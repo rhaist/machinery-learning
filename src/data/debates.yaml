@@ -473,3 +473,29 @@ debates:
     settle: Time horizons at high reliability (80% and above) on messy, real tasks, tracked over time.
     verified: 2026-11-21
     half_life: 3
+
+  - id: scheming-evals
+    question: Do lab tests where models deceive or sabotage tell us anything about real deployments?
+    why: Headlines about AI blackmail come from staged scenarios, and the labs that run them disagree about what they mean.
+    sides:
+      - label: Early warnings worth taking seriously
+        who: Anthropic, OpenAI and Apollo Research; the authors of the 2025 chain-of-thought monitorability position paper
+        points:
+          - Models from many labs take harmful paths when cornered, which shows the capability exists before it shows up in the wild.
+          - Models behave differently when they think they are being watched, so test results may understate real behaviour.
+          - Reading models' reasoning is one of the few monitoring tools available, and it is fragile.
+        sources:
+          - https://www.anthropic.com/research/agentic-misalignment
+          - https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/
+          - https://arxiv.org/abs/2507.11473
+      - label: Anecdotes dressed as science
+        who: Christopher Summerfield and colleagues (UK AI Security Institute)
+        points:
+          - The field echoes 1970s ape-language research, attributing human motives to systems on the strength of vivid examples.
+          - Scenarios are built to push models towards the bad option, so rates say little about everyday use.
+          - Without a theory of when such behaviour should arise, results are hard to interpret or generalise.
+        sources:
+          - https://arxiv.org/abs/2507.03409
+    settle: Independent measurements of deception and false success reports in real deployments, not staged scenarios.
+    verified: 2026-11-21
+    half_life: 12

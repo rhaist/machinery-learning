@@ -546,6 +546,15 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .hz .hz-v{font-family:var(--font-mono);text-align:right;color:var(--mut)}
 .hz .hz-d{margin:var(--sp-3) 0 0;color:var(--mut)}
 @media(max-width:600px){.hz .hz-list li{grid-template-columns:1fr 5.5rem}.hz .hz-n{grid-column:1/-1}}
+.sf2 .sf2-t{list-style:none;margin:var(--sp-3) 0 0;padding:0;display:grid;gap:var(--sp-1)}
+.sf2 .sf2-l{display:flex;gap:var(--sp-3);align-items:flex-start;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:var(--sp-2) var(--sp-3);color:var(--ink);cursor:pointer;font:inherit}
+.sf2 .sf2-l:hover{border-color:var(--ink)}
+.sf2 .sf2-l code{white-space:pre-wrap;font:var(--fs-xs)/1.5 var(--font-mono);background:none;padding:0}
+.sf2 .sf2-i{font:var(--fs-xs)/1.5 var(--font-mono);color:var(--mut);min-width:1.5em}
+.sf2 .sf2-l[aria-pressed=true]{border-color:var(--y);box-shadow:0 0 0 var(--hair) color-mix(in srgb,var(--y) 40%,transparent)}
+.sf2 .sf2-l.hit[aria-pressed=true]{border-color:var(--r);box-shadow:0 0 0 var(--hair) color-mix(in srgb,var(--r) 40%,transparent)}
+.sf2 #sf2-fb{margin:var(--sp-3) 0 0;min-height:1.5em}
+.sf2 #sf2-q2{margin-top:var(--sp-4)}
 @media(max-width:600px){.ce .ce-row{grid-template-columns:1fr 4rem}.ce .ce-row span{grid-column:1/-1}}
 @media(max-width:600px){.pg text{font-size:var(--fs-sm)}}
 

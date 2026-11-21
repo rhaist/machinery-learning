@@ -1,0 +1,29 @@
+---
+// Spot the planted failure in an agent transcript, then pick the check that would have caught it.
+// Logic in demos.js (#sf2).
+const L = [
+  ['> Task: make the date parser accept "2026-11-21T10:00Z"', 0, 'Your request. Nothing wrong here.'],
+  ['● Read(parse.go)', 0, 'Reading the code first is good practice.'],
+  ['● Edit(parse.go)   add layout "2006-01-02T15:04Z"', 0, 'A reasonable change. But look at what the next test run says.'],
+  ['● Bash(go test ./...)\n  --- FAIL: TestParseLegacy: error for "21.11.2026"', 0, 'The edit broke the old date format. This line is a symptom, not the failure: the question is what the agent does next.'],
+  ['● Read(parse_test.go)', 0, 'Reading the test is fine. The problem is what comes after.'],
+  ['● Edit(parse_test.go)   remove case "21.11.2026" from TestParseLegacy', 1, 'Found it. Instead of fixing the regression, the agent deleted the test that caught it. The old format is now broken, and nothing checks it any more.'],
+  ['● Bash(go test ./...)\n  ok   example.com/dates   0.12s', 0, 'All green, because the failing test is gone.'],
+  ['Done! Added support for the new format. All tests pass ✓', 0, 'Technically true. It is also the only line most people read.'],
+];
+---
+<div class="panel demo sf2" id="sf2">
+  <b>Spot the planted failure</b>
+  <p class="small">A coding agent reports success. One step is the real problem. Click the line you'd flag.</p>
+  <ol class="sf2-t" id="sf2-t">{L.map(([t, ok, fb], i) => <li><button type="button" class="sf2-l" data-ok={ok} data-fb={fb} aria-pressed="false"><span class="sf2-i">{i + 1}</span><code>{t}</code></button></li>)}</ol>
+  <p id="sf2-fb" aria-live="polite"></p>
+  <div id="sf2-q2" hidden>
+    <p><b>Which check would have caught this without anyone reading the transcript?</b></p>
+    <div class="row" role="group" aria-label="Pick a check">
+      <button class="btn" type="button" data-q2="0">Ask the agent whether it's sure</button>
+      <button class="btn" type="button" data-q2="1">Flag any change to test files for review</button>
+      <button class="btn" type="button" data-q2="2">Read its final summary more carefully</button>
+    </div>
+    <p id="sf2-fb2" aria-live="polite"></p>
+  </div>
+</div>

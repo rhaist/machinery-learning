@@ -522,3 +522,13 @@ function hz(){$$('[data-hz]').forEach(b=>b.setAttribute('aria-pressed',String(+b
 $$('[data-hz]').forEach(b=>b.addEventListener('click',()=>{k=+b.dataset.hz;hz()}));
 hz();
 }
+
+// Spot the planted failure (agent transcript), then the check that catches it.
+if($('#sf2')){
+$('#sf2-t').addEventListener('click',e=>{const b=e.target.closest('.sf2-l');if(!b)return;
+ $$('#sf2 .sf2-l').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+ $('#sf2-fb').textContent=b.dataset.fb;b.classList.toggle('hit',b.dataset.ok==='1');
+ if(b.dataset.ok==='1')$('#sf2-q2').hidden=false});
+const FB=['The agent was confident before; asking again mostly gets the same confident answer. Self-report is not a check.','Right. A simple rule outside the agent, "changes to tests need a human", catches this every time, however good the summary sounds.','The summary is accurate as far as it goes. The problem is in what it leaves out.'];
+$$('[data-q2]').forEach(b=>b.addEventListener('click',()=>{$$('[data-q2]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));$('#sf2-fb2').textContent=FB[+b.dataset.q2]}));
+}

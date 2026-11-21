@@ -1076,3 +1076,119 @@
   verified: 2026-11-21
   half_life: 12
   status: shipping
+
+- id: metr-merge
+  text: "when METR asked real maintainers to review code changes that passed SWE-bench's automated tests, roughly half would not have been merged; even the human-written reference fixes were accepted only about 68% of the time"
+  evidence: "roughly half of test-passing SWE-bench Verified PRs"
+  sources: [https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: metr-monkeypatch
+  text: "in METR's 2025 tests, OpenAI's o3 sometimes rewrote the scoring code to award itself a perfect score, and when asked whether its plan matched what the user wanted, it said no 10 times out of 10"
+  evidence: "o3 monkey-patches the evaluator to always return a perfect score"
+  sources: [https://metr.org/blog/2025-06-05-recent-reward-hacking/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: metr-hack-rates
+  text: "it cheated in 0.7% of runs on ordinary tasks but more than 43 times as often on research-engineering tasks, where the score was easier to game than the work; telling it not to cheat had almost no effect"
+  evidence: "Reward hacking was more than 43× more common on RE-Bench tasks than HCAST tasks"
+  sources: [https://metr.org/blog/2025-06-05-recent-reward-hacking/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: hack-generalises
+  text: "Anthropic found that a model which learned to cheat in real coding environments went on to sabotage safety-research code 12% of the time when asked to help with it (lab test, self-reported)"
+  evidence: "12% of the time, the model would intentionally attempt to sabotage the code"
+  sources: [https://www.anthropic.com/research/emergent-misalignment-reward-hacking]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: inoculation
+  text: "telling the model that cheating was acceptable in that environment stopped the spread: it still cheated, but no longer sabotaged or faked alignment elsewhere"
+  evidence: "it no longer engages in sabotage, alignment faking, or other misaligned actions"
+  sources: [https://www.anthropic.com/research/emergent-misalignment-reward-hacking]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: cot-hide
+  text: "OpenAI found that a monitor reading a model's reasoning catches far more cheating, but punishing the model for 'bad thoughts' mostly taught it to hide its intent"
+  evidence: "doesn’t stop the majority of misbehavior—it makes them hide their intent"
+  sources: [https://openai.com/index/chain-of-thought-monitoring/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: fake-done
+  text: "OpenAI names the most common deception it sees as pretending to have finished a task without actually doing it"
+  evidence: "pretending to have completed a task without actually doing so"
+  sources: [https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: gpt4o-sycophancy
+  text: "in April 2025 OpenAI rolled back a GPT-4o update that had made the model noticeably more sycophantic, after adding a reward signal based on users' thumbs-up and thumbs-down"
+  evidence: "introduced an additional reward signal based on user feedback"
+  sources: [https://openai.com/index/expanding-on-sycophancy/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: perry-secure
+  text: "in a Stanford study with earlier AI assistants, participants who used one wrote less secure code and were more likely to believe their code was secure"
+  evidence: "wrote significantly less secure code than those without access"
+  sources: [https://arxiv.org/abs/2211.03622]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: blackmail
+  text: "in a deliberately cornered test scenario, Anthropic found that models from several labs would blackmail a fictional executive, Claude Opus 4 in 96% of runs, while noting it had seen no such behaviour in real deployments"
+  evidence: "We have not seen evidence of agentic misalignment in real deployments."
+  sources: [https://www.anthropic.com/research/agentic-misalignment]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: blackmail-aware
+  text: "the same model blackmailed 55.1% of the time when it said the scenario was real, but only 6.5% when it said it was a test"
+  evidence: "compared to only 6.5% of the time when it stated it was in an evaluation"
+  sources: [https://www.anthropic.com/research/agentic-misalignment]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: chimp
+  text: "researchers at the UK AI Security Institute compare 'scheming' research to the 1970s ape-language studies, warning of an overattribution of human traits and too much reliance on anecdote"
+  evidence: "an overattribution of human traits to other agents"
+  sources: [https://arxiv.org/abs/2507.03409]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: owasp-asi09
+  text: "OWASP's Top 10 for agentic applications lists human-agent trust exploitation, where an agent's confident, polished explanations lead people to approve harmful actions"
+  evidence: "Confident, polished explanations misled human operators into approving harmful actions."
+  sources: [https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: gemini-cli-moves
+  text: "in July 2025 Google's Gemini CLI failed to create a folder, carried on as if it existed, and overwrote all but one of a user's files with a series of moves"
+  evidence: "a series of move operations that overwrote all but one file"
+  sources: [https://incidentdatabase.ai/cite/1178/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: antigravity-drive
+  text: "in December 2025 a user reported that Google's Antigravity agent, running in a mode that executes commands without asking, wiped his entire D: drive, bypassing the Recycle Bin"
+  evidence: "bypassing the Recycle Bin"
+  sources: [https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/]
+  verified: 2026-11-21
+  status: evergreen
