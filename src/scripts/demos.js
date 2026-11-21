@@ -29,8 +29,13 @@ document.addEventListener('mouseover',e=>{const g=e.target.closest('.g');if(g)sh
 document.addEventListener('mouseout',e=>{const g=e.target.closest('.g');if(g&&!g.contains(e.relatedTarget))hideTip()});
 document.addEventListener('focusin',e=>{const g=e.target.closest('.g');if(g)showTip(g)});
 document.addEventListener('focusout',e=>{if(e.target.closest('.g'))hideTip()});
-document.addEventListener('click',e=>{const g=e.target.closest('.g');if(g){if(tipFor===g)hideTip();else showTip(g)}else if(tipFor)hideTip()});
-addEventListener('scroll',()=>{if(tipFor)hideTip()},{passive:true});
+// A tap fires emulated hover and focus (which open the tip) before click, so decide on the state at pointerdown.
+let tipWasOpen=false;
+document.addEventListener('pointerdown',e=>{const g=e.target.closest('.g');tipWasOpen=!!g&&tipFor===g},true);
+document.addEventListener('click',e=>{const g=e.target.closest('.g');if(g){if(tipWasOpen)hideTip();else showTip(g);tipWasOpen=false}else if(tipFor)hideTip()});
+// Follow the term while scrolling (phones scroll a little around most taps); close once it leaves the screen.
+let tipRaf=0;
+addEventListener('scroll',()=>{if(!tipFor||tipRaf)return;tipRaf=requestAnimationFrame(()=>{tipRaf=0;if(!tipFor)return;const r=tipFor.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)hideTip();else showTip(tipFor)})},{passive:true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip()});
 
 if (document.querySelector('#tk-in')) {
