@@ -765,6 +765,8 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .sc-m{font-size:var(--fs-sm);color:var(--mut);white-space:nowrap}
 .sheet-links a[aria-current=page]{font-weight:600}
 .sheet-set{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);min-height:var(--ctl);font-size:var(--fs-md)}
+.sheet-pn{margin-left:var(--sp-2);font-size:var(--fs-sm);color:var(--mut)}
+.btn.armed{border-color:var(--r);color:var(--rt)}
 .sheet-set .seg2 button{min-height:var(--ctl-sm);min-width:var(--ctl)}
 /* toast */
 .toast{position:fixed;left:50%;bottom:calc(var(--sp-4) + var(--safe-b));transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:var(--sp-3);width:max-content;max-width:min(calc(100vw - 2 * var(--sp-4)), 30rem);padding:var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);background:var(--tipbg);color:var(--tipink);border-radius:var(--r-md);box-shadow:0 8px 28px var(--shade);font-size:var(--fs-sm)}

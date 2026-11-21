@@ -150,11 +150,20 @@ quizzes.forEach((el, i) => {
     if (ok) { solved.add(i); store.set('lfg-quiz-' + page, [...solved]); markDone(); }
   });
 });
+{ const n = done.size, started = n || store.get('lfg-last', null); const row = $('#sheet-progress');
+  if (row && started) { row.hidden = false; const total = $$('.sheet-chapters a').length; $('#sheet-progress-n').textContent = `${n} of ${total} done`; } }
 markDone();
-const reset = $('#reset-progress');
-if (reset) reset.addEventListener('click', () => {
-  Object.keys(localStorage).filter(k => k.startsWith('lfg-quiz-') || ['lfg-done', 'lfg-pos', 'lfg-last'].includes(k)).forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
-  location.reload();
+// Reset asks twice (no browser dialog): the first press arms the button for a few seconds.
+$$('[data-reset-progress]').forEach(btn => {
+  const label = btn.textContent; let timer = null;
+  btn.addEventListener('click', () => {
+    if (btn.dataset.armed) {
+      Object.keys(localStorage).filter(k => k.startsWith('lfg-quiz-') || ['lfg-done', 'lfg-pos', 'lfg-last'].includes(k)).forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+      location.reload(); return;
+    }
+    btn.dataset.armed = '1'; btn.textContent = 'Tap again to reset'; btn.classList.add('armed');
+    clearTimeout(timer); timer = setTimeout(() => { delete btn.dataset.armed; btn.textContent = label; btn.classList.remove('armed'); }, 4000);
+  });
 });
 
 /* ---------- keyboard access to blocks that scroll sideways (WCAG 2.1.1) ---------- */
