@@ -2,24 +2,29 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ChapterArt from '../../components/ChapterArt.astro';
+import { byPart } from '../../lib/data';
 
 export async function getStaticPaths() {
   const all = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
   return all.map((entry, i) => ({ params: { slug: entry.id }, props: { entry, prev: all[i - 1], next: all[i + 1], all } }));
 }
 const { entry, prev, next, all } = Astro.props;
+const parts = byPart(all as any[]);
+const part = parts.find(p => p.id === entry.data.part)!;
+const num = part.chapters.find(x => x.c.id === entry.id)!.num;
+const last = part.chapters[part.chapters.length - 1].num;
 const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 ---
 <Base title={entry.data.title} description={entry.data.summary} chapter={entry.id} nav="learn" og={`learn-${entry.id}`}>
   <nav slot="top" class="chbar" aria-label="Chapters"><div class="in">
-    {all.map(c => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}
+    {parts.map(p => <>{parts.length > 1 && <span class="chbar-part">Part {p.index}</span>}{p.chapters.map(({ c }) => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}</>)}
   </div></nav>
   <article class="band"><div class="chapter">
     <ChapterArt name={entry.id} />
     <header class="chapter-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
-      <div class="kicker">Chapter {entry.data.order} of {all.length - 1}{entry.data.order === 0 ? ' · start here' : ''}</div>
+      <div class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}Chapter {num} of {last}{entry.data.order === 0 ? ' · start here' : ''}</div>
       <h1>{entry.data.title}</h1>
       <p class="lede" style="margin-top:14px">{entry.data.summary}</p>
       <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>

@@ -1,0 +1,11 @@
+# Expert disagreements, shown in chapters as <Debate id="..."/> ("Where experts disagree").
+# Purpose: encourage critical thinking. Steelman both sides; name real proponents; cite primary sources.
+#
+#   id          stable key
+#   question    the disputed question, in plain language
+#   why         one sentence: why this matters for the reader
+#   sides       exactly two: label, who (named proponents), points (2-3 short bullets), sources (URLs)
+#   settle      what evidence would move the debate
+#   verified    date a human last checked both sides against their sources
+#   half_life   months until re-check (debates move; usually 6)
+debates: []

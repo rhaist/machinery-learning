@@ -17,9 +17,10 @@ This file is the complete instruction set for the monthly research run, whether 
 3. **Apply the editorial bar.** A development goes in only if it changes how a reader should *understand* or *use* these systems. New model releases, benchmark records and funding rounds usually don't qualify on their own. Ask: would a chapter explain something differently because of this? Most months that means a handful of changes, not dozens.
 4. **Update the radar** (`src/data/radar.yaml`). Add a `YYYY-MM: ring` key to `history` only for entries that actually moved, and only with a cited reason in the PR. Add new entries sparingly; mark overtaken ones `faded` rather than deleting them. Never edit past months.
 5. **Update claims and chapters.** New time-sensitive facts go into `src/data/claims.yaml` (with sources, `verified` = today, a `half_life`), then into chapters via `<Claim id="..."/>`. Bump a chapter's `updated` date only for substantive changes. Keep the beginner core in plain language; technical detail goes inside `<Engineer>` blocks.
-6. **Write the field notes** at `src/content/notes/YYYY-MM.md`: what changed and why it matters for understanding or use, what to be sceptical about, what we're watching. 400–800 words. Plain language. No hype.
-7. **Edition subtitle (rarely).** Propose a new subtitle in `src/data/site.yaml` only when the field's centre of gravity has visibly shifted, never just for freshness. Add a new entry at the top of `editions`; never edit old ones. The name and tagline are not changed by the monthly update.
-8. **Check.** Run `npm run build` and `node scripts/check-claims.mjs --strict`. Both must pass.
+6. **Debates** (`src/data/debates.yaml`). Re-check each debate past its half-life: has either side gained or lost evidence, has a new strong voice joined? Update points and sources, bump `verified`. Add a new debate only where experts genuinely disagree on something a chapter claims; both sides steelmanned, named proponents, primary sources for each side.
+7. **Write the field notes** at `src/content/notes/YYYY-MM.md`: what changed and why it matters for understanding or use, what to be sceptical about, what we're watching. 400–800 words. Plain language. No hype.
+8. **Edition subtitle (rarely).** Propose a new subtitle in `src/data/site.yaml` only when the field's centre of gravity has visibly shifted, never just for freshness. Add a new entry at the top of `editions`; never edit old ones. The name and tagline are not changed by the monthly update.
+9. **Check.** Run `npm run build` and `node scripts/check-claims.mjs --strict`. Both must pass.
 
 ## Pull request description
 

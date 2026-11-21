@@ -87,7 +87,7 @@ function markDone() {
     cont.hidden = false;
     cont.querySelector('a').href = link.href;
     cont.querySelector('a').textContent = `Continue: ${link.querySelector('.lb').textContent}`;
-    $('#continue-note').textContent = `${done.size} of ${stations.length} chapters done`;
+    $('#continue-note').textContent = `${[...done].filter(d => stations.some(li => li.dataset.chapterLink === d)).length} of ${stations.length} chapters done`;
   }
 }
 quizzes.forEach((el, i) => {

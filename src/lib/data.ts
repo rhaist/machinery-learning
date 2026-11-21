@@ -18,6 +18,8 @@ const iso = (d: string | Date) => (d instanceof Date ? d.toISOString().slice(0, 
 
 export const claims: Claim[] = (load('claims.yaml') as Claim[]).map(c => ({ ...c, verified: iso(c.verified) }));
 export const claimById = Object.fromEntries(claims.map(c => [c.id, c]));
+export const debates: any[] = ((load('debates.yaml') as any)?.debates ?? []).map((d: any) => ({ ...d, verified: iso(d.verified) }));
+export const debateById = Object.fromEntries(debates.map(d => [d.id, d]));
 export const glossary: Record<string, { term: string; def: string }> = JSON.parse(
   fs.readFileSync(path.join(dataDir, 'glossary.json'), 'utf8'));
 
@@ -45,6 +47,15 @@ export function freshness(c: Claim, today = new Date()): string {
 
 export const site: { name: string; tagline: string; repo: string; domain: string; legal: Record<string, string>; editions: { month: string; subtitle: string }[]; parts: { id: string; title: string; summary: string }[] } = load('site.yaml');
 export const edition = [...site.editions].sort((a, b) => String(b.month).localeCompare(String(a.month)))[0];
+
+/** Chapters grouped by part (in site.yaml order), each with its number inside the part. */
+export function byPart<T extends { id: string; data: { order: number; part: string } }>(chapters: T[]) {
+  const sorted = [...chapters].sort((a, b) => a.data.order - b.data.order);
+  return site.parts.map((p, pi) => {
+    const list = sorted.filter(c => c.data.part === p.id);
+    return { ...p, index: pi + 1, chapters: list.map((c, i) => ({ c, num: pi === 0 ? i : i + 1 })) };
+  }).filter(p => p.chapters.length);
+}
 
 export const monthLabel = (m: string) =>
   new Date(m + '-01T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });

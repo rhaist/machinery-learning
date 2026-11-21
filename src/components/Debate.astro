@@ -1,0 +1,25 @@
+---
+// "Where experts disagree": two steelmanned positions with named proponents and sources.
+import { debateById } from '../lib/data';
+const { id } = Astro.props;
+const d = debateById[id];
+if (!d) throw new Error(`Unknown debate id: ${id}`);
+const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+const label = new Date(d.verified + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+<section class="debate" data-verified={d.verified} data-hl={d.half_life ?? ''} aria-label={`Where experts disagree: ${d.question}`}>
+  <p class="debate-k">Where experts disagree <span class="debate-d">checked {label}</span></p>
+  <h3 class="debate-q">{d.question}</h3>
+  {d.why && <p class="debate-why">{d.why}</p>}
+  <div class="debate-sides">
+    {d.sides.map((s: any, i: number) => (
+      <div class={`side side-${i ? 'b' : 'a'}`}>
+        <p class="side-l">{s.label}</p>
+        <p class="side-w">{s.who}</p>
+        <ul>{s.points.map((p: string) => <li>{p}</li>)}</ul>
+        {s.sources?.length > 0 && <p class="side-s">Sources: {s.sources.map((u: string, j: number) => <>{j > 0 && ' · '}<a href={u}>{host(u)}</a></>)}</p>}
+      </div>
+    ))}
+  </div>
+  {d.settle && <p class="debate-settle"><b>What would settle it:</b> {d.settle}</p>}
+</section>

@@ -36,6 +36,17 @@ for (const c of claims) {
   rows[state].push({ ...c, months: months.toFixed(1) });
 }
 for (const id of used) if (!ids.has(id)) problems.push(`chapter references unknown claim: ${id}`);
+// debates: both sides need sources; same freshness rules as claims
+const debates = (yaml.load(fs.readFileSync('src/data/debates.yaml', 'utf8'))?.debates ?? []).map(d => ({ ...d, verified: iso(d.verified) }));
+for (const d of debates) {
+  if (!d.sides || d.sides.length !== 2) problems.push(`debate needs exactly two sides: ${d.id}`);
+  for (const sd of d.sides ?? []) if (!(sd.sources && sd.sources.length)) problems.push(`debate side without sources: ${d.id} / ${sd.label}`);
+  if (d.half_life) {
+    const months = (today - new Date(d.verified + 'T00:00:00Z')) / (1000 * 60 * 60 * 24 * 30.44);
+    const state = months < d.half_life ? 'fresh' : months < d.half_life * 2 ? 'aging' : 'stale';
+    if (state !== 'fresh') rows[state].push({ ...d, id: 'debate:' + d.id, months: months.toFixed(1) });
+  }
+}
 const unused = claims.filter(c => !used.has(c.id)).map(c => c.id);
 
 const out = [];
