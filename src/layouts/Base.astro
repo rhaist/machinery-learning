@@ -26,12 +26,13 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <meta name="description" content={description}>
   <link rel="alternate" type="application/rss+xml" title={`${site.name}: field notes`} href={`${base}/rss.xml`}>
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml">
-  <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d}catch(e){}</script>
+  <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d;var t=JSON.parse(localStorage.getItem('lfg-theme')||'"auto"');if(t!=="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body data-chapter={chapter}>
   <header class="site-head"><div class="in">
     <a class="brand" href={`${base}/`}><i></i>{site.name}</a>
     <nav class="site-nav" aria-label="Main">{links.map(([k, label, href]) => <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>)}</nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Colour theme: follows your system" title="Colour theme"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><span class="theme-label">Auto</span></button>
     <div class="depth"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
   </div></header>
   <slot name="top" />

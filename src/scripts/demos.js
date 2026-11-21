@@ -9,7 +9,7 @@ const VOCAB=["The"," the","Die"," Haupt","stadt"," von"," Deutsch","land"," ist"
 const VID=new Map();VOCAB.forEach((v,i)=>VID.set(v,300+i*37%9000));
 const MAXL=Math.max(...VOCAB.map(v=>v.length));
 function tokenize(t){const out=[];let i=0;while(i<t.length){let f=null;for(let L=Math.min(MAXL,t.length-i);L>0;L--){const s=t.substr(i,L);if(VID.has(s)&&s!==' Strawberry'){f=s;break}}if(!f){out.push([t[i],t.charCodeAt(i)]);i+=1}else{out.push([f,VID.get(f)]);i+=f.length}}return out}
-const HUES=['#3b4fd8','#4fc1c6','#f7e463','#e8452c'];
+const HUES=['var(--b)','var(--t)','var(--y)','var(--r)'];
 const vis=s=>esc(s).replace(/ /g,'·').replace(/\n/g,'↵');
 const chips=ts=>ts.map((t,i)=>`<span class="tok" style="--h:${HUES[i%4]}">${vis(t[0])}<small>${t[1]}</small></span>`).join('');
 const P=[
@@ -54,9 +54,9 @@ const AW={2:{1:.55,2:.3,0:.15},4:{2:.34,4:.3,3:.2,1:.16},6:{4:.56,1:.18,6:.1,5:.
 function weights(q){if(AW[q])return AW[q];if(q===0)return{0:1};if(q===1)return{1:.55,0:.45};const w={};w[q]=.45;w[q-1]=.35;for(let j=0;j<q-1;j++)w[j]=.2/(q-1);return w}
 let aq=6;const asv=$('#attn');
 function drawAttn(){const r=asv.getBoundingClientRect();const W=r.width,H=r.height;if(!W)return;const n=AT.length,pad=10,cw=(W-pad*2)/n,bh=36,by=H-bh-30;const cx=i=>pad+cw*i+cw/2;const w=weights(aq);let arcs='',labs='';
- for(const k in w){const j=+k;if(j===aq)continue;const v=w[k],x1=cx(aq),x2=cx(j);const h=Math.min(by-30,Math.abs(x1-x2)*0.3+26);const mx=(x1+x2)/2;arcs+=`<path d="M${x1} ${by} Q${mx} ${by-h*2} ${x2} ${by}" fill="none" stroke="#f7e463" stroke-opacity="${(.3+v*.7).toFixed(2)}" stroke-width="${(1.5+v*14).toFixed(1)}" stroke-linecap="round"/>`;if(v>=.08)labs+=`<text class="al" x="${mx}" y="${by-h-8}" text-anchor="middle">${Math.round(v*100)}%</text>`}
- const boxes=AT.map((t,i)=>{const sel=i===aq,fut=i>aq;return `<g class="at" data-i="${i}" tabindex="0" role="button" aria-label="Select ${t}"><rect x="${pad+cw*i+3}" y="${by}" width="${cw-6}" height="${bh}" rx="8" fill="${sel?'#f7e463':fut?'transparent':'#24357a'}" stroke="${fut?'#2c3c80':'none'}" stroke-dasharray="${fut?'4 4':'0'}"/><text x="${cx(i)}" y="${by+23}" text-anchor="middle" style="fill:${sel?'#0b1433':fut?'#7d88b8':'#eef1fb'};font-weight:${sel?700:400}">${t}</text></g>`}).join('');
- asv.innerHTML=arcs+labs+boxes+`<text x="${cx(aq)}" y="${by+bh+20}" text-anchor="middle" style="fill:#b0badf;font-size:13px">self ${Math.round((w[aq]||0)*100)}%</text>`}
+ for(const k in w){const j=+k;if(j===aq)continue;const v=w[k],x1=cx(aq),x2=cx(j);const h=Math.min(by-30,Math.abs(x1-x2)*0.3+26);const mx=(x1+x2)/2;arcs+=`<path d="M${x1} ${by} Q${mx} ${by-h*2} ${x2} ${by}" fill="none" style="stroke:var(--yt)" stroke-opacity="${(.3+v*.7).toFixed(2)}" stroke-width="${(1.5+v*14).toFixed(1)}" stroke-linecap="round"/>`;if(v>=.08)labs+=`<text class="al" x="${mx}" y="${by-h-8}" text-anchor="middle">${Math.round(v*100)}%</text>`}
+ const boxes=AT.map((t,i)=>{const sel=i===aq,fut=i>aq;return `<g class="at" data-i="${i}" tabindex="0" role="button" aria-label="Select ${t}"><rect x="${pad+cw*i+3}" y="${by}" width="${cw-6}" height="${bh}" rx="8" style="fill:${sel?'var(--y)':fut?'transparent':'var(--chip2)'};stroke:${fut?'var(--line)':'none'}" stroke-dasharray="${fut?'4 4':'0'}"/><text x="${cx(i)}" y="${by+23}" text-anchor="middle" style="fill:${sel?'var(--onY)':fut?'var(--faint)':'var(--ink)'};font-weight:${sel?700:400}">${t}</text></g>`}).join('');
+ asv.innerHTML=arcs+labs+boxes+`<text x="${cx(aq)}" y="${by+bh+20}" text-anchor="middle" style="fill:var(--mut);font-size:13px">self ${Math.round((w[aq]||0)*100)}%</text>`}
 asv.addEventListener('click',e=>{const g=e.target.closest('.at');if(g){aq=+g.dataset.i;drawAttn();const el=asv.querySelector(`.at[data-i="${aq}"]`);if(el)el.focus()}});
 asv.addEventListener('keydown',e=>{const g=e.target.closest('.at');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();aq=+g.dataset.i;drawAttn();const el=asv.querySelector(`.at[data-i="${aq}"]`);if(el)el.focus()}});
 const roA=new ResizeObserver(drawAttn);roA.observe(asv);
@@ -121,7 +121,7 @@ $('#flat-btn').addEventListener('click',e=>{const on=$('#ctxw').classList.toggle
 }
 
 if (document.querySelector('#loop')) {
-const CB={llm:'var(--b)',dec:'var(--y)',slm:'var(--t)',code:'#9aa6d6'};
+const CB={llm:'var(--b)',dec:'var(--y)',slm:'var(--t)',code:'var(--faint)'};
 const LP=[
  {n:"Screen input",w:"Decision model",c:'dec',d:"Is this input a prompt injection or an off-policy request? A typed answer (safe / suspicious / block) with probabilities, in milliseconds, before any expensive call."},
  {n:"Plan and reason",w:"Frontier LLM",c:'llm',d:"The open-ended work: understand the task, plan, choose the next action, write code. This is where generation actually pays off."},
@@ -133,7 +133,7 @@ const LP=[
 ];
 let li=3;
 $('#loop').innerHTML=LP.map((s,i)=>`<button class="btn" type="button" data-i="${i}" aria-pressed="false" style="--c:${CB[s.c]}">${s.n}<small>${s.w}</small></button>`).join('');
-function loop(){const s=LP[li];$$('#loop button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===li)));$('#loop-d').innerHTML=`<b style="color:${CB[s.c]}">${esc(s.w)}</b><p style="margin:4px 0 0">${esc(s.d)}</p>`}
+function loop(){const s=LP[li];$$('#loop button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===li)));$('#loop-d').innerHTML=`<b style="color:${s.c==='dec'?'var(--yt)':CB[s.c]}">${esc(s.w)}</b><p style="margin:4px 0 0">${esc(s.d)}</p>`}
 $('#loop').addEventListener('click',e=>{const b=e.target.closest('button');if(b){li=+b.dataset.i;loop()}});
 loop();
 }
