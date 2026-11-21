@@ -105,7 +105,7 @@ debates:
           - The Munich court held that song lyrics memorised in model parameters are a reproduction under copyright law.
           - Researchers recovered personal data and near-complete books from production systems.
         sources:
-          - https://www.edpb.europa.eu/node/8396_en
+          - https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en
           - https://cms.law/en/deu/legal-updates/gema-vs.-openai-munich-regional-court-i-issues-landmark-copyright-decision
           - https://arxiv.org/abs/2311.17035
     settle: Final appeal rulings in cases like GEMA v OpenAI, and EU-level guidance applied to concrete models.

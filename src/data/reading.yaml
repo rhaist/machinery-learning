@@ -70,7 +70,7 @@ your-data:
   - { title: "Updates to our consumer terms", by: Anthropic, year: 2025, url: "https://www.anthropic.com/news/updates-to-our-consumer-terms", why: "A clear example of a training opt-in and what it means for retention.", beginner: true }
   - { title: "Gemini Apps Privacy Hub", by: Google, year: 2026, url: "https://support.google.com/gemini/answer/13594961", why: "Human review and retention, from the source.", beginner: true }
   - { title: "Scalable Extraction of Training Data from (Production) Language Models", by: "Nasr, Carlini et al.", year: 2023, url: "https://arxiv.org/abs/2311.17035", why: "How memorised data comes back out." }
-  - { title: "EDPB press release on Opinion 28/2024 (AI models)", by: European Data Protection Board, year: 2024, url: "https://www.edpb.europa.eu/node/8396_en", why: "How GDPR applies to trained models." }
+  - { title: "EDPB Opinion 28/2024 on AI models", by: European Data Protection Board, year: 2024, url: "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en", why: "How GDPR applies to trained models." }
 judging-claims:
   - { title: "Why SWE-bench Verified no longer measures frontier coding capabilities", by: OpenAI, year: 2026, url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/", why: "A lab explaining why its own flagship benchmark stopped working." }
   - { title: "The Leaderboard Illusion", by: Singh et al., year: 2025, url: "https://arxiv.org/abs/2504.20879", why: "How leaderboards can be gamed; read with LMArena's response." }

@@ -30,6 +30,7 @@ for (const c of claims) {
   ids.add(c.id);
   if (c.half_life && !(c.sources && c.sources.length)) problems.push(`time-sensitive claim without sources: ${c.id}`);
   if (c.sources?.length && !c.evidence) problems.push(`claim without an evidence excerpt from its source: ${c.id}`);
+  for (const u of c.sources ?? []) if (!/^https?:\/\/\S+$/.test(u)) problems.push(`malformed source URL in ${c.id}: ${u}`);
   if (c.evidence_src && !(c.sources ?? []).includes(c.evidence_src)) problems.push(`evidence_src is not one of the claim's sources: ${c.id}`);
   const verified = new Date(c.verified + 'T00:00:00Z');
   if (!c.half_life) { rows.evergreen.push(c); continue; }

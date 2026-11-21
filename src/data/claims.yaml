@@ -557,8 +557,7 @@
   text: "the 2026 \"Digital Omnibus\" moved the EU's high-risk AI rules to December 2027 (stand-alone systems) and August 2028 (systems in products), leaving the general-purpose AI duties unchanged"
   evidence: "2 December 2027"
   evidence_src: https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en
-  sources: [https://digital-strategy.ec.europa.eu/en/news/eu-agrees-simplify-ai-rules-boost-innovation-and-ban-nudification-apps-protect-citizens, https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/
-    - https://data.consilium.europa.eu/doc/document/PE-30-2026-INIT/en/pdf, https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en]
+  sources: [https://digital-strategy.ec.europa.eu/en/news/eu-agrees-simplify-ai-rules-boost-innovation-and-ban-nudification-apps-protect-citizens, https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/, https://data.consilium.europa.eu/doc/document/PE-30-2026-INIT/en/pdf, https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en]
   verified: 2026-11-21
   half_life: 3
   status: shipping
