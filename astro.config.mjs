@@ -6,6 +6,6 @@ export default defineConfig({
   site: process.env.SITE ?? 'https://rhaist.github.io',
   base: process.env.BASE ?? '/llm-field-guide',
   trailingSlash: 'ignore',
-  build: { format: process.env.BUILD_FORMAT ?? 'directory' },
+  build: { format: process.env.BUILD_FORMAT ?? 'directory', assets: 'assets' },
   integrations: [mdx()],
 });
