@@ -1,0 +1,116 @@
+---
+// One drawn banner per chapter, in a shared visual language: belts, blocks (tokens), gears, tracks.
+// Colours come from theme variables, so every drawing works in light and dark.
+const { name } = Astro.props;
+const gear = (cx: number, cy: number, r: number, cls = 'a-c2') => {
+  const teeth = Array.from({ length: 10 }, (_, i) => `<rect x="${cx - r * 0.16}" y="${cy - r - r * 0.28}" width="${r * 0.32}" height="${r * 0.42}" rx="2" transform="rotate(${i * 36} ${cx} ${cy})" class="${cls}"/>`).join('');
+  return `<g>${teeth}<circle cx="${cx}" cy="${cy}" r="${r}" class="${cls}"/><circle cx="${cx}" cy="${cy}" r="${r * 0.38}" class="a-bg"/></g>`;
+};
+const block = (x: number, y: number, label = '', cls = 'a-c2', w = 46, h = 34) =>
+  `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" class="${cls}"/><rect x="${x}" y="${y}" width="${w}" height="5" rx="2" class="a-hi"/>${label ? `<text x="${x + w / 2}" y="${y + h / 2 + 5}" text-anchor="middle" class="a-tx">${label}</text>` : ''}</g>`;
+const belt = (x1: number, x2: number, y: number) =>
+  `<g><rect x="${x1}" y="${y}" width="${x2 - x1}" height="12" rx="6" class="a-c3"/>${Array.from({ length: Math.floor((x2 - x1) / 28) }, (_, i) => `<circle cx="${x1 + 14 + i * 28}" cy="${y + 6}" r="3" class="a-bg"/>`).join('')}</g>`;
+const ground = `<rect x="0" y="182" width="800" height="38" class="a-s1"/>`;
+
+const art: Record<string, string> = {
+  'start-here': `${ground}
+    ${belt(40, 760, 170)}
+    <g><rect x="40" y="70" width="70" height="90" rx="6" class="a-s2"/><rect x="52" y="86" width="46" height="5" rx="2" class="a-ln"/><rect x="52" y="100" width="38" height="5" rx="2" class="a-ln"/><rect x="52" y="114" width="44" height="5" rx="2" class="a-ln"/><rect x="52" y="128" width="30" height="5" rx="2" class="a-ln"/></g>
+    <g><rect x="92" y="54" width="70" height="90" rx="6" class="a-s2"/><rect x="104" y="70" width="46" height="5" rx="2" class="a-ln"/><rect x="104" y="84" width="40" height="5" rx="2" class="a-ln"/><rect x="104" y="98" width="44" height="5" rx="2" class="a-ln"/></g>
+    <path d="M200 60 L270 90 L270 130 L200 160 Z" class="a-c3"/>
+    <rect x="270" y="50" width="250" height="118" rx="18" class="a-c2"/><rect x="270" y="50" width="250" height="10" rx="5" class="a-hi"/>
+    ${gear(340, 46, 26, 'a-b')}${gear(395, 30, 16, 'a-t')}
+    <rect x="300" y="86" width="190" height="16" rx="8" class="a-s2"/><rect x="300" y="86" width="120" height="16" rx="8" class="a-t"/>
+    <rect x="300" y="116" width="190" height="16" rx="8" class="a-s2"/><rect x="300" y="116" width="70" height="16" rx="8" class="a-b"/>
+    <path d="M520 100 L580 120 L580 150 L520 150 Z" class="a-c3"/>
+    ${block(600, 132, 'the', 'a-c2')}${block(656, 132, 'next', 'a-y', 58)}
+    <text x="687" y="118" text-anchor="middle" class="a-cap">one token at a time</text>`,
+
+  tokens: `${ground}
+    ${belt(30, 770, 170)}
+    <rect x="40" y="128" width="300" height="36" rx="8" class="a-s2"/>
+    <text x="190" y="152" text-anchor="middle" class="a-mono">The firewall blocked</text>
+    <path d="M360 40 L400 40 L392 150 L368 150 Z" class="a-c3"/><path d="M368 150 L392 150 L380 172 Z" class="a-r"/>
+    <rect x="352" y="28" width="56" height="16" rx="4" class="a-c2"/>
+    ${block(430, 130, 'The', 'a-b', 52)}${block(490, 130, '·fire', 'a-t', 62)}${block(560, 130, 'wall', 'a-y', 56)}${block(624, 130, '·block', 'a-r', 70)}${block(702, 130, 'ed', 'a-b', 46)}
+    <text x="456" y="118" text-anchor="middle" class="a-cap">300</text><text x="521" y="118" text-anchor="middle" class="a-cap">892</text><text x="588" y="118" text-anchor="middle" class="a-cap">929</text><text x="659" y="118" text-anchor="middle" class="a-cap">1077</text><text x="725" y="118" text-anchor="middle" class="a-cap">20</text>`,
+
+  attention: `${ground}
+    ${[0, 1, 2, 3, 4, 5, 6].map(i => block(70 + i * 96, 140, '', i === 6 ? 'a-y' : 'a-c2', 60, 34)).join('')}
+    <path d="M676 140 Q 580 20 484 140" class="a-arc" style="stroke-width:12"/>
+    <path d="M676 140 Q 436 -30 196 140" class="a-arc" style="stroke-width:5"/>
+    <path d="M676 140 Q 628 80 580 140" class="a-arc" style="stroke-width:4"/>
+    <path d="M676 140 Q 388 -50 100 140" class="a-arc" style="stroke-width:2"/>
+    <text x="580" y="58" text-anchor="middle" class="a-cap">56%</text>
+    <text x="706" y="128" class="a-cap">"it"</text><text x="514" y="194" text-anchor="middle" class="a-cap">"request"</text>`,
+
+  'inside-the-stack': `${ground}
+    ${[0, 1, 2, 3, 4].map(i => `<path d="M${200} ${150 - i * 26} l60 -20 h240 l-60 20 z" class="${i % 2 ? 'a-c3' : 'a-c2'}"/><path d="M200 ${150 - i * 26} h240 v10 h-240 z" class="a-s2"/>`).join('')}
+    <rect x="324" y="30" width="14" height="140" rx="7" class="a-t" opacity=".85"/>
+    ${block(308, 150, '', 'a-y', 46, 30)}
+    <text x="330" y="22" text-anchor="middle" class="a-cap">30–120 layers</text>
+    ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect x="${540 + (i % 4) * 52}" y="${70 + Math.floor(i / 4) * 52}" width="42" height="42" rx="8" class="${i === 1 || i === 6 ? 'a-y' : 'a-c2'}"/>`).join('')}
+    <text x="642" y="190" text-anchor="middle" class="a-cap">8 experts, 2 at work</text>`,
+
+  generating: `${ground}
+    ${[90, 70, 55, 38, 26, 14].map((h, i) => `<rect x="${60 + i * 34}" y="${170 - h}" width="24" height="${h}" rx="5" class="${i === 0 ? 'a-y' : 'a-t'}"/>`).join('')}
+    <g transform="rotate(-12 340 110)"><rect x="300" y="70" width="80" height="80" rx="16" class="a-c2"/><circle cx="322" cy="92" r="7" class="a-ink"/><circle cx="358" cy="128" r="7" class="a-ink"/><circle cx="340" cy="110" r="7" class="a-ink"/></g>
+    ${belt(430, 770, 170)}
+    ${block(440, 132, 'The', 'a-c2', 52)}${block(498, 132, 'firewall', 'a-c2', 78)}${block(582, 132, 'blocked', 'a-c2', 74)}${block(662, 132, 'the', 'a-c2', 46)}${block(714, 92, '?', 'a-y', 46)}
+    <path d="M737 128 v-6" class="a-ar"/>`,
+
+  training: `${ground}
+    <path d="M60 140 H740" class="a-track"/>
+    ${[100, 280, 460, 640].map(x => `<circle cx="${x}" cy="140" r="14" class="a-t"/>`).join('')}
+    ${[0, 1, 2, 3, 4].map(i => `<rect x="${70 + i * 13}" y="${68 + (i % 2) * 6}" width="11" height="${52 - (i % 2) * 6}" rx="2" class="${['a-b', 'a-t', 'a-y', 'a-r', 'a-b'][i]}"/>`).join('')}
+    <path d="M244 66 h72 a10 10 0 0 1 10 10 v28 a10 10 0 0 1 -10 10 h-46 l-14 12 v-12 h-12 a10 10 0 0 1 -10 -10 v-28 a10 10 0 0 1 10 -10 z" class="a-c2"/>
+    <rect x="256" y="80" width="44" height="5" rx="2" class="a-ln"/><rect x="256" y="93" width="32" height="5" rx="2" class="a-ln"/>
+    <rect x="420" y="66" width="36" height="48" rx="6" class="a-c2"/><rect x="464" y="66" width="36" height="48" rx="6" class="a-c2"/>
+    <path d="M428 92 l6 6 l12 -14" class="a-ok"/><path d="M474 82 l16 16 M490 82 l-16 16" class="a-no"/>
+    <rect x="610" y="60" width="60" height="58" rx="8" class="a-c2"/>
+    <path d="M620 76 l5 5 l9 -10 M620 94 l5 5 l9 -10" class="a-ok"/><rect x="640" y="76" width="22" height="5" rx="2" class="a-ln"/><rect x="640" y="94" width="22" height="5" rx="2" class="a-ln"/>
+    <text x="100" y="172" text-anchor="middle" class="a-cap">read</text><text x="280" y="172" text-anchor="middle" class="a-cap">imitate</text><text x="460" y="172" text-anchor="middle" class="a-cap">prefer</text><text x="640" y="172" text-anchor="middle" class="a-cap">practise</text>`,
+
+  'beyond-autocomplete': `${ground}
+    <circle cx="400" cy="104" r="70" class="a-loop"/>
+    <path d="M462 72 l10 -4 l2 11" class="a-ar"/><path d="M338 136 l-10 4 l-2 -11" class="a-ar"/>
+    <rect x="360" y="12" width="80" height="44" rx="12" class="a-c2"/>${gear(400, 34, 11, 'a-b')}
+    <rect x="478" y="82" width="70" height="44" rx="10" class="a-c2"/><path d="M500 116 l18 -18 m-4 -6 a8 8 0 1 0 10 10" class="a-wr"/>
+    <rect x="360" y="152" width="80" height="40" rx="10" class="a-c2"/><rect x="374" y="164" width="40" height="5" rx="2" class="a-ln"/><rect x="374" y="176" width="52" height="5" rx="2" class="a-ln"/>
+    <rect x="252" y="82" width="70" height="44" rx="10" class="a-c2"/><path d="M272 104 l9 9 l18 -20" class="a-ok"/>
+    <text x="600" y="60" class="a-cap">model → tool</text><text x="600" y="80" class="a-cap">→ result → check</text><text x="600" y="100" class="a-cap">→ model again</text>
+    <text x="120" y="96" text-anchor="middle" class="a-cap">same frozen model,</text><text x="120" y="116" text-anchor="middle" class="a-cap">called again and again</text>`,
+
+  'strengths-and-limits': `${ground}
+    <rect x="90" y="40" width="250" height="130" rx="14" class="a-b" opacity=".85"/>
+    ${[0, 1, 2].map(i => `<g transform="translate(${150 + i * 70} 105)"><path d="M0 -18 V18 M-16 -9 L16 9 M-16 9 L16 -9" class="a-ice"/></g>`).join('')}
+    <text x="215" y="160" text-anchor="middle" class="a-cap a-on">weights: frozen</text>
+    <path d="M360 105 H440" class="a-gap"/>
+    <rect x="460" y="70" width="190" height="100" rx="12" class="a-t" opacity=".9"/>
+    <rect x="478" y="88" width="120" height="6" rx="3" class="a-bg"/><rect x="478" y="104" width="150" height="6" rx="3" class="a-bg"/><rect x="478" y="120" width="96" height="6" rx="3" class="a-r"/>
+    <text x="555" y="160" text-anchor="middle" class="a-cap a-on">context: temporary</text>
+    <path d="M690 150 l26 -46 l26 46 z" class="a-y"/><rect x="713" y="120" width="6" height="16" rx="2" class="a-onY"/><circle cx="716" cy="142" r="3.5" class="a-onY"/>`,
+
+  'around-the-model': `${ground}
+    ${belt(40, 760, 170)}
+    <rect x="70" y="40" width="190" height="126" rx="16" class="a-b" opacity=".9"/>${gear(120, 40, 18, 'a-c2')}<text x="165" y="110" text-anchor="middle" class="a-cap a-on">frontier model</text>
+    <rect x="300" y="96" width="90" height="70" rx="12" class="a-t" opacity=".9"/><text x="345" y="136" text-anchor="middle" class="a-cap a-on">small</text>
+    <rect x="440" y="60" width="16" height="106" rx="6" class="a-c3"/><rect x="456" y="96" width="70" height="10" rx="5" class="a-y"/>
+    <circle cx="448" cy="50" r="7" class="a-ok-f"/><circle cx="470" cy="50" r="7" class="a-y"/><circle cx="492" cy="50" r="7" class="a-r"/>
+    <text x="482" y="140" text-anchor="middle" class="a-cap">decision gate</text>
+    <rect x="580" y="70" width="160" height="96" rx="14" class="a-c2"/><text x="660" y="128" text-anchor="middle" class="a-mono a-big">{ code }</text>
+    <text x="660" y="60" text-anchor="middle" class="a-cap">harness</text>`,
+
+  frontier: `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="a-sky1"/><stop offset="1" class="a-sky2"/></linearGradient></defs>
+    <rect x="0" y="0" width="800" height="120" fill="url(#sky)"/>
+    <circle cx="400" cy="120" r="46" class="a-y" opacity=".9"/>
+    <rect x="0" y="118" width="800" height="102" class="a-s1"/>
+    <path d="M370 220 C 380 170 330 150 180 122" class="a-road"/><path d="M400 220 C 400 170 400 150 400 122" class="a-road"/><path d="M430 220 C 420 170 470 150 620 122" class="a-road"/>
+    <path d="M370 220 C 380 170 330 150 180 122 M400 220 C 400 170 400 150 400 122 M430 220 C 420 170 470 150 620 122" class="a-dash"/>
+    <rect x="150" y="96" width="92" height="22" rx="5" class="a-c2"/><text x="196" y="112" text-anchor="middle" class="a-cap">memory</text>
+    <rect x="356" y="68" width="88" height="22" rx="5" class="a-c2"/><text x="400" y="84" text-anchor="middle" class="a-cap">speed</text>
+    <rect x="566" y="96" width="112" height="22" rx="5" class="a-c2"/><text x="622" y="112" text-anchor="middle" class="a-cap">world models</text>`,
+};
+const svg = art[name];
+---
+{svg && <figure class="art" aria-hidden="true"><svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet" set:html={svg} /></figure>}

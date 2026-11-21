@@ -80,13 +80,6 @@ button,input,select{font:inherit}
 .bar.off{opacity:.35}
 .bar.cnt{grid-template-columns:7.2em minmax(0,1fr) 4.2em 2.6em}
 /* route */
-.route{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-.route .in{max-width:1240px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px max(5vw,16px);align-items:center}
-.route a{flex:none;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;color:var(--ink);text-decoration:none;font-size:14.5px;border:1px solid transparent;white-space:nowrap}
-.route a:hover{border-color:var(--line)}
-.route a::before{content:"";width:10px;height:10px;border-radius:50%;border:2px solid var(--t)}
-.route a.done::before{background:var(--t)}
-.route .pg{flex:none;margin-left:auto;font-size:13.5px;color:var(--mut);white-space:nowrap;padding-left:10px}
 /* figures */
 .fig{position:relative;min-height:300px}
 .fig>svg{position:absolute;inset:0;width:100%;height:100%}
@@ -345,3 +338,43 @@ details.eng{border-color:#999}
 .home-hero .htop{display:block}
 }
 @page{margin:16mm 16mm 18mm}
+/* ---------- chapter illustrations ---------- */
+.art{margin:0 0 22px;border-radius:18px;overflow:hidden;background:var(--s2);border:1px solid var(--line)}
+.art svg{display:block;width:100%;height:auto}
+.a-bg{fill:var(--s2)}.a-s1{fill:var(--s1)}.a-s2{fill:var(--chip)}.a-c2{fill:var(--chip2)}.a-c3{fill:var(--chip3)}
+.a-b{fill:var(--b)}.a-t{fill:var(--t)}.a-y{fill:var(--y)}.a-r{fill:var(--r)}.a-ink{fill:var(--ink)}.a-onY{fill:var(--onY)}
+.a-hi{fill:#fff;opacity:.16}
+.a-ln{fill:var(--mut);opacity:.6}
+.a-tx{font:600 14px "Red Hat Mono",monospace;fill:var(--ink)}
+.a-y + .a-hi + .a-tx,.a-t + .a-hi + .a-tx,.a-b + .a-hi + .a-tx,.a-r + .a-hi + .a-tx{fill:var(--onY)}
+.a-cap{font:600 14px "Red Hat Text",sans-serif;fill:var(--mut)}
+.a-cap.a-on{fill:var(--oninv)}
+.a-mono{font:500 17px "Red Hat Mono",monospace;fill:var(--ink)}.a-big{font-size:22px}
+.a-arc{fill:none;stroke:var(--yt);stroke-linecap:round;opacity:.85}
+.a-ar,.a-wr{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.a-track{stroke:var(--line);stroke-width:8;stroke-linecap:round}
+.a-loop{fill:none;stroke:var(--line);stroke-width:10;stroke-dasharray:2 16;stroke-linecap:round}
+.a-ok{fill:none;stroke:var(--t);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.a-ok-f{fill:var(--t)}
+.a-no{fill:none;stroke:var(--r);stroke-width:4;stroke-linecap:round}
+.a-ice{fill:none;stroke:var(--oninv);stroke-width:3;stroke-linecap:round;opacity:.8}
+.a-gap{stroke:var(--r);stroke-width:4;stroke-dasharray:6 8;stroke-linecap:round}
+.a-road{fill:none;stroke:var(--chip3);stroke-width:26;stroke-linecap:round}
+.a-dash{fill:none;stroke:var(--y);stroke-width:3;stroke-dasharray:10 12}
+.a-sky1{stop-color:var(--s2)}.a-sky2{stop-color:color-mix(in srgb,var(--y) 25%,var(--s2))}
+
+/* ---------- journey route ---------- */
+.route{list-style:none;margin:22px 0 6px;padding:4px 0 8px;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(92px,1fr);overflow-x:auto;counter-reset:none}
+.route li{position:relative;text-align:center}
+.route li:not(:last-child)::after{content:"";position:absolute;top:22px;left:50%;width:100%;height:6px;border-radius:3px;background:var(--line);z-index:0}
+.route li.done:not(:last-child)::after{background:var(--t)}
+.route a{position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:var(--mut);padding:0 4px;font-size:13.5px;line-height:1.25}
+.route .st{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--s1);border:3px solid var(--line);font:800 18px "Red Hat Display",system-ui,sans-serif;color:var(--ink);transition:transform .2s}
+.route a:hover .st{transform:scale(1.08);border-color:var(--t)}
+.route a:hover .lb{color:var(--ink)}
+.route li.done .st{background:var(--t);border-color:var(--t);color:var(--oninv)}
+.route li.next .st{border-color:var(--y);box-shadow:0 0 0 4px color-mix(in srgb,var(--y) 30%,transparent)}
+.route .lb{max-width:11ch;text-wrap:balance}
+.route li.next .lb{color:var(--ink);font-weight:700}
+@media(prefers-reduced-motion:reduce){.route .st{transition:none}}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.continue{margin:6px 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}

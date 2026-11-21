@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ChapterArt from '../../components/ChapterArt.astro';
 
 export async function getStaticPaths() {
   const all = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
@@ -16,6 +17,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
     {all.map(c => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}
   </div></nav>
   <article class="band"><div class="chapter">
+    <ChapterArt name={entry.id} />
     <header class="chapter-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
       <div class="kicker">Chapter {entry.data.order} of {all.length - 1}{entry.data.order === 0 ? ' · start here' : ''}</div>
       <h1>{entry.data.title}</h1>

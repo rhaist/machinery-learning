@@ -30,6 +30,12 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
   <section class="band alt"><div class="wrap">
     <h2>{site.parts[0].title}</h2>
     <p class="mut">{site.parts[0].summary} Start at zero if you're new; jump around if you're not.</p>
+    <ol class="route" aria-label="Your route through the chapters">
+      {chapters.map(c => (
+        <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`}><span class="st">{c.data.order}</span><span class="lb">{c.data.short}</span></a></li>
+      ))}
+    </ol>
+    <p class="continue" id="continue" hidden><a class="btn pri" href="#">Continue</a> <span class="small" id="continue-note"></span></p>
     <div class="journey">
       {chapters.map(c => (
         <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>

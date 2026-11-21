@@ -76,6 +76,19 @@ const done = new Set(store.get('lfg-done', []));
 function markDone() {
   if (page && quizzes.length && quizzes.every((_, i) => solved.has(i))) { done.add(page); store.set('lfg-done', [...done]); }
   $$('[data-chapter-link]').forEach(a => a.classList.toggle('done', done.has(a.dataset.chapterLink)));
+  // route: mark the next unfinished station and offer a continue link once someone has started
+  const stations = $$('.route li');
+  stations.forEach(li => li.classList.remove('next'));
+  const next = stations.find(li => !done.has(li.dataset.chapterLink));
+  if (next) next.classList.add('next');
+  const cont = $('#continue');
+  if (cont && done.size && next) {
+    const link = next.querySelector('a');
+    cont.hidden = false;
+    cont.querySelector('a').href = link.href;
+    cont.querySelector('a').textContent = `Continue: ${link.querySelector('.lb').textContent}`;
+    $('#continue-note').textContent = `${done.size} of ${stations.length} chapters done`;
+  }
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');
