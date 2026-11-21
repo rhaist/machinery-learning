@@ -97,7 +97,7 @@ const TR=[
 ];
 let ti=0;
 $('#tr').innerHTML=TR.map((t,i)=>`<button class="btn" type="button" data-i="${i}" aria-pressed="false">${t.n}</button>`).join('');
-function tr(){const t=TR[ti];$$('#tr button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===ti)));$('#trp').innerHTML=`<h3 style="margin-top:0">${t.n}</h3><dl><dt>Data</dt><dd>${t.d}</dd><dt>Objective</dt><dd>${t.o}</dd><dt>What it teaches</dt><dd>${t.t}</dd><dt>Think of it as</dt><dd>${t.a}</dd></dl><pre>${esc(t.x)}</pre>`}
+function tr(){const t=TR[ti];$$('#tr button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===ti)));$('#trp').innerHTML=`<p class="trp-h">${t.n}</p><dl><dt>Data</dt><dd>${t.d}</dd><dt>Objective</dt><dd>${t.o}</dd><dt>What it teaches</dt><dd>${t.t}</dd><dt>Think of it as</dt><dd>${t.a}</dd></dl><pre>${esc(t.x)}</pre>`}
 $('#tr').addEventListener('click',e=>{const b=e.target.closest('button');if(b){ti=+b.dataset.i;tr()}});
 tr();
 }
@@ -153,7 +153,7 @@ gate();
 
 if (document.querySelector('#mx')) {
 const MX=[["Hybrid / linear attention",[2,1,0,0,0]],["Diffusion LMs",[0,2,0,1,0]],["Test-time training",[2,0,2,0,0]],["Latent reasoning / recursion",[0,1,0,2,0]],["World models / JEPA",[0,0,1,1,2]]];
-const dot=v=>v===2?'<span class="dot" aria-label="main target"></span>':v===1?'<span class="dot p" aria-label="side benefit"></span>':'<span class="mut" aria-label="no">–</span>';
+const dot=v=>v===2?'<span class="dot" role="img" aria-label="main target"></span>':v===1?'<span class="dot p" role="img" aria-label="side benefit"></span>':'<span class="mut" role="img" aria-label="not a target">–</span>';
 $('#mx').innerHTML=MX.map(r=>`<tr><td><b>${r[0]}</b></td>${r[1].map(v=>`<td>${dot(v)}</td>`).join('')}</tr>`).join('');
 
 }

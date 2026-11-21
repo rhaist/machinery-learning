@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 const { n } = Astro.props;
 const { Content } = await render(n);
 ---
-<Base title={n.data.title} description={n.data.summary} nav="notes">
+<Base title={n.data.title} description={n.data.summary} nav="notes" og={`notes-${n.id}`}>
   <article class="band"><div class="chapter">
     <header class="chapter-head"><div class="kicker">Field notes · {monthLabel(n.data.month)}</div><h1>{n.data.title}</h1><p class="lede" style="margin-top:14px">{n.data.summary}</p></header>
     <div class="prose"><Content /></div>

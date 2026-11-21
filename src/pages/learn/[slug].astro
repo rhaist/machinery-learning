@@ -12,7 +12,7 @@ const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 ---
-<Base title={entry.data.title} description={entry.data.summary} chapter={entry.id} nav="learn">
+<Base title={entry.data.title} description={entry.data.summary} chapter={entry.id} nav="learn" og={`learn-${entry.id}`}>
   <nav slot="top" class="chbar" aria-label="Chapters"><div class="in">
     {all.map(c => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}
   </div></nav>
