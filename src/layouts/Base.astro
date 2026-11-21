@@ -42,9 +42,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <header class="site-head"><div class="in">
     <a class="brand" href={`${base}/`}><i></i>{site.name}</a>
     <nav class="site-nav" aria-label="Main">{links.map(([k, label, href]) => <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>)}</nav>
-    <button type="button" class="theme-btn" id="theme-btn" aria-label="Colour theme: follows your system" title="Colour theme"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><span class="theme-label">Auto</span></button>
     <button type="button" class="menu-btn" data-sheet-open aria-haspopup="dialog" aria-controls="sheet"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg><span>Menu</span></button>
-    <div class="depth"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
   </div>{cur && <div class="read-progress" aria-hidden="true"><i></i></div>}</header>
   <slot name="top" />
   <main><slot /></main>
@@ -78,7 +76,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
       </section>
       <section class="sheet-sec" id="sheet-settings" aria-label="Settings">
         <p class="label">Settings</p>
-        <div class="sheet-set"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
+        <div class="sheet-set"><span>Engineer boxes</span><div class="seg2" role="group" aria-label="Engineer boxes by default"><button type="button" data-depth-btn="beginner" aria-pressed="true">Closed</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Open</button></div></div>
         <div class="sheet-set"><span>Text size</span><div class="seg2" role="group" aria-label="Text size"><button type="button" data-size-btn="s" aria-pressed="false" aria-label="Small text">A−</button><button type="button" data-size-btn="m" aria-pressed="true" aria-label="Medium text">A</button><button type="button" data-size-btn="l" aria-pressed="false" aria-label="Large text">A+</button></div></div>
         <div class="sheet-set"><span>Theme</span><div class="seg2" role="group" aria-label="Colour theme"><button type="button" data-theme-set="auto" aria-pressed="true">Auto</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div></div>
       </section>

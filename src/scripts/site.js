@@ -1,4 +1,4 @@
-// Site-level behaviour: reading path, theme, reader (progress, resume, sheet), freshness, "new since last visit", quizzes, glossary search, radar.
+// Site-level behaviour: Engineer-box default, theme, reader (progress, resume, sheet), freshness, "new since last visit", quizzes, glossary search, radar.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -7,7 +7,7 @@ const store = {
 const today = new Date();
 const iso = d => d.toISOString().slice(0, 10);
 
-/* ---------- reading path: beginner | engineer ---------- */
+/* ---------- Engineer boxes: closed (default) | open. Stored as lfg-depth = beginner | engineer for continuity. ---------- */
 function applyDepth(depth, initial) {
   document.documentElement.dataset.depth = depth;
   $$('[data-depth-btn]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.depthBtn === depth)));
@@ -21,21 +21,13 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- colour theme: auto (system) -> light -> dark ---------- */
-const THEMES = ['auto', 'light', 'dark'];
 function applyTheme(t) {
   if (t === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
-  const b = $('#theme-btn');
-  if (b) { b.querySelector('.theme-label').textContent = t[0].toUpperCase() + t.slice(1); b.setAttribute('aria-label', t === 'auto' ? 'Colour theme: follows your system' : `Colour theme: ${t}`); }
   $$('[data-theme-set]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.themeSet === t)));
   // redraw canvases/SVGs that read colours at draw time
   window.dispatchEvent(new Event('resize'));
 }
 applyTheme(store.get('lfg-theme', 'auto'));
-const themeBtn = $('#theme-btn');
-if (themeBtn) themeBtn.addEventListener('click', () => {
-  const next = THEMES[(THEMES.indexOf(store.get('lfg-theme', 'auto')) + 1) % THEMES.length];
-  store.set('lfg-theme', next); applyTheme(next);
-});
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-theme-set]'); if (!b) return;
@@ -134,6 +126,10 @@ function markDone() {
     cont.querySelector('a').textContent = `Continue: ${link.querySelector('.lb').textContent}`;
     $('#continue-note').textContent = `${[...done].filter(d => stations.some(li => li.dataset.chapterLink === d)).length} of ${stations.length} chapters done`;
   }
+  // home hero: once someone has started, the main action continues where they are
+  const start = $('#hero-start'), all = $$('.route li');
+  const nextAll = all.find(li => !done.has(li.dataset.chapterLink));
+  if (start && done.size && nextAll) { start.href = nextAll.querySelector('a').href; start.textContent = `Continue: ${nextAll.querySelector('.lb').textContent}`; }
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');

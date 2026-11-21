@@ -17,9 +17,9 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
       <div class="hero-copy">
         <p class="kicker">{monthLabel(String(edition.month))} edition · {edition.subtitle}</p>
         <h1>How AI like ChatGPT actually works, explained as it changes</h1>
-        <div class="paths" role="group" aria-label="Choose your reading path">
-          <button type="button" data-depth-btn="beginner" aria-pressed="true">I'm new to this<small>Plain language, everyday analogies</small></button>
-          <button type="button" data-depth-btn="engineer" aria-pressed="false">I'm an engineer<small>Same chapters, technical depth open</small></button>
+        <div class="hero-cta">
+          <div class="row"><a class="btn pri" id="hero-start" href={`${base}/learn/start-here/`}>Start reading</a><a class="btn" href={`${base}/learn/prompt-injection/`}>Part 2: Trust &amp; security</a></div>
+          <p class="caption">Plain language first. Technical depth folds open in Engineer boxes, wherever you want it.</p>
         </div>
       </div>
       <p class="lede">An interactive guide for people who use AI tools every day and want to know what is really going on inside them. Every diagram is live. Every fast-moving fact shows when it was last checked, and the guide is updated each month as the field moves.</p>

@@ -108,7 +108,7 @@ Chapters read like a book on phones and tablets. This is how chapters behave, no
 
 - **Compact header** (≤900px): wordmark and a Menu button in one row. It slides away while you scroll down and returns when you scroll up, near the top and near the end. A 2px amber progress line sits on its bottom edge on chapter pages, at every width.
 - **Reader bar** (≤900px or touch screens, chapter pages only): Contents · chapter number and minutes left · Aa · Next (the one amber action). `--bar-h` tall plus the device's safe area; it hides and returns with the header.
-- **Sheet**: one dialog for everything that left the header. A bottom sheet on phones, a full-height side panel from 601px. Order on chapter pages: this chapter's sections (current one marked, read ones in ink), all chapters by part with done state, guide links, settings (reading path, text size, theme). On other pages, guide links come first.
+- **Sheet**: one dialog for everything that left the header. A bottom sheet on phones, a full-height side panel from 601px. Order on chapter pages: this chapter's sections (current one marked, read ones in ink), all chapters by part with done state, guide links, settings (Engineer boxes closed or open, text size, theme). On other pages, guide links come first.
 - **Progress and resume**: progress is measured through the chapter text. Reaching the end marks the chapter done and shows "Chapter complete" above the pager. The position is remembered per chapter; on return a toast *offers* to continue. Never jump without asking.
 - **Text size**: S/M/L adjusts `--fs-base`, `--fs-md` and `--fs-lg` only, so every proportion holds.
 - **Keyboard**: ← and → move between chapters, except while a control, a scrolling demo or the sheet has focus. Esc closes the sheet.
