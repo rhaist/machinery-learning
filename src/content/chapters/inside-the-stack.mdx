@@ -15,12 +15,12 @@ import BlockDiagram from '../../components/BlockDiagram.astro';
 import MoE from '../../components/MoE.astro';
 import Debate from '../../components/Debate.astro';
 
-A model is not one clever step. It is the same two-part step (a *layer*) stacked dozens of times, 30 to over 120 layers in today's large models:
+A model is one two-part step (a *layer*) stacked dozens of times, 30 to over 120 layers in today's large models:
 
 - **Look around** (attention, the previous chapter): each word gathers context from earlier words.
 - **Think** (engineers call this the MLP or feed-forward layer): each word, on its own, works through what it now knows. Much of the model's stored knowledge seems to live here.
 
-Each layer refines the understanding a little further. Researchers have found that, roughly speaking, early layers sort out words and grammar, middle layers work with ideas and relationships ("this is a bug report", "the user is frustrated"), and late layers turn all of that into a concrete guess about the next piece of text. At the very end, the model produces a score for every possible next token.
+Each layer refines the understanding a little further. Interpretability studies suggest that, roughly, early layers sort out words and grammar, middle layers work with ideas and relationships ("this is a bug report", "the user is frustrated"), and late layers turn all of that into a concrete guess about the next piece of text. At the very end, the model produces a score for every possible next token.
 
 <BlockDiagram />
 
@@ -28,7 +28,7 @@ Each layer refines the understanding a little further. Researchers have found th
 
 The <Term k="params">parameters</Term> are the model's dials: the numbers inside all those layers that training adjusted, one tiny nudge at a time. "A 70B model" has 70 billion of them. They encode everything the model learned. The training data stops at some date, and the dials don't change afterwards. That's why models have a knowledge cutoff.
 
-## The trick that keeps giant models affordable
+## Mixture of experts: running only part of the model
 
 Bigger models know more, but running every dial for every word is expensive. So most leading open-weight models, and at least some closed ones such as Google's Gemini, now use a <Term k="moe">Mixture of Experts</Term>: the "think" part is split into dozens or hundreds of specialists, and a small router picks a handful of them for each word, so only about 5% of the model works on any one word. <Claim id="deepseek-moe" cap />.
 
@@ -50,4 +50,4 @@ Each token's vector travels down the <Term k="residual">residual stream</Term>: 
 
 <Debate id="interpretability-localise" />
 
-<Quiz q="A model has 671B parameters but only about 37B are “active”. What does that mean?" options={["Each word passes through a few specialist parts chosen by a router","Only 37B parameters were trained","The rest are compressed and unpacked on demand","It runs 18 copies of the model in parallel"]} answer={0} explain="That's Mixture of Experts. All parameters exist and were trained, but each word only goes through a small subset of them, so the compute per word is that of a much smaller model." />
+<Quiz q="A model has 671B parameters but only about 37B are 'active'. What does that mean?" options={["Each word passes through a few specialist parts chosen by a router","Only 37B parameters were trained","The rest are compressed and unpacked on demand","It runs 18 copies of the model in parallel"]} answer={0} explain="That's Mixture of Experts. All parameters exist and were trained, but each word only goes through a small subset of them, so the compute per word is that of a much smaller model." />

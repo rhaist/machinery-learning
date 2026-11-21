@@ -27,7 +27,7 @@ Imagine a new assistant who opens all your post and does whatever any letter say
 
 There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since. Today <Claim id="pi-owasp" />.
 
-Indirect injection is no longer a lab curiosity. Three real cases:
+Indirect injection has already hit shipping products:
 
 - **One email, no clicks.** <Claim id="echoleak" cap />. The attacker never needed the victim to open the message. Copilot found it while searching for context.
 - **"Summarise this page."** <Claim id="comet" cap />. The user only asked for a summary.
@@ -35,10 +35,10 @@ Indirect injection is no longer a lab curiosity. Three real cases:
 
 ## The lethal trifecta
 
-So is every AI assistant doomed? No. Injection only turns into theft when three things meet. <Claim id="trifecta" cap />.
+Injection only turns into theft when three things meet. <Claim id="trifecta" cap />.
 
 <Note title="The house-sitter" kind="key">
-Your house-sitter has your keys (private data), lets strangers push notes under the door (untrusted content), and has a phone (a way to send things out). Take away any one of the three and a nasty note can do far less harm. No keys: nothing to steal. No notes: no instructions. No phone: nowhere to send anything.
+Your house-sitter has your keys (private data), lets strangers push notes under the door (untrusted content), and has a phone (a way to send things out). Take away any one of the three and a nasty note can do far less harm: without keys there is nothing to steal, without notes nobody can slip in instructions, and without a phone there is nowhere to send anything.
 </Note>
 
 ## Try it: attack your own assistant
@@ -47,11 +47,11 @@ Switch the three legs on and off, pick an attack, and try the defences. Then giv
 
 <InjectionLab />
 
-Three things to notice. The keyword filter catches the blunt attack, even in white-on-white text, because hidden text is only hidden from *you*. It misses the polite paraphrase completely. Spotlighting helps a lot but never reaches zero, and a small chance per try adds up when the attacker can try again and again. Only removing a leg, or the data-flow rule, stops the attack every time.
+The keyword filter catches the blunt attack, even in white-on-white text, because hidden text is only hidden from *you*. It misses the polite paraphrase completely. Spotlighting helps a lot but never reaches zero, and a small chance per try adds up when the attacker can try again and again. Only removing a leg, or the data-flow rule, stops the attack every time.
 
 ## Why "just train it better" isn't the whole answer
 
-You might expect this to be solved by now. The people closest to it say it isn't. <Claim id="ncsc-confusable" cap />. In SQL injection, the classic web attack, the fix was to send commands and data down separate channels. Language models have only one channel.
+The people closest to the problem say it is not solved. <Claim id="ncsc-confusable" cap />. In SQL injection, the classic web attack, the fix was to send commands and data down separate channels. Language models have only one channel.
 
 The labs agree it's open. <Claim id="labs-unsolved" cap />. That 1% is real progress. But notice the "100 attempts": in security, a defence that fails one time in a hundred is a defence an attacker will get through eventually.
 

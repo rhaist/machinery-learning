@@ -21,7 +21,7 @@ Every response you have ever had from an AI, including a coding agent's multi-fi
 
 ## 1. To predict well, the model has to understand what it's predicting
 
-"Predict the next word" describes how the model was *trained*, not what happens inside it. To predict the next line of a proof, a stack trace or a detective story across trillions of examples, the cheapest strategy often seems to be to build internal pictures of what's going on: the state of the program, the structure of the argument, who the murderer probably is. How complete and reliable those pictures are is actively debated (see the box further down).
+"Predict the next word" describes how the model was *trained*, not what happens inside it. To predict the next line of a proof, a stack trace or a detective story across trillions of examples, the cheapest strategy is often to build internal pictures of what's going on: the state of the program, the structure of the argument, who the murderer probably is. How complete and reliable those pictures are is actively debated (see the box further down).
 
 <Note title="An everyday comparison">
 To finish someone else's sentences reliably, you have to understand what they're talking about. Do it for every topic ever written about, and you end up needing to understand a great deal.
@@ -39,7 +39,7 @@ A model straight out of the reading stage predicts what text would typically com
 
 ## 3. The tool loop turns one prediction into a process
 
-What you use in a coding tool isn't just a model. It's a loop around one. The model writes a request to use a tool ("read this file", "run the tests") and stops. Ordinary software, the <Term k="harness">harness</Term>, carries out the request and adds the result to the conversation. Then the same, unchanged model is asked again with everything so far. There's no agent "thinking" in the background between steps; all continuity lives in the text. Step through a typical session:
+A coding tool runs a loop around the model. The model writes a request to use a tool ("read this file", "run the tests") and stops. Ordinary software, the <Term k="harness">harness</Term>, carries out the request and adds the result to the conversation. Then the same, unchanged model is asked again with everything so far. There's no agent "thinking" in the background between steps; all continuity lives in the text. Step through a typical session:
 
 <AgentTrace />
 
@@ -49,16 +49,16 @@ Put the three together: a model that builds rich internal pictures in order to p
 
 ## When it feels like autocomplete again
 
-The illusion breaks in predictable ways, and each one traces back to a mechanism from this guide. Knowing the mechanism tells you what to do about it.
+The illusion breaks in predictable ways. Each one traces back to a mechanism from earlier chapters, and the mechanism tells you what to do about it.
 
 <AutocompleteTable />
 
 <Note title="Working with it, knowing all this" kind="key">
-**Give it a way to check its work:** tests, a type checker, a linter. That's the setting it was trained in. **Spend context deliberately:** the right files, an example to copy, the constraints. **Ask for a plan first** on anything non-trivial. **Keep sessions short and focused.** And **treat confidence as style, not evidence:** fluency is what the model is best at; correctness is what tests are for.
+Give it a way to check its work, such as tests, a type checker or a linter, because that is the setting it was trained in. Spend context on the right files, an example to copy and the constraints. On anything non-trivial, ask for a plan first, and keep sessions short and focused. Treat confidence as style: fluency is what the model is best at, and only tests tell you the code is correct.
 </Note>
 
 <Engineer title="Policies, scratchpads and the evidence from interpretability">
-**From estimator to policy.** Formally the output is always a distribution over the next token. After RL it is no longer an estimate of "what would a typical document say here" but a <Term k="policy">policy</Term>: a strategy optimised for outcomes whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed. They were optimised to be.
+**From estimator to policy.** Formally the output is always a distribution over the next token. After RL it is no longer an estimate of "what would a typical document say here" but a <Term k="policy">policy</Term>: a strategy optimised for outcomes whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed: they were optimised for outcomes.
 
 **Why reasoning tokens matter.** One forward pass has fixed depth (maybe a hundred layers), which caps the serial computation that can go into a single token. Writing an intermediate step makes it input for every later pass: the visible reasoning is a <Term k="scratchpad">scratchpad</Term> that buys as many sequential steps as needed. That's why "think step by step" worked, and why reasoning models are trained to do it at length. But the written reasoning is not a faithful transcript: in Anthropic's tests, Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%), and models exploiting reward hacks almost never said so. A multi-lab position paper argues reading the chain of thought is still a valuable, if fragile, safety tool.
 

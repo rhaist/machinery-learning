@@ -13,16 +13,19 @@ An interactive guide for people who use AI tools every day and want to understan
 - **Part 1: Language models.** Tokens, attention, training, generation, agents, limits and the research frontier. Ten chapters, each with a hands-on demo.
 - **Part 2: Trust & security.** Prompt injection, agent permissions, the AI supply chain, where your data goes, and how to judge AI claims. Five chapters with interactive labs.
 
-## What makes it different
+## How it stays honest
 
-- **It shows its age.** Every fact that can go out of date lives in a claims registry with its sources, the date it was last verified and a re-check interval. Overdue facts visibly fade on the page until someone re-verifies them. The full list is on the [Sources & freshness](https://machinerylearning.eu/sources/) page.
-- **It shows disagreement.** Where experts genuinely disagree, a chapter presents both sides, steelmanned, with named proponents and primary sources, plus what evidence would settle it.
-- **It changes every month.** A research run drafts an update as a pull request (re-verified claims, radar moves, field notes) and a human reviews every change before it is published. The [frontier radar](https://machinerylearning.eu/radar/) keeps its full history.
-- **It respects readers.** No cookies, no tracking, no third-party requests. Reading progress stays in your browser.
+Every fact that can go out of date lives in a claims registry with its sources, the date it was last verified and a re-check interval. Overdue facts fade on the page until someone re-verifies them. The full list is on the [Sources & freshness](https://machinerylearning.eu/sources/) page.
+
+Where experts disagree, the chapter presents both sides at their strongest, with named proponents, primary sources and the evidence that would settle the question.
+
+Each month a research run drafts an update as a pull request (re-verified claims, radar moves, field notes), and a human reviews every change before it is published. The [frontier radar](https://machinerylearning.eu/radar/) keeps its full history.
+
+The site sets no cookies, does no tracking and makes no third-party requests. Reading progress stays in your browser.
 
 ## Spotted an error?
 
-Please [open an issue](https://github.com/rhaist/machinery-learning/issues/new/choose). There are templates for factual errors, broken sources and suggestions. Corrections with a primary source are the most valuable contribution there is. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Please [open an issue](https://github.com/rhaist/machinery-learning/issues/new/choose). There are templates for factual errors, broken sources and suggestions. Corrections with a primary source help most. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Running it locally
 

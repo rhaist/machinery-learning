@@ -23,7 +23,7 @@ Typing into a free consumer chatbot is a bit like writing a postcard. The postal
 
 ## Consumer and business are different products
 
-The biggest difference isn't between providers. It's between free or personal plans and business ones. For example, <Claim id="openai-training-default" />. Anthropic made the choice explicit: <Claim id="anthropic-consumer" />. Google adds people to the loop: <Claim id="gemini-retention" />.
+The biggest difference is between free or personal plans and business ones, more than between providers. For example, <Claim id="openai-training-default" />. Anthropic made the choice explicit: <Claim id="anthropic-consumer" />. Google adds people to the loop: <Claim id="gemini-retention" />.
 
 Deletion isn't always the end either. <Claim id="nyt-hold" cap />. A <Term k="legalhold">legal hold</Term> overrides the provider's normal promise. Only setups that never store your text, such as <Term k="zdr">zero data retention</Term> or a local model, avoid that.
 
@@ -33,7 +33,7 @@ Deletion isn't always the end either. <Claim id="nyt-hold" cap />. A <Term k="le
 
 ## Can a model remember what it learned?
 
-Here's the subtler question. Even if nobody stores your chat, what about text that went *into* training? Models mostly learn patterns, but they also <Term k="memorization">memorise</Term> some rare or often-repeated text word for word, like a student who learned a few textbook pages by heart, phone numbers included.
+Even if nobody stores your chat, what about text that went *into* training? Models mostly learn patterns, but they also <Term k="memorization">memorise</Term> some rare or often-repeated text word for word, like a student who learned a few textbook pages by heart, phone numbers included.
 
 That memory can be pulled back out. <Claim id="extraction-chatgpt" cap />. Long copyrighted texts too: <Claim id="books-extraction" />. Practical rule: assume anything public on the web may be inside a model somewhere.
 
@@ -41,7 +41,7 @@ That memory can be pulled back out. <Claim id="extraction-chatgpt" cap />. Long 
 
 ## Memory and share links
 
-Two convenience features deserve their own warning. **Memory** lets an assistant keep facts about you across chats, which also makes injection persistent: <Claim id="spaiware" />. And **share links** are publishing: <Claim id="share-links" />.
+Two convenience features deserve their own warning. Memory lets an assistant keep facts about you across chats, which also makes injection persistent: <Claim id="spaiware" />. And share links are publishing: <Claim id="share-links" />.
 
 ## What EU law says
 
@@ -49,7 +49,7 @@ If you're in Europe, two sets of rules matter. GDPR already applies: the Europea
 
 ## Local isn't automatically safe
 
-Running a model yourself removes the provider from the picture. It doesn't remove risk, it moves it to you. <Claim id="ollama-exposed" cap />.
+Running a model yourself removes the provider from the picture. It moves the risk to you. <Claim id="ollama-exposed" cap />.
 
 <Note title="Everyday habits" kind="key">
 - Check your settings. Turn off "improve the model" if you don't want your chats used for training.
@@ -59,7 +59,7 @@ Running a model yourself removes the provider from the picture. It doesn't remov
 </Note>
 
 <Engineer title="Data governance for AI use">
-**Contract, don't hope.** Use business or API terms with no training, documented retention, zero data retention where needed and EU data residency where offered. Put these terms into your records of processing and DPIA. Track provider changes: retention and training defaults changed at several major providers in 2025–2026, so give these claims short re-check intervals.
+**Contracts.** Use business or API terms with no training, documented retention, zero data retention where needed and EU data residency where offered. Put these terms into your records of processing and DPIA. Track provider changes: retention and training defaults changed at several major providers in 2025–2026, so give these claims short re-check intervals.
 
 **Shadow AI.** Blocking consumer AI on company devices without offering an approved alternative mostly drives use onto personal phones. Provide the sanctioned tool first, then govern.
 

@@ -17,7 +17,7 @@ import Debate from '../../components/Debate.astro';
 
 Most research directions aim at one of the limits from the previous chapters. Grouped by the problem they try to solve:
 
-**"It can't learn after training."** *Test-time training* lets a model write what it reads into a small, changeable part of itself while it works, so knowledge isn't stuck between frozen weights and a temporary conversation. <Claim id="ttt-inplace" cap />, and <Claim id="ttt-e2e" />. Still research, but aimed at the biggest structural gap.
+**"It can't learn after training."** *Test-time training* lets a model write what it reads into a small, changeable part of itself while it works, so knowledge isn't stuck between frozen weights and a temporary conversation. <Claim id="ttt-inplace" cap />, and <Claim id="ttt-e2e" />. It is still research, aimed at the gap between the two memories.
 
 **"Long texts are slow and expensive."** *Hybrid models* replace most attention layers with layers that keep a fixed-size running summary, so they're cheaper on long texts but can forget exact details; a few full-attention layers stay for exact recall. These are already in some open models, and <Claim id="subquadratic-review" />.
 
@@ -25,7 +25,7 @@ Most research directions aim at one of the limits from the previous chapters. Gr
 
 <Diffusion />
 
-**"Thinking in words is inefficient."** *Latent reasoning* lets a model think in its internal numbers instead of writing out each step, or loop its own layers to think longer. More efficient, but we lose the readable chain of thought, one of the few windows we have into what a model is doing, and an imperfect one: models don't always write down what really drove their answer.
+**"Thinking in words is inefficient."** *Latent reasoning* lets a model think in its internal numbers instead of writing out each step, or loop its own layers to think longer. That is more efficient, but it gives up the readable chain of thought. The written chain is one of the few views into what a model is doing, though an imperfect one: models don't always write down what drove their answer.
 
 **"Language isn't the world."** *World models* learn how situations unfold, especially physical ones, by predicting in an abstract space rather than word by word. <Claim id="ami-labs" cap />; <Claim id="ami-product" />.
 
@@ -35,8 +35,8 @@ See where each direction stands this month, and how it moved, on the [frontier r
 
 ## Reading the frontier sceptically
 
-<Note title="A sceptical reading" kind="key">
-Most of the progress you've felt in the last two years came not from new architectures but from better training (especially practice with automatic checking) and from letting models think longer, on essentially the 2017 design (with many refinements, but the same core idea). "Transformers are about to be replaced" has been predicted every year since 2023. The likely near-term path is absorption: hybrid layers, test-time memory and diffusion-style decoding get folded into transformer-like systems rather than replacing them. The two bets that would truly change the picture, continual learning and world models, are also the least proven.
+<Note title="What has driven progress" kind="key">
+Most of the progress you've felt in the last two years came not from new architectures but from better training (especially practice with automatic checking) and from letting models think longer, on the 2017 design (with many refinements, but the same core idea). "Transformers are about to be replaced" has been predicted every year since 2023. The likely near-term path is absorption: hybrid layers, test-time memory and diffusion-style decoding get folded into transformer-like systems rather than replacing them. The two bets that would change the picture most, continual learning and world models, are also the least proven.
 </Note>
 
 <Debate id="imitation-dead-end" />

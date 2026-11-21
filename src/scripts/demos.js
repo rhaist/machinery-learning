@@ -197,7 +197,7 @@ const ST=[
  {w:'both',x:'● Bash(go test ./... -run TestParseHeader)\n  --- FAIL: expected "Host", got "Hos"',d:'Call 2. The whole transcript goes in again. Prompt caching means the unchanged prefix isn\'t recomputed, so each step is cheap and fast despite resending everything.',k:20.3,c:2},
  {w:'both',x:'● Read(parser.go)\n(thinking) line[:idx-1] drops the last character of the key.',d:'Call 3. The "insight" happens inside forward passes and in the reasoning tokens, which act as a scratchpad: every written step becomes input for the next.',k:23.1,c:3},
  {w:'model',x:'● Edit(parser.go)   line[:idx-1]  →  line[:idx]',d:'Call 4. Constrained decoding guarantees the Edit arguments are valid for the tool\'s schema. The model proposes the edit; the harness applies it, subject to your permission settings.',k:23.5,c:4},
- {w:'both',x:'● Bash(go test ./...)\n  ok   example.com/parser   0.31s',d:'Call 5. Act, observe, check against tests: this loop has exactly the shape of the RL environments these models were trained in. That\'s why giving the agent a way to verify matters so much.',k:23.9,c:5},
+ {w:'both',x:'● Bash(go test ./...)\n  ok   example.com/parser   0.31s',d:'Call 5. Act, observe, check against tests: this loop has the same shape as the RL environments these models were trained in, which is why giving the agent a way to verify its work matters.',k:23.9,c:5},
  {w:'model',x:'Fixed an off-by-one in ParseHeader that chopped the last\ncharacter off every header key.',d:'Call 6 ends with an end-of-turn token. Afterwards nothing persists except the transcript and the changed file. The next session starts from zero, unless instruction files or summaries bring knowledge back into context.',k:24.1,c:6}
 ];let sti=0;
 function stp(){const t=ST[sti];$('#st-who').textContent=WHO[t.w][0];$('#st-who').style.color=WHO[t.w][1];$('#st-n').textContent=`step ${sti+1} of ${ST.length}`;$('#st-x').textContent=t.x;$('#st-d').textContent=t.d;$('#st-m').style.width=(t.k/24.1*100).toFixed(1)+'%';$('#st-v').textContent=`${t.k}k · ${t.c} call${t.c===1?'':'s'}`;$('#st-prev').disabled=sti===0;$('#st-next').disabled=sti===ST.length-1}
@@ -269,7 +269,7 @@ function draw(){
  const v=$('#aq-verdict');
  if(sb){v.className='lab-verdict ok';v.innerHTML=`<b>${asks.length} prompts instead of ${Q.length}.</b> The key upload at step ${BAD+1} was stopped by the network rule before anyone had to notice it. The boundary held even if you, and the model, got it wrong.`}
  else if(st[BAD]==='y'){v.className='lab-verdict bad';v.innerHTML=`<b>Your SSH private key just left the machine.</b> Step ${BAD+1} sent <code>~/.ssh/id_rsa</code> to an unknown domain. It looked like every other line. Now tick "run it in a sandbox".`}
- else if(st[BAD]==='n'){v.className='lab-verdict ok';v.innerHTML=`<b>You caught it at step ${BAD+1}.</b> Well done. Would you still catch it on the fortieth prompt of a long Friday afternoon? Try the sandbox.`}
+ else if(st[BAD]==='n'){v.className='lab-verdict ok';v.innerHTML=`<b>You caught it at step ${BAD+1}.</b> Would you still catch it on the fortieth prompt of a long Friday afternoon? Try the sandbox.`}
  else v.className='lab-verdict',v.innerHTML='';
 }
 $('#aq-list').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;st[+b.dataset.i]=b.dataset.v;draw()});

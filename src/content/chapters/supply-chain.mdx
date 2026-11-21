@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import InstallRoulette from '../../components/InstallRoulette.astro';
 
-So far we've looked at attacks that reach the model while it's working. This chapter goes one step back: what if something was wrong with the ingredients? The code the AI told you to install, the model file you downloaded, the text the model was trained on, or the AI tool itself.
+The previous chapters covered attacks that reach the model while it's working. Other attacks happen earlier, in the ingredients: the code the AI told you to install, the model file you downloaded, the text the model was trained on, or the AI tool itself.
 
 <Note title="The recipe book that invents brand names">
 A recipe book sometimes names ingredients that don't exist: "use FreshCo baking powder". A con artist reads the book, opens a shop called FreshCo, and sells something nasty. Nobody hacked the book. The attacker just waited where its readers would go.
@@ -45,7 +45,7 @@ A pickle file is flat-pack furniture that assembles itself when you open the box
 
 The deepest ingredient is the training data. Models learn from huge scrapes of the web, and anyone can write to the web. <Term k="poisoning">Data poisoning</Term> plants text designed to teach a model something its makers didn't intend, such as a hidden trigger that changes its behaviour, a <Term k="backdoor">backdoor</Term>.
 
-You might assume an attacker would need to control a big share of the data. Recent work suggests otherwise. <Claim id="poison-250" cap />, a trigger that made the model produce gibberish. And getting text into a dataset is cheap: <Claim id="poison-cheap" />. Worse, once a backdoor is in, it can be hard to get out. <Claim id="sleeper-agents" cap />.
+Earlier work measured poisoning as a share of the training data, but the absolute number of documents turned out to matter: <Claim id="poison-250" />, a trigger that made the model produce gibberish. And getting text into a dataset is cheap: <Claim id="poison-cheap" />. Worse, once a backdoor is in, it can be hard to get out. <Claim id="sleeper-agents" cap />.
 
 <Debate id="data-poisoning-risk" />
 
@@ -71,4 +71,4 @@ Finally, AI tools are software with their own supply chains, and attackers have 
 **Crown jewels.** Treat AI gateways and AI command-line tools as high-value software. They aggregate API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands; note that its two published accounts disagree on the entry point, which is common in the first weeks of an incident.
 </Engineer>
 
-<Quiz q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. A predictable mistake is something an attacker can prepare for." />
+<Quiz q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. Attackers can register a name that keeps coming back." />

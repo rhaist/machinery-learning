@@ -79,7 +79,7 @@ debates:
         points:
           - The demonstrated backdoor was a narrow trigger that produced gibberish; more harmful behaviours have been harder to implant.
           - Attackers must survive data filtering and post-training, so curation and evaluation are the right investment.
-          - Counterweight from Sleeper Agents work: once a backdoor is in, today's safety training may not remove it.
+          - "The Sleeper Agents work points the other way: once a backdoor is in, today's safety training may not remove it."
         sources:
           - https://www.anthropic.com/research/small-samples-poison
           - https://arxiv.org/abs/2401.05566
@@ -246,7 +246,7 @@ debates:
           - But given many attempts, the base models solve more problems, so the training narrowed the model onto paths it could already find.
         sources:
           - https://arxiv.org/abs/2504.13837
-      - label: It finds genuinely new strategies
+      - label: It finds new strategies
         who: Liu, Diao, Choi, Kautz and colleagues (NVIDIA); DeepSeek
         points:
           - Long, stable practice found strategies the base model couldn't reach even with very many attempts.

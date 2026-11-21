@@ -2,7 +2,7 @@
 title: "Around the model: small models, decision models, harnesses"
 short: Around the model
 order: 8
-summary: Real AI products are teams, not one big brain. Who does what, and where the new decision models fit.
+summary: Most AI products combine several models with plain software. Who does what, and where the new decision models fit.
 minutes: 11
 updated: 2026-11-21
 ---
@@ -20,12 +20,12 @@ import Debate from '../../components/Debate.astro';
 When you use an AI product, you're rarely talking to one model. Behind the scenes there is often a small team, each member doing what it's best and cheapest at:
 
 <Note title="Like a hospital">
-The **senior doctor** (a large frontier model) handles the hard, open-ended cases. A **triage nurse** (a decision model) makes quick, narrow calls: urgent or not, which department. (A new and still-unproven nurse, so check its calls.) **Lab technicians** (small models) run routine jobs fast and cheaply. And the **hospital's procedures** (plain software, the harness) decide who is allowed to do what, and keep records.
+The senior doctor (a large frontier model) handles the hard, open-ended cases. A triage nurse (a decision model) makes quick, narrow calls: urgent or not, which department. This nurse is new and still unproven, so check its calls. Lab technicians (small models) run routine jobs fast and cheaply. And the hospital's procedures (plain software, the harness) decide who is allowed to do what, and keep records.
 </Note>
 
 - **Large frontier models** do the open-ended thinking: understanding the task, planning, writing code.
 - **<Term k="slm">Small language models</Term>** are the same kind of model made much smaller. They're fast, cheap, private when run on your own device, and can run on a laptop or phone, but they know less and are weaker at long reasoning. They're good for summarising, sorting and extracting.
-- **<Term k="decision">Decision models</Term>** don't write text at all. You ask a narrow question with fixed answers ("allow, ask a human, or block?") and get back a probability for each option, in tens to hundreds of milliseconds. In short, <Claim id="jev-release" />. AWS (Strands Decider) and Cloudflare (Clef) followed with open versions on 1 October.
+- **<Term k="decision">Decision models</Term>** don't write text at all. You ask a narrow question with fixed answers ("allow, ask a human, or block?") and get back a probability for each option, in tens to hundreds of milliseconds. The category is new: <Claim id="jev-release" />. AWS (Strands Decider) and Cloudflare (Clef) followed with open versions on 1 October.
 - **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here.
 
 Click through the steps of a typical agent loop to see who handles what:
@@ -43,7 +43,7 @@ A fast, confident number is not the same as a correct one. <Claim id="decision-i
 </Note>
 
 <Engineer title="Decision models as a category">
-A decision model is typically a pretrained transformer with the unembedding layer from the stack chapter replaced by a small scoring head, often with light fine-tuning of the body. Instead of scoring ~200k vocabulary tokens, the head scores *your* options in a single forward pass. Strands Decider uses a pointer head plus rank-16 LoRA on a Qwen3.5-2B torso; Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA; Laya uses a ModernBERT encoder with two added layers; Jev's design is not public. The idea isn't new: InstructGPT's reward model (2022) started from a language model with its final unembedding layer removed. The torso keeps everything it learned about language; the model just loses the ability to ramble. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.)
+A decision model is typically a pretrained transformer with the unembedding layer from the stack chapter replaced by a small scoring head, often with light fine-tuning of the body. Instead of scoring ~200k vocabulary tokens, the head scores *your* options in a single forward pass. Strands Decider uses a pointer head plus rank-16 LoRA on a Qwen3.5-2B torso; Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA; Laya uses a ModernBERT encoder with two added layers; Jev's design is not public. The idea isn't new: InstructGPT's reward model (2022) started from a language model with its final unembedding layer removed. The torso keeps everything it learned about language, but the model no longer writes text. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.)
 
 <DecisionHeads />
 

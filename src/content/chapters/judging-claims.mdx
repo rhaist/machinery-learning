@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import BaseRate from '../../components/BaseRate.astro';
 
-Every chapter in this part has quoted numbers: attack success rates, approval rates, percentages of invented packages. This last chapter is about how to read numbers like that, and the ones you'll meet in product launches, news stories and your own inbox. Most of it comes down to one question: *measured how, by whom, against what?*
+Part 2 has quoted plenty of numbers: attack success rates, approval rates, percentages of invented packages. You'll meet many more in product launches, news stories and your own inbox. Reading them well mostly comes down to one question: *measured how, by whom, against what?*
 
 <Note title="The student who saw the exam">
 A student who memorised last year's exam scores brilliantly on last year's exam. Give them fresh questions and you find out what they actually know. A lot of AI benchmarking is the same problem: models are trained on the internet, and the internet contains the tests.
@@ -23,7 +23,7 @@ A student who memorised last year's exam scores brilliantly on last year's exam.
 
 ## Benchmarks leak
 
-When test questions end up in training data, scores go up without ability going up. That's <Term k="contamination">contamination</Term>. <Claim id="gsm1k" cap />. It's not only small labs: <Claim id="swebench-retired" />. A benchmark where every top model scores about the same has also stopped telling you much, which is <Term k="saturation">saturation</Term>.
+When test questions end up in training data, scores go up without ability going up. That's <Term k="contamination">contamination</Term>. <Claim id="gsm1k" cap />. A leading coding benchmark had the same problem: <Claim id="swebench-retired" />. A benchmark where every top model scores about the same has also stopped telling you much, which is <Term k="saturation">saturation</Term>.
 
 Leaderboards where people vote between models have their own issues. <Claim id="leaderboard-illusion" cap />. A score describes the variant that was tested, under that board's conditions.
 
@@ -33,7 +33,7 @@ Even our own impressions can mislead us. <Claim id="metr-slower" cap />. And mod
 
 ## Try it: the AI-essay detector
 
-Detectors that claim to spot AI-written text are a perfect case study, because the maths catches people out. <Claim id="detectors-fail" cap />. Play with the sliders below, and watch the red squares.
+Detectors that claim to spot AI-written text show the problem clearly, because the maths catches people out. <Claim id="detectors-fail" cap />. Play with the sliders below, and watch the red squares.
 
 <BaseRate />
 
@@ -68,4 +68,4 @@ The most expensive AI claims are the ones made by a fake person. <Claim id="arup
 **Payment and identity controls.** Deepfake-resistant processes: out-of-band callbacks to known numbers, two-person approval for unusual transfers, no exceptions for urgency or seniority. These would have stopped the Arup fraud with no AI involved at all.
 </Engineer>
 
-<Quiz q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent. A small error rate on a big group adds up." />
+<Quiz q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent." />

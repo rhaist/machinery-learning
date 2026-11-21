@@ -25,7 +25,7 @@ Two families, both open-source and self-hosted: **Instrument Sans** (headings an
 | `--fs-lg` | 19px | Ledes, h3, card and panel titles |
 | `--fs-xl` | 22px | Small display: debate question, card numbers, quadrant heads |
 | `--fs-2xl` | 26–32px fluid | Every h2 |
-| `--fs-3xl` | 34–52px fluid | Every h1 (one per page) |
+| `--fs-3xl` | 38–64px fluid | Every h1 (one per page) |
 
 Line height: `--lh-tight` 1.1 for headings (h1 1.02), `--lh-snug` 1.35 for UI and compact lists, `--lh-body` 1.6 for reading text. Weights: 400 body, 500 h1/h2 and UI emphasis, 600 h3 and component titles. Nothing heavier: the large, light headings are part of the identity.
 
@@ -129,7 +129,7 @@ Share images (`src/lib/og.ts`) use the dark tokens, the grid, registration marks
 
 ## Writing in the interface
 
-Sentence case everywhere. Labels say what happens ("Check the registry", not "Submit"). Illustrative numbers are labelled as illustrative in a caption.
+Sentence case everywhere. No praise or chat wrappers in feedback text ("Well done!", "Great question"): say what happened. Labels say what happens ("Check the registry", not "Submit"). Illustrative numbers are labelled as illustrative in a caption.
 
 ## Checks
 

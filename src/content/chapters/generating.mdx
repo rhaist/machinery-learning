@@ -2,7 +2,7 @@
 title: Generating text, one token at a time
 short: Generating
 order: 4
-summary: A weighted dice roll, repeated. Why answers differ each time, what “temperature” does, and why thinking takes time.
+summary: A weighted dice roll, repeated. Why answers differ each time, what 'temperature' does, and why thinking takes time.
 minutes: 9
 updated: 2026-11-21
 ---
@@ -15,11 +15,11 @@ import Debate from '../../components/Debate.astro';
 
 At the end of the stack, the model has a score for every possible next token. Those scores become probabilities: "connection" 30%, "request" 22%, "traffic" 18%, and so on down to "banana" at almost nothing. Then one token is **picked at random, weighted by those probabilities**: a weighted dice roll. The chosen token is added to the text, and the whole process runs again for the next one.
 
-That's it. Every answer you have ever received from a chatbot was written this way, one piece at a time. It explains several things you've probably noticed:
+Every answer you have ever received from a chatbot was written this way, one piece at a time. That explains several things you've probably noticed:
 
-- **The same question gives different answers,** because the dice roll differs each time, and because providers update models and hidden instructions.
-- **Answers stream in word by word,** because that is literally how they are produced.
-- **Long answers take longer,** because every token needs another full pass (one trip through all the layers) through the model.
+- The same question gives different answers, because the dice roll differs each time, and because providers update models and hidden instructions.
+- Answers stream in word by word, because that is literally how they are produced.
+- Long answers take longer, because every token needs another full pass through all the layers.
 
 Two settings shape the dice roll. <Term k="temperature">Temperature</Term> makes the model more predictable (low) or more adventurous (high). <Term k="topp">Top-p</Term> throws away the many very unlikely options before rolling. Move the sliders, then sample a few hundred times:
 
@@ -29,8 +29,8 @@ Two settings shape the dice roll. <Term k="temperature">Temperature</Term> makes
 
 Newer <Term k="reasoning">reasoning models</Term> first write out a long draft, often hidden or summarised (working through the problem, checking themselves), and only then write the answer you see. Those thinking tokens are generated the same way, one at a time, which is why they take longer and cost more. In return, answers to hard problems usually get much better, though on some tasks longer thinking doesn't help or even hurts. This is called <Term k="ttc">test-time compute</Term>: paying for quality when the question is asked rather than when the model was trained.
 
-<Note title="Why “temperature 0” still isn't perfectly repeatable" kind="key">
-Even when the model always takes the most likely token, your request is processed together with other people's, and the size of that batch subtly changes the arithmetic. Occasionally that tips a close call the other way. Deterministic in theory, very nearly in practice.
+<Note title="Why 'temperature 0' still isn't perfectly repeatable" kind="key">
+Even when the model always takes the most likely token, your request is processed together with other people's, and the size of that batch subtly changes the arithmetic. Occasionally that tips a close call the other way.
 </Note>
 
 <Engineer title="Softmax, KV cache, pricing and decoding tricks">

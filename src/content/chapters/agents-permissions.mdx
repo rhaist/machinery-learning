@@ -15,9 +15,9 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import ApprovalQueue from '../../components/ApprovalQueue.astro';
 
-The last chapter ended on an uncomfortable conclusion: you can't fully stop a model from being fooled. This chapter is about the other half of the problem. If the model *is* fooled, what can it actually do?
+The last chapter ended on an uncomfortable conclusion: you can't fully stop a model from being fooled. The other half of the problem is what a fooled model can actually do.
 
-That depends entirely on what you handed it. An AI that can only read a page and write a summary can't do much harm. An agent with your email, your cloud account and a shell is a different thing.
+That depends entirely on what you handed it. An AI that can only read a page and write a summary can't do much harm. An agent with your email, your cloud account and a shell can do real damage.
 
 <Note title="The valet key">
 When you hand your car to a parking attendant, you give them a key that starts the engine but won't open the boot or the glovebox. AI agents should get valet keys, not your whole keyring.
@@ -29,7 +29,7 @@ Security people have a name for the problem: <Term k="agency">excessive agency</
 
 - **The code freeze that wasn't.** <Claim id="replit-db" cap />. Nothing in the system enforced the freeze. It was a sentence in a chat.
 - **The helpful support agent.** <Claim id="supabase-mcp" cap />. A human support worker would never have had those rights.
-- **The plug-in that added one line.** <Claim id="postmark-mcp" cap />. No clever AI trick at all, just a trusted-looking add-on.
+- **The plug-in that added one line.** <Claim id="postmark-mcp" cap />. It needed no AI trick, only a trusted-looking add-on.
 
 The common thread: the agent had more access than its job needed, and the only thing standing between it and disaster was its own judgement.
 
@@ -43,18 +43,18 @@ A coding agent is fixing a login bug. It asks before every action. One of these 
 
 <ApprovalQueue />
 
-If you caught it, well done. Most people don't, and the numbers back that up: <Claim id="approval-93" />. That's <Term k="approvalfatigue">approval fatigue</Term>, the same reflex that makes everyone click "accept" on the tenth cookie banner.
+Most people miss it, and the numbers show why: <Claim id="approval-93" />. That's <Term k="approvalfatigue">approval fatigue</Term>, the same reflex that makes everyone click "accept" on the tenth cookie banner.
 
-The sandbox round is the point of the demo. Instead of asking a tired human thirty questions, you draw a boundary once: this folder, this registry, nothing else. The agent works freely inside it, and the dangerous step fails whether or not anyone notices.
+The sandbox round shows the alternative. Instead of asking a tired human thirty questions, you draw a boundary once: this folder, this registry, nothing else. The agent works freely inside it, and the dangerous step fails whether or not anyone notices.
 
 <Debate id="approval-prompts" />
 
 ## Attackers use your agents too
 
-Agents on your laptop run with your permissions. That makes them useful to attackers who get code onto your machine some other way. <Claim id="s1ngularity" cap />. The "skip all permissions" flags exist for convenience. Malware likes them too.
+Agents on your laptop run with your permissions. That makes them useful to attackers who get code onto your machine some other way. <Claim id="s1ngularity" cap />. The "skip all permissions" flags exist for convenience, and malware uses them too.
 
 <Note title="Everyday habits" kind="key">
-- Connect only the apps an assistant really needs, and disconnect them when you're done.
+- Connect only the apps an assistant needs, and disconnect them when you're done.
 - Keep "ask before acting" on for anything that sends, buys, deletes or shares, and read the request when it comes.
 - Install AI plug-ins and connectors only from the vendor's own page, never from a look-alike package.
 - Never run an agent with "skip permissions" on your normal account.

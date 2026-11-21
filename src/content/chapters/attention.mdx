@@ -21,17 +21,17 @@ After the previous chapter, each word is a point on the map of meaning (strictly
 Picture a meeting where each person, before speaking, can only listen back to those who have already spoken, and pays most attention to the ones whose points matter for what they're about to say. Everyone does this at once, and many times over.
 </Note>
 
-**Click any word below** to see where it looks. Click "it" first.
+Click any word below to see where it looks. Click "it" first.
 
 <Attention />
 
-Notice the dashed words: a word can only look *backwards*. The model is trained never to look ahead, even in text it has already been given, because when it writes, the future really doesn't exist yet.
+Notice the dashed words: a word can only look *backwards*. The model is trained never to look ahead, even in text it has already been given, because when it writes, the future doesn't exist yet.
 
 ## Why this was the breakthrough
 
 Older language models read text strictly word by word and had to squeeze everything they'd read into a small running summary, so they forgot the beginning of long sentences. Attention lets every word reach back to *any* earlier word directly. Attention itself appeared in 2014, as an add-on to those older models. The 2017 paper that introduced the <Term k="transformer">transformer</Term>, the design behind almost every chatbot today, threw away the word-by-word reading entirely and kept only attention.
 
-There is a price, which comes back later: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
+This has a price that comes back in later chapters: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
 
 <Engineer title="Query, key, value: a soft hash-table lookup">
 Mechanically, attention is a differentiable key-value lookup, built from three matrix multiplications per token (<Term k="qkv">query, key, value</Term>):
@@ -51,4 +51,4 @@ The <Term k="causal">causal mask</Term> sets the scores for future positions to 
 
 <Debate id="full-attention-vs-hybrid" />
 
-<Quiz q="In “The server rejected the request because it was malformed”, what lets “it” pick up meaning from “request”?" options={["The tokenizer merges them","The rule that words can't look ahead","Attention: “it” looks back and weights “request” most heavily","A grammar rule stored somewhere in the model"]} answer={2} explain="Attention lets each word blend in information from the earlier words most relevant to it. For “it”, that is “request”. Under the hood, its query matches request's key, so request's value dominates the mix." />
+<Quiz q="In 'The server rejected the request because it was malformed', what lets 'it' pick up meaning from 'request'?" options={["The tokenizer merges them","The rule that words can't look ahead","Attention: 'it' looks back and weights 'request' most heavily","A grammar rule stored somewhere in the model"]} answer={2} explain="Attention lets each word blend in information from the earlier words most relevant to it. For 'it', that is 'request'. Under the hood, its query matches request's key, so request's value dominates the mix." />
