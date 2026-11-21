@@ -130,7 +130,7 @@ function markDone() {
   const summary = [note, `${finished} of ${ids.length} chapters done`].filter(Boolean).join(' · ');
   const start = $('#hero-start');
   if (start && li) { start.href = li.querySelector('a').href; start.textContent = `Continue: ${li.dataset.short}`; const meta = $('#hero-meta'); if (meta) meta.textContent = summary; }
-  // highlight where to go next (chapter 0 on a first visit); the key only matters once there is progress
+  // highlight where to go next (chapter 1 on a first visit); the key only matters once there is progress
   const t = target || (done.size ? null : ids[0]);
   stations.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
   const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';

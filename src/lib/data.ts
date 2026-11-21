@@ -54,7 +54,7 @@ export function byPart<T extends { id: string; data: { order: number; part: stri
   const sorted = [...chapters].sort((a, b) => a.data.order - b.data.order);
   return site.parts.map((p, pi) => {
     const list = sorted.filter(c => c.data.part === p.id);
-    return { ...p, index: pi + 1, chapters: list.map((c, i) => ({ c, num: pi === 0 ? i : i + 1 })) };
+    return { ...p, index: pi + 1, chapters: list.map((c, i) => ({ c, num: i + 1 })) };
   }).filter(p => p.chapters.length);
 }
 

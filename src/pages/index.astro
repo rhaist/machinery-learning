@@ -24,7 +24,7 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
         <p class="lede">Most of us use AI tools every day without knowing what happens between typing a question and getting an answer. This guide explains it from the ground up, in plain language, with diagrams you can try.</p>
         <div class="hero-cta">
           <a class="btn pri" id="hero-start" href={`${base}/learn/${first.id}/`}>Start reading</a>
-          <p class="hero-meta" id="hero-meta">Chapter 0 · {first.data.minutes} minutes · nothing to sign up for</p>
+          <p class="hero-meta" id="hero-meta">Chapter 1 · {first.data.minutes} minutes · nothing to sign up for</p>
         </div>
         {pi && <p class="hero-alt">Here for security? Start with <a href={`${base}/learn/${pi.id}/`}>prompt injection</a> ({pi.data.minutes} min, no earlier chapters needed).</p>}
       </div>
@@ -45,7 +45,7 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
   {parts.map((p, pi) => (
   <section class={`band ${pi % 2 ? '' : 'alt'}`}><div class="wrap">
     <div class="part-head"><h2>{p.title}</h2>
-    <p>{p.summary}{pi === 0 && " Start at zero if you're new; jump around if you're not."}</p></div>
+    <p>{p.summary}{pi === 0 && " New to this? Start with chapter 1; otherwise jump around."}</p></div>
     <div class="journey">
       {p.chapters.map(({ c, num }) => (
         <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>
