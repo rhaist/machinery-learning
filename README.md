@@ -8,7 +8,7 @@
 
 ![Machinery Learning](docs/preview.png)
 
-An interactive guide for people who use AI tools every day and want to understand what is going on inside them. It starts with large language models and is written for two kinds of reader at once: a plain-language core with everyday analogies, and *Engineer depth* boxes with the technical detail that fold open wherever you want it.
+Most of us use AI tools every day without knowing what happens between typing a question and getting an answer. This guide explains it from the ground up, for two kinds of reader at once: each chapter is written in plain language with everyday analogies, and boxes marked *Engineer* fold open with the technical detail.
 
 - **Part 1: Language models.** Tokens, attention, training, generation, agents, limits and the research frontier. Ten chapters, each with a hands-on demo.
 - **Part 2: Agents.** The agent loop; context, memory, plug-ins and sandboxes; what agents get done; how to tell when they fail. Four chapters.
