@@ -84,6 +84,8 @@ Everything inside the model only lowers the odds of a successful injection. The 
 
 **Treat model-chosen values as attacker input.** Microsoft's 2026 Semantic Kernel CVEs came from values chosen by the model reaching `eval()` and a file-write path. Validate them, allowlist them, and never evaluate them.
 
+**Where the research started.** The first systematic study of prompt injection was "Ignore Previous Prompt" ([Perez and Ribeiro, 2022](https://arxiv.org/abs/2211.09527)). Jailbreaks, which attack the model's own safety training rather than an application, have their own literature: why safety training fails ([Wei, Haghtalab and Steinhardt, 2023](https://arxiv.org/abs/2307.02483)) and automatically found attack suffixes that transfer between models ([Zou et al., 2023](https://arxiv.org/abs/2307.15043)).
+
 **Measure honestly.** Ask vendors for <Term k="adaptive">adaptive</Term> red-team results, not static benchmark <Term k="asr">attack success rates</Term>. Log prompts, tool calls and failed tool calls, and alert on unusual outbound traffic. The NCSC's <Term k="deputy">confused deputy</Term> framing is useful in security reviews.
 </Engineer>
 

@@ -37,13 +37,15 @@ Even when the model always takes the most likely token, your request is processe
 <Engineer title="Softmax, KV cache, pricing and decoding tricks">
 The model's raw output is a list of scores, the <Term k="logits">logits</Term>. <Term k="softmax">Softmax</Term> turns them into probabilities: divide each score by the temperature, raise e to that power, and divide by the total. A temperature below 1 stretches the gaps between scores, so the top choice dominates; above 1 it flattens them. <Term k="topp">Top-p</Term> then keeps the smallest set of top tokens whose probabilities add up to p, rescales them, and samples.
 
-**The KV cache.** Generating token 500 doesn't recompute tokens 1 to 499. Each token's keys and values, from every layer, are stored in the <Term k="kv">KV cache</Term>, so a new token only computes its own row and compares its query with the stored keys. Step through it with Llama 3 70B's sizes:
+**The KV cache.** Generating token 500 doesn't recompute tokens 1 to 499. Each token's keys and values, from every layer, are stored in the <Term k="kv">KV cache</Term>, so a new token only computes its own row and compares its query with the stored keys. Serving systems manage that memory in fixed-size pages, like an operating system's virtual memory, to fit more conversations on one GPU ([PagedAttention, Kwon et al., 2023](https://arxiv.org/abs/2309.06180)). Step through it with Llama 3 70B's sizes:
 
 <KvCache />
 
 **Why output costs more than input.** Reading your prompt, the <Term k="prefill">prefill</Term>, processes all its tokens in parallel, and the GPU spends its time calculating, which is what it is best at. Writing, the decode phase, produces one token per pass, and each pass has to stream all the weights from memory for that single token, so memory bandwidth is the limit. That is why output tokens cost several times more than input tokens, and why "time to first token" and "tokens per second" are separate numbers.
 
 **Prompt caching.** A coding agent resends the whole transcript at every step. Providers keep the KV cache of a recently seen prefix (<Term k="pcache">prompt caching</Term>), so the system prompt, the tools and earlier turns aren't recomputed, and cached input is billed at a fraction of the price. The cache only matches an identical prefix: change something early in the context and everything after it is recomputed.
+
+**Sampling more than once.** Asking for several answers and taking the most common one improves accuracy on reasoning tasks ([self-consistency, Wang et al., 2022](https://arxiv.org/abs/2203.11171)). Many "thinking harder" modes build on that idea.
 
 **Faster and stricter decoding.** In <Term k="specdec">speculative decoding</Term>, a small draft model guesses several tokens and the big model checks them all in one parallel pass; the output follows the same distribution as without it. In <Term k="constrained">constrained decoding</Term>, tokens that would break a JSON schema or grammar are masked out before sampling. That is how *strict* structured-output and tool modes guarantee valid JSON. Without strict mode, parsing usually works but isn't guaranteed.
 

@@ -1,0 +1,68 @@
+# Works an established researcher would expect this guide to know.
+# scripts/check-canon.mjs checks that every `cited` entry is linked somewhere in the
+# guide (chapters, notes, claims, figures, debates or reading list) and that every
+# `excluded` entry says why.
+#
+# How entries get here (see research/MONTHLY_UPDATE.md › Canon and recall):
+# popularity signals find candidates; research judgement decides.
+#   signals: citations (Semantic Scholar), best-paper and outstanding-paper awards
+#            (NeurIPS, ICML, ICLR, ACL), Hacker News discussion of papers and lab research
+#            posts, and the field's annual reviews (Stanford AI Index, State of AI Report)
+#   filter:  primary source; peer-reviewed, replicated or widely built upon; famous
+#            critiques kept next to famous results; hype, marketing and debunked work out
+#
+# status: cited | excluded
+
+canon:
+  # --- architecture and inference ---
+  - { id: "1706.03762", title: "Attention Is All You Need", signal: "the transformer paper", where: attention, status: cited }
+  - { id: "2205.14135", title: "FlashAttention", signal: "canonical; reviewed 2026-11", where: attention, status: cited }
+  - { id: "2309.17453", title: "Efficient Streaming Language Models with Attention Sinks", signal: "2.9k citations", where: attention, status: cited }
+  - { id: "2505.06708", title: "Gated Attention for Large Language Models", signal: "NeurIPS 2025 best paper", where: attention, status: cited }
+  - { id: "2309.06180", title: "PagedAttention (vLLM)", signal: "10k citations", where: generating, status: cited }
+  - { id: "2203.11171", title: "Self-Consistency Improves Chain of Thought Reasoning", signal: "8k citations", where: generating, status: cited }
+  - { id: "2202.05262", title: "Locating and Editing Factual Associations in GPT (ROME)", signal: "3.8k citations", where: inside-the-stack, status: cited }
+  - { id: "2401.04088", title: "Mixtral of Experts", signal: "HN 359; widely cited", where: inside-the-stack, status: cited }
+  - { id: "2312.00752", title: "Mamba", signal: "10k citations", where: frontier, status: cited }
+  - { id: "2310.16834", title: "Discrete Diffusion Modeling by Estimating the Ratios (SEDD)", signal: "ICML 2024 best paper", where: frontier, status: cited }
+  - { id: "2506.17298", title: "Mercury: Ultra-fast language models based on diffusion", signal: "HN 576; first commercial-scale diffusion LM", where: frontier, status: cited }
+  - { id: "2402.17764", title: "The Era of 1-bit LLMs", signal: "HN 1,040", where: around-the-model, status: cited }
+  # --- training ---
+  - { id: "2001.08361", title: "Scaling Laws for Neural Language Models", signal: "canonical", where: training, status: cited }
+  - { id: "2203.15556", title: "Training Compute-Optimal Large Language Models (Chinchilla)", signal: "NeurIPS 2022 outstanding paper", where: training, status: cited }
+  - { id: "2305.16264", title: "Scaling Data-Constrained Language Models", signal: "NeurIPS 2023 runner-up", where: training, status: cited }
+  - { id: "2206.07682", title: "Emergent Abilities of Large Language Models", signal: "canonical", where: training, status: cited }
+  - { id: "2304.15004", title: "Are Emergent Abilities of Large Language Models a Mirage?", signal: "NeurIPS 2023 outstanding paper", where: training, status: cited }
+  - { id: "2203.02155", title: "Training language models to follow instructions (InstructGPT)", signal: "canonical", where: training, status: cited }
+  - { id: "2212.08073", title: "Constitutional AI", signal: "canonical", where: training, status: cited }
+  - { id: "2305.18290", title: "Direct Preference Optimization", signal: "11.8k citations", where: training, status: cited }
+  - { id: "2305.20050", title: "Let's Verify Step by Step", signal: "5.6k citations", where: training, status: cited }
+  - { id: "2402.03300", title: "DeepSeekMath (GRPO)", signal: "11k citations", where: training, status: cited }
+  - { id: "2501.12948", title: "DeepSeek-R1", signal: "HN 1,351; 6.6k citations", where: training, status: cited }
+  - { id: "2305.17493", title: "The Curse of Recursion (model collapse)", signal: "Nature 2024", where: training, status: cited }
+  # --- reasoning and agents ---
+  - { id: "2201.11903", title: "Chain-of-Thought Prompting Elicits Reasoning", signal: "24k citations", where: beyond-autocomplete, status: cited }
+  - { id: "2205.11916", title: "Large Language Models are Zero-Shot Reasoners", signal: "8.6k citations", where: beyond-autocomplete, status: cited }
+  - { id: "2210.03629", title: "ReAct", signal: "14k citations", where: beyond-autocomplete, status: cited }
+  - { id: "2302.04761", title: "Toolformer", signal: "6.8k citations", where: beyond-autocomplete, status: cited }
+  - { id: "2410.21333", title: "Mind Your Step (by Step): Chain-of-Thought can Reduce Performance", signal: "HN 371", where: generating, status: cited }
+  # --- limits and evaluation ---
+  - { id: "2505.06120", title: "LLMs Get Lost in Multi-Turn Conversation", signal: "ICLR 2026 outstanding paper; HN 374", where: strengths-and-limits, status: cited }
+  - { id: "2507.21919", title: "Training language models to be warm and empathetic makes them less reliable", signal: "HN 358", where: strengths-and-limits, status: cited }
+  - { id: "2307.03172", title: "Lost in the Middle", signal: "canonical", where: strengths-and-limits, status: cited }
+  - { id: "2306.05685", title: "Judging LLM-as-a-judge with MT-Bench and Chatbot Arena", signal: "13.5k citations", where: judging-claims, status: cited }
+  - { id: "2310.06770", title: "SWE-bench", signal: "5k citations", where: judging-claims, status: cited }
+  - { id: "2412.14093", title: "Alignment faking in large language models", signal: "canonical safety result", where: judging-claims, status: cited }
+  # --- security ---
+  - { id: "2211.09527", title: "Ignore Previous Prompt", signal: "first systematic prompt-injection study", where: prompt-injection, status: cited }
+  - { id: "2302.12173", title: "Not what you've signed up for (indirect prompt injection)", signal: "canonical", where: prompt-injection, status: cited }
+  - { id: "2307.02483", title: "Jailbroken: How Does LLM Safety Training Fail?", signal: "security canon", where: prompt-injection, status: cited }
+  - { id: "2307.15043", title: "Universal and Transferable Adversarial Attacks on Aligned Language Models", signal: "security canon", where: prompt-injection, status: cited }
+  - { id: "2401.05566", title: "Sleeper Agents", signal: "canonical", where: supply-chain, status: cited }
+  - { id: "2311.17035", title: "Scalable Extraction of Training Data from (Production) Language Models", signal: "canonical", where: your-data, status: cited }
+  # --- considered and left out ---
+  - { id: "2403.06634", title: "Stealing Part of a Production Language Model", signal: "ICML 2024 best paper", status: excluded, reason: "Model theft protects the vendor, not the reader; no current chapter covers it. Candidate for a future security chapter." }
+  - { id: "2404.14219", title: "Phi-3 Technical Report", signal: "HN 411; 2.7k citations", status: excluded, reason: "Small models are sourced through Phi-4; the report adds no point the chapter makes." }
+  - { id: "2303.12712", title: "Sparks of Artificial General Intelligence", signal: "very widely discussed", status: excluded, reason: "Not peer reviewed, anecdotal method, widely criticised; the guide avoids AGI framing." }
+  - { id: "2506.08872", title: "Your Brain on ChatGPT (cognitive debt)", signal: "HN 391; heavy press coverage", status: excluded, reason: "Small sample (54 people), not peer reviewed when it spread; claims outrun the evidence." }
+  - { id: "2308.01516", title: "LK-99 superconductor preprints", signal: "most-upvoted arXiv links on HN since 2022", status: excluded, reason: "Not AI, and debunked: an example of why popularity alone never qualifies a source." }

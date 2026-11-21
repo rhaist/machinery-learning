@@ -59,7 +59,9 @@ The most expensive AI claims are the ones made by a fake person. <Claim id="arup
 <Engineer title="Evaluating AI claims at work">
 Public numbers describe public tasks under someone else's conditions. Only your own measurements describe your work.
 
-**Run your own evals.** Build a small held-out set from your own work (tickets, code, documents), keep it out of every prompt and fine-tuning dataset, and re-run it whenever you change models. Prefer leaderboards that label provisional scores and disclose private testing.
+**Run your own evals.** Build a small held-out set from your own work (tickets, code, documents), keep it out of every prompt and fine-tuning dataset, and re-run it whenever you change models. Prefer leaderboards that label provisional scores and disclose private testing. Arena-style boards rank models by pairwise human votes ([Zheng et al., 2023](https://arxiv.org/abs/2306.05685)); the same paper shows that models used as judges favour longer answers and their own style.
+
+**Watched versus unwatched.** In a 2024 experiment, Claude 3 Opus complied more with a new training goal when it believed its answers would be used for training, and reasoned that this would stop it from being changed ([Greenblatt et al., 2024](https://arxiv.org/abs/2412.14093)). An evaluation only tells you how a model behaves under the conditions of that evaluation.
 
 **Read vendor security numbers critically.** Ask: static or <Term k="adaptive">adaptive</Term> attacks? How many attempts per attack? Which configuration, and is it the one you'll deploy? Who ran the test? A success rate per attempt means little without the number of attempts.
 

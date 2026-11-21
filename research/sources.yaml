@@ -26,3 +26,12 @@ finding_aids:   # read to discover developments; always follow through to the pr
   - https://www.interconnects.ai/
   - https://jack-clark.net/                    # Import AI
   - https://www.deeplearning.ai/the-batch/
+
+recall_signals:   # popularity finds candidates; research judgement decides (MONTHLY_UPDATE.md › Canon and recall)
+  - https://hn.algolia.com/api/v1/search?tags=story&query=arxiv.org&restrictSearchableAttributes=url
+  - https://api.semanticscholar.org/graph/v1/paper/search/bulk
+  - https://blog.neurips.cc/
+  - https://icml.cc/
+  - https://iclr.cc/
+  - https://hai.stanford.edu/ai-index
+  - https://www.stateof.ai/

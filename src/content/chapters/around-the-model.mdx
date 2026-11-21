@@ -57,7 +57,7 @@ The current models differ in the details. Strands Decider puts a pointer head on
 
 **Harnesses and MCP.** <Claim id="strands-sdk" cap />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything first, acts on confident answers, and passes the uncertain rest to a bigger model.
 
-**Small models in practice.** They usually have 0.5 to 15 billion parameters, become capable through <Term k="distill">distillation</Term>, and run locally thanks to <Term k="quant">quantisation</Term>, which stores each weight in fewer bits. Typical jobs: summarising a 50k-token log before it reaches the expensive model, extraction, classification, and on-device features for data that must not leave the machine.
+**Small models in practice.** They usually have 0.5 to 15 billion parameters, become capable through <Term k="distill">distillation</Term>, and run locally thanks to <Term k="quant">quantisation</Term>, which stores each weight in fewer bits. Research models trained from the start with only three possible weight values push this furthest ([Ma et al., 2024](https://arxiv.org/abs/2402.17764)). Typical jobs: summarising a 50k-token log before it reaches the expensive model, extraction, classification, and on-device features for data that must not leave the machine.
 </Engineer>
 
 <Debate id="decision-models-trust" />

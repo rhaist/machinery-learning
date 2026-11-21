@@ -25,6 +25,8 @@ jobs:
         run: node scripts/check-claims.mjs --strict
       - name: Every number has a source, calculation or illustration label
         run: node scripts/check-figures.mjs
+      - name: Canonical works are cited or excluded with a reason
+        run: node scripts/check-canon.mjs
       - name: Design rules (DESIGN.md)
         run: node scripts/check-design.mjs
       - run: npm run build

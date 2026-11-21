@@ -67,7 +67,7 @@ Formally, the model's output is always a probability distribution over the next 
 
 <SerialDepth />
 
-That is why "think step by step" worked, and why reasoning models are trained to do it at length.
+That is why chain-of-thought prompting worked ([Wei et al., 2022](https://arxiv.org/abs/2201.11903)), why simply adding "Let's think step by step" helped ([Kojima et al., 2022](https://arxiv.org/abs/2205.11916)), and why reasoning models are trained to do it at length.
 
 **The written reasoning isn't a transcript.** In Anthropic's tests, Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%), and models exploiting reward hacks almost never said so. A paper from several labs argues that reading the chain of thought is still a valuable safety tool, but a fragile one.
 
@@ -75,7 +75,7 @@ That is why "think step by step" worked, and why reasoning models are trained to
 
 The counterweight: Vafa and colleagues (2024) show that models can pass world-model tests while their internal maps are incoherent. And the attribution-graph method captures only part of the computation.
 
-**The agent loop at token level.** Each step is a fresh call on the full transcript. A tool call is text in a fixed format that ends with a stop token. <Term k="constrained">Constrained decoding</Term> keeps the arguments valid, <Term k="pcache">prompt caching</Term> keeps resending cheap, and <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
+**The agent loop at token level.** The pattern of alternating reasoning with tool calls was named ReAct ([Yao et al., 2022](https://arxiv.org/abs/2210.03629)), and Toolformer showed that models can learn when to call a tool ([Schick et al., 2023](https://arxiv.org/abs/2302.04761)). Each step is a fresh call on the full transcript. A tool call is text in a fixed format that ends with a stop token. <Term k="constrained">Constrained decoding</Term> keeps the arguments valid, <Term k="pcache">prompt caching</Term> keeps resending cheap, and <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
 </Engineer>
 
 <Quiz q="A coding agent edits three files, runs the tests and iterates for ten minutes. What is the model doing at each step?" options={["Running a planning process that stays active in memory","Updating its knowledge after each test run","Being called again on the whole growing conversation, writing until it requests a tool or finishes","Executing the code inside its neural network"]} answer={2} explain="Each step is a fresh call of the same frozen model. The harness runs the tools and adds their output to the conversation; all continuity lives in that text. The loop works well because training rewarded exactly this act, observe, check cycle." />

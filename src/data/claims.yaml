@@ -580,7 +580,7 @@
 - id: swebench-retired
   text: "in February 2026 OpenAI stopped reporting the SWE-bench Verified coding benchmark: every frontier model it tested had seen some answers in training, and most audited failures had flawed tests"
   evidence: "we have stopped reporting SWE-bench Verified scores"
-  sources: [https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/]
+  sources: [https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/, https://arxiv.org/abs/2310.06770]
   verified: 2026-11-21
   half_life: 6
   status: shipping

@@ -1,4 +1,4 @@
-// Fetches every source URL in claims, figures, debates and the reading list.
+// Fetches every source URL in claims, figures, debates, the reading list and links in chapters and notes.
 // Fails on links that are gone (404, 410, DNS or TLS errors, 5xx after a retry).
 // 401/403/429 count as warnings: many publishers block automated requests.
 // Runs monthly in CI (.github/workflows/links.yml); not part of `npm run check`.
@@ -12,6 +12,7 @@ for (const c of y('claims.yaml')) (c.sources ?? []).forEach(u => add(u, 'claim:'
 for (const f of (y('figures.yaml')?.figures ?? [])) (f.sources ?? []).forEach(u => add(u, 'figure:' + f.page));
 for (const d of (y('debates.yaml')?.debates ?? [])) for (const s of d.sides ?? []) (s.sources ?? []).forEach(u => add(u, 'debate:' + d.id));
 for (const [ch, items] of Object.entries(y('reading.yaml') ?? {})) for (const r of items) add(r.url, 'reading:' + ch);
+for (const dir of ['src/content/chapters', 'src/content/notes']) for (const f of fs.readdirSync(dir)) for (const m of fs.readFileSync(`${dir}/${f}`, 'utf8').matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)) add(m[1], `${dir.split('/').pop()}:${f}`);
 
 const UA = 'Mozilla/5.0 (compatible; machinery-learning-linkcheck; +https://machinerylearning.eu/)';
 async function probe(u, tries = 2) {

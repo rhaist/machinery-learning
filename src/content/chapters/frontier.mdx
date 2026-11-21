@@ -46,9 +46,9 @@ Most of the progress you've felt in the last two years came not from new archite
 
 ● main target, ○ side benefit.
 
-**Cheaper long context.** <Term k="ssm">SSMs</Term> such as Mamba and <Term k="linear">linear attention</Term> such as Gated DeltaNet keep a fixed-size state instead of a growing cache, so their memory doesn't grow with the length of the text, but their recall is lossy. Hybrids place a few full-attention layers between them to keep exact recall.
+**Cheaper long context.** <Term k="ssm">SSMs</Term> such as Mamba ([Gu and Dao, 2023](https://arxiv.org/abs/2312.00752)) and <Term k="linear">linear attention</Term> such as Gated DeltaNet keep a fixed-size state instead of a growing cache, so their memory doesn't grow with the length of the text, but their recall is lossy. Hybrids place a few full-attention layers between them to keep exact recall.
 
-**Parallel writing.** <Term k="dlm">Diffusion LMs</Term> come in masked (discrete) and continuous variants. Each pass costs more than one autoregressive step, but it fills in many positions at once.
+**Parallel writing.** <Term k="dlm">Diffusion LMs</Term> come in masked (discrete) and continuous variants. A discrete version competitive with GPT-2 won an ICML 2024 best paper ([Lou, Meng and Ermon, 2023](https://arxiv.org/abs/2310.16834)), and Inception Labs launched Mercury as the first commercial-scale one ([Inception Labs, 2025](https://arxiv.org/abs/2506.17298)). Each pass costs more than one autoregressive step, but it fills in many positions at once.
 
 **Learning while reading.** <Term k="ttt">TTT</Term> updates a set of fast-changing weights during inference, using a self-supervised objective on the text being read.
 

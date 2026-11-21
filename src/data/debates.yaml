@@ -188,13 +188,15 @@ debates:
     why: If we can read a model's internals, we can check it for problems directly instead of only testing its outputs.
     sides:
       - label: Yes, and it's getting practical
-        who: Geva and colleagues; Anthropic's interpretability team; Dario Amodei
+        who: Geva and colleagues; Meng and colleagues; Anthropic's interpretability team; Dario Amodei
         points:
           - The "think" layers behave like key-value memories: keys detect text patterns, and values push towards likely next words.
+          - Meng and colleagues located factual associations in middle-layer MLPs and edited single facts directly (ROME).
           - Anthropic extracted millions of human-interpretable features from a production model.
           - Amodei has set Anthropic the goal that interpretability can reliably detect most model problems by 2027.
         sources:
           - https://arxiv.org/abs/2012.14913
+          - https://arxiv.org/abs/2202.05262
           - https://transformer-circuits.pub/2024/scaling-monosemanticity/
           - https://www.darioamodei.com/post/the-urgency-of-interpretability
       - label: The maps are less useful than they look
@@ -222,14 +224,16 @@ debates:
           - https://openai.com/index/learning-to-reason-with-llms/
           - https://arxiv.org/abs/2408.03314
       - label: Sometimes it hurts
-        who: Gema and colleagues (Anthropic Fellows and collaborators); Shojaee and colleagues (Apple)
+        who: Gema and colleagues (Anthropic Fellows and collaborators); Shojaee and colleagues (Apple); Liu, Griffiths and colleagues
         points:
           - On purpose-built tasks, longer reasoning lowered accuracy through distraction and over-thinking the framing.
+          - On tasks where deliberating also makes people worse, chain-of-thought lowered accuracy sharply (Liu et al., 2024).
           - On the hardest puzzles, reasoning models' effort and accuracy collapsed despite spare budget (a result others attribute partly to test design).
         sources:
           - https://arxiv.org/abs/2507.14417
           - https://arxiv.org/abs/2506.06941
           - https://arxiv.org/abs/2506.09250
+          - https://arxiv.org/abs/2410.21333
     settle: Clear guidance on which kinds of task benefit, measured on real work rather than puzzles.
     verified: 2026-11-21
     half_life: 6
