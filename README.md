@@ -11,7 +11,8 @@
 An interactive guide for people who use AI tools every day and want to understand what is going on inside them. It starts with large language models and is written for two kinds of reader at once: a plain-language core with everyday analogies, and *Engineer depth* boxes with the technical detail that fold open wherever you want it.
 
 - **Part 1: Language models.** Tokens, attention, training, generation, agents, limits and the research frontier. Ten chapters, each with a hands-on demo.
-- **Part 2: Trust & security.** Prompt injection, agent permissions, the AI supply chain, where your data goes, and how to judge AI claims. Five chapters with interactive labs.
+- **Part 2: Agents.** The agent loop; context, memory, plug-ins and sandboxes; what agents get done; how to tell when they fail. Four chapters.
+- **Part 3: Trust & security.** Prompt injection, agent permissions, the AI supply chain, where your data goes, what AI is doing to the security industry, and how to judge AI claims. Six chapters with interactive labs.
 
 ## How it stays honest
 

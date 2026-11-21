@@ -6,9 +6,9 @@ Automated fact-checks catch a lot, but they share blind spots with the model tha
 
 | Reviewer | Reads | Time |
 |---|---|---|
-| ML engineer or researcher | Part 1, chapters 2–10: the Engineer boxes first, then the main text | 60–90 minutes |
-| Security practitioner | Part 2, all five chapters, including the labs and Engineer boxes | 60 minutes |
-| Anyone new to the topic | Part 1, chapter 1 and one chapter of their choice, Engineer boxes closed | 20 minutes |
+| ML engineer or researcher | Part 1, chapters 1–9, and Part 2: the Engineer boxes first, then the main text | 90–120 minutes |
+| Security practitioner | Part 3, all six chapters, and the security notes in Part 2, including the labs and Engineer boxes | 75 minutes |
+| Anyone new to the topic | Part 1, chapter 0 (start here) and one chapter of their choice, Engineer boxes closed | 20 minutes |
 
 Read on the live site: <https://machinerylearning.eu>. To open every Engineer box at once, choose Menu › Settings › Engineer boxes › Open.
 
