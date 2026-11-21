@@ -1,11 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+import { site, monthLabel } from '../lib/data';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<Base title="How this guide works" description="How the LLM Field Guide stays current: reading paths, freshness, the radar and the monthly update." nav="about">
+<Base title="How this guide works" description={`How ${site.name} stays current: reading paths, freshness, the radar and the monthly update.`} nav="about">
   <section class="band"><div class="chapter prose">
     <h1>How this guide works</h1>
     <p class="lede" style="margin:14px 0 8px">A book about AI goes out of date before it's printed. This guide is built to change: a stable core that explains how these systems work, and a living layer that is re-checked every month.</p>
+
+    <h2>Why "Machinery"</h2>
+    <p>In 1950 Alan Turing published "Computing Machinery and Intelligence", the paper that asked whether machines can think. This guide takes the more modest half of that title: it is about the machinery, how these systems actually work, so that you can form your own view on the bigger question. The name is meant to outlast any one technology. Today's content is about language models; when the field moves on, new parts will follow.</p>
+    <p>The subtitle changes with each edition. So far:</p>
+    <ul>{site.editions.map(e => <li><b>{monthLabel(String(e.month))}:</b> {e.subtitle}</li>)}</ul>
 
     <h2>Two reading paths, one guide</h2>
     <p>Every chapter has a plain-language core for people who are new to this. Technical detail sits in <b>Engineer depth</b> sections that stay folded on the beginner path and open on the engineer path. Switch at any time with "Reading path" at the top; the choice is remembered in your browser.</p>
@@ -25,7 +31,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p>An agent that reads arbitrary web pages and then writes to a repository is exactly the prompt-injection risk the guide warns about. So the research agent can read the web and open pull requests, nothing else: no merge rights, no access to secrets, no changes to the build or deployment configuration. Anything it fetched is treated as data, never as instructions.</p>
 
     <h2>Who writes it</h2>
-    <p>Maintained by Robert Haist. Drafts are written with AI assistance and reviewed by a human before publishing. Corrections and suggestions are welcome as issues or pull requests on <a href="https://github.com/rhaist/llm-field-guide">GitHub</a>.</p>
+    <p>Maintained by Robert Haist. Drafts are written with AI assistance and reviewed by a human before publishing. Corrections and suggestions are welcome as issues or pull requests on <a href={site.repo}>GitHub</a>.</p>
     <p class="small"><button class="btn" type="button" id="reset-progress">Reset my quiz progress</button> Progress, reading path and last-visit date are stored only in your browser.</p>
   </div></section>
 </Base>

@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import HeroPipeline from '../components/HeroPipeline.astro';
-import { radarEntries, radarMonths, ringAt, monthLabel } from '../lib/data';
+import { radarEntries, radarMonths, ringAt, monthLabel, site, edition } from '../lib/data';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const chapters = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
 const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
@@ -10,11 +10,12 @@ const latest = notes[0];
 const month = radarMonths[radarMonths.length - 1];
 const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).length;
 ---
-<Base title="LLM Field Guide" nav="">
+<Base title={site.name} nav="">
   <section class="band home-hero"><div class="wrap">
     <div class="htop">
       <div>
-        <h1>How LLMs actually work, explained as they change</h1>
+        <p class="kicker">{site.name} · {monthLabel(String(edition.month))} edition: {edition.subtitle}</p>
+        <h1>How AI like ChatGPT actually works, explained as it changes</h1>
         <div class="paths" role="group" aria-label="Choose your reading path">
           <button type="button" data-depth-btn="beginner" aria-pressed="true">I'm new to this<small>Plain language, everyday analogies</small></button>
           <button type="button" data-depth-btn="engineer" aria-pressed="false">I'm an engineer<small>Same chapters, technical depth open</small></button>
@@ -27,8 +28,8 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
   </div></section>
 
   <section class="band alt"><div class="wrap">
-    <h2>The journey</h2>
-    <p class="mut">Ten short chapters, each with a hands-on demo and a checkpoint question. Start at zero if you're new; jump around if you're not.</p>
+    <h2>{site.parts[0].title}</h2>
+    <p class="mut">{site.parts[0].summary} Start at zero if you're new; jump around if you're not.</p>
     <div class="journey">
       {chapters.map(c => (
         <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>

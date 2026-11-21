@@ -1,0 +1,15 @@
+# Site identity. The name and tagline are stable; the edition subtitle evolves.
+# Add a new entry at the top of `editions` when the subtitle changes; never rewrite old ones.
+
+name: Machinery
+tagline: A living field guide to how AI actually works   # used in page titles, search and link previews
+repo: https://github.com/rhaist/machinery
+
+editions:
+  - month: 2026-11
+    subtitle: Next token, and what comes after
+
+parts:
+  - id: language-models
+    title: "Part 1: Language models"
+    summary: How today's AI reads, predicts, is trained, and where it breaks. Ten short chapters, each with a hands-on demo and a checkpoint question.

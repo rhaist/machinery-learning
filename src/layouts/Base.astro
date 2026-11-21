@@ -1,8 +1,8 @@
 ---
 import '../styles/global.css';
-import { glossary } from '../lib/data';
+import { glossary, site } from '../lib/data';
 import { getCollection } from 'astro:content';
-const { title, description = 'A living, interactive guide to how large language models work, updated monthly.', chapter = '', nav = '' } = Astro.props;
+const { title, description = `${site.tagline}. Interactive, plain-language, updated monthly.`, chapter = '', nav = '' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
 const lastUpdate = notes[0]?.data.date;
@@ -13,9 +13,11 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{title === 'LLM Field Guide' ? title : `${title} · LLM Field Guide`}</title>
+  <title>{title === site.name ? `${site.name}: ${site.tagline}` : `${title} · ${site.name}`}</title>
+  <meta property="og:title" content={title === site.name ? site.name : `${title} · ${site.name}`}>
+  <meta property="og:description" content={description}>
   <meta name="description" content={description}>
-  <link rel="alternate" type="application/rss+xml" title="LLM Field Guide: field notes" href={`${base}/rss.xml`}>
+  <link rel="alternate" type="application/rss+xml" title={`${site.name}: field notes`} href={`${base}/rss.xml`}>
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +26,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
 </head>
 <body data-chapter={chapter}>
   <header class="site-head"><div class="in">
-    <a class="brand" href={`${base}/`}><i></i>LLM Field Guide</a>
+    <a class="brand" href={`${base}/`}><i></i>{site.name}</a>
     <nav class="site-nav" aria-label="Main">{links.map(([k, label, href]) => <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>)}</nav>
     <div class="depth"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
   </div></header>
@@ -32,7 +34,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <main><slot /></main>
   <footer class="site-foot band"><div class="in">
     <span>A living guide, updated monthly{lastUpdate && <> · last update {lastUpdate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</>}</span>
-    <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href="https://github.com/rhaist/llm-field-guide">Source on GitHub</a></span>
+    <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a></span>
   </div></footer>
   <div id="tip" hidden role="tooltip"></div>
   <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)} />

@@ -1,4 +1,4 @@
-// LLM Field Guide: client behaviour. Every demo is guarded, so a page only runs what it contains.
+// Machinery: client behaviour. Every demo is guarded, so a page only runs what it contains.
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,8 +1,10 @@
-# LLM Field Guide
+# Machinery
 
-A living, interactive guide to how large language models work, for people who use AI tools every day and want to understand what is going on inside them. Two reading paths (beginner and engineer), live demos in every chapter, and a monthly update as the field moves.
+*A living field guide to how AI actually works.*
 
-**Live site:** https://rhaist.github.io/llm-field-guide/ (once Pages is enabled)
+A living, interactive guide to how AI works, starting with large language models, for people who use AI tools every day and want to understand what is going on inside them. Two reading paths (beginner and engineer), live demos in every chapter, and a monthly update as the field moves.
+
+**Live site:** https://rhaist.github.io/machinery/ (once Pages is enabled)
 
 ## How it stays alive
 
@@ -13,6 +15,7 @@ A living, interactive guide to how large language models work, for people who us
 | Frontier radar | `src/data/radar.yaml` | Monthly; `history` keeps every past position |
 | Field notes | `src/content/notes/YYYY-MM.md` | One per month |
 | Glossary | `src/data/glossary.json` | As new terms appear |
+| Name, tagline, edition subtitle | `src/data/site.yaml` | Subtitle per edition; history kept |
 
 The monthly update follows [`research/MONTHLY_UPDATE.md`](research/MONTHLY_UPDATE.md): re-verify stale claims, scan [`research/sources.yaml`](research/sources.yaml), apply the editorial bar, update radar, claims and chapters, write field notes, open **one PR** for human review. CI blocks update PRs that touch the build, workflows or scripts.
 
@@ -33,7 +36,7 @@ Demos are Astro components in `src/components/`; their behaviour lives in `src/s
 
 ```sh
 npm install
-npm run dev            # http://localhost:4321/llm-field-guide/
+npm run dev            # http://localhost:4321/machinery/
 npm run build
 npm run check:claims   # freshness report; --strict fails on stale claims
 ```
