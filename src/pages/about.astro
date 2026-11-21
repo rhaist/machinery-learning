@@ -1,40 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, monthLabel } from '../lib/data';
+import { site } from '../lib/data';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<Base title="How this guide works" description={`How ${site.name} stays current: Engineer depth, freshness, the radar and the monthly update.`} nav="about">
+<Base title="How this guide works" description={`How ${site.name} stays current: dated facts, visible corrections and a human-reviewed monthly update.`} nav="about">
   <section class="band"><div class="page-text">
     <header class="page-head"><h1>How this guide works</h1>
-    <p class="lede">Books about AI go out of date quickly. This guide keeps its explanations of how these systems work stable, and re-checks its fast-changing facts every month.</p></header>
+    <p class="lede">The explanations of how AI works stay stable. The fast-changing facts around them are checked again every month.</p></header>
     <div class="prose">
 
-    <h2>Why "Machinery Learning"</h2>
-    <p>In 1950 Alan Turing published "Computing Machinery and Intelligence", the paper that asked whether machines can think. This guide takes the more modest half of that title: it is about the machinery, how these systems actually work, so that you can form your own view on the bigger question. The name reads two ways, and both are meant: you are learning about the machinery, and the machinery is learning. It is also a pun on "machine learning", though the guide isn't limited to that technique and is meant to outlast any one technology. Today's content is about language models; when the field moves on, new parts will follow.</p>
-    <p>The subtitle changes with each edition. So far:</p>
-    <ul>{site.editions.map(e => <li><b>{monthLabel(String(e.month))}:</b> {e.subtitle}</li>)}</ul>
-
-    <h2>Plain text and Engineer boxes</h2>
-    <p>Every chapter has a plain-language core for people who are new to this. Technical detail sits in <b>Engineer depth</b> boxes that stay folded until you open them. If you want them all open, choose "Engineer boxes: Open" under Settings in the menu; the choice is remembered in your browser.</p>
-
     <h2>Dates on fast-changing facts</h2>
-    <p>Facts that can go stale, such as model releases, benchmark numbers and research results, carry a small date badge showing when a person last checked them against their sources. Each has a re-check interval, from three months for fast-moving claims to a year for slower ones. Once a fact is overdue, it visibly fades until it's verified again. The full list, with sources, is on <a href={`${base}/sources/`}>Sources &amp; freshness</a>.</p>
-    <h2>When something is wrong</h2>
-    <p>Mistakes will happen in a guide that changes every month. Every chapter ends with a link to report one, and each fact on the sources page has its own. Confirmed errors are fixed and listed on the <a href={`${base}/corrections/`}>corrections page</a> with what was wrong and how it was found, so the record stays visible.</p>
+    <p>Model releases, benchmark numbers and research results carry a small date that shows when someone last checked them against their sources. A fact that is overdue for a check fades until it has been verified again. All of them, with sources, are on <a href={`${base}/sources/`}>Sources &amp; freshness</a>.</p>
+
+    <h2>Mistakes</h2>
+    <p>Every chapter ends with a link to report one. Fixes are listed on the <a href={`${base}/corrections/`}>corrections page</a>, with what was wrong.</p>
 
     <h2>The monthly update</h2>
-    <ol>
-      <li><b>Research.</b> At the start of each month, an AI research agent works through a fixed list of sources (lab research blogs, new papers, a few trusted newsletters) and compares what it finds against the guide's claims and radar.</li>
-      <li><b>Proposal.</b> It drafts updates as a pull request: re-verified or rewritten claims, radar moves, new entries, and a draft of the month's field notes, each with sources.</li>
-      <li><b>Human review.</b> A person reviews every change against its sources, edits, and merges. Nothing is published without that review.</li>
-    </ol>
-    <p>The editorial bar: something goes in only if it changes how a reader should understand or use these systems. That keeps the guide from turning into a news feed.</p>
-
-    <h2>How the update pipeline is secured</h2>
-    <p>An agent that reads arbitrary web pages and then writes to a repository is the prompt-injection risk the guide warns about. So the research agent can read the web and open pull requests, nothing else: no merge rights, no access to secrets, no changes to the build or deployment configuration. Anything it fetched is treated as data, never as instructions.</p>
+    <p>Each month an AI research agent reads a fixed list of sources and proposes changes as a pull request, each with its sources. A person checks every change before it goes live. The agent can read the web and open pull requests, nothing more: it cannot merge, see secrets or change how the site is built. Reading the web and acting on it is exactly the prompt-injection risk the guide warns about, so it gets no more access than that.</p>
 
     <h2>Who writes it</h2>
-    <p>Maintained by Robert Haist. Drafts are written with AI assistance and reviewed by a human before publishing. Corrections and suggestions are welcome as issues or pull requests on <a href={site.repo}>GitHub</a>.</p>
-    <p class="small"><button class="btn" type="button" data-reset-progress>Reset my progress</button> Your progress, reading position, settings and last-visit date are stored only in your browser.</p>
+    <p>Robert Haist, with AI help for research and drafting. Corrections and suggestions are welcome on <a href={site.repo}>GitHub</a>. Your progress and settings are stored only in your browser.</p>
+
+    <h2>The name</h2>
+    <p>It comes from Alan Turing's 1950 paper "Computing Machinery and Intelligence". The guide covers the machinery, so you can form your own view on the intelligence.</p>
   </div></div></section>
 </Base>
