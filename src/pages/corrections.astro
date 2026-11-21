@@ -8,7 +8,7 @@ const who: Record<string, string> = { reader: 'Reported by a reader', 'fact-chec
 <Base title="Corrections" description="Every factual correction made to the guide, with what was wrong and what it says now." nav="about">
   <section class="band"><div class="wrap">
     <header class="page-head"><h1>Corrections</h1>
-    <p class="lede">Every factual correction to the guide is listed here: what it said, what it says now, and how the error was found. Rewording and new material aren't listed. If you spot something wrong, <a href={reportUrl(site.repo, { title: 'page or chapter', page: 'https://' + site.domain + '/' })}>report it on GitHub</a>.</p></header>
+    <p class="lede">Every factual correction since the guide launched is listed here: what it said, what it says now, and how the error was found. Rewording and new material aren't listed. If you spot something wrong, <a href={reportUrl(site.repo, { title: 'page or chapter', page: 'https://' + site.domain + '/' })}>report it on GitHub</a>.</p></header>
     {corrections.length === 0 ? <p>No corrections yet.</p> :
     <ol class="corr">
       {corrections.map(c => <li>
