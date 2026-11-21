@@ -3,24 +3,25 @@
 
 /* ========== tokens ========== */
 :root{color-scheme:light dark;
-/* colour (light, dark) */
---bg:light-dark(#fbfcff,#0b1433);--s1:light-dark(#f0f3fb,#111c46);--s2:light-dark(#e6ebf7,#1a2860);--s2alt:light-dark(#dfe5f5,#1d2c68);
---line:light-dark(#cdd6ec,#2c3c80);--ink:light-dark(#0b1433,#eef1fb);--mut:light-dark(#4a5680,#b0badf);--faint:light-dark(#8a94b8,#7d88b8);
---b:light-dark(#2f43c8,#3b4fd8);--bsoft:light-dark(#5468e0,#8fa0ff);--t:light-dark(#0b7f86,#4fc1c6);--tt:light-dark(#075f65,#4fc1c6);--y:light-dark(#f2d500,#f7e463);--yt:light-dark(#7a5f00,#f7e463);
---r:light-dark(#c8321a,#e8452c);--rt:light-dark(#b02a14,#ff8f78);--onY:#0b1433;
---sunk:light-dark(#ffffff,#081030);--track:light-dark(#dde4f4,#0d1a4a);--chip:light-dark(#e8edf9,#152257);--chip2:light-dark(#d5ddf3,#24357a);--chip3:light-dark(#b9c5ea,#33459a);
---ring1:light-dark(#e9eefa,#0f1a48);--ring2:light-dark(#e1e7f7,#132055);--ring3:light-dark(#d8e0f4,#172763);--ring4:light-dark(#cfd9f1,#1b2d70);
---tipbg:light-dark(#0b1433,#f4f6ff);--blipink:light-dark(#ffffff,#0b1433);--oninv:light-dark(#ffffff,#0b1433);--tipink:light-dark(#eef1fb,#0b1433);
+/* colour (light: drafting paper, dark: blueprint at night) */
+--bg:light-dark(#f5f4ef,#0d1014);--s1:light-dark(#eeece5,#12161b);--s2:light-dark(#e7e4db,#161b21);--s2alt:light-dark(#e2dfd5,#191e25);
+--line:light-dark(#cfcabd,#262c34);--ink:light-dark(#15171a,#e6e8ea);--mut:light-dark(#54595f,#9ba2a9);--faint:light-dark(#8b8f93,#6a727a);
+--b:light-dark(#3a49c9,#7d8bff);--bsoft:light-dark(#4f5ed6,#8f9bff);--t:light-dark(#1572b6,#5bb8f5);--tt:light-dark(#0d5c96,#74c4f7);--y:light-dark(#f0a71f,#f5b544);--yt:light-dark(#8a5300,#f5b544);
+--r:light-dark(#c2361f,#ff6b57);--rt:light-dark(#a82c17,#ff8a7a);--onY:#14100a;
+--sunk:light-dark(#fbfaf7,#0a0c0f);--track:light-dark(#e3e0d6,#1a2027);--chip:light-dark(#ebe8e0,#1b2128);--chip2:light-dark(#ddd9cd,#232a33);--chip3:light-dark(#c9c4b5,#323a45);
+--ring1:light-dark(#efede6,#11151a);--ring2:light-dark(#e9e6de,#141920);--ring3:light-dark(#e3e0d6,#181e25);--ring4:light-dark(#dcd8cd,#1c232b);
+--tipbg:light-dark(#15171a,#eef0f2);--blipink:light-dark(#ffffff,#0d1014);--oninv:light-dark(#ffffff,#0d1014);--tipink:light-dark(#eef0f2,#15171a);
 --shade:color-mix(in srgb,#000 40%,transparent);--hi:color-mix(in srgb,#fff 16%,transparent);
+--grid:light-dark(color-mix(in srgb,#15171a 5%,transparent),color-mix(in srgb,#e6e8ea 4%,transparent));
 /* type */
---font-display:"Red Hat Display",system-ui,sans-serif;--font-text:"Red Hat Text",system-ui,sans-serif;--font-mono:"Red Hat Mono",ui-monospace,monospace;
---fs-xs:12px;--fs-input:16px;--fs-sm:14px;--fs-md:15px;--fs-base:17px;--fs-lg:19px;--fs-xl:22px;--fs-2xl:clamp(26px,3.2vw,32px);--fs-3xl:clamp(34px,5vw,52px);
+--font-display:"Instrument Sans Variable",system-ui,sans-serif;--font-text:"Instrument Sans Variable",system-ui,sans-serif;--font-mono:"Martian Mono",ui-monospace,monospace;
+--fs-xs:12px;--fs-label:11px;--fs-input:16px;--fs-sm:14px;--fs-md:15px;--fs-base:17px;--fs-lg:19px;--fs-xl:22px;--fs-2xl:clamp(26px,3.2vw,32px);--fs-3xl:clamp(38px,5.6vw,64px);
 --lh-tight:1.1;--lh-snug:1.35;--lh-body:1.6;
 /* space */
 --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:96px;
 --pad:var(--sp-4);--band:clamp(var(--sp-7),7vw,var(--sp-9));--gutter:clamp(var(--sp-4),5vw,var(--sp-7));
 /* shape */
---hair:2px;--r-xs:4px;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-pill:999px;--edge:4px;
+--hair:2px;--r-xs:2px;--r-sm:2px;--r-md:3px;--r-lg:4px;--r-pill:999px;--edge:4px;
 --ctl:44px;--ctl-sm:36px;
 /* layout */
 --w-page:1240px;--w-wide:920px;--w-text:680px;--head-h:64px;
@@ -445,7 +446,7 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .lab-verdict:empty{display:none}
 .lab-verdict.ok{border-color:var(--t)}.lab-verdict.warn{border-color:var(--y)}.lab-verdict.bad{border-color:var(--r)}
 .il-seg{font:var(--fs-sm)/1.5 var(--font-mono);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-sm);background:var(--sunk);border-left:var(--edge) solid var(--line)}
-.il-src{display:inline-block;min-width:4.5em;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:var(--fs-xs);letter-spacing:.06em}
+.il-src{display:inline-block;min-width:7em;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:var(--fs-xs);letter-spacing:.06em}
 .il-sys{border-color:var(--b)}.il-user{border-color:var(--t)}.il-ext{border-color:var(--r)}.il-off{opacity:.6}
 .il-hid{background:var(--chip);border-radius:var(--r-xs);padding:0 var(--sp-1);outline:1px dashed var(--mut)}
 .il-mark{color:var(--tt);font-weight:700}
@@ -530,6 +531,57 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 /* ========== legal ========== */
 .legal-draft{display:block}
 
+
+/* ========== identity: technical drawing ========== */
+body{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:var(--sp-5) var(--sp-5)}
+h1,h2{font-weight:500;letter-spacing:-.03em}
+h1{line-height:1.02}
+h3,.eng-title,.trp-h,.side-l,.mem b,.fb b,.hop .n b,.note>b,.gi dt,.rlist li b,.card .num{font-weight:600}
+code,.mono,pre{font-size:.86em}
+pre{font-size:var(--fs-xs)}
+/* labels: small uppercase mono */
+.kicker,.site-nav a,.chbar a,.chbar-part,.debate-k,.eng-tag,.meta,.stage .stage-h,th,.qhead,.legend,.pager small,.card .cm,.claim .cb,.ring,.fl,.newtag,.rd-b,.il-src,.side-w,.depth,.seg2 button,.theme-btn,.lab-h,.rd-m,.card>.small{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;font-size:var(--fs-label);font-weight:400}
+.kicker{color:var(--yt)}
+.site-nav a[aria-current=page]{color:var(--ink);background:transparent;box-shadow:inset 0 -2px 0 var(--y);border-radius:0}
+.site-nav a:hover{background:transparent;color:var(--ink)}
+.brand{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;font-size:var(--fs-sm);font-weight:500}
+.brand i{background:none;border:1.5px solid var(--y);border-radius:50%;position:relative;width:16px;height:16px}
+.brand i::before,.brand i::after{content:"";position:absolute;background:var(--y)}
+.brand i::before{left:50%;top:-4px;bottom:-4px;width:1.5px;transform:translateX(-50%)}
+.brand i::after{top:50%;left:-4px;right:-4px;height:1.5px;transform:translateY(-50%)}
+.chbar a[aria-current=page]{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.chbar a{border-radius:var(--r-sm)}
+.chbar a::before{border-radius:0;width:7px;height:7px;border-width:1.5px}
+/* surfaces: hairlines, square, drawing marks */
+.panel,.card,.debate,.quiz,.note,.pager a{background:color-mix(in srgb,var(--s1) 88%,transparent)}
+.demo.panel,.art{position:relative;overflow:visible}
+.demo.panel::before,.art::before{content:"";position:absolute;inset:-5px;pointer-events:none;
+ --m:color-mix(in srgb,var(--ink) 55%,transparent);
+ background:
+  linear-gradient(var(--m),var(--m)) left top/12px 1px no-repeat,linear-gradient(var(--m),var(--m)) left top/1px 12px no-repeat,
+  linear-gradient(var(--m),var(--m)) right top/12px 1px no-repeat,linear-gradient(var(--m),var(--m)) right top/1px 12px no-repeat,
+  linear-gradient(var(--m),var(--m)) left bottom/12px 1px no-repeat,linear-gradient(var(--m),var(--m)) left bottom/1px 12px no-repeat,
+  linear-gradient(var(--m),var(--m)) right bottom/12px 1px no-repeat,linear-gradient(var(--m),var(--m)) right bottom/1px 12px no-repeat}
+.chapter .prose{counter-reset:fig}
+.chapter .prose>.demo.panel{counter-increment:fig}
+.chapter .prose>.demo.panel::after{content:"FIG. " counter(fig);position:absolute;top:0;left:var(--sp-5);transform:translateY(-50%);background:var(--bg);padding:0 var(--sp-2);font:var(--fs-label) var(--font-mono);letter-spacing:.08em;color:var(--mut)}
+.art{border-color:var(--line);background:transparent}
+.art svg{border-radius:var(--r-lg)}
+/* inspection stamps */
+.claim .cb{background:transparent;box-shadow:inset 0 0 0 1px currentColor;color:var(--tt);padding:0 var(--sp-1)}
+.claim.evergreen .cb{color:var(--mut)}
+.ring{color:var(--ink);background:transparent;box-shadow:inset 0 0 0 1px currentColor}
+.ring[data-ring=shipping]{background:transparent;color:var(--tt)}.ring[data-ring=emerging]{background:transparent;color:var(--yt)}.ring[data-ring=faded]{background:transparent;color:var(--faint)}
+.eng-tag{background:transparent;color:var(--b);box-shadow:inset 0 0 0 1px currentColor}
+.side{border-top-width:2px}
+.note{border-left-width:2px}
+.btn,.paths button,.qo button{border-radius:var(--r-sm)}
+.paths button{font-weight:600}
+.route .st{border-radius:0;border-width:1.5px;font-weight:500;width:44px;height:44px}
+.route li:not(:last-child)::after{height:1.5px;top:22px;border-radius:0}
+.card .num{font-family:var(--font-mono);font-weight:400;font-size:var(--fs-sm);letter-spacing:.06em;color:var(--yt)}
+.card .num::before{content:"CH. "}
+
 /* ========== chapter illustrations (SVG drawing scale; raw sizes allowed here) ========== */
 /* design-lint: off */
 .a-bg{fill:var(--s2)}.a-s1{fill:var(--s1)}.a-s2{fill:var(--chip)}.a-c2{fill:var(--chip2)}.a-c3{fill:var(--chip3)}
@@ -553,6 +605,16 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .a-gap{stroke:var(--r);stroke-width:4;stroke-dasharray:6 8;stroke-linecap:round}
 .a-road{fill:none;stroke:var(--chip3);stroke-width:26;stroke-linecap:round}
 .a-dash{fill:none;stroke:var(--y);stroke-width:3;stroke-dasharray:10 12}
+.a-c2,.a-c3,.a-s2{fill:none;stroke:color-mix(in srgb,var(--ink) 55%,transparent);stroke-width:1.5}
+.a-s1{fill:none;stroke:none}.a-bg{fill:var(--bg)}
+.a-b,.a-t,.a-y,.a-r{stroke-width:1.75}
+.a-b{fill:color-mix(in srgb,var(--b) 14%,transparent);stroke:var(--b)}.a-t{fill:color-mix(in srgb,var(--t) 14%,transparent);stroke:var(--t)}
+.a-y{fill:color-mix(in srgb,var(--y) 18%,transparent);stroke:var(--y)}.a-r{fill:color-mix(in srgb,var(--r) 14%,transparent);stroke:var(--r)}
+.a-hi{display:none}
+.a-y + .a-hi + .a-tx,.a-t + .a-hi + .a-tx,.a-b + .a-hi + .a-tx,.a-r + .a-hi + .a-tx{fill:var(--ink)}
+.a-tx{font-family:var(--font-mono);font-size:12px}
+.a-cap{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.a-cap.a-on{fill:var(--ink)}
 .a-sky1{stop-color:var(--s2)}.a-sky2{stop-color:color-mix(in srgb,var(--y) 25%,var(--s2))}
 /* design-lint: on */
 
