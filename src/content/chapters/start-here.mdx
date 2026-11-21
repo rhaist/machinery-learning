@@ -10,6 +10,7 @@ import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
 import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
+import ForwardPass from '../../components/ForwardPass.astro';
 
 A large language model (LLM) is a program that has read an enormous amount of text and learned one skill extremely well: **continuing text**. Give it the beginning of something, and it predicts what comes next, one small piece (a word or part of a word) at a time. ChatGPT, Claude, Gemini and the AI in your coding tools are all built around this one skill.
 
@@ -39,6 +40,12 @@ Each chapter has a plain-language core and optional **Engineer depth** boxes: op
 Under the hood, an LLM is a <Term k="transformer">transformer</Term>: a stack of identical blocks that each refine a list of numbers for every piece of text.
 
 The path from input to output is short. Your text is split into <Term k="token">tokens</Term>, and each token becomes a vector, a long list of numbers. The vectors pass through the stack. Each block has two parts: <Term k="attention">attention</Term> lets a token pull in information from earlier tokens, and an <Term k="mlp">MLP</Term> then works on each token by itself. At the end, the model gives a probability for every token in its vocabulary, and one is picked.
+
+Step through one full pass of Llama 3 70B, with its real sizes. Watch the shape of the data and where the 70 billion parameters sit:
+
+<ForwardPass />
+
+Two things stand out. The data keeps the same shape all the way through the stack, one row of 8,192 numbers per token, because every block adds its result to the rows instead of replacing them. And most of the parameters sit in the MLPs, which work on one token at a time. That is part of why researchers look there for stored facts.
 
 The three training stages above have technical names. Reading is <Term k="pretraining">pretraining</Term>: predicting the next token across tens of trillions of tokens. Apprenticeship is supervised fine-tuning (<Term k="sft">SFT</Term>) on example conversations, followed by preference tuning (<Term k="rlhf">RLHF</Term> or <Term k="dpo">DPO</Term>). Practice with feedback is reinforcement learning with verifiable rewards (<Term k="rlvr">RLVR</Term>).
 

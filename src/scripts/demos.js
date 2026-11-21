@@ -331,3 +331,43 @@ function draw(){
 $$('[data-br]').forEach(b=>b.addEventListener('click',()=>{const [t,f]=b.dataset.br.split(',');$('#br-tp').value=t;$('#br-fp').value=f;draw()}));
 draw();
 }
+
+/* forward pass (start-here, Engineer box) */
+if($('#fp')){
+const S=[
+ ["Tokenize","The tokenizer turns \"The firewall blocked the\" into 4 token IDs. From here on, the model only works with numbers."],
+ ["Embed","Each ID selects one row of the embedding table: 128,256 rows of 8,192 numbers, about 1.05 billion parameters. The prompt is now a 4 × 8,192 matrix with one row per token. This matrix is the residual stream: every later step reads it and adds its result to it."],
+ ["Attention","Each row scores the earlier rows for relevance and pulls in a weighted mix of them; the last row is shown looking back. Llama 3 70B runs this as 64 heads of width 128 side by side. The four attention weight matrices hold about 151 million parameters per block. The result is added back onto the rows, so the shape stays 4 × 8,192."],
+ ["MLP","Each row then goes through the MLP on its own: widened from 8,192 to 28,672 numbers, passed through a non-linear gate, and narrowed back. Its three weight matrices hold about 705 million parameters per block. The result is again added back."],
+ ["Repeat","Attention plus MLP is one block, about 856 million parameters. The model runs 80 of them in sequence, each refining the same 4 × 8,192 matrix. 80 blocks × 856 million, plus the two 1.05 billion tables at either end, gives the 70 billion in the model's name. About 80% of it sits in the MLPs."],
+ ["Unembed","After the last block, only the final row is needed to predict what comes next. It is multiplied by the unembedding matrix (8,192 × 128,256, another 1.05 billion parameters), giving one score, called a logit, for every token in the vocabulary."],
+ ["Sample and loop","Softmax turns the scores into probabilities and one token is drawn: \"connection\". It is appended to the input, and the whole pass runs again. Thanks to the KV cache, the next pass computes only the new row; attention reads the stored keys and values of the earlier rows instead of recomputing them."]];
+let k=0;const parts=$$('#fp [data-s]');
+function fp(){const n=k+1;parts.forEach(p=>p.classList.toggle('on',p.dataset.s.split(' ').includes(String(n))));
+ $('#fp-t').textContent=n+'. '+S[k][0];$('#fp-n').textContent=n+' of '+S.length;$('#fp-d').textContent=S[k][1];
+ $('#fp-prev').disabled=k===0;$('#fp-next').textContent=k===S.length-1?'Start over':'Next step'}
+$('#fp-next').addEventListener('click',()=>{k=k===S.length-1?0:k+1;fp()});
+$('#fp-prev').addEventListener('click',()=>{if(k>0){k--;fp()}});
+fp();
+}
+
+/* byte-pair encoding (tokens, Engineer box) */
+if($('#bpe')){
+const C=[['low',5],['lower',2],['newest',6],['widest',3]];
+function run(steps){let W=C.map(([w,n])=>({n,t:[...w]}));const V=[...new Set(C.flatMap(([w])=>[...w]))];let last=null,top=[];
+ for(let s=0;s<=steps;s++){const cnt=new Map();W.forEach(({n,t})=>{for(let i=0;i<t.length-1;i++){const p=t[i]+'\u0000'+t[i+1];cnt.set(p,(cnt.get(p)||0)+n)}});
+  top=[...cnt].sort((a,b)=>b[1]-a[1]);if(s===steps)break;if(!top.length||top[0][1]<2)return null;
+  const [a,b]=top[0][0].split('\u0000'),m=a+b;W=W.map(({n,t})=>{const o=[];for(let i=0;i<t.length;i++){if(i<t.length-1&&t[i]===a&&t[i+1]===b){o.push(m);i++}else o.push(t[i])}return{n,t:o}});V.push(m);last={a,b,m,c:top[0][1]}}
+ return{W,V,last,top}}
+let k=0;const pair=p=>p.replace('\u0000',' + ');
+function bpe(){const r=run(k);
+ $('#bpe-w').innerHTML=r.W.map(({n,t})=>`<div class="bpe-word"><span class="toks">${t.map(x=>`<span class="tok${r.last&&x===r.last.m?' new':''}" style="--h:var(--t)">${esc(x)}</span>`).join('')}</span><span class="small">× ${n}</span></div>`).join('');
+ $('#bpe-d').innerHTML=r.last?`Merge ${k}: the most frequent neighbouring pair was <b>${esc(r.last.a)} + ${esc(r.last.b)}</b> (${r.last.c} times). Every occurrence became the new token <b>${esc(r.last.m)}</b>.`:'Start: every word is split into single characters, and the vocabulary is the 10 characters that occur.';
+ const nx=run(k+1);
+ $('#bpe-c').textContent=r.top.length?'Pair counts now: '+r.top.slice(0,4).map(([p,c])=>pair(p).replace(' + ','')+' '+c).join(' · ')+(nx?'':' · no pair occurs twice, so training stops'):'';
+ $('#bpe-v').innerHTML=r.V.map((v,i)=>`<span class="tok${i>=10?' merged':''}${r.last&&v===r.last.m?' new':''}" style="--h:var(--${i>=10?'y':'t'})">${esc(v)}</span>`).join('');
+ $('#bpe-n').textContent=k+(k===1?' merge':' merges');$('#bpe-prev').disabled=k===0;$('#bpe-next').textContent=nx?'Next merge':'Start over'}
+$('#bpe-next').addEventListener('click',()=>{k=run(k+1)?k+1:0;bpe()});
+$('#bpe-prev').addEventListener('click',()=>{if(k>0){k--;bpe()}});
+bpe();
+}

@@ -1,0 +1,12 @@
+---
+// Byte-pair encoding on a tiny corpus, one merge per step. Logic in demos.js (#bpe-*).
+---
+<div class="panel demo bpe" id="bpe">
+  <div class="row between"><b>Building a vocabulary, one merge at a time</b><span class="small" id="bpe-n"></span></div>
+  <div class="bpe-words" id="bpe-w"></div>
+  <p id="bpe-d" aria-live="polite"></p>
+  <p class="small" id="bpe-c"></p>
+  <div class="bpe-vocab"><span class="small">Vocabulary</span><div id="bpe-v"></div></div>
+  <div class="row"><button class="btn" type="button" id="bpe-prev">Back</button><button class="btn pri" type="button" id="bpe-next">Next merge</button></div>
+  <p class="caption">The corpus is the textbook example from Sennrich and colleagues (2016): "low" 5 times, "lower" 2, "newest" 6, "widest" 3. Real tokenizers start from bytes and learn 100,000 or more merges from billions of words.</p>
+</div>

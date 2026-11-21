@@ -376,6 +376,38 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .ex.on{color:var(--yt);font-weight:700}
 .accent{color:var(--yt)}.pick{color:var(--y);font-weight:500}
 
+/* forward pass and BPE (Engineer boxes) */
+.fp svg{display:block;width:100%;max-width:440px;margin:var(--sp-2) auto 0}
+.fp [data-s]{opacity:.22;transition:opacity .25s}
+.fp [data-s].on{opacity:1}
+.fp text{font-size:var(--fs-xs)}
+.fp .fp-mono,.fp .fp-dim,.fp .fp-tag{font-family:var(--font-mono)}
+.fp .fp-dim{fill:var(--mut)}
+.fp .fp-tag{fill:var(--tt)}
+.fp .fp-ttl{font-weight:600}
+.fp .fp-tok{fill:var(--chip);stroke:var(--line)}
+.fp .fp-tbl{fill:var(--chip2);stroke:var(--line)}
+.fp .fp-hl,.fp .fp-pick,.fp .fp-hlw{fill:var(--y)}
+.fp .fp-onpick{fill:var(--onY)}
+.fp .fp-row{fill:color-mix(in srgb,var(--t) 55%,transparent)}
+.fp .fp-cur{fill:var(--t)}
+.fp .fp-wide{fill:color-mix(in srgb,var(--y) 30%,transparent)}
+.fp .fp-frame{fill:none;stroke:var(--t)}
+.fp .fp-ln,.fp .fp-arc,.fp .fp-loop,.fp .fp-base{fill:none;stroke:var(--mut);stroke-width:1.5}
+.fp .fp-arc{stroke:var(--yt)}
+.fp .fp-loop{stroke:var(--yt);stroke-dasharray:4 3}
+.fp .fp-head{fill:var(--mut)}
+.fp .fp-bars{stroke:var(--chip3);stroke-width:4}
+.fp .fp-top{stroke:var(--y);stroke-width:4}
+.fp .fp-add{fill:var(--s2);stroke:var(--yt)}
+.fp .fp-plus{stroke:var(--yt);stroke-width:1.5}
+.bpe-words{display:grid;gap:var(--sp-2);margin-top:var(--sp-3)}
+.bpe-word{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap}
+.bpe .tok.new{outline:2px solid var(--y);outline-offset:1px}
+.bpe-vocab{display:grid;gap:var(--sp-1);margin-bottom:var(--sp-3)}
+.bpe-vocab>div{display:flex;flex-wrap:wrap;gap:var(--sp-1)}
+@media (prefers-reduced-motion:reduce){.fp [data-s]{transition:none}}
+
 /* training stages */
 .tr{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
 .tr .btn{flex:1 1 9em}

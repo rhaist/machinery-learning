@@ -1,0 +1,76 @@
+---
+// One forward pass through Llama 3 70B, step by step. Steps and text live in demos.js (#fp-*).
+// data-s lists the steps in which a part of the drawing is highlighted.
+---
+<div class="panel demo fp" id="fp">
+  <div class="row between"><b id="fp-t">One forward pass</b><span class="small" id="fp-n"></span></div>
+  <svg viewBox="0 0 360 620" role="img" aria-label="Diagram of one forward pass: tokens, embedding, 80 blocks of attention and MLP, unembedding, sampling">
+    <defs><marker id="fp-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fp-head"/></marker></defs>
+
+    <g data-s="1">
+      <rect class="fp-tok" x="14" y="22" width="36" height="26" rx="2"/><text class="fp-mono" x="32" y="39" text-anchor="middle">The</text>
+      <rect class="fp-tok" x="53" y="22" width="76" height="26" rx="2"/><text class="fp-mono" x="91" y="39" text-anchor="middle">·firewall</text>
+      <rect class="fp-tok" x="132" y="22" width="70" height="26" rx="2"/><text class="fp-mono" x="167" y="39" text-anchor="middle">·blocked</text>
+      <rect class="fp-tok" x="205" y="22" width="42" height="26" rx="2"/><text class="fp-mono" x="226" y="39" text-anchor="middle">·the</text>
+      <text class="fp-dim" x="264" y="32">4 token</text><text class="fp-dim" x="264" y="46">IDs</text>
+    </g>
+    <path class="fp-ln" d="M132 52V68" marker-end="url(#fp-ah)"/>
+
+    <g data-s="2">
+      <rect class="fp-tbl" x="20" y="74" width="40" height="96" rx="2"/>
+      <rect class="fp-hl" x="20" y="82" width="40" height="4"/><rect class="fp-hl" x="20" y="104" width="40" height="4"/><rect class="fp-hl" x="20" y="133" width="40" height="4"/><rect class="fp-hl" x="20" y="155" width="40" height="4"/>
+      <text class="fp-dim" x="14" y="184">128,256 rows</text>
+      <path class="fp-ln" d="M62 84L96 96M62 106L96 112M62 135L96 128M62 157L96 144"/>
+    </g>
+    <g data-s="2 3 4 5">
+      <rect class="fp-row" x="100" y="92" width="146" height="10"/><rect class="fp-row" x="100" y="108" width="146" height="10"/><rect class="fp-row" x="100" y="124" width="146" height="10"/><rect class="fp-row" x="100" y="140" width="146" height="10"/>
+      <text class="fp-dim" x="264" y="116">4 × 8,192</text><text class="fp-dim" x="264" y="130">residual</text><text class="fp-dim" x="264" y="144">stream</text>
+    </g>
+    <path class="fp-ln" d="M132 192V206" marker-end="url(#fp-ah)"/>
+
+    <g data-s="5">
+      <rect class="fp-frame" x="12" y="210" width="236" height="206" rx="3" stroke-dasharray="5 4"/>
+      <text class="fp-tag" x="240" y="226" text-anchor="end">× 80 blocks</text>
+      <text class="fp-dim" x="264" y="300">856M</text><text class="fp-dim" x="264" y="314">parameters</text><text class="fp-dim" x="264" y="328">per block</text>
+    </g>
+    <g data-s="3 5">
+      <text class="fp-ttl" x="24" y="230">Attention</text>
+      <rect class="fp-row" x="80" y="240" width="150" height="9"/><rect class="fp-row" x="80" y="254" width="150" height="9"/><rect class="fp-row" x="80" y="268" width="150" height="9"/><rect class="fp-row fp-cur" x="80" y="282" width="150" height="9"/>
+      <path class="fp-arc" d="M78 244C62 252 62 278 78 286M78 258C66 264 66 280 78 286M78 272C71 276 71 282 78 286" marker-end="url(#fp-ah)"/>
+      <text class="fp-dim" x="18" y="260">looks</text><text class="fp-dim" x="18" y="273">back</text>
+      <circle class="fp-add" cx="155" cy="306" r="7"/><path class="fp-plus" d="M151 306H159M155 302V310"/>
+    </g>
+    <g data-s="4 5">
+      <text class="fp-ttl" x="24" y="332">MLP</text>
+      <rect class="fp-row" x="125" y="340" width="60" height="8"/>
+      <path class="fp-wide" d="M125 348L80 362H230L185 348Z"/>
+      <rect class="fp-hlw" x="80" y="362" width="150" height="8"/>
+      <path class="fp-wide" d="M80 370L125 384H185L230 370Z"/>
+      <rect class="fp-row" x="125" y="384" width="60" height="8"/>
+      <text class="fp-dim" x="24" y="348">8,192</text><text class="fp-dim" x="24" y="369">28,672</text><text class="fp-dim" x="24" y="391">8,192</text>
+      <circle class="fp-add" cx="155" cy="404" r="7"/><path class="fp-plus" d="M151 404H159M155 400V408"/>
+    </g>
+    <path class="fp-ln" d="M132 418V434" marker-end="url(#fp-ah)"/>
+
+    <g data-s="6">
+      <rect class="fp-row fp-cur" x="80" y="440" width="150" height="10"/>
+      <text class="fp-dim" x="24" y="444">last</text><text class="fp-dim" x="24" y="457">row</text>
+      <path class="fp-ln" d="M155 452V462" marker-end="url(#fp-ah)"/>
+      <path class="fp-bars" d="M80 512V500M88 512V494M96 512V504M104 512V488M112 512V498M120 512V506M136 512V496M144 512V502M152 512V492M160 512V505M168 512V499M176 512V490M184 512V503M192 512V497M200 512V507M208 512V495M216 512V501M224 512V493M230 512V504"/>
+      <path class="fp-top" d="M128 512V466"/>
+      <path class="fp-base" d="M76 512H234"/>
+      <text class="fp-dim" x="264" y="490">128,256</text><text class="fp-dim" x="264" y="504">scores</text>
+    </g>
+    <path class="fp-ln" d="M132 520V536" marker-end="url(#fp-ah)"/>
+
+    <g data-s="7">
+      <text class="fp-dim" x="24" y="565">sample</text>
+      <rect class="fp-pick" x="80" y="548" width="122" height="28" rx="2"/><text class="fp-mono fp-onpick" x="141" y="566" text-anchor="middle">·connection</text>
+      <path class="fp-loop" d="M202 562H254V35H250" marker-end="url(#fp-ah)"/>
+      <text class="fp-dim" x="264" y="560">append,</text><text class="fp-dim" x="264" y="574">run again</text>
+    </g>
+  </svg>
+  <p id="fp-d" aria-live="polite"></p>
+  <div class="row"><button class="btn" type="button" id="fp-prev">Back</button><button class="btn pri" type="button" id="fp-next">Next step</button></div>
+  <p class="caption">Sizes from Llama 3 70B's published configuration. The token split is illustrative, and the score chart shows a handful of the 128,256 bars.</p>
+</div>

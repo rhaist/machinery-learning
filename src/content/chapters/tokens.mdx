@@ -14,6 +14,7 @@ import Quiz from '../../components/Quiz.astro';
 import Tokenizer from '../../components/Tokenizer.astro';
 import EmbeddingMap from '../../components/EmbeddingMap.astro';
 import Debate from '../../components/Debate.astro';
+import BpeMerge from '../../components/BpeMerge.astro';
 
 Before a model can do anything with your text, the text gets chopped into pieces called <Term k="token">tokens</Term>. A token is usually a word or a chunk of a word. Common words like "the" or "firewall" are one token each. Rare or long words get split into several pieces. The model works with <Claim id="vocab-size" />, and every piece has a number.
 
@@ -40,9 +41,15 @@ A number like 892 means nothing by itself. So each token number is translated in
 <Engineer title="Tokenizers and embedding tables">
 A <Term k="tokenizer">tokenizer</Term> is a fixed lookup step in front of the model. It turns text into integer IDs, and IDs back into text. It is built once, before the model is trained, and never changes afterwards.
 
-Most tokenizers today use byte-level BPE (byte-pair encoding). The vocabulary starts with the 256 possible byte values. Then the most frequent neighbouring pair in a large text sample is merged into a new token, again and again, until the vocabulary reaches its target size. Because every single byte stays in the vocabulary, any input can be encoded; the worst case is one token per byte.
+Most tokenizers today use byte-level BPE (byte-pair encoding). The vocabulary starts with the 256 possible byte values. Then the most frequent neighbouring pair in a large text sample is merged into a new token, again and again, until the vocabulary reaches its target size. Because every single byte stays in the vocabulary, any input can be encoded; the worst case is one token per byte. Watch it learn on a tiny corpus:
+
+<BpeMerge />
+
+The merges are recorded in order, and encoding new text replays them in the same order. Frequent words end up as one token, while rare words fall apart into the pieces the merges happened to produce. That is why "newest" becomes one token here but an unseen word like "lowest" would be "low" + "est".
 
 Each token ID then selects one row of the model's first weight matrix, the <Term k="embedding">embedding</Term> table. That row is the token's vector: 4,000 to 16,000 numbers in large models, 1,000 to 3,000 in small ones. The width stays the same through the whole model. Every later layer reads and writes vectors of exactly that size, along what engineers call the <Term k="residual">residual stream</Term>.
+
+Vocabulary size is a trade-off. A bigger vocabulary makes text shorter, so each prompt needs fewer tokens and fewer passes. But the embedding table grows with it: 200,000 tokens × 8,192 numbers is 1.6 billion parameters, and the unembedding matrix at the output is the same size. Small models often reuse one matrix for both jobs (tied embeddings) to save that space.
 
 The tokenizer explains some cost and quality differences you'll meet:
 
