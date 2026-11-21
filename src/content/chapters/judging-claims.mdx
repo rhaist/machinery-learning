@@ -1,7 +1,7 @@
 ---
 title: "Don't trust the scoreboard: judging AI claims"
 short: Judging claims
-order: 18
+order: 19
 part: trust-security
 summary: Benchmarks, vendor security numbers, AI detectors and deepfakes. Habits for telling what's real.
 minutes: 12
@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import BaseRate from '../../components/BaseRate.astro';
 
-Part 3 has quoted plenty of numbers: attack success rates, approval rates, percentages of invented packages. You'll meet many more in product launches, news stories and your own inbox. Reading them well mostly comes down to one question: *measured how, by whom, against what?*
+This guide has quoted plenty of numbers: attack success rates, approval rates, percentages of invented packages. You'll meet many more in product launches, news stories and your own inbox. Reading them well mostly comes down to one question: *measured how, by whom, against what?*
 
 <Note title="The student who saw the exam">
 A student who memorised last year's exam scores brilliantly on last year's exam. Give them fresh questions and you find out what they actually know. A lot of AI benchmarking is the same problem: models are trained on the internet, and the internet contains the tests.
@@ -30,6 +30,12 @@ Leaderboards where people vote between models have their own issues. <Claim id="
 ## Feelings aren't measurements
 
 Even our own impressions can mislead us. <Claim id="metr-slower" cap />. And models can behave differently when they think they're being watched: <Claim id="eval-awareness" />. The same lesson from the [prompt injection chapter](/learn/prompt-injection/) applies to every security number: a defence measured against a fixed test set looks better than it will against someone who adapts.
+
+## A chart that changed its mind
+
+[The patch gap](/learn/patch-gap/) quoted the Zero Day Clock, a site many security people shared this year. Its story is a good lesson in reading numbers. <Claim id="zdc-headline" cap />. But <Claim id="zdc-critique" />.
+
+Look at the site today and the story has moved on. <Claim id="zdc-no-tte" cap />. <Claim id="zdc-not-claiming" cap />. That's what a trustworthy measurement looks like: it changes its method when the method is shown to be weak, it states what it can't measure, and it lets you check the numbers. The headline that made it famous is still out there, and it no longer matches its source. Before you repeat a striking chart, open the source and read what it says now.
 
 ## Try it: the AI-essay detector
 

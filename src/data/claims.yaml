@@ -1192,3 +1192,41 @@
   sources: [https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/]
   verified: 2026-11-21
   status: evergreen
+
+- id: zdc-headline
+  text: "in May 2026 Tom's Hardware reported that the Zero Day Clock showed AI shrinking the time from disclosure to exploit from a year to a day, heading towards a minute"
+  evidence: "AI shrinks zero-day exploit time from a year to a single day"
+  sources: [https://www.tomshardware.com/tech-industry/cyber-security/zero-day-clock-visualizes-and-quantifies-the-effects-of-ai-on-software-security-time-until-exploit-went-from-one-year-to-one-day-and-projected-to-be-one-minute-soon-enough]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: zdc-critique
+  text: "a vulnerability-database veteran who works on the commercial VulnDB, and so has an interest of his own, had already argued that its time-to-exploit measure mixed up four different dates"
+  evidence: "That is one definition that is mixing up four different dates."
+  sources: [https://jericho.blog/2026/03/12/zero-day-clock-all-the-pieces-matter]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: zdc-no-tte
+  text: "the site no longer publishes time to exploitation at all, explaining that the measure ignores how long a vulnerability has been around, can't fall below zero, and hides changes inside an average"
+  evidence: "it ignores aging"
+  sources: [https://zerodayclock.com/about]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: zdc-not-claiming
+  text: "it now says plainly that it is not claiming the shift has already happened, and that every number on the site can be reproduced from public sources"
+  evidence: "We are not claiming that this shift has already happened."
+  sources: [https://zerodayclock.com/about, https://zerodayclock.com/]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: zdc-policy
+  text: "the Zero Day Clock observatory estimates that patching everything on an exploited list or with an EPSS score of 3% or more means about 820 CVEs a month and covers about 69% of newly attacked ones, while patching every critical (CVSS 9+) CVE means 1,567 a month and covers only about 54%"
+  evidence: "Any KEV or EPSS 3%+"
+  sources: [https://zerodayclock.com/]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping

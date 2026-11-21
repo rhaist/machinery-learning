@@ -1,7 +1,7 @@
 ---
 title: "Finding got cheap: AI and the patch gap"
 short: Patch gap
-order: 19
+order: 18
 part: trust-security
 summary: AI now finds software flaws faster than anyone can fix them. Why the hard part of security moved to patching, and what still works.
 minutes: 12
@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import PatchGap from '../../components/PatchGap.astro';
 
-The other chapters in this part are about attacks on AI. This one is about what AI is doing to security everywhere else. For decades, the slow step in software security was finding the flaws. In 2026 that changed: AI models now read code and find flaws at a pace no human team could match. Fixing them did not speed up.
+Most chapters in this part are about attacks on AI. This one is about what AI is doing to security everywhere else. For decades, the slow step in software security was finding the flaws. In 2026 that changed: AI models now read code and find flaws at a pace no human team could match. Fixing them did not speed up.
 
 <Note title="The inspector with a drone">
 A building inspector used to walk a building for a week and find a dozen problems. Now a drone finds a thousand overnight. The repair crew is the same size as before. Some rooms aren't on the floor plan, and some doors were welded shut years ago. The building isn't any worse than it was last month. It's just that nobody can pretend not to know any more.
@@ -60,7 +60,7 @@ None of this is new. It's the basic hygiene that security teams have asked for s
 
 The answer isn't to patch everything faster. Nobody can. It's to patch the right things first and make the rest harder to reach. <Claim id="ncsc-wave" cap />.
 
-- **Fix what attackers are actually using.** Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else.
+- **Fix what attackers are actually using.** Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else. The difference is large: <Claim id="zdc-policy" />.
 - **Start at the edge.** Firewalls, VPN gateways and anything reachable from the internet come first, because attackers scan for them within hours.
 - **Know what you own.** An accurate asset inventory is the control every other control depends on.
 - **Shield what you can't fix.** Separate old systems from the rest of the network, put filters in front of them, and plan their replacement instead of waiting for a patch that won't come.
