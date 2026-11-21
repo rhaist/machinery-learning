@@ -5,10 +5,22 @@ import '@fontsource/martian-mono/latin-500.css';
 import '../styles/global.css';
 import { glossary, site, byPart } from '../lib/data';
 import { getCollection } from 'astro:content';
-const { title, description = `${site.tagline}. Interactive, plain-language, updated monthly.`, chapter = '', nav = '', og = 'home' } = Astro.props;
+const { title, description = 'How AI like ChatGPT works, explained in plain language with interactive diagrams: language models, agents and AI security. Updated every month.', chapter = '', nav = '', og = 'home', type = 'website', modified = null, published = null, noindex = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ogUrl = new URL(`${base}/og/${og}.png`, Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const siteUrl = new URL(`${base}/`, Astro.site).href;
+const isHome = title === site.name;
+const fullTitle = isHome ? `How AI like ChatGPT works, explained · ${site.name}` : `${title} · ${site.name}`;
+// structured data: who publishes the site, and what each page is (Google Search Central: Article structured data)
+const author = { '@type': 'Person', name: site.legal.name, url: new URL(`${base}/about/`, Astro.site).href };
+const iso = (d: any) => d ? new Date(d).toISOString().slice(0, 10) : undefined;
+const ld = isHome
+  ? { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, alternateName: 'machinerylearning.eu', url: siteUrl, description, inLanguage: 'en', publisher: author }
+  : type === 'article'
+    ? { '@context': 'https://schema.org', '@type': 'Article', headline: title, description, image: [ogUrl], url: pageUrl, mainEntityOfPage: pageUrl, inLanguage: 'en', datePublished: iso(published), dateModified: iso(modified ?? published), author, publisher: author, isPartOf: { '@type': 'WebSite', name: site.name, url: siteUrl } }
+    : null;
+const ldJson = ld ? JSON.stringify(ld).replace(/</g, '\\u003c') : '';
 const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
 const lastUpdate = notes[0]?.data.date;
 const parts = byPart(await getCollection('chapters') as any[]);
@@ -22,10 +34,13 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{title === site.name ? `${site.name}: ${site.tagline}` : `${title} · ${site.name}`}</title>
-  <meta property="og:title" content={title === site.name ? site.name : `${title} · ${site.name}`}>
+  <title>{fullTitle}</title>
+  {noindex && <meta name="robots" content="noindex">}
+  <meta property="og:title" content={isHome ? `How AI like ChatGPT works, explained` : title}>
   <meta property="og:description" content={description}>
-  <meta property="og:type" content="website">
+  <meta property="og:type" content={type}>
+  {type === 'article' && modified && <meta property="article:modified_time" content={iso(modified)}>}
+  {type === 'article' && published && <meta property="article:published_time" content={iso(published)}>}
   <meta property="og:url" content={pageUrl}>
   <meta property="og:image" content={ogUrl}>
   <meta property="og:image:width" content="1200">
@@ -36,6 +51,10 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <meta name="description" content={description}>
   <link rel="alternate" type="application/rss+xml" title={`${site.name}: field notes`} href={`${base}/rss.xml`}>
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml">
+  <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`}>
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f4ef">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1014">
+  {ldJson && <script type="application/ld+json" set:html={ldJson} />}
   <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d;var t=JSON.parse(localStorage.getItem('lfg-theme')||'"auto"');if(t!=="auto")document.documentElement.dataset.theme=t;var z=JSON.parse(localStorage.getItem('lfg-size')||'"m"');if(z!=="m")document.documentElement.dataset.size=z}catch(e){}</script>
 </head>
 <body data-chapter={chapter} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
