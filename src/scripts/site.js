@@ -286,7 +286,11 @@ if (radarEl) {
     }
   }
   readerUpdate = update;
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { onScrollChrome(); update(); ticking = false; }); } }, { passive: true });
+  let idleT = null;
+  addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(() => { onScrollChrome(); update(); ticking = false; }); }
+    clearTimeout(idleT); idleT = setTimeout(() => { update(); save(); }, 500); // also when animation frames are throttled
+  }, { passive: true });
   addEventListener('resize', update);
   if (done.has(chapterId)) { const note = $('#complete-note'); if (note) note.hidden = false; completed = true; }
   update();
