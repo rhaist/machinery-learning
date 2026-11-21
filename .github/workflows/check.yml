@@ -23,6 +23,8 @@ jobs:
       - run: npm ci
       - name: Claims freshness and integrity
         run: node scripts/check-claims.mjs --strict
+      - name: Every number has a source, calculation or illustration label
+        run: node scripts/check-figures.mjs
       - name: Design rules (DESIGN.md)
         run: node scripts/check-design.mjs
       - run: npm run build

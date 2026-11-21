@@ -7,7 +7,7 @@ const load = (f: string) => parseYaml(fs.readFileSync(path.join(dataDir, f), 'ut
 
 export type Claim = {
   id: string; text: string; sources?: string[]; verified: string | Date;
-  half_life?: number; status: string;
+  half_life?: number; status: string; evidence?: string; evidence_src?: string;
 };
 export type RadarEntry = {
   id: string; name: string; quadrant: string; chapter?: string; note: string;
@@ -60,3 +60,15 @@ export function byPart<T extends { id: string; data: { order: number; part: stri
 
 export const monthLabel = (m: string) =>
   new Date(m + '-01T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+export type Correction = { date: string; page: string; title: string; what: string; now: string; found_by: string };
+export const corrections: Correction[] = (((load('corrections.yaml') as any)?.corrections ?? []) as any[])
+  .map(c => ({ ...c, date: iso(c.date) }))
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+/** Link to a prefilled "factual error" issue on GitHub. */
+export function reportUrl(repo: string, o: { title: string; page: string; quote?: string }) {
+  const q = new URLSearchParams({ template: 'factual-error.yml', title: `Correction: ${o.title}`, page: o.page });
+  if (o.quote) q.set('claim', o.quote);
+  return `${repo}/issues/new?${q.toString()}`;
+}

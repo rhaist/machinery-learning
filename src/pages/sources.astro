@@ -1,15 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import { claims, freshness } from '../lib/data';
+import { claims, freshness, site, reportUrl } from '../lib/data';
+const plain = (h: string) => h.replace(/<[^>]+>/g, '');
 const sorted = [...claims].sort((a, b) => (a.half_life ?? 999) - (b.half_life ?? 999));
 ---
 <Base title="Sources & freshness" description="Every time-sensitive claim in the guide, its sources and when it was last verified." nav="about">
   <section class="band"><div class="wrap">
     <header class="page-head"><h1>Sources &amp; freshness</h1>
-    <p class="lede">Every fact in this guide that can go out of date is listed here with its sources, the date a human last checked it, and how often it needs re-checking. Facts past their re-check date fade on the page until they are verified again.</p></header>
+    <p class="lede">Every fact in this guide that can go out of date is listed here with its sources, the date a human last checked it, and how often it needs re-checking. Facts past their re-check date fade on the page until they are verified again. Fixes to anything that turned out wrong are listed on the <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/corrections/`}>corrections page</a>.</p></header>
     <div class="scroll"><table class="src stack2"><thead><tr><th>Claim</th><th>Status</th><th>Verified</th><th>Re-check</th><th>Sources</th></tr></thead><tbody>
       {sorted.map(c => <tr id={c.id} class={freshness(c)} data-verified={c.verified} data-hl={c.half_life ?? ''}>
-        <td set:html={c.text} />
+        <td><span set:html={c.text} />{c.evidence && <span class="ev">Source: "{c.evidence}"</span>} <a class="src-report" href={reportUrl(site.repo, { title: plain(c.text).slice(0, 60), page: `https://${site.domain}/sources/#${c.id}`, quote: plain(c.text) })}>Report</a></td>
         <td>{c.status} <span class="fl" data-fresh-label>{freshness(c)}</span></td>
         <td>{c.verified}</td>
         <td>{c.half_life ? `every ${c.half_life} months` : 'evergreen'}</td>

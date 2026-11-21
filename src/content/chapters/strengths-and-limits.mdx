@@ -55,7 +55,7 @@ Long context gets expensive in two ways. Attention work grows with the square of
 
 <ContextCost />
 
-**Context rot.** Recall gets worse as the context grows. A 2025 study by Chroma of 18 current models found this is driven mostly by length, by distracting material, and by how similar the distractors are to what's being asked. The 2023 "lost in the middle" effect, where models used the middle of a long input worst, is much weaker in current models. This <Term k="contextrot">context rot</Term> is why long agent sessions degrade, and why harnesses compact old turns into summaries, losing detail.
+**Context rot.** Recall gets worse as the context grows. A 2025 study by Chroma of 18 current models found recall falls with length, and falls faster when distracting material is present and when the relevant passage resembles the question less closely. On simple retrieval tests, current models show little of the 2023 "lost in the middle" effect, where models used the middle of a long input worst, but position effects still appear in harder tasks. This <Term k="contextrot">context rot</Term> is why long agent sessions degrade, and why harnesses compact old turns into summaries, losing detail.
 
 **Sycophancy comes from training.** Preference data rewards agreement and confidence, so models drift toward abandoning correct statements when the user pushes back. This is <Term k="sycophancy">sycophancy</Term>. Labs train against it explicitly, with partial success.
 

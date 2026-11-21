@@ -45,7 +45,7 @@ Two convenience features deserve their own warning. Memory lets an assistant kee
 
 ## What EU law says
 
-If you're in Europe, two sets of rules matter. GDPR already applies: the European data protection board says whether a model counts as "anonymous" must be judged case by case, and Italy's regulator fined OpenAI €15 million in 2024. The EU AI Act adds duties for model makers: <Claim id="eu-gpai" />. Its timetable moved this year: <Claim id="eu-omnibus" />. None of this changes what a chatbot does with your words today; your provider's terms and settings do.
+If you're in Europe, two sets of rules matter. GDPR already applies: the European data protection board says whether a model counts as "anonymous" must be judged case by case, and Italy's regulator fined OpenAI €15 million in 2024, though a Rome court annulled the fine in March 2026 because the case belonged with the Irish regulator. The EU AI Act adds duties for model makers: <Claim id="eu-gpai" />. Its timetable moved this year: <Claim id="eu-omnibus" />. None of this changes what a chatbot does with your words today; your provider's terms and settings do.
 
 ## Local isn't automatically safe
 
@@ -67,7 +67,7 @@ Settle in contracts and settings what you would otherwise have to hope for.
 
 **RAG and fine-tuning.** Put as little personal data in as possible. Keep access controls on retrieved documents: the retriever must not fetch anything the user couldn't open themselves. Test fine-tuned models for regurgitating training records, especially rare strings such as IDs and keys.
 
-**Self-hosting.** Never expose model servers without authentication. Put them behind a reverse proxy or VPN, verify model files (previous chapter) and log access. Many local runtimes listen on all network interfaces with no authentication by default.
+**Self-hosting.** Never expose model servers without authentication. Put them behind a reverse proxy or VPN, verify model files (previous chapter) and log access. Most local runtimes have no authentication, and many guides and container images expose them on all network interfaces.
 
 **Regulatory register.** Keep a living list of dates:
 
@@ -75,7 +75,7 @@ Settle in contracts and settings what you would otherwise have to hope for.
 - Article 50 transparency duties, with a grace period for watermarking that ends on 2 December 2026.
 - High-risk rules in December 2027 and August 2028.
 
-Check the Omnibus reference in the Official Journal on EUR-Lex before you cite it in policy.
+The Omnibus was published in the Official Journal in July 2026 (reported as Regulation (EU) 2026/1744); confirm the reference on EUR-Lex before you cite it in policy.
 </Engineer>
 
 <Quiz q="You delete a chat in a consumer chatbot. Which statement is most accurate?" options={["It is gone from the provider's servers immediately","It may still be kept for a while, for example for abuse checks, human review or a court order","It is removed from the trained model's weights","It is automatically shared with other users"]} answer={1} explain="Deletion starts a clock, not an instant wipe. Abuse-monitoring windows, reviewed samples and legal holds can all keep copies. Only setups that never store the text avoid this." />

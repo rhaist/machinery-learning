@@ -29,7 +29,7 @@
  },
  "qkv": {
   "term": "Query, key, value",
-  "def": "Three vectors computed from each token by matrix multiplication. Score = query · key; softmax of the scores gives weights; output = weighted sum of values."
+  "def": "Three vectors computed from each token by matrix multiplication. Score = query · key, divided by the square root of the key length; softmax of the scores gives weights; output = weighted sum of values."
  },
  "head": {
   "term": "Attention head",
@@ -41,7 +41,7 @@
  },
  "mlp": {
   "term": "MLP / feed-forward layer",
-  "def": "The per-token half of a block: two or three large matrix multiplications with a non-linearity (gated variants such as SwiGLU use three). Holds much of the stored knowledge and about 80% of the parameters in a dense model."
+  "def": "The per-token half of a block: two or three large matrix multiplications with a non-linearity (gated variants such as SwiGLU use three). Holds much of the stored knowledge and roughly 70–80% of the parameters in a large dense model."
  },
  "residual": {
   "term": "Residual stream",
@@ -85,7 +85,7 @@
  },
  "inference": {
   "term": "Inference",
-  "def": "Running a trained model to produce output, as opposed to training it. Most of an LLM's lifetime cost."
+  "def": "Running a trained model to produce output, as opposed to training it. For a widely used model, often most of its lifetime cost."
  },
  "pretraining": {
   "term": "Pretraining",
@@ -213,7 +213,7 @@
  },
  "decision": {
   "term": "Decision model",
-  "def": "Typically a pretrained transformer whose text-generating head is replaced by a small scoring head for a fixed set of options, often with light fine-tuning of the body. It answers typed questions (yes/no, choice, score) with a probability per option in one forward pass. Examples: Jev (TypeSafe AI), Strands Decider (AWS) and Clef (Cloudflare), the last two with open weights. The trick goes back to the reward models of 2022."
+  "def": "Typically a pretrained transformer whose text-generating head is replaced by a small scoring head for a fixed set of options, often with light fine-tuning of the body. It answers typed questions (yes/no, choice, score) with a probability per option in one forward pass. Examples: Jev (TypeSafe AI), Laya (Convai Innovations), Strands Decider (AWS) and Clef (Cloudflare); all but Jev have open weights. The trick is older: GPT-1 and BERT (2018) used small task heads, and RLHF reward models replaced the text head with a scoring head."
  },
  "harness": {
   "term": "Agent harness / SDK",
@@ -257,7 +257,7 @@
  },
  "contextrot": {
   "term": "Context rot",
-  "def": "The decline in how well a model uses its context as the context gets long, driven mostly by length and distracting, similar-looking material. (Older models also used the middle of long inputs worst.)"
+  "def": "The decline in how well a model uses its context as the context gets long: recall falls with length, and faster with distracting material and when the relevant passage resembles the question less closely. (Older models also used the middle of long inputs worst.)"
  },
  "sycophancy": {
   "term": "Sycophancy",

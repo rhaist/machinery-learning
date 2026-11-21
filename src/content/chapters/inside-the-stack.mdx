@@ -60,7 +60,7 @@ Superposition is why a single neuron usually responds to several unrelated thing
 | 128k context | The window, in tokens. Llama 3.1 introduced it; the first Llama 3 had 8k |
 | RoPE, SwiGLU, RMSNorm | Rotary positions, the MLP's gate function and the normalisation: standard choices |
 
-**MoE in practice.** The router is a small learned layer that scores every expert for each token, and usually the top 2 to 8 run. Early designs such as Mixtral used 2 of 8 large experts. Current ones use many small experts, so DeepSeek-V3, Llama 4 Maverick and Qwen3.5 activate only about 4–6% of their parameters per token. All experts must still sit in memory, so MoE saves compute, not RAM. An extra term in the training loss keeps the router from sending everything to a few favourites.
+**MoE in practice.** The router is a small learned layer that scores every expert for each token, and usually between 1 and 10 of them run, often next to an always-on shared expert. Early designs such as Mixtral used 2 of 8 large experts. Current ones use many small experts, so DeepSeek-V3, Llama 4 Maverick and Qwen3.5 activate only about 4–6% of their parameters per token. All experts must still sit in memory, so MoE saves compute, not RAM. A balancing mechanism, usually an extra term in the training loss (DeepSeek-V3 adjusts per-expert biases instead), keeps the router from sending everything to a few favourites.
 </Engineer>
 
 <Debate id="interpretability-localise" />

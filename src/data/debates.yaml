@@ -18,7 +18,7 @@ debates:
         points:
           - Models trained to rank instructions by source, plus automated red-teaming, cut measured attack success sharply.
           - Anthropic reports about 1% success for an adaptive attacker with 100 attempts in browser use (self-reported).
-          - Spam filters made email usable without being perfect; monitoring and confirmations change real-world risk the same way.
+          - Like scams and social engineering, injection may never be fully solved, but layered defences, monitoring and confirmations can keep real-world risk low.
         sources:
           - https://openai.com/index/hardening-atlas-against-prompt-injection
           - https://openai.com/index/instruction-hierarchy-challenge
@@ -26,7 +26,7 @@ debates:
       - label: Only deterministic boundaries count
         who: Simon Willison, the UK NCSC, Nasr, Carlini, Tramèr and colleagues
         points:
-          - Adaptive attacks broke 12 published defences that had reported near-zero attack success.
+          - Adaptive attacks broke 12 published defences, most of which had reported near-zero attack success.
           - A 1% failure rate against an attacker who can retry many times is close to certain failure.
           - So untrusted input must never be able to reach privileged tools, whatever the model decides.
         sources:
@@ -69,7 +69,7 @@ debates:
       - label: Practical and cheap
         who: Nicholas Carlini and colleagues; Souly and colleagues (Anthropic, UK AISI, Alan Turing Institute)
         points:
-          - Poisoning a web-scale dataset could cost about $60.
+          - Poisoning 0.01% of a web-scale dataset could cost about $60.
           - About 250 documents planted a backdoor regardless of model size, so attackers need a fixed number of pages, not a share of the web.
         sources:
           - https://arxiv.org/abs/2302.10149
@@ -95,7 +95,7 @@ debates:
         who: Hamburg Data Protection Commissioner (discussion paper, 2024)
         points:
           - Storing a model is not processing personal data; rights apply to what goes in and comes out.
-          - Extraction attacks take disproportionate effort, and treating weights as a data store would make erasure impossible.
+          - Extracting personal data from a model takes disproportionate effort, so the paper treats a model as not storing personal data.
         sources:
           - https://datenschutz-hamburg.de/fileadmin/user_upload/HmbBfDI/Datenschutz/Informationen/240715_Discussion_Paper_Hamburg_DPA_KI_Models.pdf
       - label: It depends, and often yes
@@ -128,7 +128,7 @@ debates:
         who: Sadasivan, Feizi and colleagues; authors of a 2026 C2PA security analysis
         points:
           - Paraphrasing weakens text watermarks, and watermarks can be spoofed to frame humans.
-          - A missing label will be misread as proof that something is real.
+          - Critics worry that a missing label will be misread as proof that something is real.
         sources:
           - https://arxiv.org/abs/2303.11156
           - https://arxiv.org/abs/2604.24890
@@ -151,7 +151,7 @@ debates:
       - label: Tokens are a minor factor and here to stay
         who: Uzan and Pinter (CharBench); current frontier practice
         points:
-          - Every frontier model still ships a subword tokenizer, and vocabularies are growing (Qwen3.5 went from about 150k to 250k).
+          - Every major model whose tokenizer is public still uses subword tokens, and vocabularies are growing (Qwen3.5 went from about 150k to 250k).
           - CharBench finds tokenization explains less of the letter-counting failures than usually claimed; word length matters more.
         sources:
           - https://arxiv.org/html/2508.02591v2
@@ -165,13 +165,12 @@ debates:
     why: Attention's cost is what makes long documents slow and expensive. If cheaper layers work, long-context AI gets much cheaper.
     sides:
       - label: Keep full attention
-        who: MiniMax; Sebastian Raschka
+        who: MiniMax
         points:
-          - MiniMax built a hybrid for its M2 model, saw it fall behind on multi-step reasoning at scale, and went back to full attention.
+          - MiniMax's earlier models mixed linear and full attention. At larger scale the hybrid fell behind on multi-step reasoning, so for M2 the company went back to full attention.
           - Tooling and hardware for the alternatives are still immature.
         sources:
           - https://www.minimax.io/news/why-did-m2-end-up-as-a-full-attention-model
-          - https://magazine.sebastianraschka.com/i/177848019/24-qwen3-next
       - label: Hybrids are already shipping
         who: Alibaba (Qwen team); Fichtl, Groh and colleagues at TU Munich
         points:
@@ -191,9 +190,9 @@ debates:
       - label: Yes, and it's getting practical
         who: Geva and colleagues; Anthropic's interpretability team; Dario Amodei
         points:
-          - The "think" layers behave like key-value memories for facts.
+          - The "think" layers behave like key-value memories: keys detect text patterns, and values push towards likely next words.
           - Anthropic extracted millions of human-interpretable features from a production model.
-          - Amodei argues interpretability could reliably catch most model problems by 2027.
+          - Amodei has set Anthropic the goal that interpretability can reliably detect most model problems by 2027.
         sources:
           - https://arxiv.org/abs/2012.14913
           - https://transformer-circuits.pub/2024/scaling-monosemanticity/
@@ -240,7 +239,7 @@ debates:
     why: It decides whether the recent jumps in maths and coding can keep coming from more practice, or need better base models.
     sides:
       - label: Mostly bringing out what's there
-        who: Yue, Chen, Lu and colleagues (Tsinghua University)
+        who: Yue, Chen, Lu and colleagues (Tsinghua University and Shanghai Jiao Tong University)
         points:
           - Trained models get the right answer on the first try more often than their base models.
           - But given many attempts, the base models solve more problems, so the training narrowed the model onto paths it could already find.
@@ -298,10 +297,10 @@ debates:
           - https://arxiv.org/abs/2401.11817
           - https://arxiv.org/abs/2311.14648
       - label: It's largely an incentive problem
-        who: Kalai, Nachum, Vempala and Zhang (OpenAI)
+        who: Kalai, Nachum, Vempala and Zhang (OpenAI and Georgia Tech)
         points:
           - Benchmarks reward confident guessing over "I don't know", so training learns to guess.
-          - Scoring abstention fairly in mainstream tests would cut hallucination substantially; repeated and systematic facts need not be hallucinated at all.
+          - The authors argue that scoring abstention fairly in mainstream tests could cut hallucination substantially; repeated and systematic facts need not be hallucinated at all.
         sources:
           - https://arxiv.org/abs/2509.04664
     settle: Benchmarks that reward abstention becoming standard, and whether models trained against them hallucinate much less in daily use.
@@ -316,18 +315,20 @@ debates:
         who: Strands Labs (AWS); Cloudflare
         points:
           - Strands reports 0.78 accuracy on JevBench with good calibration at about 115 ms on a consumer graphics card.
-          - Cloudflare reports its Clef models ahead of Jev on Jev's own index, with Clef-flash at under 40 ms.
+          - Cloudflare reports Clef ahead of Jev on Jev's own index, and Clef-flash at a median under 40 ms.
         sources:
           - https://github.com/strands-labs/strands-decider
           - https://blog.cloudflare.com/clef-decision-models/
       - label: The evidence is thin
-        who: Jiawei Li (independent preprint); a study relayed by Amplitude
+        who: Jiawei Li (independent preprint); AY Automate
         points:
           - One evaluation found Jev at chance on routing and "confidently constant", with the open Laya model no better.
           - Another found a decision model copied the big model, mistakes included, more than it matched the correct answers.
-          - Every headline benchmark so far is self-reported.
+          - The few independent tests so far are small and mixed; the headline benchmarks for Strands Decider and Clef are self-reported.
         sources:
           - https://arxiv.org/abs/2610.02267
+          - https://www.ayautomate.com/blog/jev-vs-llm-benchmark
+          - https://vals.ai/blogs/independent-evaluation-of-jev
           - https://amplitude.com/blog/jev-analysis
     settle: Independent replication on shared tasks, especially on decisions from real deployments.
     verified: 2026-11-21

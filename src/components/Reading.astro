@@ -12,7 +12,7 @@ const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./,
       {items.map((r: any) => (
         <li>
           <span class="rd-t"><a href={r.url}>{r.title}</a>{r.beginner && <span class="rd-b">no background needed</span>}</span>
-          <span class="rd-m">{r.by}, {r.year} · {host(r.url)}</span>
+          <span class="rd-m">{r.by}{r.year ? `, ${r.year}` : ''} · {host(r.url)}</span>
           <span class="rd-w">{r.why}</span>
         </li>
       ))}

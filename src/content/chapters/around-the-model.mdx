@@ -43,7 +43,7 @@ A fast, confident number is not the same as a correct one. <Claim id="decision-i
 </Note>
 
 <Engineer title="Decision models as a category">
-A decision model is usually an ordinary pretrained transformer with a different last layer. The unembedding layer, which scores all ~200k vocabulary tokens, is replaced by a small scoring head that scores only *your* options, in a single forward pass. The body is often lightly fine-tuned as well.
+A decision model is usually an ordinary pretrained transformer with a different last layer. The unembedding layer, which scores every token in a vocabulary of typically 130k to 250k entries, is replaced by a small scoring head that scores only *your* options, in a single forward pass. The body is often lightly fine-tuned as well.
 
 <DecisionHeads />
 
@@ -53,7 +53,7 @@ The current models differ in the details. Strands Decider puts a pointer head on
 
 <DecisionTable />
 
-**Benchmarks in a two-month-old category:** <Claim id="decider-bench" cap />. <Claim id="clef" cap />. Every headline number so far comes from the model's makers, so measure on your own decisions.
+**Benchmarks in a two-month-old category:** <Claim id="decider-bench" cap />. <Claim id="clef" cap />. The makers' numbers are self-reported, and the first independent tests, mostly of Jev, are small and mixed, so measure on your own decisions.
 
 **Harnesses and MCP.** <Claim id="strands-sdk" cap />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything first, acts on confident answers, and passes the uncertain rest to a bigger model.
 

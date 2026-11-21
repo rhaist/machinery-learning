@@ -23,7 +23,9 @@
     "preview": "astro preview",
     "check:claims": "node scripts/check-claims.mjs",
     "check:design": "node scripts/check-design.mjs",
-    "check": "node scripts/check-claims.mjs --strict && node scripts/check-design.mjs && astro build"
+    "check:figures": "node scripts/check-figures.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check": "node scripts/check-claims.mjs --strict && node scripts/check-figures.mjs && node scripts/check-design.mjs && astro build"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.6",

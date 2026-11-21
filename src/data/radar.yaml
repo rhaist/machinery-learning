@@ -51,11 +51,11 @@ entries:
     history: { 2026-11: research }
 
   - id: world-models
-    name: World models / JEPA
+    name: World models
     quadrant: Architecture
     chapter: frontier
-    note: Predicting in an abstract representation space. Heavily funded, no public product yet.
-    history: { 2026-11: research }
+    note: Models of how situations unfold. Generative ones are public (World Labs' Marble, Google's Genie 3); JEPA-style models such as AMI Labs' have no product yet.
+    history: { 2026-11: emerging }
 
   - id: rlvr
     name: RL with verifiable rewards
@@ -110,7 +110,7 @@ entries:
     name: Decision models
     quadrant: Systems & agents
     chapter: around-the-model
-    note: Typed answers with probabilities, no text generation. Jev, Strands Decider, Clef. All headline benchmarks self-reported so far.
+    note: Typed answers with probabilities, no text generation. Jev, Laya, Strands Decider, Clef. Makers' benchmarks are self-reported; the first independent tests are small and mixed.
     history: { 2026-11: emerging }
 
   - id: prompt-caching
@@ -124,8 +124,8 @@ entries:
     name: Prompt-injection defences
     quadrant: Security & trust
     chapter: prompt-injection
-    note: Classifiers, spotlighting, instruction-hierarchy training. Reduce risk; adaptive attackers beat all published ones studied.
-    history: { 2026-11: emerging }
+    note: Classifiers, spotlighting, instruction-hierarchy training, in mainstream products since 2024. Shipping is not solved; adaptive attackers beat all published defences studied.
+    history: { 2026-11: shipping }
 
   - id: decision-gates
     name: Decision-model tool gates
@@ -166,5 +166,5 @@ entries:
     name: Interpretability tooling
     quadrant: Security & trust
     chapter: beyond-autocomplete
-    note: Sparse autoencoders and attribution graphs that show what a model computes internally.
-    history: { 2026-11: research }
+    note: Sparse autoencoders and attribution graphs that show what a model computes internally. Hosted tools and open releases exist; reliability is still contested.
+    history: { 2026-11: emerging }

@@ -14,7 +14,9 @@ For any of these, [open an issue](https://github.com/rhaist/machinery-learning/i
 Something goes into the guide only if it changes how a reader should understand or use these systems. New model releases, benchmark records and funding rounds rarely qualify on their own.
 
 - **Sources:** primary sources (papers, official lab or vendor posts, standards, court and regulator documents) over commentary. Vendor numbers about their own products are marked "self-reported".
-- **Time-sensitive facts** go into `src/data/claims.yaml` with sources, a `verified` date and a `half_life` (months until re-check), and appear in chapters as `<Claim id="…" />`. Don't hard-code them into prose.
+- **Time-sensitive facts** go into `src/data/claims.yaml` with sources, a `verified` date and a `half_life` (months until re-check), and an `evidence` excerpt (at most 15 words, copied exactly from the source), and appear in chapters as `<Claim id="…" />`. Don't hard-code them into prose.
+- **Every other number** in a chapter needs an entry in `src/data/figures.yaml`: `source` (with sources and evidence), `derived` (with the calculation) or `illustrative` (with a note). `npm run check` fails on a number without one.
+- **Corrections** to anything already published get an entry in `src/data/corrections.yaml`, shown on the corrections page.
 - **Disagreements** go into `src/data/debates.yaml`: both sides steelmanned, with named proponents and sources for each side.
 - **Beginner core first:** plain language, everyday analogies, no unexplained jargon. Technical detail belongs inside `<Engineer>` blocks, written as [DESIGN.md › Engineer boxes](DESIGN.md#engineer-boxes) describes: takeaway first, one idea per paragraph, terms explained on first use, a figure for any mechanism.
 - **Style:** British English, short sentences, sentence case for headings, no hype. State the point directly: no "not X but Y" setups, one-line closers, staged run-ups ("Here's the thing"), stock AI words or decorative bold. The [humanizer checklist](https://github.com/blader/humanizer) lists the patterns to avoid.

@@ -63,7 +63,7 @@ Formally, the model's output is always a probability distribution over the next 
 
 **From estimator to policy.** After pretraining, the distribution estimates what a typical document would say next. After reinforcement learning, it is a <Term k="policy">policy</Term>: a strategy optimised for outcomes, whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed.
 
-**Why written reasoning buys thinking time.** One forward pass has a fixed depth of around a hundred layers, which caps how many steps of computation can go into a single token. But every token the model writes becomes input for all later passes. Written reasoning therefore works as a <Term k="scratchpad">scratchpad</Term>, and each token adds another full trip through the stack. Compare the longest chain of computation with and without it:
+**Why written reasoning buys thinking time.** One forward pass has a fixed depth, typically 30 to 120 layers, which caps how many steps of computation can go into a single token. But every token the model writes becomes input for all later passes. Written reasoning therefore works as a <Term k="scratchpad">scratchpad</Term>, and each token adds another full trip through the stack. Compare the longest chain of computation with and without it:
 
 <SerialDepth />
 

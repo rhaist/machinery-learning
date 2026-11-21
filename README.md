@@ -52,6 +52,8 @@ npm run check      # claims freshness (strict), design rules, production build
 | `scripts/` | `check-claims.mjs` (freshness and integrity), `check-design.mjs` (design rules) |
 | [`DESIGN.md`](DESIGN.md) | The design system: tokens, type, layout, signatures and the rules CI enforces |
 | [`docs/MAINTAINING.md`](docs/MAINTAINING.md) | Deployment, domain, the monthly update and release checks |
+| [`docs/REVIEW.md`](docs/REVIEW.md) | Brief for expert reviewers: what to read, what to look for, how to report |
+| `src/data/figures.yaml`, `corrections.yaml` | Sources or calculations for every other number in the text, and the public corrections log |
 
 Built with [Astro](https://astro.build), Instrument Sans and Martian Mono (both self-hosted), and no client-side framework.
 

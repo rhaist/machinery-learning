@@ -1,0 +1,303 @@
+# Specific numbers in chapter and field-note prose that are not <Claim>s.
+# scripts/check-figures.mjs fails on any number without a home here or in claims.yaml.
+# Bare years and days of dates are exempt. `names` lists names that contain digits.
+#
+# kind: source        a fact from a source: sources, evidence (short exact excerpt), verified
+#       derived       our own calculation: calc, based_on (sources or other figures)
+#       illustrative  a made-up example or toy value: note
+
+names:
+  - Part 1
+  - Part 2
+  - chapter 10
+  - Llama 3 70B
+  - 70B-class
+  - Llama 3.1
+  - Llama 2
+  - Llama 3
+  - Llama 4 Maverick
+  - Claude 3.7 Sonnet
+  - Claude 3.5 Haiku
+  - Tülu 3
+  - ARC-AGI-1
+  - Strands Decider 2B
+  - Apache 2.0
+  - Top 10 for Agentic Applications
+  - temperature 0
+  - Article 50
+
+figures:
+  # --- derived: our own calculations ---
+  - page: chapters/tokens
+    text: "200,000 tokens × 8,192 numbers is 1.6 billion parameters"
+    kind: derived
+    calc: "200,000 × 8,192 = 1,638,400,000 ≈ 1.6 billion"
+    based_on: [vocab-size claim, Llama 3 70B hidden size]
+  - page: chapters/attention
+    text: "weights that add up to 1"
+    kind: derived
+    calc: "Softmax output sums to 1 by definition."
+  - page: chapters/generating
+    text: "A temperature below 1 stretches the gaps between scores, so the top choice dominates; above 1 it flattens them"
+    kind: derived
+    calc: "Softmax of logits divided by T: T < 1 scales differences up, T > 1 scales them down."
+  - page: chapters/judging-claims
+    text: "Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent."
+    kind: derived
+    calc: "1,000 × 5% = 50 AI; 50 × 90% = 45 caught; 950 × 2% = 19 false alarms; 19 / (45 + 19) = 29.7%"
+  # --- illustrative: made-up examples and quiz options ---
+  - page: chapters/tokens
+    text: "A number like 892 means nothing by itself"
+    kind: illustrative
+    note: "An arbitrary token ID."
+  - page: chapters/tokens
+    text: "(\"12345\" becomes \"123\" + \"45\" in GPT-4o's and Llama 3's)"
+    kind: derived
+    calc: "Encoded with tiktoken's o200k_base (GPT-4o): '12345' → '123' + '45'. Llama 3's tokenizer also groups digits in threes."
+    based_on: [https://github.com/openai/tiktoken]
+  - page: chapters/generating
+    text: "\"connection\" 30%, \"request\" 22%, \"traffic\" 18%"
+    kind: illustrative
+    note: "Example probabilities, matching the hero demo."
+  - page: chapters/generating
+    text: "Generating token 500 doesn't recompute tokens 1 to 499"
+    kind: illustrative
+    note: "Any position works."
+  - page: chapters/generating
+    text: "You turn the temperature down to 0.1"
+    kind: illustrative
+    note: "Quiz scenario."
+  - page: chapters/inside-the-stack
+    text: "It runs 18 copies of the model in parallel"
+    kind: illustrative
+    note: "Wrong quiz option (671 / 37 ≈ 18)."
+  - page: chapters/judging-claims
+    text: "An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written"
+    kind: illustrative
+    note: "Quiz scenario; the answer is derived below."
+  - page: chapters/judging-claims
+    text: "About 2% / About 10% / About 30% / About 90%"
+    kind: illustrative
+    note: "Quiz options."
+  - page: chapters/generating
+    text: "Why temperature 0 still varies"
+    kind: illustrative
+    note: "Heading; temperature 0 is the setting being discussed."
+  # --- sources: chapters 1-5 (verified in the independent audit, 21 Nov 2026) ---
+  - page: chapters/start-here
+    text: "where the 70 billion parameters sit"
+    kind: derived
+    calc: "80 × (151M attention + 705M MLP) + 2 × 1.05B embedding tables = 70.55B"
+    based_on: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+  - page: chapters/start-here
+    text: "one row of 8,192 numbers per token"
+    kind: source
+    sources: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+    evidence: '"hidden_size": 8192'
+    verified: 2026-11-21
+  - page: chapters/tokens
+    text: "In English, 1,000 tokens is roughly 750 words"
+    kind: source
+    sources: [https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them]
+    evidence: "1 token ~= ¾ words"
+    verified: 2026-11-21
+  - page: chapters/tokens
+    text: "The vocabulary starts with the 256 possible byte values"
+    kind: derived
+    calc: "A byte has 8 bits: 2^8 = 256 values."
+  - page: chapters/tokens
+    text: "4,000 to 16,000 numbers in large models, 1,000 to 3,000 in small ones"
+    kind: source
+    sources: [https://arxiv.org/abs/2407.21783, https://huggingface.co/unsloth/Llama-3.2-1B/blob/main/config.json]
+    evidence: "Model dimension 4,096 | 8,192 | 16,384"
+    verified: 2026-11-21
+  - page: chapters/attention
+    text: "Llama 3 70B has 64 query heads but only 8 key/value heads"
+    kind: source
+    sources: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+    evidence: '"num_attention_heads": 64, "num_key_value_heads": 8'
+    verified: 2026-11-21
+  - page: chapters/attention
+    text: "about 50,000 earlier tokens"
+    kind: derived
+    calc: "Per token, attention scores cost about 2·n·d·L FLOPs against about 2·P for the weights; with d = 8,192, L = 80, P = 70.6B they are equal near n ≈ 53,000."
+    based_on: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+  - page: chapters/inside-the-stack
+    text: "30 to over 120 layers in today's large models"
+    kind: source
+    sources: [https://arxiv.org/abs/2407.21783]
+    evidence: "Layers 32 | 80 | 126"
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "What \"70 billion parameters\" means"
+    kind: illustrative
+    note: "Heading; the example size used throughout."
+  - page: chapters/inside-the-stack
+    text: "\"A 70B model\" has 70 billion of them"
+    kind: illustrative
+    note: "Definition of the naming convention."
+  - page: chapters/inside-the-stack
+    text: "so only about 5% of the model works on any one word"
+    kind: derived
+    calc: "DeepSeek-V3: 37B / 671B = 5.5%; Qwen3.5: 17B / 397B = 4.3%"
+    based_on: [https://arxiv.org/abs/2412.19437, https://huggingface.co/Qwen/Qwen3.5-397B-A17B]
+  - page: chapters/inside-the-stack
+    text: "about 80% in a dense model like Llama 3 70B"
+    kind: derived
+    calc: "MLP 80 × 705M = 56.4B of 70.55B = 79.9%"
+    based_on: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+  - page: chapters/inside-the-stack
+    text: "A residual stream 8,192 numbers wide can hold far more than 8,192 concepts"
+    kind: illustrative
+    note: "Width from Llama 3 70B; the point is superposition."
+  - page: chapters/inside-the-stack
+    text: "| 70B parameters, 80 layers | 80 blocks of attention plus MLP | | Hidden size 8192 | The residual stream is 8,192 numbers wide | | 64 attention heads, 8 KV heads | 64 query heads share 8 sets of keys and values"
+    kind: source
+    sources: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+    evidence: '"num_hidden_layers": 80, "hidden_size": 8192, "num_key_value_heads": 8'
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "| 128k context | The window, in tokens. Llama 3.1 introduced it; the first Llama 3 had 8k"
+    kind: source
+    sources: [https://ai.meta.com/blog/meta-llama-3-1/, https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
+    evidence: "our latest models expand context length to 128K"
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "usually between 1 and 10 of them run"
+    kind: source
+    sources: [https://huggingface.co/Qwen/Qwen3.5-397B-A17B, https://ai.meta.com/blog/llama-4-multimodal-intelligence/]
+    evidence: "10 routed experts plus 1 shared expert"
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "Early designs such as Mixtral used 2 of 8 large experts"
+    kind: source
+    sources: [https://arxiv.org/abs/2401.04088]
+    evidence: "a router network selects two experts to process the current state"
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "activate only about 4–6% of their parameters per token"
+    kind: derived
+    calc: "DeepSeek-V3 37B/671B = 5.5%; Llama 4 Maverick 17B/400B = 4.3%; Qwen3.5 17B/397B = 4.3%"
+    based_on: [https://arxiv.org/abs/2412.19437, https://ai.meta.com/blog/llama-4-multimodal-intelligence/, https://huggingface.co/Qwen/Qwen3.5-397B-A17B]
+  - page: chapters/inside-the-stack
+    text: "A model has 671B parameters but only about 37B are 'active'"
+    kind: source
+    sources: [https://arxiv.org/abs/2412.19437]
+    evidence: "671B total parameters with 37B activated for each token"
+    verified: 2026-11-21
+  - page: chapters/inside-the-stack
+    text: "Only 37B parameters were trained"
+    kind: illustrative
+    note: "Wrong quiz option."
+  # --- sources: chapters 6-15 and field notes (verified in the independent audit, 21 Nov 2026) ---
+  - page: chapters/beyond-autocomplete
+    text: "typically 30 to 120 layers"
+    kind: source
+    sources: [https://arxiv.org/abs/2407.21783, https://huggingface.co/Qwen/Qwen3.5-397B-A17B/blob/main/config.json]
+    evidence: "Layers 32 | 80 | 126"
+    verified: 2026-11-21
+  - page: chapters/beyond-autocomplete
+    text: "Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%)"
+    kind: source
+    sources: [https://www.anthropic.com/research/reasoning-models-dont-say-think]
+    evidence: "Claude 3.7 Sonnet mentioned the hint 25% of the time, and DeepSeek R1 mentioned it 39%"
+    verified: 2026-11-21
+  - page: chapters/strengths-and-limits
+    text: "A 2025 study by Chroma of 18 current models"
+    kind: source
+    sources: [https://www.trychroma.com/research/context-rot]
+    evidence: "we evaluate 18 LLMs"
+    verified: 2026-11-21
+  - page: chapters/around-the-model
+    text: "a vocabulary of typically 130k to 250k entries"
+    kind: source
+    sources: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json, https://huggingface.co/Qwen/Qwen3.5-397B-A17B/blob/main/config.json]
+    evidence: '"vocab_size": 128256 (Llama 3); "vocab_size": 248320 (Qwen3.5)'
+    verified: 2026-11-21
+  - page: chapters/around-the-model
+    text: "They usually have 0.5 to 15 billion parameters"
+    kind: source
+    sources: [https://techcommunity.microsoft.com/blog/aiplatformblog/introducing-phi-4-microsoft%E2%80%99s-newest-small-language-model-specializing-in-comple/4357090, https://huggingface.co/Qwen/Qwen2.5-0.5B]
+    evidence: "Phi-4, our 14B parameter state-of-the-art small language model (SLM)"
+    verified: 2026-11-21
+  - page: chapters/around-the-model
+    text: "summarising a 50k-token log"
+    kind: illustrative
+    note: "Example task size."
+  - page: chapters/frontier
+    text: "reach 45% on ARC-AGI-1 and 8% on the harder ARC-AGI-2"
+    kind: source
+    sources: [https://arxiv.org/abs/2510.04871]
+    evidence: "TRM obtains 45% test-accuracy on ARC-AGI-1 and 8% on ARC-AGI-2"
+    verified: 2026-11-21
+  - page: chapters/prompt-injection
+    text: "That 1% is real progress. But notice the \"100 attempts\""
+    kind: source
+    sources: [https://www.anthropic.com/research/prompt-injection-defenses]
+    evidence: "[note] Restates the labs-unsolved claim: about 1% success for an adaptive attacker with 100 attempts."
+    verified: 2026-11-21
+  - page: chapters/agents-permissions
+    text: "CVE-2025-6514 in `mcp-remote` (CVSS 9.6)"
+    kind: source
+    sources: [https://nvd.nist.gov/vuln/detail/CVE-2025-6514]
+    evidence: "OS command injection when connecting to untrusted MCP servers"
+    verified: 2026-11-21
+  - page: chapters/supply-chain
+    text: "had a hole until version 2.6"
+    kind: source
+    sources: [https://nvd.nist.gov/vuln/detail/CVE-2025-32434]
+    evidence: "fixed in version 2.6.0"
+    verified: 2026-11-21
+  - page: chapters/supply-chain
+    text: "The Amazon Q extension incident (July 2025, CVE-2025-8217)"
+    kind: source
+    sources: [https://aws.amazon.com/security/security-bulletins/AWS-2025-015/]
+    evidence: "inappropriately scoped GitHub token in their CodeBuild configuration"
+    verified: 2026-11-21
+  - page: chapters/supply-chain
+    text: "Update PyTorch to 2.6 or later (CVE-2025-32434"
+    kind: source
+    sources: [https://nvd.nist.gov/vuln/detail/CVE-2025-32434]
+    evidence: "fixed in version 2.6.0"
+    verified: 2026-11-21
+  - page: chapters/supply-chain
+    text: "In one large study, 43% came back every time"
+    kind: source
+    sources: [https://arxiv.org/html/2406.10279v3]
+    evidence: "43% of hallucinated packages were repeated in all 10 queries"
+    verified: 2026-11-21
+  - page: chapters/your-data
+    text: "Italy's regulator fined OpenAI €15 million in 2024, though a Rome court annulled the fine in March 2026"
+    kind: source
+    sources: [https://www.garanteprivacy.it/home/docweb/-/docweb-display/print/10085432, https://www.wsgr.com/en/insights/openai-prevails-in-landmark-italian-ai-and-gdpr-enforcement-case.html]
+    evidence: "sentenza del Tribunale di Roma n. 4153/2026, pubbl. il 18/03/2026"
+    verified: 2026-11-21
+  - page: chapters/your-data
+    text: "reported as Regulation (EU) 2026/1744"
+    kind: source
+    sources: [https://www.whitecase.com/insight-alert/eu-ai-omnibus-enters-force-amending-ai-act]
+    evidence: "Regulation (EU) 2026/1744"
+    verified: 2026-11-21
+    note: "Law-firm summary; EUR-Lex was not reachable during the audit."
+  - page: notes/2026-11
+    text: "Strands reports 0.78 on JevBench for its current release (0.72 for its launch build)"
+    kind: source
+    sources: [https://github.com/strands-labs/strands-decider]
+    evidence: "0.779 (180 of 231)"
+    verified: 2026-11-21
+  - page: notes/2026-11
+    text: "mistakes included, 6–8 points more often"
+    kind: source
+    sources: [https://www.ayautomate.com/blog/jev-vs-llm-benchmark]
+    evidence: "agreement ran 6 to 8 points above accuracy"
+    verified: 2026-11-21
+  - page: notes/2026-11
+    text: "Jev answering \"cheap\" for 99.5% of model-routing requests"
+    kind: source
+    sources: [https://arxiv.org/html/2610.02267]
+    evidence: "Jev answers “cheap” for 99.5% of requests"
+    verified: 2026-11-21
+  - page: notes/2026-11
+    text: "now tracks 22 directions"
+    kind: derived
+    calc: "Count of entries in src/data/radar.yaml."

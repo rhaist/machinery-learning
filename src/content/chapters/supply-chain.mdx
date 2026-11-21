@@ -70,7 +70,7 @@ Treat everything an AI system pulls in, whether packages, models, data or tools,
 
 **Poisoning defence** happens mostly before training: curating and deduplicating data, watching sources that change hands (expired domains, for example), and running evaluations after training that look for trigger behaviour. If you fine-tune on scraped or user-submitted data, you inherit this problem directly.
 
-**Crown jewels.** Treat AI gateways and AI command-line tools as high-value software: they collect API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands. Its two published accounts disagree on how the attacker got in, which is common in the first weeks of an incident.
+**Crown jewels.** Treat AI gateways and AI command-line tools as high-value software: they collect API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands. The first reports differed on how the attacker got in; both LiteLLM and Snyk now trace it to a poisoned security scanner in CI that leaked the publishing token.
 </Engineer>
 
 <Quiz q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. Attackers can register a name that keeps coming back." />
