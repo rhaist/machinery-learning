@@ -115,9 +115,9 @@ const done = new Set(store.get('lfg-done', []));
 function markDone() {
   if (page && quizzes.length && quizzes.every((_, i) => solved.has(i))) { done.add(page); store.set('lfg-done', [...done]); }
   $$('[data-chapter-link]').forEach(a => a.classList.toggle('done', done.has(a.dataset.chapterLink)));
-  // where to continue: the chapter you were last reading if it isn't finished, otherwise the next unfinished one after it
-  const stations = $$('.route li');
-  stations.forEach(li => li.classList.remove('next'));
+  // where to continue: the chapter you were last reading if it isn't finished, otherwise the next unfinished one after it.
+  // The hero's journey map lists every chapter in reading order, so it is the source of truth here.
+  const stations = $$('.hm-dots li');
   if (!stations.length) return;
   const ids = stations.map(li => li.dataset.chapterLink);
   const last = store.get('lfg-last', null), pos = store.get('lfg-pos', {});
@@ -126,27 +126,15 @@ function markDone() {
   else if (last && ids.includes(last)) { const i = ids.indexOf(last); target = [...ids.slice(i + 1), ...ids.slice(0, i)].find(id => !done.has(id)) || null; }
   else if (done.size) target = ids.find(id => !done.has(id)) || null;
   const li = target && stations[ids.indexOf(target)];
-  if (li) li.classList.add('next');
   const finished = ids.filter(id => done.has(id)).length;
   const summary = [note, `${finished} of ${ids.length} chapters done`].filter(Boolean).join(' · ');
-  const label = li && li.querySelector('.lb').textContent, href = li && li.querySelector('a').href;
-  const cont = $('#continue');
-  if (cont && li) {
-    cont.hidden = false;
-    cont.querySelector('a').href = href;
-    cont.querySelector('a').textContent = `Continue: ${label}`;
-    $('#continue-note').textContent = summary;
-  }
   const start = $('#hero-start');
-  if (start && li) { start.href = href; start.textContent = `Continue: ${label}`; const meta = $('#hero-meta'); if (meta) meta.textContent = summary; }
-  // journey map in the hero: highlight where to go next (chapter 0 for a first visit)
-  const dots = $$('.hm-dots li');
-  if (dots.length) {
-    const t = target || (done.size ? null : dots[0].dataset.chapterLink);
-    dots.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
-    const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';
-    const key = $('#hm-key'); if (key) key.hidden = !done.size; // the key only matters once there is progress
-  }
+  if (start && li) { start.href = li.querySelector('a').href; start.textContent = `Continue: ${li.dataset.short}`; const meta = $('#hero-meta'); if (meta) meta.textContent = summary; }
+  // highlight where to go next (chapter 0 on a first visit); the key only matters once there is progress
+  const t = target || (done.size ? null : ids[0]);
+  stations.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
+  const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';
+  const key = $('#hm-key'); if (key) key.hidden = !done.size;
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');

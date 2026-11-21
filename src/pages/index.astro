@@ -32,7 +32,7 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
         <nav class="hero-map" aria-label="The whole guide at a glance">
           {parts.map(p => <div class="hm-part">
             <p class="hm-h"><span class="label">{p.title.replace(':', ' ·')}</span> <span class="hm-meta">{p.chapters.length} {p.chapters.length === 1 ? "chapter" : "chapters"} · {dur(mins(p))}</span></p>
-            <ol class="hm-dots">{p.chapters.map(({ c, num }) => <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`} title={c.data.title} aria-label={`Chapter ${num}: ${c.data.title}`}>{num}</a></li>)}</ol>
+            <ol class="hm-dots">{p.chapters.map(({ c, num }) => <li data-chapter-link={c.id} data-short={c.data.short}><a href={`${base}/learn/${c.id}/`} title={c.data.title} aria-label={`Chapter ${num}: ${c.data.title}`}>{num}</a></li>)}</ol>
           </div>)}
           <p class="hm-key small" id="hm-key" hidden><span class="hm-sw next"></span><span id="hm-key-next">start here</span><span class="hm-sw done"></span>finished</p>
         </nav>
@@ -46,12 +46,6 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
   <section class={`band ${pi % 2 ? '' : 'alt'}`}><div class="wrap">
     <div class="part-head"><h2>{p.title}</h2>
     <p>{p.summary}{pi === 0 && " Start at zero if you're new; jump around if you're not."}</p></div>
-    <ol class="route" aria-label={`Your route through ${p.title}`}>
-      {p.chapters.map(({ c, num }) => (
-        <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`}><span class="st">{num}</span><span class="lb">{c.data.short}</span></a></li>
-      ))}
-    </ol>
-    {pi === 0 && <p class="continue" id="continue" hidden><a class="btn pri" href="#">Continue</a> <span class="small" id="continue-note"></span></p>}
     <div class="journey">
       {p.chapters.map(({ c, num }) => (
         <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>
