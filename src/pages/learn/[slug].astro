@@ -33,6 +33,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
       </header>
     </div>
     <div class="prose"><Content /><Reading id={entry.id} /></div>
+    <p class="complete-note label" id="complete-note" hidden>Chapter complete</p>
     <nav class="pager" aria-label="Previous and next chapter">
       {prev && <a href={`${base}/learn/${prev.id}/`}><small>Previous</small>{prev.data.title}</a>}
       {next && <a class="next" href={`${base}/learn/${next.id}/`}><small>Next</small>{next.data.title}</a>}

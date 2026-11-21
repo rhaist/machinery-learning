@@ -1,4 +1,4 @@
-// Site-level behaviour: reading path, freshness, "new since last visit", quizzes, glossary search, radar.
+// Site-level behaviour: reading path, theme, reader (progress, resume, sheet), freshness, "new since last visit", quizzes, glossary search, radar.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -26,6 +26,7 @@ function applyTheme(t) {
   if (t === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t;
   const b = $('#theme-btn');
   if (b) { b.querySelector('.theme-label').textContent = t[0].toUpperCase() + t.slice(1); b.setAttribute('aria-label', t === 'auto' ? 'Colour theme: follows your system' : `Colour theme: ${t}`); }
+  $$('[data-theme-set]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.themeSet === t)));
   // redraw canvases/SVGs that read colours at draw time
   window.dispatchEvent(new Event('resize'));
 }
@@ -35,6 +36,50 @@ if (themeBtn) themeBtn.addEventListener('click', () => {
   const next = THEMES[(THEMES.indexOf(store.get('lfg-theme', 'auto')) + 1) % THEMES.length];
   store.set('lfg-theme', next); applyTheme(next);
 });
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-theme-set]'); if (!b) return;
+  store.set('lfg-theme', b.dataset.themeSet); applyTheme(b.dataset.themeSet);
+});
+
+/* ---------- text size: s | m | l ---------- */
+function applySize(z) {
+  if (z === 'm') delete document.documentElement.dataset.size; else document.documentElement.dataset.size = z;
+  $$('[data-size-btn]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sizeBtn === z)));
+}
+applySize(store.get('lfg-size', 'm'));
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-size-btn]'); if (!b) return;
+  store.set('lfg-size', b.dataset.sizeBtn); applySize(b.dataset.sizeBtn); readerUpdate && readerUpdate();
+});
+
+var readerUpdate = null;
+
+/* ---------- menu sheet ---------- */
+const sheet = $('#sheet');
+let sheetReturn = null;
+function openSheet(at) {
+  if (!sheet || sheet.open) return;
+  sheetReturn = document.activeElement;
+  readerUpdate && readerUpdate();
+  sheet.showModal();
+  const target = at && document.getElementById(at);
+  const body = sheet.querySelector('.sheet-body');
+  if (target && body) body.scrollTop = target.offsetTop - body.offsetTop;
+  else if (body) body.scrollTop = 0;
+  const focusEl = (target && target.querySelector('[aria-current], a, button')) || sheet.querySelector('[data-sheet-close]');
+  if (focusEl) focusEl.focus({ preventScroll: true });
+}
+function closeSheet() { if (sheet && sheet.open) sheet.close(); }
+if (sheet) {
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-sheet-open]'); if (o) { e.preventDefault(); openSheet(o.dataset.sheetAt); return; }
+    if (e.target.closest('[data-sheet-close]')) closeSheet();
+  });
+  // tap on the backdrop closes; links inside close before navigating within the page
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); const a = e.target.closest('a[href^="#"]'); if (a) closeSheet(); });
+  sheet.addEventListener('close', () => { if (sheetReturn && sheetReturn.focus) sheetReturn.focus({ preventScroll: true }); });
+}
 
 /* ---------- freshness of claims (re-computed in the browser, so fading works between builds) ---------- */
 function freshness(verified, hl) {
@@ -174,3 +219,88 @@ if (radarEl) {
   if (slider) { slider.max = R.months.length - 1; slider.value = R.months.length - 1; slider.addEventListener('input', () => { month = R.months[+slider.value]; draw(); }); }
   const roR = new ResizeObserver(draw); roR.observe(radarEl);
 }
+
+/* ---------- reader: progress, sections, resume, completion, hide-on-scroll ---------- */
+(() => {
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const chapterId = document.body.dataset.chapter;
+  const prose = chapterId && $('.chapter .prose');
+  const root = document.documentElement;
+  // hide header and reader bar while scrolling down; show on scroll up, near the top and near the end
+  let lastY = scrollY, ticking = false;
+  const compact = matchMedia('(max-width: 900px), (pointer: coarse)');
+  function onScrollChrome() {
+    const y = scrollY, dy = y - lastY;
+    const nearEnd = y + innerHeight > document.documentElement.scrollHeight - 160;
+    if (!compact.matches || y < 80 || nearEnd || (sheet && sheet.open)) root.classList.remove('head-hidden');
+    else if (dy > 6) root.classList.add('head-hidden');
+    else if (dy < -6) root.classList.remove('head-hidden');
+    lastY = y;
+  }
+  if (!prose) {
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { onScrollChrome(); ticking = false; }); } }, { passive: true });
+    return;
+  }
+  const minutes = +document.body.dataset.minutes || 0;
+  const bar = $('.read-progress');
+  const left = $('#rb-left');
+  const heads = $$('.chapter .prose > h2');
+  const toc = $('#sheet-toc');
+  if (toc) toc.innerHTML = heads.map((h, i) => { if (!h.id) h.id = 's-' + (h.textContent || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48); return `<li><a href="#${h.id}">${h.textContent.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</a></li>`; }).join('');
+  const tocLinks = toc ? [...toc.querySelectorAll('a')] : [];
+  const pos = store.get('lfg-pos', {});
+  const anchorAt = () => innerHeight * 0.3;
+  function progress() {
+    const r = prose.getBoundingClientRect();
+    const span = Math.max(1, r.height - innerHeight * 0.5);
+    return Math.min(1, Math.max(0, (anchorAt() - r.top) / span));
+  }
+  let saveT = null, completed = false;
+  function update() {
+    const p = progress();
+    if (bar) bar.style.setProperty('--p', p.toFixed(4));
+    if (left) left.textContent = p >= 0.98 ? 'Done' : `${Math.max(1, Math.ceil(minutes * (1 - p)))} min left`;
+    // current section
+    let cur = -1;
+    heads.forEach((h, i) => { if (h.getBoundingClientRect().top < anchorAt()) cur = i; });
+    tocLinks.forEach((a, i) => { a.classList.toggle('read', i < cur); if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    // remember the place (debounced), and mark the chapter done at the end
+    clearTimeout(saveT);
+    saveT = setTimeout(() => { const all = store.get('lfg-pos', {}); if (p > 0.03 && p < 0.97) all[chapterId] = +p.toFixed(3); else delete all[chapterId]; store.set('lfg-pos', all); }, 400);
+    if (p >= 0.97 && !completed) {
+      completed = true;
+      done.add(chapterId); store.set('lfg-done', [...done]); markDone();
+      const note = $('#complete-note'); if (note) note.hidden = false;
+    }
+  }
+  readerUpdate = update;
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { onScrollChrome(); update(); ticking = false; }); } }, { passive: true });
+  addEventListener('resize', update);
+  if (done.has(chapterId)) { const note = $('#complete-note'); if (note) note.hidden = false; completed = true; }
+  update();
+  // offer to resume where the reader stopped (never jump on its own)
+  const saved = pos[chapterId];
+  const toast = $('#toast');
+  if (saved && !location.hash && scrollY < 40 && toast) {
+    toast.innerHTML = `<span>Continue where you left off (${Math.round(saved * 100)}%)?</span><button type="button" class="btn pri" data-resume>Continue</button><button type="button" class="btn x" data-toast-close aria-label="Dismiss">✕</button>`;
+    toast.hidden = false;
+    const hide = () => { toast.hidden = true; };
+    const timer = setTimeout(hide, 9000);
+    toast.addEventListener('click', e => {
+      if (e.target.closest('[data-resume]')) {
+        const r = prose.getBoundingClientRect();
+        const span = Math.max(1, r.height - innerHeight * 0.5);
+        const y = scrollY + r.top + saved * span - anchorAt();
+        scrollTo({ top: Math.max(0, y), behavior: reduce() ? 'auto' : 'smooth' });
+        clearTimeout(timer); hide();
+      } else if (e.target.closest('[data-toast-close]')) { clearTimeout(timer); hide(); }
+    });
+  }
+  // keyboard: ← → move between chapters (not while typing or using a control)
+  document.addEventListener('keydown', e => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const t = e.target; if (t.closest && t.closest('input, select, textarea, [contenteditable], .scroll, dialog')) return;
+    const url = e.key === 'ArrowRight' ? document.body.dataset.next : e.key === 'ArrowLeft' ? document.body.dataset.prev : null;
+    if (url) location.href = url;
+  });
+})();

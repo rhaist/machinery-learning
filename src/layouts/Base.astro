@@ -3,7 +3,7 @@ import '@fontsource-variable/instrument-sans/index.css';
 import '@fontsource/martian-mono/latin-400.css';
 import '@fontsource/martian-mono/latin-500.css';
 import '../styles/global.css';
-import { glossary, site } from '../lib/data';
+import { glossary, site, byPart } from '../lib/data';
 import { getCollection } from 'astro:content';
 const { title, description = `${site.tagline}. Interactive, plain-language, updated monthly.`, chapter = '', nav = '', og = 'home' } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -11,13 +11,17 @@ const ogUrl = new URL(`${base}/og/${og}.png`, Astro.site).href;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
 const lastUpdate = notes[0]?.data.date;
+const parts = byPart(await getCollection('chapters') as any[]);
+const flat = parts.flatMap(p => p.chapters.map(({ c, num }) => ({ c, num, part: p })));
+const at = flat.findIndex(x => x.c.id === chapter);
+const cur = at >= 0 ? flat[at] : null, prevC = at > 0 ? flat[at - 1] : null, nextC = at >= 0 ? flat[at + 1] ?? null : null;
 const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar', `${base}/radar/`], ['notes', 'Field notes', `${base}/notes/`], ['glossary', 'Glossary', `${base}/glossary/`], ['about', 'How it works', `${base}/about/`]];
 ---
 <!DOCTYPE html>
 <html lang="en" data-depth="beginner">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{title === site.name ? `${site.name}: ${site.tagline}` : `${title} · ${site.name}`}</title>
   <meta property="og:title" content={title === site.name ? site.name : `${title} · ${site.name}`}>
   <meta property="og:description" content={description}>
@@ -32,21 +36,55 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <meta name="description" content={description}>
   <link rel="alternate" type="application/rss+xml" title={`${site.name}: field notes`} href={`${base}/rss.xml`}>
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml">
-  <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d;var t=JSON.parse(localStorage.getItem('lfg-theme')||'"auto"');if(t!=="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d;var t=JSON.parse(localStorage.getItem('lfg-theme')||'"auto"');if(t!=="auto")document.documentElement.dataset.theme=t;var z=JSON.parse(localStorage.getItem('lfg-size')||'"m"');if(z!=="m")document.documentElement.dataset.size=z}catch(e){}</script>
 </head>
-<body data-chapter={chapter}>
+<body data-chapter={chapter} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
   <header class="site-head"><div class="in">
     <a class="brand" href={`${base}/`}><i></i>{site.name}</a>
     <nav class="site-nav" aria-label="Main">{links.map(([k, label, href]) => <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>)}</nav>
     <button type="button" class="theme-btn" id="theme-btn" aria-label="Colour theme: follows your system" title="Colour theme"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><span class="theme-label">Auto</span></button>
+    <button type="button" class="menu-btn" data-sheet-open aria-haspopup="dialog" aria-controls="sheet"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg><span>Menu</span></button>
     <div class="depth"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
-  </div></header>
+  </div>{cur && <div class="read-progress" aria-hidden="true"><i></i></div>}</header>
   <slot name="top" />
   <main><slot /></main>
   <footer class="site-foot band"><div class="in">
     <span>A living guide, updated monthly{lastUpdate && <> · last update {lastUpdate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</>}</span>
     <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a> · <a href={`${base}/impressum/`}>Legal notice</a> · <a href={`${base}/privacy/`}>Privacy</a></span>
   </div></footer>
+  {cur && <nav class="reader-bar" aria-label="Reading controls">
+    <button type="button" class="rb-btn" data-sheet-open data-sheet-at="sheet-sections" aria-haspopup="dialog" aria-controls="sheet"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg><span>Contents</span></button>
+    <p class="rb-status" aria-live="off"><span class="rb-ch">{cur.part.index > 1 && <span class="rb-part">Part {cur.part.index} · </span>}Ch. {cur.num}</span><span class="rb-left" id="rb-left">{cur.c.data.minutes} min</span></p>
+    <button type="button" class="rb-btn" data-sheet-open data-sheet-at="sheet-settings" aria-haspopup="dialog" aria-controls="sheet" aria-label="Text and reading settings"><span class="rb-aa" aria-hidden="true">Aa</span></button>
+    {nextC ? <a class="rb-btn rb-next" href={`${base}/learn/${nextC.c.id}/`} aria-label={`Next chapter: ${nextC.c.data.title}`}><span>Next</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a> : <a class="rb-btn rb-next" href={`${base}/`}><span>Home</span></a>}
+  </nav>}
+  <dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+    <div class="sheet-head"><p class="label" id="sheet-title">{cur ? 'Contents' : 'Menu'}</p><button type="button" class="btn sm" data-sheet-close>Close</button></div>
+    <div class="sheet-body">
+      {cur && <section class="sheet-sec" id="sheet-sections" aria-label="In this chapter">
+        <p class="label">In this chapter</p>
+        <p class="sheet-now">{cur.c.data.title}</p>
+        <ol class="sheet-toc" id="sheet-toc"></ol>
+      </section>}
+      <section class="sheet-sec" aria-label="Chapters">
+        {parts.map(p => <>
+          <p class="label">{p.title}</p>
+          <ol class="sheet-chapters">{p.chapters.map(({ c, num }) => <li><a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === chapter ? 'page' : undefined}><span class="sc-num">{num}</span><span class="sc-t">{c.data.short}</span><span class="sc-m">{c.data.minutes} min</span></a></li>)}</ol>
+        </>)}
+      </section>
+      <section class={cur ? 'sheet-sec' : 'sheet-sec sheet-first'} aria-label="Guide">
+        <p class="label">Guide</p>
+        <ul class="sheet-links"><li><a href={`${base}/`}>Home</a></li>{links.map(([k, label, href]) => <li><a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a></li>)}</ul>
+      </section>
+      <section class="sheet-sec" id="sheet-settings" aria-label="Settings">
+        <p class="label">Settings</p>
+        <div class="sheet-set"><span>Reading path</span><div class="seg2" role="group" aria-label="Reading path"><button type="button" data-depth-btn="beginner" aria-pressed="true">Beginner</button><button type="button" data-depth-btn="engineer" aria-pressed="false">Engineer</button></div></div>
+        <div class="sheet-set"><span>Text size</span><div class="seg2" role="group" aria-label="Text size"><button type="button" data-size-btn="s" aria-pressed="false" aria-label="Small text">A−</button><button type="button" data-size-btn="m" aria-pressed="true" aria-label="Medium text">A</button><button type="button" data-size-btn="l" aria-pressed="false" aria-label="Large text">A+</button></div></div>
+        <div class="sheet-set"><span>Theme</span><div class="seg2" role="group" aria-label="Colour theme"><button type="button" data-theme-set="auto" aria-pressed="true">Auto</button><button type="button" data-theme-set="light" aria-pressed="false">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div></div>
+      </section>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
   <div id="tip" hidden role="tooltip"></div>
   <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)} />
   <script>
