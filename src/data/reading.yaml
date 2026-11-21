@@ -50,6 +50,7 @@ frontier:
   - { title: "Why did M2 end up as a full-attention model?", by: MiniMax, year: 2025, url: "https://www.minimax.io/news/why-did-m2-end-up-as-a-full-attention-model", why: "A lab's own account of why it abandoned a hybrid." }
   - { title: "V-JEPA 2", by: Assran et al., year: 2025, url: "https://arxiv.org/abs/2506.09985", why: "The concrete JEPA world-model result: robot planning from video." }
   - { title: "Chain of Thought Monitorability", by: Korbak et al., year: 2025, url: "https://arxiv.org/abs/2507.11473", why: "Why thinking in hidden numbers carries a safety cost." }
+  - { title: "The 2026 AI Index Report", by: Stanford HAI, year: 2026, url: "https://hai.stanford.edu/ai-index/2026-ai-index-report", why: "The field's independent annual data review; the 2026 edition finds capability advancing faster than our ability to measure it." }
 prompt-injection:
   - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
   - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }

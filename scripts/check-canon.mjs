@@ -14,7 +14,8 @@ const problems = [];
 for (const c of canon) {
   if (!['cited', 'excluded'].includes(c.status)) problems.push(`canon: bad status for ${c.id}`);
   if (c.status === 'excluded' && !c.reason) problems.push(`canon: excluded without a reason: ${c.title}`);
-  if (c.status === 'cited' && !new RegExp(`arxiv\\.org/(abs|html|pdf)/${c.id.replace('.', '\\.')}`).test(blob)) problems.push(`canon: marked cited but not linked anywhere: ${c.id} ${c.title}`);
+  const linked = c.url ? blob.includes(c.url) : new RegExp(`arxiv\\.org/(abs|html|pdf)/${String(c.id).replace('.', '\\.')}`).test(blob);
+  if (c.status === 'cited' && !linked) problems.push(`canon: marked cited but not linked anywhere: ${c.id ?? c.url} ${c.title}`);
 }
 if (problems.length) { console.error(problems.map(p => '✗ ' + p).join('\n')); process.exit(1); }
 console.log(`Canon check: OK (${canon.filter(c => c.status === 'cited').length} cited, ${canon.filter(c => c.status === 'excluded').length} excluded with reasons)`);

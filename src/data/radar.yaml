@@ -26,7 +26,7 @@ entries:
     name: Mixture of Experts
     quadrant: Architecture
     chapter: inside-the-stack
-    note: Huge total capacity, small per-token compute (about 5% of parameters per token). Standard in leading open-weight models and Gemini; closed labs mostly don't say.
+    note: Huge total capacity, small per-token compute (around 4–6% of parameters per token in current flagships). Standard in leading open-weight models and Gemini; closed labs mostly don't say.
     history: { 2026-11: shipping }
 
   - id: diffusion-lms

@@ -192,7 +192,7 @@
   evidence: "discard its language-modelling head"
   sources:
     - https://github.com/strands-labs/strands-decider
-    - https://tech-insider.org/amazon-strands-decider-2b-open-source-agent-model-2026/
+    - https://strandsagents.com/blog/introducing-strands-decider/
   verified: 2026-11-21
   half_life: 3
   status: emerging
@@ -306,7 +306,7 @@
 - id: camel
   text: "Google DeepMind's CaMeL tracks where every piece of data came from and enforces rules at tool calls; on the AgentDojo benchmark it completed 77% of tasks with provable security, against 84% undefended"
   evidence: "solving 77% of tasks with provable security (compared to 84% with an undefended system)"
-  sources: [https://arxiv.org/abs/2503.18813, https://arxiv.org/abs/2506.08837]
+  sources: [https://arxiv.org/abs/2503.18813v2, https://arxiv.org/abs/2506.08837]
   verified: 2026-11-21
   half_life: 6
   status: research
@@ -393,7 +393,7 @@
 - id: replit-db
   text: "in July 2025 a Replit coding agent deleted a production database during a declared code freeze; the freeze existed only as an instruction in text"
   evidence: "Replit agent in development deleted data from the production database"
-  sources: [https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/]
+  sources: [https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/, https://www.theregister.com/2025/07/22/replit_saastr_response/]
   verified: 2026-11-21
   status: evergreen
 
@@ -557,7 +557,7 @@
   text: "the 2026 \"Digital Omnibus\" moved the EU's high-risk AI rules to December 2027 (stand-alone systems) and August 2028 (systems in products), leaving the general-purpose AI duties unchanged"
   evidence: "2 December 2027"
   evidence_src: https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en
-  sources: [https://digital-strategy.ec.europa.eu/en/news/eu-agrees-simplify-ai-rules-boost-innovation-and-ban-nudification-apps-protect-citizens, https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/, https://data.consilium.europa.eu/doc/document/PE-30-2026-INIT/en/pdf, https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en]
+  sources: [https://eur-lex.europa.eu/eli/reg/2026/1744/oj, https://digital-strategy.ec.europa.eu/en/news/eu-agrees-simplify-ai-rules-boost-innovation-and-ban-nudification-apps-protect-citizens, https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/, https://data.consilium.europa.eu/doc/document/PE-30-2026-INIT/en/pdf, https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en]
   verified: 2026-11-21
   half_life: 3
   status: shipping
@@ -636,7 +636,7 @@
 - id: arup-deepfake
   text: "in early 2024 an Arup employee in Hong Kong transferred about US$25 million after a video call in which every other participant, including the CFO, was a deepfake"
   evidence: "200 million Hong Kong dollars ($25.6 million)"
-  sources: [https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo/]
+  sources: [https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo/, https://edition.cnn.com/2024/05/16/tech/arup-deepfake-scam-loss-hong-kong-intl-hnk]
   verified: 2026-11-21
   status: evergreen
 

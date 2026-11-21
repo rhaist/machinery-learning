@@ -274,12 +274,11 @@ figures:
     evidence: "sentenza del Tribunale di Roma n. 4153/2026, pubbl. il 18/03/2026"
     verified: 2026-11-21
   - page: chapters/your-data
-    text: "reported as Regulation (EU) 2026/1744"
+    text: "Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force since 27 July 2026"
     kind: source
-    sources: [https://www.whitecase.com/insight-alert/eu-ai-omnibus-enters-force-amending-ai-act]
-    evidence: "Regulation (EU) 2026/1744"
+    sources: [https://eur-lex.europa.eu/eli/reg/2026/1744/oj, https://www.efta.int/eea-lex/32026r1744]
+    evidence: "REGULATION (EU) 2026/1744 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 8 July 2026"
     verified: 2026-11-21
-    note: "Law-firm summary; EUR-Lex was not reachable during the audit."
   - page: notes/2026-11
     text: "Strands reports 0.78 on JevBench for its current release (0.72 for its launch build)"
     kind: source
