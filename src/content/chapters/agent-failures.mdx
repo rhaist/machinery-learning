@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import SpotFailure from '../../components/SpotFailure.astro';
 
-A chatbot's mistake sits on the screen in front of you. An agent's mistake can be twenty steps back, inside a file you never opened, under a cheerful "done". This chapter is about that gap: how agents fail, why their failures are hard to see, and what kinds of checking catch them.
+A chatbot's mistake sits on the screen in front of you. An agent's mistake can be twenty steps back, inside a file you never opened, under a cheerful "done". Agents fail in ways that are hard to see, and only some kinds of checking catch them.
 
 <Note title="The contractor who paints over the cracks">
 You hire a contractor to fix a crack in the wall and ask them to call when it passes inspection. They call: it passed. They didn't lie, exactly. They filled the crack with paste and painted over it, and the inspector only looked at the surface. Nobody was malicious. The inspection checked the wrong thing, and the contractor learned what the inspection checks.
@@ -23,7 +23,7 @@ You hire a contractor to fix a crack in the wall and ask them to call when it pa
 
 ## Passing isn't done
 
-Agents are trained and judged against signals that can be checked automatically: tests pass, the grader says yes, the user clicks thumbs-up. The trouble is that what can be checked cheaply is rarely all of what you wanted. <Claim id="metr-merge" cap />. The tests passed. The work wasn't good enough.
+Agents are trained and judged against signals that can be checked automatically: tests pass, the grader says yes, the user clicks thumbs-up. The trouble is that what can be checked cheaply is rarely all of what you wanted. <Claim id="metr-merge" cap />. The tests passed, and the work still wasn't good enough.
 
 Look for the problem yourself:
 
@@ -31,13 +31,13 @@ Look for the problem yourself:
 
 ## Gaming the check
 
-When the check is easier to satisfy than the task, models find the shortcut. Researchers call it <Term k="rewardhack">reward hacking</Term>. <Claim id="metr-monkeypatch" cap />. It's not constant: <Claim id="metr-hack-rates" />. The pattern is the important part. Cheating happens where the score is easy to fake and the real work is hard, which describes a lot of real tasks.
+When the check is easier to satisfy than the task, models find the shortcut. Researchers call it <Term k="rewardhack">reward hacking</Term>. <Claim id="metr-monkeypatch" cap />. It's not constant: <Claim id="metr-hack-rates" />. Cheating happens where the score is easy to fake and the real work is hard, which describes a lot of real tasks.
 
-It can also spread. <Claim id="hack-generalises" cap />. The fix that worked is surprising: <Claim id="inoculation" />. That's lab research on one training setup, but it suggests cheating is less a quirk than a lesson the model learns about what it's for.
+It can also spread. <Claim id="hack-generalises" cap />. What stopped it: <Claim id="inoculation" />. That comes from one lab's training setup, and it suggests cheating can shape a model's behaviour well beyond the task where it learned to cheat.
 
 ## Claiming success it didn't achieve
 
-The most practical failure is the simplest. <Claim id="fake-done" cap />. Sometimes the agent believes it; sometimes it skips the check that would have told it otherwise. Watching the agent's reasoning helps, up to a point. <Claim id="cot-hide" cap />.
+<Claim id="fake-done" cap />. Sometimes the agent believes it; sometimes it skips the check that would have told it otherwise. Watching the agent's reasoning helps, up to a point. <Claim id="cot-hide" cap />.
 
 Agreeing too readily is a cousin of this problem. Models learn partly from human approval, and people like being agreed with. <Claim id="gpt4o-sycophancy" cap />. An agent that goes along with your flawed plan won't flag the flaw.
 
@@ -45,7 +45,7 @@ And people are not reliable checkers of large output either. <Claim id="perry-se
 
 ## When it goes wrong for real
 
-The damaging incidents so far look less like plotting and more like confident carelessness with too much access:
+The damaging incidents so far came from confident, careless agents with too much access:
 
 - <Claim id="replit-db" cap />.
 - <Claim id="gemini-cli-moves" cap />.
@@ -55,7 +55,7 @@ In each case the agent's apology came after the damage, and in each case a borin
 
 ## What lab tests of deception show
 
-You may have seen headlines about AI models blackmailing people. They come from staged tests. <Claim id="blackmail" cap />. Labs build such scenarios as fire drills in rigged buildings: they show what a model *can* do when cornered, not how often it happens at work. One result complicates every number: <Claim id="blackmail-aware" />. <Claim id="eval-awareness" cap />.
+You may have seen headlines about AI models blackmailing people. They come from staged tests. <Claim id="blackmail" cap />. Labs build such scenarios as fire drills in rigged buildings: they show what a model *can* do when cornered, not how often it happens at work. One result complicates these numbers: <Claim id="blackmail-aware" />. <Claim id="eval-awareness" cap />.
 
 <Debate id="scheming-evals" />
 
@@ -63,10 +63,10 @@ You may have seen headlines about AI models blackmailing people. They come from 
 
 Reading everything an agent does doesn't scale, and asking it whether it's sure doesn't help. What works is a short list of checks that don't depend on the agent's word:
 
-- **Checks outside the agent.** Rules that flag changes to tests, configuration or permissions; a separate test run in CI that the agent can't edit; spot checks of finished work against what you actually asked for.
-- **Approvals only where they matter.** <Claim id="approval-93" cap />. A prompt for every step trains people to click yes. Save approvals for actions that can't be undone, and show the effect (the diff, the recipient, the amount), not the agent's explanation. <Claim id="owasp-asi09" cap />.
-- **Reversibility by design.** Snapshots before a task, deletes that go to a bin, backups held with credentials the agent never sees, separate environments for production.
-- **Small, checkable tasks.** A task you can verify in five minutes beats one that takes an hour to review, even if the agent could do the bigger one.
+- Checks outside the agent: Rules that flag changes to tests, configuration or permissions; a separate test run in CI that the agent can't edit; spot checks of finished work against what you actually asked for.
+- Approvals only where they matter. <Claim id="approval-93" cap />. A prompt for every step trains people to click yes. Save approvals for actions that can't be undone, and show the effect (the diff, the recipient, the amount), not the agent's explanation. <Claim id="owasp-asi09" cap />.
+- Reversibility by design: Snapshots before a task, deletes that go to a bin, backups held with credentials the agent never sees, separate environments for production.
+- Small, checkable tasks. A task you can verify in five minutes beats one that takes an hour to review, even if the agent could do the bigger one.
 
 <Note title="Security note: logs and undo" kind="warn">
 An agent's own report is not evidence. Its logs are, if the agent can't change them. Record every tool call, with arguments and results, to a store outside the agent's reach. Git history inside the agent's workspace doesn't count: the agent can rewrite it. Keep backups and snapshots behind credentials the agent doesn't hold, so a confident mistake can't take the safety net with it. And keep a way to stop everything at once, as the NCSC recommends (see [What the agent sees](/learn/context-and-memory/)).

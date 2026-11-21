@@ -36,13 +36,13 @@ Summaries keep the gist and drop the details nobody flagged as important, which 
 
 The model itself remembers nothing between calls. Its weights are frozen. What products call memory is a harness feature: it writes text somewhere, a list of saved facts or an index of old chats, and pastes the relevant parts back into the context later. <Claim id="chatgpt-memory" cap />.
 
-That works less well than it sounds. <Claim id="longmemeval" cap />. Memories also go stale: a fact saved in March may be wrong in November, and the model can't tell. Retrieval-based search over documents and memory end the same way: as text on the desk, subject to the same limits.
+It works less well than the name suggests. <Claim id="longmemeval" cap />. Memories also go stale: a fact saved in March may be wrong in November, and the model can't tell. Retrieval-based search over documents and memory end the same way: as text on the desk, subject to the same limits.
 
 <Debate id="big-window-or-curation" />
 
 ## How tools and know-how plug in
 
-An agent is only as useful as what it can reach. Instead of every product wiring up every service by hand, a few shared formats have emerged:
+Agents need tools and data to work with. Instead of every product wiring up every service by hand, a few shared formats have emerged:
 
 - **MCP** (Model Context Protocol) is a standard plug for tools and data: a mail server, a database or a ticketing system describes its tools once, and any agent that speaks MCP can use them. <Claim id="aaif" cap />. <Claim id="mcp-stateless" cap />.
 - **Instruction files** such as AGENTS.md are a README for agents: the harness pastes them into the context at the start of a session.
@@ -51,15 +51,15 @@ An agent is only as useful as what it can reach. Instead of every product wiring
 All three are ways of getting text into the context: tool descriptions, instructions, results. That text steers the agent. <Claim id="tool-desc" cap />. It's also why the same model can do very differently in different products. <Claim id="harness-matters" cap />. A benchmark score belongs to a model *and* its harness, tools and settings, never to the model alone.
 
 <Note title="Security note: where the agent's code runs" kind="warn">
-Two kinds of risk meet here. First, everything that enters the context can carry instructions: a tool description, a file, a web page, even a stored memory. <Claim id="spaiware-fix" cap />. Treat skills, instruction files and MCP servers like code from a stranger, as [Giving an AI the keys](/learn/agents-permissions/) explains.
+Everything that enters the context can carry instructions: a tool description, a file, a web page, even a stored memory. <Claim id="spaiware-fix" cap />. Treat skills, instruction files and MCP servers like code from a stranger, as [Giving an AI the keys](/learn/agents-permissions/) explains.
 
-Second, agents run code, so it matters *where*. The options form a ladder, from a plain program on your laptop up to a separate machine:
+Agents also run code, so it matters *where*. The options form a ladder, from a plain program on your laptop up to a separate machine:
 
 <IsolationLadder />
 
 Cloud services that run agent code have largely settled on <Term k="microvm">microVMs</Term>. <Claim id="firecracker" cap />, cheap enough to give every session its own. <Term k="gvisor">gVisor</Term> is the main alternative, and its makers are clear about its limits: <Claim id="gvisor-sidechannel" />. On your own computer, protection is usually thinner. <Claim id="cc-sandbox" cap />.
 
-The most serious escapes so far didn't break the walls. They went through a door that was left open. <Claim id="openai-artifactory" cap />. Official guidance has caught up: <Claim id="ncsc-agents" />.
+The most serious escapes so far went through a permitted path rather than through the isolation itself. <Claim id="openai-artifactory" cap />. Official guidance has caught up: <Claim id="ncsc-agents" />.
 </Note>
 
 <Engineer title="Building the context, and choosing the sandbox">

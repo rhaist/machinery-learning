@@ -31,6 +31,18 @@ names:
   - Article 50
 
 figures:
+  - page: notes/2026-11
+    text: "Microsoft's October update alone fixed 1,413 flaws, more than in all of 2025"
+    kind: source
+    sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/, https://www.infosecurity-magazine.com/news/microsoft-patch-tuesday-record-1/]
+    evidence: "a mega Patch Tuesday, containing 1,413 defects"
+    verified: 2026-11-21
+  - page: notes/2026-11
+    text: "doubles about every 3.6 months"
+    kind: source
+    sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+    evidence: "time horizons are doubling roughly every 3.61 months"
+    verified: 2026-11-21
   - page: chapters/agents-at-work
     text: "At 50% success, the newest model in this data handles tasks of about seventeen hours. Demand four successes in five and the same model manages about three"
     kind: derived

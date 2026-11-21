@@ -18,7 +18,7 @@ import PatchGap from '../../components/PatchGap.astro';
 Most chapters in this part are about attacks on AI. This one is about what AI is doing to security everywhere else. For decades, the slow step in software security was finding the flaws. In 2026 that changed: AI models now read code and find flaws at a pace no human team could match. Fixing them did not speed up.
 
 <Note title="The inspector with a drone">
-A building inspector used to walk a building for a week and find a dozen problems. Now a drone finds a thousand overnight. The repair crew is the same size as before. Some rooms aren't on the floor plan, and some doors were welded shut years ago. The building isn't any worse than it was last month. It's just that nobody can pretend not to know any more.
+A building inspector used to walk a building for a week and find a dozen problems. Now a drone finds a thousand overnight. The repair crew is the same size as before. Some rooms aren't on the floor plan, and some doors were welded shut years ago. The building is no worse than last month; its problems are now on paper.
 </Note>
 
 ## The wave you can see in the data
@@ -33,12 +33,12 @@ Look at the two charts together. The top one counts flaws found and published. T
 
 ## How AI finds flaws
 
-There is no single trick. Models do several jobs that used to need scarce experts:
+Models do several jobs that used to need scarce experts:
 
-- **Reading code like a reviewer who never gets tired**, function by function, asking what happens with unexpected input.
-- **Writing the test inputs**: generating thousands of strange inputs to see what crashes, and then explaining why.
-- **Looking for siblings**: once one flaw is known, finding the same mistake everywhere else it was copied.
-- **Reading patches**: comparing a fixed version with the old one shows exactly what was broken. Defenders use this to check fixes. Attackers use it to build exploits for everyone who hasn't patched yet.
+- Reading code like a reviewer who never gets tired, function by function, asking what happens with unexpected input.
+- Writing the test inputs: generating thousands of strange inputs to see what crashes, and then explaining why.
+- Looking for siblings: once one flaw is known, finding the same mistake everywhere else it was copied.
+- Reading patches: comparing a fixed version with the old one shows exactly what was broken. Defenders use this to check fixes. Attackers use it to build exploits for everyone who hasn't patched yet.
 
 The last point is why a published patch starts a clock. Not every finding is real or dangerous, though. <Claim id="glasswing-vulncheck" cap />. Many more were duplicates, outside what the project treats as a security boundary, or still waiting for a human to check them.
 
@@ -46,11 +46,11 @@ The last point is why a published patch starts a clock. Not every finding is rea
 
 A patch only helps once it is installed. Between "a fix exists" and "we are safe" sit the same steps as ever:
 
-- **Knowing what you own.** You can't patch a server, a camera or a laptop that isn't on your <Term k="asset-inventory">asset inventory</Term>, and in large networks that list is rarely complete.
-- **Getting a fix at all.** Appliances and embedded devices wait for the vendor. <Claim id="ncsc-legacy" cap />: <Term k="eol">end-of-life</Term> systems that will collect new findings and never a fix.
-- **Finding a window.** Factories, hospitals and payment systems can't reboot whenever a patch lands. Each update has to be tested so it doesn't break the business it protects.
+- Knowing what you own. You can't patch a server, a camera or a laptop that isn't on your <Term k="asset-inventory">asset inventory</Term>, and in large networks that list is rarely complete.
+- Getting a fix at all. Appliances and embedded devices wait for the vendor. <Claim id="ncsc-legacy" cap />: <Term k="eol">end-of-life</Term> systems that will collect new findings and never a fix.
+- Finding a window. Factories, hospitals and payment systems can't reboot whenever a patch lands. Each update has to be tested so it doesn't break the business it protects.
 
-None of this is new. It's the basic hygiene that security teams have asked for since the beginning, and the gaps were survivable while flaws trickled in. They aren't now. <Claim id="dbir-31" cap />, and <Claim id="dbir-43" />.
+These are the basics security teams have asked for since the beginning, and the gaps were survivable while flaws trickled in. At today's volume they aren't. <Claim id="dbir-31" cap />, and <Claim id="dbir-43" />.
 
 ## Crisis or backlog?
 
@@ -58,12 +58,12 @@ None of this is new. It's the basic hygiene that security teams have asked for s
 
 ## What still works
 
-The answer isn't to patch everything faster. Nobody can. It's to patch the right things first and make the rest harder to reach. <Claim id="ncsc-wave" cap />.
+Nobody can patch everything faster, so patch the right things first and make the rest harder to reach. <Claim id="ncsc-wave" cap />.
 
-- **Fix what attackers are actually using.** Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else. The difference is large: <Claim id="zdc-policy" />.
-- **Start at the edge.** Firewalls, VPN gateways and anything reachable from the internet come first, because attackers scan for them within hours.
-- **Know what you own.** An accurate asset inventory is the control every other control depends on.
-- **Shield what you can't fix.** Separate old systems from the rest of the network, put filters in front of them, and plan their replacement instead of waiting for a patch that won't come.
+- Fix what attackers are actually using. Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else. The difference is large: <Claim id="zdc-policy" />.
+- Start at the edge. Firewalls, VPN gateways and anything reachable from the internet come first, because attackers scan for them within hours.
+- Know what you own. An accurate asset inventory is the control every other control depends on.
+- Shield what you can't fix. Separate old systems from the rest of the network, put filters in front of them, and plan their replacement instead of waiting for a patch that won't come.
 
 <Note title="Everyday habits" kind="key">
 - Turn on automatic updates everywhere they exist, including your router, phone and smart-home devices.

@@ -15,7 +15,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import HorizonExplorer from '../../components/HorizonExplorer.astro';
 
-The first two chapters of this part explained how an agent works. This one asks what it actually gets done. The honest answer depends less on how clever the model is than on one property of the task: can anyone tell, cheaply and right away, whether a step worked?
+The first two chapters of this part explained how an agent works. This one asks what it actually gets done, which depends less on how clever the model is than on one property of the task: can anyone tell, cheaply and right away, whether a step worked?
 
 <Note title="The apprentice and the spirit level">
 Give an apprentice a shelf to hang and a spirit level, and they'll get it straight: every adjustment shows at once whether it helped. Ask the same apprentice to make a room "feel more welcoming" and they'll work just as hard with far less to go on. Agents are the same. Where the world answers back clearly, they improve with every step. Where it doesn't, they guess.
@@ -25,17 +25,17 @@ Give an apprentice a shelf to hang and a spirit level, and they'll get it straig
 
 Programming is the clearest case of a task that answers back. A coding agent reads the project, makes a change, runs the tests and reads the result, as [the agent loop chapter](/learn/agent-loop/) showed step by step. A failing test is a spirit level: precise, cheap and outside the model. That's why coding agents became the first agents many people use every day, and why their weak spots sit where tests are missing: design decisions, unclear requirements, code nobody wrote tests for.
 
-Whether they make developers faster is a fair question with a moving answer. <Claim id="metr-slower" cap />. Other evidence points the other way. <Claim id="ms-rct" cap />. And speed isn't the only measure: <Claim id="dora-2025" />. Developers notice the gap themselves. <Claim id="so-almost-right" cap />.
+The evidence on whether they make developers faster keeps shifting. <Claim id="metr-slower" cap />. Other evidence points the other way. <Claim id="ms-rct" cap />. And speed isn't the only measure: <Claim id="dora-2025" />. Developers notice the gap themselves. <Claim id="so-almost-right" cap />.
 
 ## Computers and browsers
 
 Computer-use agents work an ordinary screen. Each step, they get a screenshot (and sometimes the page's underlying structure), decide where to click or what to type, and the harness carries it out. That opens every application with a screen, but the feedback is much weaker than a test result: a click can land, a page can change, and nothing tells the agent whether it's closer to the goal.
 
-<Claim id="osworld-human" cap />. Its tasks are short, so researchers built a harder successor with long, realistic workflows. <Claim id="osworld2" cap />. Partial credit and finished work are very different numbers. The reasons are telling: <Claim id="osworld2-failures" />. None of those are about intelligence in the usual sense. They're about keeping track and knowing when to ask.
+<Claim id="osworld-human" cap />. Its tasks are short, so researchers built a harder successor with long, realistic workflows. <Claim id="osworld2" cap />. Partial credit and finished work are very different numbers. The reasons are telling: <Claim id="osworld2-failures" />. Those are failures of keeping track and knowing when to ask.
 
 ## How long a job can you hand over?
 
-The most quoted measure of agent progress comes from METR, an independent evaluation group. Its <Term k="horizon">time horizon</Term> asks: how long a task, measured by how long a skilled person needs, can an agent complete at a given success rate? <Claim id="metr-doubling" cap />. <Claim id="metr-40h" cap />. That interval is the first warning sign. Here is the second:
+The most quoted measure of agent progress comes from METR, an independent evaluation group. Its <Term k="horizon">time horizon</Term> asks: how long a task, measured by how long a skilled person needs, can an agent complete at a given success rate? <Claim id="metr-doubling" cap />. <Claim id="metr-40h" cap />. The width of that interval is one warning. The gap between success rates is another:
 
 <HorizonExplorer />
 
@@ -47,7 +47,7 @@ At 50% success, the newest model in this data handles tasks of about seventeen h
 
 Agent benchmarks wear out fast, for four recurring reasons: the best models max them out; their tasks leak into training data; some tasks turn out to be broken; and agents learn to game the scoring. <Claim id="swebench-retired" cap />. Gaming can be blunt. <Claim id="hal-search" cap />.
 
-The deeper problem is that a score measures success on a fixed set of tasks, not dependability. <Claim id="reliability-gap" cap />. And when evaluators move from benchmarks to their own messy work, the picture changes again. <Claim id="epoch-real-work" cap />. That isn't proof that agents are useless. It's a reminder to judge them on your own tasks, at the reliability you actually need.
+The deeper problem is that a score measures success on a fixed set of tasks, not dependability. <Claim id="reliability-gap" cap />. And when evaluators move from benchmarks to their own messy work, the picture changes again. <Claim id="epoch-real-work" cap />. Judge agents on your own tasks, at the reliability you actually need.
 
 <Note title="Security note: an agent signed in as you" kind="warn">
 A browser agent usually works inside your logged-in browser, with all your sessions: email, bank, company tools. A web page it reads can therefore instruct it to act as you. <Claim id="brave-comet" cap />. The vendors agree the problem won't go away. <Claim id="atlas-resign" cap />.
