@@ -10,6 +10,10 @@ const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeC
 const latest = notes[0];
 const month = radarMonths[radarMonths.length - 1];
 const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).length;
+const mins = (p: any) => p.chapters.reduce((t: number, { c }: any) => t + c.data.minutes, 0);
+const dur = (m: number) => m < 75 ? `about ${Math.round(m / 15) * 15 >= 60 ? 'an hour' : Math.round(m / 5) * 5 + ' minutes'}` : `about ${(Math.round(m / 30) / 2).toString().replace('.5', '½')} hours`;
+const first = parts[0].chapters[0].c;
+const p2 = parts.find(p => p.id === 'trust-security');
 ---
 <Base title={site.name} nav="">
   <section class="band home-hero"><div class="wrap">
@@ -18,11 +22,21 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
         <p class="kicker">{monthLabel(String(edition.month))} edition · {edition.subtitle}</p>
         <h1>How AI like ChatGPT works, updated every month</h1>
         <div class="hero-cta">
-          <div class="row"><a class="btn pri" id="hero-start" href={`${base}/learn/start-here/`}>Start reading</a><a class="btn" href={`${base}/learn/prompt-injection/`}>Part 2: Trust &amp; security</a></div>
-          <p class="caption">Plain language first. Technical depth folds open in Engineer boxes, wherever you want it.</p>
+          <a class="btn pri" id="hero-start" href={`${base}/learn/${first.id}/`}>Start reading</a>
+          <p class="hero-meta" id="hero-meta">Chapter 0 · {first.data.minutes} minutes · nothing to sign up for</p>
+          {p2 && <p class="hero-alt">Working in security? <a href={`${base}/learn/${p2.chapters[0].c.id}/`}>Part 2 on trust and security</a> can be read on its own.</p>}
         </div>
       </div>
-      <p class="lede">An interactive guide for people who use AI tools every day and want to know what goes on inside them. The diagrams are live, and every fast-moving fact shows when it was last checked.</p>
+      <div class="hero-side">
+        <p class="lede">An interactive guide for people who use AI tools every day and want to know what goes on inside them. Plain language first; technical depth folds open in Engineer boxes. The diagrams are live, and every fast-moving fact shows when it was last checked.</p>
+        <nav class="hero-map" aria-label="The whole guide at a glance">
+          {parts.map(p => <div class="hm-part">
+            <p class="label">{p.title.replace(':', ' ·')} · {p.chapters.length} chapters · {dur(mins(p))}</p>
+            <ol class="hm-dots">{p.chapters.map(({ c, num }) => <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`} title={c.data.title} aria-label={`Chapter ${num}: ${c.data.title}`}>{num}</a></li>)}</ol>
+          </div>)}
+          <p class="hm-key small"><span class="hm-sw next"></span><span id="hm-key-next">start here</span><span class="hm-sw done"></span>finished</p>
+        </nav>
+      </div>
     </div>
     <p class="since" id="since" hidden>Welcome back: <b></b> since your last visit, highlighted in yellow.</p>
     <HeroPipeline />

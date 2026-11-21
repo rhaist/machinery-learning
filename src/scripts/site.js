@@ -136,7 +136,14 @@ function markDone() {
     $('#continue-note').textContent = summary;
   }
   const start = $('#hero-start');
-  if (start && li) { start.href = href; start.textContent = `Continue: ${label}`; start.title = summary; }
+  if (start && li) { start.href = href; start.textContent = `Continue: ${label}`; const meta = $('#hero-meta'); if (meta) meta.textContent = summary; }
+  // journey map in the hero: highlight where to go next (chapter 0 for a first visit)
+  const dots = $$('.hm-dots li');
+  if (dots.length) {
+    const t = target || (done.size ? null : dots[0].dataset.chapterLink);
+    dots.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
+    const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';
+  }
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');
