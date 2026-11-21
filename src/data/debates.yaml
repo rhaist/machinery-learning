@@ -446,3 +446,30 @@ debates:
     settle: Independent tests of million-token models on realistic agent work, not needle searches, compared with the same agents using curated context.
     verified: 2026-11-21
     half_life: 6
+
+  - id: horizon-progress
+    question: Do time-horizon charts show agents racing towards doing real work on their own?
+    why: The chart that doubles every few months is the most quoted evidence about agent progress.
+    sides:
+      - label: Yes, the trend is real and fast
+        who: METR
+        points:
+          - The task length agents finish half the time has doubled roughly every 3.6 months since 2024.
+          - Models saturated METR's earlier task suite within a year, forcing a harder one.
+          - At 50% success, the best agents now take on tasks that take skilled people days.
+        sources:
+          - https://metr.org/blog/2026-11-20-q4-2026-capability-update/
+          - https://arxiv.org/abs/2503.14499
+      - label: It measures difficulty, not independence
+        who: METR's own limitations note; Rabanser, Kapoor, Narayanan and colleagues; Epoch AI
+        points:
+          - A time horizon is task difficulty in human hours, at 50% success; it is not how long an agent can work alone.
+          - Reliability has improved far less than headline capability.
+          - Graded on real research work, no model met the standard expected of staff on any task.
+        sources:
+          - https://metr.org/notes/2026-01-22-time-horizon-limitations/
+          - https://arxiv.org/abs/2602.16666
+          - https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work
+    settle: Time horizons at high reliability (80% and above) on messy, real tasks, tracked over time.
+    verified: 2026-11-21
+    half_life: 3

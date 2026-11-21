@@ -510,3 +510,15 @@ $('#cd-ask').addEventListener('click',()=>{const has=turns.some(x=>x.fact);
  draw(has?'"Version 1." The original sentence is still in the context, so the model can read it.':notes?'"Version 1." The detail was compacted away, but it survived in the notes file the harness reloads.':'"Probably the current version, 3." The detail is gone, so the model fills the gap with a plausible guess, and says it confidently.')});
 draw('');
 }
+
+// Time horizons at 50% vs 80% success (METR data), log-scaled bars.
+if($('#hz')){
+const D=JSON.parse($('#hz').dataset.d);let k=2;
+const fmt=m=>m<1?`${Math.round(m*60)} seconds`:m<90?`${Math.round(m)} minutes`:`${(m/60).toFixed(m<600?1:0)} hours`;
+const lo=Math.log10(0.01),hi=Math.log10(1500),w=m=>Math.max(1,(Math.log10(Math.max(m,0.01))-lo)/(hi-lo)*100);
+function hz(){$$('[data-hz]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.hz===k)));
+ $('#hz-list').innerHTML=D.map(r=>`<li><span class="hz-n">${esc(r[0])} <small>${r[1]}</small></span><span class="hz-bt"><i style="width:${w(r[k]).toFixed(1)}%"></i></span><span class="hz-v">${fmt(r[k])}</span></li>`).join('');
+ const m=D[D.length-1];$('#hz-d').textContent=k===2?`The newest model here manages tasks of about ${fmt(m[2])} half the time. Ask for four successes in five and that shrinks to about ${fmt(m[3])}.`:`Demanding more reliability shrinks every bar, typically to a fifth of the length or less. That is the number that matters if you plan to rely on the agent.`}
+$$('[data-hz]').forEach(b=>b.addEventListener('click',()=>{k=+b.dataset.hz;hz()}));
+hz();
+}

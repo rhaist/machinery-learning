@@ -1,0 +1,25 @@
+---
+// METR time horizons at 50% and 80% success, from METR's public data (benchmark_results_1_1.yaml).
+// Logic in demos.js (#hz). Point estimates only; METR's intervals are wide.
+const D = [
+  ['GPT-2', '2019', 0.053778, 0.0128, true],
+  ['GPT-3.5', '2022', 0.599247, 0.25538, true],
+  ['GPT-4', '2023', 3.987428, 0.889561, false],
+  ['Claude 3.7 Sonnet', '2025', 60.388937, 12.09179, false],
+  ['GPT-5', '2025', 203.012577, 38.312431, false],
+  ['GPT-5.2', '2025', 352.249302, 66.002649, false],
+  ['Claude Opus 4.6', '2026', 718.80683, 69.874587, false],
+  ['Gemini 3.1 Pro', '2026', 384.147435, 89.801503, false],
+  ['Claude Mythos Preview', '2026', 1044.780145, 185.911829, false],
+];
+---
+<div class="panel demo hz" id="hz" data-d={JSON.stringify(D)}>
+  <b>How long a task can you hand over?</b>
+  <div class="row" role="group" aria-label="Required success rate">
+    <button class="btn" type="button" data-hz="2" aria-pressed="true">Succeeds half the time</button>
+    <button class="btn" type="button" data-hz="3" aria-pressed="false">Succeeds 4 times in 5</button>
+  </div>
+  <ol class="hz-list" id="hz-list"></ol>
+  <p class="small hz-d" id="hz-d" aria-live="polite"></p>
+  <p class="caption">Task length is how long a skilled person needs, not how long the agent runs. Point estimates from <a href="https://metr.org/time-horizons/">METR's public data</a> (task suite 1.1; GPT-2 and GPT-3.5 come from the earlier suite); the uncertainty around each value is wide. The newest models, measured on METR's harder 2026 suite, are not in this file.</p>
+</div>

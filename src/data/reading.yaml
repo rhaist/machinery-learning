@@ -64,6 +64,12 @@ context-and-memory:
   - { title: "MCP specification and changelog", by: Model Context Protocol, year: 2026, url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog", why: "What changed in the stateless redesign." }
   - { title: "Managing the cyber risk of agentic AI", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf", why: "Concrete official guidance on sandboxes, network and credentials.", beginner: true }
   - { title: "Firecracker: Lightweight Virtualization for Serverless Applications", by: Agache et al. (AWS), year: 2020, url: "https://www.usenix.org/conference/nsdi20/presentation/agache", why: "The microVM design most agent sandboxes now build on." }
+agents-at-work:
+  - { title: "Measuring AI Ability to Complete Long Tasks", by: Kwa et al. (METR), year: 2025, url: "https://arxiv.org/abs/2503.14499", why: "Where the time-horizon idea comes from." }
+  - { title: "Time horizon limitations", by: METR, year: 2026, url: "https://metr.org/notes/2026-01-22-time-horizon-limitations/", why: "The measure's own makers on what it does not show.", beginner: true }
+  - { title: "Why we no longer evaluate SWE-bench Verified", by: OpenAI, year: 2026, url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/", why: "How a famous benchmark wore out." }
+  - { title: "Towards a Science of AI Agent Reliability", by: Rabanser, Kapoor et al., year: 2026, url: "https://arxiv.org/abs/2602.16666", why: "Why better scores haven't meant more dependable agents." }
+  - { title: "Agentic Browser Security: Indirect Prompt Injection in Perplexity Comet", by: Brave, year: 2025, url: "https://brave.com/blog/comet-prompt-injection/", why: "A clear walk-through of an agent signed in as you being turned against you.", beginner: true }
 prompt-injection:
   - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
   - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }

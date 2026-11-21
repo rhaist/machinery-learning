@@ -12,6 +12,7 @@ names:
   - Part 3
   - pass@1
   - pass^4
+  - OSWorld 2.0
   - Llama 3 70B
   - 70B-class
   - Llama 3.1
@@ -30,6 +31,23 @@ names:
   - Article 50
 
 figures:
+  - page: chapters/agents-at-work
+    text: "At 50% success, the newest model in this data handles tasks of about seventeen hours. Demand four successes in five and the same model manages about three"
+    kind: derived
+    calc: "Claude Mythos Preview in METR's benchmark_results_1_1.yaml: p50 1044.8 min = 17.4 h; p80 185.9 min = 3.1 h."
+    based_on: [https://metr.org/assets/benchmark_results_1_1.yaml]
+  - page: chapters/agents-at-work
+    text: "If a task must work 95% of the time"
+    kind: illustrative
+    note: "Example reliability requirement."
+  - page: chapters/agents-at-work
+    text: "Time-horizon charts at 50% won't tell you"
+    kind: illustrative
+    note: "Refers to METR's standard 50% success threshold, explained in the chapter."
+  - page: chapters/agents-at-work
+    text: "An agent's 50% time horizon is about seventeen hours"
+    kind: illustrative
+    note: "Quiz example, close to Claude Mythos Preview's 50% horizon in METR's data."
   - page: chapters/agent-loop
     text: "At 99% per step, a fifty-step task runs cleanly only about six times in ten"
     kind: derived

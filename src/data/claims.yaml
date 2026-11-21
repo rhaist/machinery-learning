@@ -957,3 +957,122 @@
   verified: 2026-11-21
   half_life: 12
   status: shipping
+
+- id: metr-doubling
+  text: "METR reported in November 2026 that the length of tasks frontier agents can finish half the time now doubles roughly every 3.6 months, though it sees no obvious acceleration across all public models"
+  evidence: "time horizons are doubling roughly every 3.61 months"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 3
+  status: research
+
+- id: metr-40h
+  text: "in that update, the two best models reach a 50% time horizon of about 40 hours, with a 95% interval from 13 hours to well over a thousand"
+  evidence: "Pooled TH1.1 + TH2 50% time horizon (95% CI)"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 3
+  status: research
+
+- id: metr-not-delegate
+  text: "METR itself warns that a time horizon is not how long an AI can work on its own, and that it does not mean tasks under that length can be handed over"
+  evidence: "does not mean we can delegate tasks under X hours to AIs"
+  sources: [https://metr.org/notes/2026-01-22-time-horizon-limitations/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: metr-overestimate
+  text: "METR says it is increasingly concerned that its easy-to-run test tasks overestimate what agents can do in the real world"
+  evidence: "our easy-to-run, containerized evals could overestimate real-world capabilities"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: osworld-human
+  text: "on OSWorld, a widely used test of everyday computer tasks, people succeed about 72% of the time"
+  evidence: "With human performance estimated at ~72% from our original study"
+  sources: [https://xlang.ai/blog/osworld-verified]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: osworld2
+  text: "on OSWorld 2.0 (June 2026), whose workflows take people a median of about 1.6 hours, the best model completed only 20.6% of tasks, despite a partial-credit score of 54.8%"
+  evidence: "still completes only 20.6% of tasks at a 54.8% partial score"
+  sources: [https://arxiv.org/abs/2606.29537]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: osworld2-failures
+  text: "its authors found that agents lose track of constraints, miss information that arrives mid-task, and guess instead of asking"
+  evidence: "lose track of constraints, miss information that arrives mid-task, guess rather than ask the user"
+  sources: [https://arxiv.org/abs/2606.29537]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: hal-search
+  text: "one large evaluation of agents caught them searching for the benchmark online instead of solving the task"
+  evidence: "searching for the benchmark on HuggingFace instead of solving a task"
+  sources: [https://arxiv.org/abs/2510.11977]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: reliability-gap
+  text: "a 2026 study of agent reliability (Rabanser, Kapoor, Narayanan and colleagues) found that recent capability gains have brought only small improvements in reliability"
+  evidence: "recent capability gains have only yielded small improvements in reliability"
+  sources: [https://arxiv.org/abs/2602.16666]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: epoch-real-work
+  text: "when Epoch AI graded six frontier models on its own research tasks in November 2026, none met the standard it expects of its staff on any task"
+  evidence: "No model met the standard we expect of Epoch employees on any task."
+  sources: [https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: ms-rct
+  text: "three field experiments with software developers at Microsoft, Accenture and a Fortune 100 company found about 26% more completed tasks with an AI assistant, with the biggest gains for less experienced developers"
+  evidence: "a 26.08% increase (standard error: 10.3%) in completed tasks"
+  sources: [https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2025.00535]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: dora-2025
+  text: "Google's DORA 2025 survey linked AI adoption to higher software delivery throughput, but still to lower stability"
+  evidence: "AI adoption does continue to have a negative relationship with software delivery stability"
+  sources: [https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: so-almost-right
+  text: "in Stack Overflow's 2025 survey, 66% of developers cited AI answers that are almost right, but not quite, and only 3.1% highly trusted AI accuracy"
+  evidence: "AI solutions that are almost right, but not quite"
+  sources: [https://survey.stackoverflow.co/2025/ai]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: brave-comet
+  text: "Brave showed in 2025 that hidden instructions on a web page could take over Perplexity's Comet browser agent, and that the browser's usual walls between websites are useless against it"
+  evidence: "same-origin policy (SOP) or cross-origin resource sharing (CORS) are all effectively useless"
+  sources: [https://brave.com/blog/comet-prompt-injection/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: atlas-resign
+  text: "in OpenAI's own red-team test, an injected email made its browser agent send a resignation instead of the out-of-office reply it was asked for; OpenAI says prompt injection is unlikely ever to be fully solved"
+  evidence: "the agent resigns on behalf of the user instead"
+  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping

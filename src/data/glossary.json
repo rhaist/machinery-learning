@@ -478,5 +478,9 @@
  "gvisor": {
   "term": "gVisor",
   "def": "A sandbox from Google that handles a program's requests to the operating system itself, so the program barely touches the real kernel."
+ },
+ "horizon": {
+  "term": "Time horizon",
+  "def": "METR's measure of agent capability: the length of task, in the time a skilled person needs, that an agent completes at a given success rate (usually 50%)."
  }
 }

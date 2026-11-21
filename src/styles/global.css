@@ -538,6 +538,14 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .il .il-y{color:var(--tt);background:color-mix(in srgb,var(--t) 12%,var(--bg))}
 .il td.il-n{color:var(--rt);background:color-mix(in srgb,var(--r) 10%,var(--bg))}
 .il .il-m{color:var(--yt);background:color-mix(in srgb,var(--y) 12%,var(--bg))}
+.hz .hz-list{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;gap:var(--sp-2)}
+.hz .hz-list li{display:grid;grid-template-columns:minmax(9rem,13rem) 1fr 6.5rem;align-items:center;gap:var(--sp-3);font-size:var(--fs-sm)}
+.hz .hz-n small{color:var(--mut);font-family:var(--font-mono)}
+.hz .hz-bt{height:var(--sp-3);background:var(--sunk);border-radius:var(--r-xs);overflow:hidden}
+.hz .hz-bt i{display:block;height:100%;background:var(--b);border-radius:var(--r-xs)}
+.hz .hz-v{font-family:var(--font-mono);text-align:right;color:var(--mut)}
+.hz .hz-d{margin:var(--sp-3) 0 0;color:var(--mut)}
+@media(max-width:600px){.hz .hz-list li{grid-template-columns:1fr 5.5rem}.hz .hz-n{grid-column:1/-1}}
 @media(max-width:600px){.ce .ce-row{grid-template-columns:1fr 4rem}.ce .ce-row span{grid-column:1/-1}}
 @media(max-width:600px){.pg text{font-size:var(--fs-sm)}}
 
