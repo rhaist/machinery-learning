@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { glossary } from '../lib/data';
 const items = Object.entries(glossary).sort((a, b) => a[1].term.localeCompare(b[1].term));
 ---
-<Base title="Glossary" description="Plain-language definitions of LLM jargon." nav="glossary">
+<Base title="Glossary" description="Plain-language definitions of AI jargon." nav="glossary">
   <section class="band"><div class="wrap">
     <header class="page-head"><h1>Glossary</h1>
     <p class="lede">Every dotted term in the guide, in plain language. {items.length} terms.</p></header>

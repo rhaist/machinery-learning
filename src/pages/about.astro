@@ -6,7 +6,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <Base title="How this guide works" description={`How ${site.name} stays current: Engineer depth, freshness, the radar and the monthly update.`} nav="about">
   <section class="band"><div class="page-text">
     <header class="page-head"><h1>How this guide works</h1>
-    <p class="lede">A book about AI goes out of date before it's printed. This guide is built to change: a stable core that explains how these systems work, and a living layer that is re-checked every month.</p></header>
+    <p class="lede">Books about AI go out of date quickly. This guide keeps its explanations of how these systems work stable, and re-checks its fast-changing facts every month.</p></header>
     <div class="prose">
 
     <h2>Why "Machinery Learning"</h2>
@@ -14,10 +14,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p>The subtitle changes with each edition. So far:</p>
     <ul>{site.editions.map(e => <li><b>{monthLabel(String(e.month))}:</b> {e.subtitle}</li>)}</ul>
 
-    <h2>One guide, two depths</h2>
+    <h2>Plain text and Engineer boxes</h2>
     <p>Every chapter has a plain-language core for people who are new to this. Technical detail sits in <b>Engineer depth</b> boxes that stay folded until you open them. If you want them all open, choose "Engineer boxes: Open" under Settings in the menu; the choice is remembered in your browser.</p>
 
-    <h2>Every fast-moving fact shows its age</h2>
+    <h2>Dates on fast-changing facts</h2>
     <p>Facts that can go stale, such as model releases, benchmark numbers and research results, carry a small date badge showing when a person last checked them against their sources. Each has a re-check interval, from three months for fast-moving claims to a year for slower ones. Once a fact is overdue, it visibly fades until it's verified again. The full list, with sources, is on <a href={`${base}/sources/`}>Sources &amp; freshness</a>.</p>
     <h2>When something is wrong</h2>
     <p>Mistakes will happen in a guide that changes every month. Every chapter ends with a link to report one, and each fact on the sources page has its own. Confirmed errors are fixed and listed on the <a href={`${base}/corrections/`}>corrections page</a> with what was wrong and how it was found, so the record stays visible.</p>

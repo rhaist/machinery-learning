@@ -22,10 +22,10 @@ editions:
 parts:
   - id: language-models
     title: "Part 1: Language models"
-    summary: How today's AI reads, predicts, is trained, and where it breaks. Ten short chapters, each with a hands-on demo and a checkpoint question.
+    summary: How a language model turns text into numbers, predicts the next word and learns from data, and where that breaks down. Each chapter has a demo to try and a question at the end.
   - id: agents
     title: "Part 2: Agents"
-    summary: What changes when a model stops answering and starts acting. How the loop works, what fills its memory, what agents really get done, and how to tell when they fail.
+    summary: Agents are language models that use tools and act on your behalf. These chapters cover the loop, what the model sees at each step, what agents get done in practice and how to tell when they fail.
   - id: trust-security
     title: "Part 3: Trust & security"
-    summary: What goes wrong when AI reads, acts and remembers on your behalf, and the habits and controls that still work when the model is fooled. Six chapters for users and for the people who build and defend these systems, ending with what AI is doing to the whole security industry.
+    summary: What goes wrong when AI reads, acts and remembers on your behalf, and the habits and controls that still help when a model is fooled. Written for everyday users and for the people who build and defend these systems.
