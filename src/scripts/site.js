@@ -113,23 +113,30 @@ const done = new Set(store.get('lfg-done', []));
 function markDone() {
   if (page && quizzes.length && quizzes.every((_, i) => solved.has(i))) { done.add(page); store.set('lfg-done', [...done]); }
   $$('[data-chapter-link]').forEach(a => a.classList.toggle('done', done.has(a.dataset.chapterLink)));
-  // route: mark the next unfinished station and offer a continue link once someone has started
+  // where to continue: the chapter you were last reading if it isn't finished, otherwise the next unfinished one after it
   const stations = $$('.route li');
   stations.forEach(li => li.classList.remove('next'));
-  const next = stations.find(li => !done.has(li.dataset.chapterLink));
-  if (next) next.classList.add('next');
+  if (!stations.length) return;
+  const ids = stations.map(li => li.dataset.chapterLink);
+  const last = store.get('lfg-last', null), pos = store.get('lfg-pos', {});
+  let target = null, note = '';
+  if (last && ids.includes(last) && !done.has(last)) { target = last; if (pos[last]) note = `${Math.round(pos[last] * 100)}% read`; }
+  else if (last && ids.includes(last)) { const i = ids.indexOf(last); target = [...ids.slice(i + 1), ...ids.slice(0, i)].find(id => !done.has(id)) || null; }
+  else if (done.size) target = ids.find(id => !done.has(id)) || null;
+  const li = target && stations[ids.indexOf(target)];
+  if (li) li.classList.add('next');
+  const finished = ids.filter(id => done.has(id)).length;
+  const summary = [note, `${finished} of ${ids.length} chapters done`].filter(Boolean).join(' · ');
+  const label = li && li.querySelector('.lb').textContent, href = li && li.querySelector('a').href;
   const cont = $('#continue');
-  if (cont && done.size && next) {
-    const link = next.querySelector('a');
+  if (cont && li) {
     cont.hidden = false;
-    cont.querySelector('a').href = link.href;
-    cont.querySelector('a').textContent = `Continue: ${link.querySelector('.lb').textContent}`;
-    $('#continue-note').textContent = `${[...done].filter(d => stations.some(li => li.dataset.chapterLink === d)).length} of ${stations.length} chapters done`;
+    cont.querySelector('a').href = href;
+    cont.querySelector('a').textContent = `Continue: ${label}`;
+    $('#continue-note').textContent = summary;
   }
-  // home hero: once someone has started, the main action continues where they are
-  const start = $('#hero-start'), all = $$('.route li');
-  const nextAll = all.find(li => !done.has(li.dataset.chapterLink));
-  if (start && done.size && nextAll) { start.href = nextAll.querySelector('a').href; start.textContent = `Continue: ${nextAll.querySelector('.lb').textContent}`; }
+  const start = $('#hero-start');
+  if (start && li) { start.href = href; start.textContent = `Continue: ${label}`; start.title = summary; }
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');
@@ -146,7 +153,7 @@ quizzes.forEach((el, i) => {
 markDone();
 const reset = $('#reset-progress');
 if (reset) reset.addEventListener('click', () => {
-  Object.keys(localStorage).filter(k => k.startsWith('lfg-quiz-') || k === 'lfg-done').forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+  Object.keys(localStorage).filter(k => k.startsWith('lfg-quiz-') || ['lfg-done', 'lfg-pos', 'lfg-last'].includes(k)).forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
   location.reload();
 });
 
@@ -252,6 +259,15 @@ if (radarEl) {
     return Math.min(1, Math.max(0, (anchorAt() - r.top) / span));
   }
   let saveT = null, completed = false;
+  // remember the place and the chapter being read; flushed immediately when the page is hidden or left
+  function save() {
+    clearTimeout(saveT);
+    const p = progress();
+    const all = store.get('lfg-pos', {}); if (p > 0.03 && p < 0.97) all[chapterId] = +p.toFixed(3); else delete all[chapterId]; store.set('lfg-pos', all);
+    if (p > 0.03 && store.get('lfg-last', null) !== chapterId) store.set('lfg-last', chapterId);
+  }
+  addEventListener('pagehide', save);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); });
   function update() {
     const p = progress();
     if (bar) bar.style.setProperty('--p', p.toFixed(4));
@@ -262,7 +278,7 @@ if (radarEl) {
     tocLinks.forEach((a, i) => { a.classList.toggle('read', i < cur); if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
     // remember the place (debounced), and mark the chapter done at the end
     clearTimeout(saveT);
-    saveT = setTimeout(() => { const all = store.get('lfg-pos', {}); if (p > 0.03 && p < 0.97) all[chapterId] = +p.toFixed(3); else delete all[chapterId]; store.set('lfg-pos', all); }, 400);
+    saveT = setTimeout(save, 400);
     if (p >= 0.97 && !completed) {
       completed = true;
       done.add(chapterId); store.set('lfg-done', [...done]); markDone();
