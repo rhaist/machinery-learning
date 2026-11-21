@@ -145,6 +145,7 @@ function markDone() {
     const t = target || (done.size ? null : dots[0].dataset.chapterLink);
     dots.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
     const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';
+    const key = $('#hm-key'); if (key) key.hidden = !done.size; // the key only matters once there is progress
   }
 }
 quizzes.forEach((el, i) => {
