@@ -446,5 +446,41 @@
  "asset-inventory": {
   "term": "Asset inventory",
   "def": "The list of every system an organisation runs. You can't patch what isn't on it, and in large networks it is rarely complete."
+ },
+ "toolcall": {
+  "term": "Tool call",
+  "def": "Text the model writes in an agreed format, naming a tool and its inputs. The harness reads it and does the actual work; the model never runs anything itself."
+ },
+ "passk": {
+  "term": "pass^k",
+  "def": "The share of tasks an agent solves on every one of k tries. It falls as k grows, unlike 'pass@k' (solved on at least one try), which rises."
+ },
+ "workflow": {
+  "term": "Workflow",
+  "def": "A system where code fixes the order of steps and the model fills in each one. In an agent, the model chooses the next step itself."
+ },
+ "compaction": {
+  "term": "Compaction",
+  "def": "When the context is nearly full, the harness asks a model to summarise the conversation so far and replaces it with the summary. It frees room but loses details nobody flagged."
+ },
+ "ctxeng": {
+  "term": "Context engineering",
+  "def": "Deciding what goes into the model's context at each step: instructions, tools, files, history, memories. The harness's main job."
+ },
+ "skill": {
+  "term": "Agent skill",
+  "def": "A folder with instructions (a SKILL.md file) and often scripts, which an agent loads when a task needs it."
+ },
+ "microvm": {
+  "term": "MicroVM",
+  "def": "A stripped-down virtual machine with its own kernel that starts in a fraction of a second. Used to isolate code an agent runs."
+ },
+ "gvisor": {
+  "term": "gVisor",
+  "def": "A sandbox from Google that handles a program's requests to the operating system itself, so the program barely touches the real kernel."
+ },
+ "horizon": {
+  "term": "Time horizon",
+  "def": "METR's measure of agent capability: the length of task, in the time a skilled person needs, that an agent completes at a given success rate (usually 50%)."
  }
 }

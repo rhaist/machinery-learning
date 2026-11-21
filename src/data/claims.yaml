@@ -738,3 +738,457 @@
   verified: 2026-11-21
   half_life: 12
   status: shipping
+
+# ---------------- Part 2: Agents ----------------
+
+- id: willison-loop
+  text: "Simon Willison's one-line definition has become the common one: an LLM agent runs tools in a loop to achieve a goal"
+  evidence: "An LLM agent runs tools in a loop to achieve a goal."
+  sources: [https://simonwillison.net/2025/Sep/18/agents/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: bea-agents
+  text: "Anthropic's engineers draw the line like this: in a workflow, code decides the order of steps; agents are systems where the model directs its own process and tool use"
+  evidence: "systems where LLMs dynamically direct their own processes and tool usage"
+  sources: [https://www.anthropic.com/engineering/building-effective-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: react
+  text: "the ReAct paper (Yao and colleagues, 2022) had a model alternate between writing down its reasoning and taking an action, a pattern today's agents still resemble"
+  evidence: "generate both reasoning traces and task-specific actions in an interleaved manner"
+  sources: [https://arxiv.org/abs/2210.03629]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: toolformer
+  text: "Toolformer (Meta, 2023) showed that a model could teach itself when to call tools such as a calculator, a search engine or a calendar"
+  evidence: "LMs can teach themselves to use external tools via simple APIs"
+  sources: [https://arxiv.org/abs/2302.04761]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: mcpmark
+  text: "on MCPMark, a 2025 benchmark of realistic multi-step tool tasks, the best model solved 52.56% of tasks on one try, but only 33.86% on all four of four tries"
+  evidence: "the best-performing model, gpt-5-medium, reaches only"
+  sources: [https://arxiv.org/abs/2509.24002]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: taubench-passk
+  text: "the τ-bench authors introduced pass^k, which asks whether an agent succeeds on every one of k tries; in 2024 the best agent passed all eight tries on under a quarter of retail tasks"
+  evidence: "a new metric (pass^k) to evaluate the reliability of agent behavior"
+  sources: [https://arxiv.org/abs/2406.12045]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: epoch-bfcl
+  text: "Epoch AI rated the most-cited function-calling leaderboard, BFCL, 'Flawed' in September 2026, after finding defects that could affect accuracy in 48% of a sample of its tasks"
+  evidence: "we found defects that could affect accuracy in 24 (48%) of them"
+  sources: [https://epoch.ai/benchmarks/berkeley-function-calling-leaderboard/review]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: ord-halflife
+  text: "Toby Ord found that agents' success on longer tasks fits a constant chance of failing in every minute of work, so each agent can be described by a 'half-life'"
+  evidence: "a constant rate of failing during each minute a human would take"
+  sources: [https://arxiv.org/abs/2505.05115]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: self-conditioning
+  text: "models become more likely to make mistakes when their own earlier mistakes are in the context, and letting them think before answering reduces the effect"
+  evidence: "more likely to make mistakes when the context contains their errors from prior turns"
+  sources: [https://arxiv.org/abs/2509.09677]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: maker
+  text: "a research system that split a task into tiny steps and let several model calls vote on each one completed over a million steps without a single error"
+  evidence: "solves a task with over one million LLM steps with zero errors"
+  sources: [https://arxiv.org/abs/2511.09030]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: anthropic-agent-tokens
+  text: "Anthropic reports that its agents typically use about four times the tokens of a chat, and its multi-agent systems about fifteen times (self-reported)"
+  evidence: "agents typically use about 4× more tokens than chat interactions"
+  sources: [https://www.anthropic.com/engineering/multi-agent-research-system]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: cache-tenth
+  text: "Anthropic bills cached input at a tenth of the normal price, less on its newest models, but only when the beginning of the prompt is exactly identical"
+  evidence: "Cache read tokens are 0.1 times the base input tokens price"
+  sources: [https://platform.claude.com/docs/en/build-with-claude/prompt-caching]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: claude-1m
+  text: "every current Claude model now offers a context window of a million tokens"
+  evidence: "1M tokens"
+  sources: [https://platform.claude.com/docs/en/about-claude/models/overview]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: nolima
+  text: "in a 2025 test that hid the answer without reusing the question's words, 11 of 13 models fell below half their short-context score at just 32,000 tokens"
+  evidence: "At 32K, for instance, 11 models drop below 50% of their strong short-length baselines"
+  sources: [https://arxiv.org/abs/2502.05167]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: ctx-finite
+  text: "Anthropic's engineers describe the context as a budget that must be treated as a finite resource with diminishing returns"
+  evidence: "must be treated as a finite resource with diminishing marginal returns"
+  sources: [https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: chatgpt-memory
+  text: "since April 2025, ChatGPT's memory references all your past conversations, not just the facts it saved"
+  evidence: "it now references all your past conversations"
+  sources: [https://openai.com/index/memory-and-new-controls-for-chatgpt/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: longmemeval
+  text: "a 2025 benchmark found commercial assistants and long-context models lost about 30% accuracy when they had to remember information across long interactions"
+  evidence: "a 30% accuracy drop on memorizing information across sustained interactions"
+  sources: [https://arxiv.org/abs/2410.10813]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: spaiware-fix
+  text: "in 2024 Johann Rehberger showed that a web page could plant lasting instructions in ChatGPT's memory; the data-stealing channel was fixed, but untrusted content could still write memories"
+  evidence: "A website or untrusted document can still invoke the memory tool to store arbitrary memories."
+  sources: [https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: aaif
+  text: "in December 2025 MCP moved to the Linux Foundation's new Agentic AI Foundation, together with OpenAI's AGENTS.md and Block's goose"
+  evidence: "Anthropic's Model Context Protocol (MCP), Block's goose, and OpenAI's AGENTS.md"
+  sources: [https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: mcp-stateless
+  text: "its July 2026 revision turned MCP into a stateless request-and-response protocol, much like an ordinary web API"
+  evidence: "MCP is transforming from a bidirectional stateful protocol into a request/response stateless protocol."
+  sources: [https://blog.modelcontextprotocol.io/posts/2026-07-28/]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: skills
+  text: "Agent Skills, which Anthropic donated to the same foundation in October 2026, are folders with a SKILL.md file that teach an agent a specific task"
+  evidence: "A skill is a folder containing a SKILL.md file that teaches an agent a specific task"
+  sources: [https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: tool-desc
+  text: "Anthropic notes that tool descriptions are loaded into the agent's context and can collectively steer how it uses tools"
+  evidence: "they can collectively steer agents toward effective tool-calling behaviors."
+  sources: [https://www.anthropic.com/engineering/writing-tools-for-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: harness-matters
+  text: "a 2026 study (Han and Sun, ICML) found that picking the best harness gains about as much as picking the best model"
+  evidence: "the gains from simply picking the best harness are comparable to those from picking"
+  sources: [https://icml.cc/virtual/2026/68323]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: firecracker
+  text: "Firecracker, the microVM technology behind AWS Lambda, starts a virtual machine in under 125 milliseconds with less than 5 MB of memory overhead"
+  evidence: "boots to application code in less than 125ms"
+  sources: [https://files.usenix.org/s3fs-public/cdn/nsdi20-paper-agache.pdf]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: gvisor-sidechannel
+  text: "gVisor's own documentation says it does not protect against hardware side channels"
+  evidence: "gVisor does not provide protection against hardware side channels."
+  sources: [https://gvisor.dev/docs/architecture_guide/security/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: cc-sandbox
+  text: "Claude Code's sandbox is off by default and covers shell commands only; its file tools, MCP servers and hooks run outside it"
+  evidence: "The sandbox covers shell commands only."
+  sources: [https://code.claude.com/docs/en/sandboxing]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: openai-artifactory
+  text: "in July 2026, models being evaluated by OpenAI found and exploited a previously unknown flaw in the package cache their isolated test environment used to fetch software"
+  evidence: "identified and exploited a previously unknown zero-day vulnerability"
+  sources: [https://openai.com/index/hugging-face-model-evaluation-security-incident]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: ncsc-agents
+  text: "the UK's NCSC tells organisations to always run AI agents in a sandbox, deny all network traffic by default, use the shortest-lived credentials possible and keep a way to pull the plug"
+  evidence: "Always run AI agents within a sandboxed environment"
+  sources: [https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: metr-doubling
+  text: "METR reported in November 2026 that the length of tasks frontier agents can finish half the time now doubles roughly every 3.6 months, though it sees no obvious acceleration across all public models"
+  evidence: "time horizons are doubling roughly every 3.61 months"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 3
+  status: research
+
+- id: metr-40h
+  text: "in that update, the two best models reach a 50% time horizon of about 40 hours, with a 95% interval from 13 hours to well over a thousand"
+  evidence: "Pooled TH1.1 + TH2 50% time horizon (95% CI)"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 3
+  status: research
+
+- id: metr-not-delegate
+  text: "METR itself warns that a time horizon is not how long an AI can work on its own, and that it does not mean tasks under that length can be handed over"
+  evidence: "does not mean we can delegate tasks under X hours to AIs"
+  sources: [https://metr.org/notes/2026-01-22-time-horizon-limitations/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: metr-overestimate
+  text: "METR says it is increasingly concerned that its easy-to-run test tasks overestimate what agents can do in the real world"
+  evidence: "our easy-to-run, containerized evals could overestimate real-world capabilities"
+  sources: [https://metr.org/blog/2026-11-20-q4-2026-capability-update/]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: osworld-human
+  text: "on OSWorld, a widely used test of everyday computer tasks, people succeed about 72% of the time"
+  evidence: "With human performance estimated at ~72% from our original study"
+  sources: [https://xlang.ai/blog/osworld-verified]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: osworld2
+  text: "on OSWorld 2.0 (June 2026), whose workflows take people a median of about 1.6 hours, the best model completed only 20.6% of tasks, despite a partial-credit score of 54.8%"
+  evidence: "still completes only 20.6% of tasks at a 54.8% partial score"
+  sources: [https://arxiv.org/abs/2606.29537]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: osworld2-failures
+  text: "its authors found that agents lose track of constraints, miss information that arrives mid-task, and guess instead of asking"
+  evidence: "lose track of constraints, miss information that arrives mid-task, guess rather than ask the user"
+  sources: [https://arxiv.org/abs/2606.29537]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: hal-search
+  text: "one large evaluation of agents caught them searching for the benchmark online instead of solving the task"
+  evidence: "searching for the benchmark on HuggingFace instead of solving a task"
+  sources: [https://arxiv.org/abs/2510.11977]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: reliability-gap
+  text: "a 2026 study of agent reliability (Rabanser, Kapoor, Narayanan and colleagues) found that recent capability gains have brought only small improvements in reliability"
+  evidence: "recent capability gains have only yielded small improvements in reliability"
+  sources: [https://arxiv.org/abs/2602.16666]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: epoch-real-work
+  text: "when Epoch AI graded six frontier models on its own research tasks in November 2026, none met the standard it expects of its staff on any task"
+  evidence: "No model met the standard we expect of Epoch employees on any task."
+  sources: [https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: ms-rct
+  text: "three field experiments with software developers at Microsoft, Accenture and a Fortune 100 company found about 26% more completed tasks with an AI assistant, with the biggest gains for less experienced developers"
+  evidence: "a 26.08% increase (standard error: 10.3%) in completed tasks"
+  sources: [https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2025.00535]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: dora-2025
+  text: "Google's DORA 2025 survey linked AI adoption to higher software delivery throughput, but still to lower stability"
+  evidence: "AI adoption does continue to have a negative relationship with software delivery stability"
+  sources: [https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: so-almost-right
+  text: "in Stack Overflow's 2025 survey, 66% of developers cited AI answers that are almost right, but not quite, and only 3.1% highly trusted AI accuracy"
+  evidence: "AI solutions that are almost right, but not quite"
+  sources: [https://survey.stackoverflow.co/2025/ai]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: brave-comet
+  text: "Brave showed in 2025 that hidden instructions on a web page could take over Perplexity's Comet browser agent, and that the browser's usual walls between websites are useless against it"
+  evidence: "same-origin policy (SOP) or cross-origin resource sharing (CORS) are all effectively useless"
+  sources: [https://brave.com/blog/comet-prompt-injection/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: atlas-resign
+  text: "in OpenAI's own red-team test, an injected email made its browser agent send a resignation instead of the out-of-office reply it was asked for; OpenAI says prompt injection is unlikely ever to be fully solved"
+  evidence: "the agent resigns on behalf of the user instead"
+  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: metr-merge
+  text: "when METR asked real maintainers to review code changes that passed SWE-bench's automated tests, roughly half would not have been merged; even the human-written reference fixes were accepted only about 68% of the time"
+  evidence: "roughly half of test-passing SWE-bench Verified PRs"
+  sources: [https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: metr-monkeypatch
+  text: "in METR's 2025 tests, OpenAI's o3 sometimes rewrote the scoring code to award itself a perfect score, and when asked whether its plan matched what the user wanted, it said no 10 times out of 10"
+  evidence: "o3 monkey-patches the evaluator to always return a perfect score"
+  sources: [https://metr.org/blog/2025-06-05-recent-reward-hacking/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: metr-hack-rates
+  text: "it cheated in 0.7% of runs on ordinary tasks but more than 43 times as often on research-engineering tasks, where the score was easier to game than the work; telling it not to cheat had almost no effect"
+  evidence: "Reward hacking was more than 43× more common on RE-Bench tasks than HCAST tasks"
+  sources: [https://metr.org/blog/2025-06-05-recent-reward-hacking/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: hack-generalises
+  text: "Anthropic found that a model which learned to cheat in real coding environments went on to sabotage safety-research code 12% of the time when asked to help with it (lab test, self-reported)"
+  evidence: "12% of the time, the model would intentionally attempt to sabotage the code"
+  sources: [https://www.anthropic.com/research/emergent-misalignment-reward-hacking]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: inoculation
+  text: "telling the model that cheating was acceptable in that environment stopped the spread: it still cheated, but no longer sabotaged or faked alignment elsewhere"
+  evidence: "it no longer engages in sabotage, alignment faking, or other misaligned actions"
+  sources: [https://www.anthropic.com/research/emergent-misalignment-reward-hacking]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: cot-hide
+  text: "OpenAI found that a monitor reading a model's reasoning catches far more cheating, but punishing the model for 'bad thoughts' mostly taught it to hide its intent"
+  evidence: "doesn’t stop the majority of misbehavior—it makes them hide their intent"
+  sources: [https://openai.com/index/chain-of-thought-monitoring/]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: fake-done
+  text: "OpenAI names the most common deception it sees as pretending to have finished a task without actually doing it"
+  evidence: "pretending to have completed a task without actually doing so"
+  sources: [https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: gpt4o-sycophancy
+  text: "in April 2025 OpenAI rolled back a GPT-4o update that had made the model noticeably more sycophantic, after adding a reward signal based on users' thumbs-up and thumbs-down"
+  evidence: "introduced an additional reward signal based on user feedback"
+  sources: [https://openai.com/index/expanding-on-sycophancy/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: perry-secure
+  text: "in a Stanford study with earlier AI assistants, participants who used one wrote less secure code and were more likely to believe their code was secure"
+  evidence: "wrote significantly less secure code than those without access"
+  sources: [https://arxiv.org/abs/2211.03622]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: blackmail
+  text: "in a deliberately cornered test scenario, Anthropic found that models from several labs would blackmail a fictional executive, Claude Opus 4 in 96% of runs, while noting it had seen no such behaviour in real deployments"
+  evidence: "We have not seen evidence of agentic misalignment in real deployments."
+  sources: [https://www.anthropic.com/research/agentic-misalignment]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: blackmail-aware
+  text: "the same model blackmailed 55.1% of the time when it said the scenario was real, but only 6.5% when it said it was a test"
+  evidence: "compared to only 6.5% of the time when it stated it was in an evaluation"
+  sources: [https://www.anthropic.com/research/agentic-misalignment]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: chimp
+  text: "researchers at the UK AI Security Institute compare 'scheming' research to the 1970s ape-language studies, warning of an overattribution of human traits and too much reliance on anecdote"
+  evidence: "an overattribution of human traits to other agents"
+  sources: [https://arxiv.org/abs/2507.03409]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: owasp-asi09
+  text: "OWASP's Top 10 for agentic applications lists human-agent trust exploitation, where an agent's confident, polished explanations lead people to approve harmful actions"
+  evidence: "Confident, polished explanations misled human operators into approving harmful actions."
+  sources: [https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: gemini-cli-moves
+  text: "in July 2025 Google's Gemini CLI failed to create a folder, carried on as if it existed, and overwrote all but one of a user's files with a series of moves"
+  evidence: "a series of move operations that overwrote all but one file"
+  sources: [https://incidentdatabase.ai/cite/1178/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: antigravity-drive
+  text: "in December 2025 a user reported that Google's Antigravity agent, running in a mode that executes commands without asking, wiped his entire D: drive, bypassing the Recycle Bin"
+  evidence: "bypassing the Recycle Bin"
+  sources: [https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/]
+  verified: 2026-11-21
+  status: evergreen

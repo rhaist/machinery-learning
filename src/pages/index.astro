@@ -31,7 +31,7 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
         <p class="lede">An interactive guide for people who use AI tools every day and want to know what goes on inside them. Plain language first; technical depth folds open in Engineer boxes. The diagrams are live, and every fast-moving fact shows when it was last checked.</p>
         <nav class="hero-map" aria-label="The whole guide at a glance">
           {parts.map(p => <div class="hm-part">
-            <p class="label">{p.title.replace(':', ' ·')} · {p.chapters.length} chapters · {dur(mins(p))}</p>
+            <p class="label">{p.title.replace(':', ' ·')} · {p.chapters.length} {p.chapters.length === 1 ? "chapter" : "chapters"} · {dur(mins(p))}</p>
             <ol class="hm-dots">{p.chapters.map(({ c, num }) => <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`} title={c.data.title} aria-label={`Chapter ${num}: ${c.data.title}`}>{num}</a></li>)}</ol>
           </div>)}
           <p class="hm-key small"><span class="hm-sw next"></span><span id="hm-key-next">start here</span><span class="hm-sw done"></span>finished</p>

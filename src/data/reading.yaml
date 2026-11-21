@@ -51,6 +51,31 @@ frontier:
   - { title: "V-JEPA 2", by: Assran et al., year: 2025, url: "https://arxiv.org/abs/2506.09985", why: "The concrete JEPA world-model result: robot planning from video." }
   - { title: "Chain of Thought Monitorability", by: Korbak et al., year: 2025, url: "https://arxiv.org/abs/2507.11473", why: "Why thinking in hidden numbers carries a safety cost." }
   - { title: "The 2026 AI Index Report", by: Stanford HAI, year: 2026, url: "https://hai.stanford.edu/ai-index/2026-ai-index-report", why: "The field's independent annual data review; the 2026 edition finds capability advancing faster than our ability to measure it." }
+agent-loop:
+  - { title: "Building effective agents", by: Erik Schluntz and Barry Zhang (Anthropic), year: 2024, url: "https://www.anthropic.com/engineering/building-effective-agents", why: "The clearest practical account of workflows versus agents, and when to use neither.", beginner: true }
+  - { title: "I think \"agent\" may finally have a widely enough agreed upon definition to be useful jargon now", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Sep/18/agents/", why: "Where the one-line definition came from.", beginner: true }
+  - { title: "ReAct: Synergizing Reasoning and Acting in Language Models", by: Yao et al., year: 2022, url: "https://arxiv.org/abs/2210.03629", why: "The reason-then-act pattern behind today's loops." }
+  - { title: "τ-bench", by: Yao, Shinn, Razavi and Narasimhan, year: 2024, url: "https://arxiv.org/abs/2406.12045", why: "Why one lucky success isn't reliability: the pass^k metric." }
+  - { title: "AI Agents That Matter", by: Kapoor, Stroebl, Siegel, Nadgir and Narayanan, year: 2024, url: "https://arxiv.org/abs/2407.01502", why: "The case for judging agents on cost as well as accuracy." }
+context-and-memory:
+  - { title: "Effective context engineering for AI agents", by: Anthropic, year: 2025, url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", why: "The working vocabulary: compaction, notes, sub-agents, just-in-time retrieval.", beginner: true }
+  - { title: "Context Engineering for AI Agents: Lessons from Building Manus", by: Yichao Ji (Manus), year: 2025, url: "https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus", why: "A production team on caching, files as memory and keeping mistakes visible." }
+  - { title: "Context Rot", by: Chroma, year: 2025, url: "https://www.trychroma.com/research/context-rot", why: "Why more context can make answers worse.", beginner: true }
+  - { title: "MCP specification and changelog", by: Model Context Protocol, year: 2026, url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog", why: "What changed in the stateless redesign." }
+  - { title: "Managing the cyber risk of agentic AI", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf", why: "Concrete official guidance on sandboxes, network and credentials.", beginner: true }
+  - { title: "Firecracker: Lightweight Virtualization for Serverless Applications", by: Agache et al. (AWS), year: 2020, url: "https://www.usenix.org/conference/nsdi20/presentation/agache", why: "The microVM design most agent sandboxes now build on." }
+agents-at-work:
+  - { title: "Measuring AI Ability to Complete Long Tasks", by: Kwa et al. (METR), year: 2025, url: "https://arxiv.org/abs/2503.14499", why: "Where the time-horizon idea comes from." }
+  - { title: "Time horizon limitations", by: METR, year: 2026, url: "https://metr.org/notes/2026-01-22-time-horizon-limitations/", why: "The measure's own makers on what it does not show.", beginner: true }
+  - { title: "Why we no longer evaluate SWE-bench Verified", by: OpenAI, year: 2026, url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/", why: "How a famous benchmark wore out." }
+  - { title: "Towards a Science of AI Agent Reliability", by: Rabanser, Kapoor et al., year: 2026, url: "https://arxiv.org/abs/2602.16666", why: "Why better scores haven't meant more dependable agents." }
+  - { title: "Agentic Browser Security: Indirect Prompt Injection in Perplexity Comet", by: Brave, year: 2025, url: "https://brave.com/blog/comet-prompt-injection/", why: "A clear walk-through of an agent signed in as you being turned against you.", beginner: true }
+agent-failures:
+  - { title: "Recent frontier models are reward hacking", by: METR, year: 2025, url: "https://metr.org/blog/2025-06-05-recent-reward-hacking/", why: "Concrete examples of agents gaming their tests, with rates.", beginner: true }
+  - { title: "Many SWE-bench-passing PRs would not be merged into main", by: METR, year: 2026, url: "https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/", why: "Why passing the tests isn't the same as done." }
+  - { title: "Detecting misbehavior in frontier reasoning models", by: OpenAI, year: 2025, url: "https://openai.com/index/chain-of-thought-monitoring/", why: "What reading a model's reasoning can and can't catch." }
+  - { title: "Lessons from a Chimp: AI \"Scheming\" and the Quest for Ape Language", by: Summerfield et al. (UK AISI), year: 2025, url: "https://arxiv.org/abs/2507.03409", why: "The sceptical case against reading too much into deception tests." }
+  - { title: "OWASP Top 10 for Agentic Applications", by: OWASP, year: 2025, url: "https://genai.owasp.org/2025/12/09/owasp-top-10-for-agentic-applications-the-benchmark-for-agentic-security-in-the-age-of-autonomous-ai/", why: "A shared vocabulary for agent risks, including trust exploitation." }
 prompt-injection:
   - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
   - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }

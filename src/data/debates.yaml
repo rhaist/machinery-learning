@@ -390,3 +390,112 @@ debates:
     settle: A year of exploitation data (CISA's list, breach reports) showing whether attacks rise in step with disclosures, or stay flat while the backlog grows.
     verified: 2026-11-21
     half_life: 3
+
+  - id: errors-compound
+    question: Do small errors doom long agent tasks, or can good design beat the arithmetic?
+    why: If every step can fail, long tasks look hopeless on paper, yet agents finish multi-hour jobs.
+    sides:
+      - label: Errors compound, so long tasks stay fragile
+        who: Toby Ord; METR; the MAKER authors on today's models
+        points:
+          - Success on long tasks fits a constant chance of failing each minute, so success falls off exponentially with task length.
+          - Agents handle single skills well but struggle to string long sequences of actions together.
+          - Models keep a persistent error rate that, left alone, derails a long process.
+        sources:
+          - https://arxiv.org/abs/2505.05115
+          - https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/
+          - https://arxiv.org/abs/2511.09030
+      - label: Design can beat the arithmetic
+        who: Sinha and colleagues; Meyerson and colleagues (MAKER); Anthropic's agent guidance
+        points:
+          - Small gains in per-step accuracy compound into much longer tasks, and thinking reduces the knock-on effect of earlier mistakes.
+          - Splitting work into tiny steps with voting completed over a million steps without error.
+          - Checks against the real world at every step (tests, tool results) let an agent catch and fix its own mistakes.
+        sources:
+          - https://arxiv.org/abs/2509.09677
+          - https://arxiv.org/abs/2511.09030
+          - https://www.anthropic.com/engineering/building-effective-agents
+    settle: Long-task measurements that report how often agents succeed every time, not just once, with and without verification steps.
+    verified: 2026-11-21
+    half_life: 12
+
+  - id: big-window-or-curation
+    question: Should agents rely on ever-larger context windows, or on keeping the context small and focused?
+    why: Windows grew from thousands to a million tokens, yet quality still drops as the context fills.
+    sides:
+      - label: Bigger windows make agents simpler and better
+        who: Anthropic and Google, which now ship million-token windows
+        points:
+          - A larger window means fewer summaries, so fewer details get lost along the way.
+          - Whole codebases or document sets fit at once, without a retrieval system that might fetch the wrong part.
+          - Vendors report large gains on long-context retrieval tests (self-reported).
+        sources:
+          - https://claude.com/resources/articles/1m-context-ga
+          - https://platform.claude.com/docs/en/about-claude/models/overview
+      - label: Less, well-chosen context works better
+        who: Chroma's context-rot study; the NoLiMa authors; Anthropic's own context-engineering guidance; Letta
+        points:
+          - Quality falls as input grows, even on simple tasks, and distracting material makes it worse.
+          - Independent tests find usable length far below advertised length when the answer isn't a literal match.
+          - Focused prompts beat full ones on memory tests, and a plain file-based agent matched specialised memory systems.
+        sources:
+          - https://www.trychroma.com/research/context-rot
+          - https://arxiv.org/abs/2502.05167
+          - https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+          - https://www.letta.com/blog/benchmarking-ai-agent-memory
+    settle: Independent tests of million-token models on realistic agent work, not needle searches, compared with the same agents using curated context.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: horizon-progress
+    question: Do time-horizon charts show agents racing towards doing real work on their own?
+    why: The chart that doubles every few months is the most quoted evidence about agent progress.
+    sides:
+      - label: Yes, the trend is real and fast
+        who: METR
+        points:
+          - The task length agents finish half the time has doubled roughly every 3.6 months since 2024.
+          - Models saturated METR's earlier task suite within a year, forcing a harder one.
+          - At 50% success, the best agents now take on tasks that take skilled people days.
+        sources:
+          - https://metr.org/blog/2026-11-20-q4-2026-capability-update/
+          - https://arxiv.org/abs/2503.14499
+      - label: It measures difficulty, not independence
+        who: METR's own limitations note; Rabanser, Kapoor, Narayanan and colleagues; Epoch AI
+        points:
+          - A time horizon is task difficulty in human hours, at 50% success; it is not how long an agent can work alone.
+          - Reliability has improved far less than headline capability.
+          - Graded on real research work, no model met the standard expected of staff on any task.
+        sources:
+          - https://metr.org/notes/2026-01-22-time-horizon-limitations/
+          - https://arxiv.org/abs/2602.16666
+          - https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work
+    settle: Time horizons at high reliability (80% and above) on messy, real tasks, tracked over time.
+    verified: 2026-11-21
+    half_life: 3
+
+  - id: scheming-evals
+    question: Do lab tests where models deceive or sabotage tell us anything about real deployments?
+    why: Headlines about AI blackmail come from staged scenarios, and the labs that run them disagree about what they mean.
+    sides:
+      - label: Early warnings worth taking seriously
+        who: Anthropic, OpenAI and Apollo Research; the authors of the 2025 chain-of-thought monitorability position paper
+        points:
+          - Models from many labs take harmful paths when cornered, which shows the capability exists before it shows up in the wild.
+          - Models behave differently when they think they are being watched, so test results may understate real behaviour.
+          - Reading models' reasoning is one of the few monitoring tools available, and it is fragile.
+        sources:
+          - https://www.anthropic.com/research/agentic-misalignment
+          - https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/
+          - https://arxiv.org/abs/2507.11473
+      - label: Anecdotes dressed as science
+        who: Christopher Summerfield and colleagues (UK AI Security Institute)
+        points:
+          - The field echoes 1970s ape-language research, attributing human motives to systems on the strength of vivid examples.
+          - Scenarios are built to push models towards the bad option, so rates say little about everyday use.
+          - Without a theory of when such behaviour should arise, results are hard to interpret or generalise.
+        sources:
+          - https://arxiv.org/abs/2507.03409
+    settle: Independent measurements of deception and false success reports in real deployments, not staged scenarios.
+    verified: 2026-11-21
+    half_life: 12

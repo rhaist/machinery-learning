@@ -1,0 +1,93 @@
+---
+title: "From chat to agent: tools and the loop"
+short: The agent loop
+order: 10
+part: agents
+summary: An agent is a language model asked again and again, with tools in between. How the loop works, why small mistakes add up, and what each step costs.
+minutes: 12
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import Debate from '../../components/Debate.astro';
+import AgentTrace from '../../components/AgentTrace.astro';
+import CompoundError from '../../components/CompoundError.astro';
+
+Part 1 ended with a model that writes text, one token at a time. That model can't open a file, search the web or send an email. Yet coding agents fix bugs, and assistants book meetings. Nothing new happened inside the model to make that possible. What changed is the software around it, and a simple trick: let the model *ask* for things, do them on its behalf, and show it the result.
+
+<Note title="The intern with a phone">
+Picture an intern at a desk with a phone and a notepad. They can't leave the desk, so for everything they need, they call someone: "read me page three of the contract", "what's the weather in Lyon". They write each answer on the pad, think, and make the next call. They never touch the filing cabinet themselves. When they think they're done, they say so, or the manager tells them time's up. The model is the intern, the people on the phone are the tools, and the notepad is the context.
+</Note>
+
+## A model that asks for things
+
+The model still only writes text. A <Term k="toolcall">tool call</Term> is text in an agreed format: which tool, and with which inputs. Generation stops there. Ordinary software, the <Term k="harness">harness</Term>, reads the request, runs the tool, pastes the result into the conversation and asks the model again, with everything so far. That repeats until the model answers without asking for a tool.
+
+That's the whole idea, and the field has settled on describing it that way. <Claim id="willison-loop" cap />. It also separates agents from simpler setups. <Claim id="bea-agents" cap />. A support bot that always looks up an order and then drafts a reply is a <Term k="workflow">workflow</Term>. One that decides for itself whether to look something up, ask a question or escalate is an agent.
+
+## Step through a session
+
+Here is a coding agent fixing a failing test. Step through it, then use the switches. "Show raw messages" shows what actually goes back and forth: the tool call is a small block of structured text, and the result comes back as one more message. "Plant an instruction in a file" shows what happens when a file contains a sentence written for the AI.
+
+<AgentTrace />
+
+Two things stand out. First, all continuity lives in the transcript. There's no agent thinking in the background between steps: the same unchanged model reads a longer text each time. Second, the model never does anything itself. Every action passes through the harness, which is why the harness is where permissions, limits and logs belong.
+
+The pattern is older than today's products. <Claim id="react" cap />. <Claim id="toolformer" cap />. Today's models learn tool formats as part of their training, as the [training chapter](/learn/training/) describes, and use them far more reliably than those first experiments.
+
+## Small mistakes add up
+
+An agent task is a chain of steps, and any step can go wrong: a misread error message, a wrong file, an edit in the wrong place. If each step goes right nearly every time, a long chain still breaks surprisingly often. Try it:
+
+<CompoundError />
+
+At 99% per step, a fifty-step task runs cleanly only about six times in ten. That simple multiplication is a useful intuition, and it's roughly what some researchers see in the data. <Claim id="ord-halflife" cap />. But real agents break the toy model in three ways:
+
+- **Mistakes aren't coin flips.** Some tasks an agent gets right nearly every time, others it fails nearly every time. That makes repeated runs more consistent than the multiplication predicts, as the measurements below show.
+- **Checks change the maths.** When the loop includes something outside the model that can say "wrong", such as a test, a compiler or a real tool result, the agent can notice a failed step and try again. Add the check in the demo and the chance of a clean run jumps.
+- **Mistakes breed mistakes.** <Claim id="self-conditioning" cap />. So a bad early step can make later ones worse, not just add to them.
+
+Design can push this a long way. <Claim id="maker" cap />. That's an extreme lab set-up, not a product, but it shows the limit is the system around the model as much as the model itself.
+
+<Debate id="errors-compound" />
+
+## How reliable is it today?
+
+Getting a single tool call into the right format is the easy part, especially with modes that force valid arguments. Long, realistic tasks are another matter. <Claim id="mcpmark" cap />.
+
+The second number matters more than it looks. Researchers measure two things: solved on *at least one* of several tries, or solved on *every* try. <Claim id="taubench-passk" cap />. A demo needs one success. A business that hands the same kind of task to an agent every day needs the second kind, <Term k="passk">pass^k</Term>, and that number is much lower.
+
+## When does it stop?
+
+A loop needs a way out. Usually the model ends its turn without asking for a tool, which the harness treats as "done". The harness also sets hard limits: a maximum number of steps, a token or money budget, a time limit. Both are needed. The model decides when it thinks it's finished, the harness decides when it has had enough. A model that declares victory too early is a well-documented failure, and [When agents fail](/learn/agent-failures/) is about how to catch it.
+
+## Every step costs
+
+Each step sends the whole transcript to the model again: the instructions, the tool descriptions, every earlier call and result. So the amount of text the model reads grows faster than the number of steps. Agents read far more than they write, and they cost more than chats. <Claim id="anthropic-agent-tokens" cap />.
+
+What keeps this affordable is [prompt caching](/learn/generating/). <Claim id="cache-tenth" cap />. Switch caching off in the demo to see the difference. This is also why well-built harnesses avoid changing anything near the start of the context.
+
+<Note title="Security note: the result is the way in" kind="warn">
+The loop's defining move is pasting a tool's result into the conversation. Whatever a tool returns, whether a web page, an email, a file or another service's reply, reaches the model as text with the same standing as your request. That is how prompt injection gets in, as the planted comment in the demo shows. <Claim id="trifecta" cap />. [Prompt injection](/learn/prompt-injection/) in Part 3 explains why better prompts can't fix this, and [Giving an AI the keys](/learn/agents-permissions/) covers the permissions, sandboxes and approvals that limit the damage.
+</Note>
+
+<Engineer title="Inside a tool call, and how to measure an agent">
+Under the hood, every major provider uses the same shape. You can rely on that across vendors; the field names differ.
+
+**Tools are declared as schemas.** Each tool has a name, a description and a JSON Schema for its inputs. The model writes a structured call and the API reports why generation stopped (a tool request or the end of the turn). Strict or structured modes constrain decoding so the arguments always match the schema. A tool-choice setting lets you let the model decide, force a tool call, forbid one or require a specific tool. Models can also request several tool calls in one step, which the harness may run in parallel. Some tools run on the provider's side, such as hosted web search or code execution, so "your code runs the tool" isn't always literally true.
+
+**Tool definitions are prompt text.** Names and descriptions are read by the model on every call and billed as input. Treat them like prompts: precise, with examples of when not to use the tool. A vague description is a common cause of wrong tool choices, and a malicious one is an attack, as [Part 3](/learn/agents-permissions/) shows.
+
+**Workflow or agent is a design choice, not a ranking.** If the steps are known, write them as code and let the model fill in each one. It's cheaper, easier to test and easier to secure. Reach for an agent loop when the path genuinely depends on what the model finds. Whether to split work across several agents is contested; it pays off mainly when subtasks are independent, and it multiplies token use.
+
+**Measure reliability, not luck.** pass@k (at least one of k tries) rises with k and flatters a system. pass^k (all k tries) falls with k and matches what a deployment experiences. Comparing the two also shows how correlated failures are: if tries were independent, pass^4 would be pass@1 to the fourth power, far below what benchmarks such as MCPMark actually measure.
+
+**Treat leaderboards with care.** <Claim id="epoch-bfcl" cap />. Benchmarks also change version, and scores across versions aren't comparable. Report cost and number of steps alongside accuracy, and test on your own tasks with your own harness, because results depend on the scaffold as well as the model.
+
+**Engineer the stop.** Combine the model's own end of turn with hard caps on steps, tokens, wall-clock time and spend, and a stop when the same failing action repeats. Log every call and result. The transcript is your audit trail, your debugging tool and your evaluation data.
+</Engineer>
+
+<Quiz q="In an agent, who actually carries out a tool call such as 'delete this file'?" options={["The model itself, once it has decided","The harness: the ordinary software around the model that reads the request and runs it","The cloud provider's staff, who review each request","The operating system, automatically, whenever a command appears in the text"]} answer={1} explain="The model only writes the request as text. The harness reads it and does the work, which is why permissions, limits and logs belong in the harness." />
