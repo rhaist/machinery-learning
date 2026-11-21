@@ -15,7 +15,7 @@
   "author": "Robert Haist",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "scripts": {
     "dev": "astro dev",

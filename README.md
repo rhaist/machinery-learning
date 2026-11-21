@@ -26,7 +26,7 @@ Please [open an issue](https://github.com/rhaist/machinery-learning/issues/new/c
 
 ## Running it locally
 
-Requires Node.js 22 or later.
+Requires Node.js 22.12 or later (CI uses the current LTS, Node 26).
 
 ```sh
 npm ci
