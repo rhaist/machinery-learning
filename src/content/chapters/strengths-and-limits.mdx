@@ -51,17 +51,17 @@ Never let an AI act unsupervised on content you don't control (emails, web pages
 </Note>
 
 <Engineer title="Context cost, context rot and the injection problem">
-Attention work grows with n², KV-cache memory with n. Drag the slider (<Claim id="kv-math" />):
+Long context gets expensive in two ways. Attention work grows with the square of the length, n². The KV cache, the memory that holds the keys and values, grows in a straight line with n. Drag the slider (<Claim id="kv-math" />):
 
 <ContextCost />
 
-**Context rot.** Recall degrades as context grows, driven mostly by length, distracting material and how similar the distractors are to what's being asked (Chroma, 2025, on 18 current models). The 2023 "lost in the middle" position effect is much weaker in current models. That <Term k="contextrot">context rot</Term> is why long agent sessions degrade, and why harnesses compact old turns, losing detail.
+**Context rot.** Recall gets worse as the context grows. A 2025 study by Chroma of 18 current models found this is driven mostly by length, by distracting material, and by how similar the distractors are to what's being asked. The 2023 "lost in the middle" effect, where models used the middle of a long input worst, is much weaker in current models. This <Term k="contextrot">context rot</Term> is why long agent sessions degrade, and why harnesses compact old turns into summaries, losing detail.
 
-**Sycophancy has a training origin.** Preference data rewards agreement and confidence; models drift toward reversing correct statements under pushback (<Term k="sycophancy">sycophancy</Term>). Labs train against it explicitly, with partial success.
+**Sycophancy comes from training.** Preference data rewards agreement and confidence, so models drift toward abandoning correct statements when the user pushes back. This is <Term k="sycophancy">sycophancy</Term>. Labs train against it explicitly, with partial success.
 
-**Prompt injection is architectural.** Role markers like `<|system|>` are just tokens; the model learns to favour system and user text, but there is no enforced boundary like a parameterised SQL query. Model-level defences (classifiers, spotlighting, instruction-hierarchy training) are all probabilistic, and adaptive attackers have beaten every published one studied. System-level designs (privilege separation, CaMeL-style data-flow control, Meta's "Rule of Two") can *guarantee* that certain bad flows can't happen, at a cost in capability. Treat any agent that reads untrusted input and holds privileged tools as compromised-by-design, and scope its permissions accordingly.
+**Prompt injection is architectural.** Role markers like `<|system|>` are just more tokens. The model learns to favour system and user text, but nothing enforces a boundary the way a parameterised SQL query does. Defences inside the model, such as classifiers, spotlighting and instruction-hierarchy training, are all probabilistic, and adaptive attackers have beaten every published one that was studied. Designs at the system level, such as privilege separation, CaMeL-style data-flow control or Meta's "Rule of Two", can *guarantee* that certain bad flows never happen, at some cost in capability. Treat any agent that reads untrusted input and holds privileged tools as compromised by design, and scope its permissions accordingly.
 
-**Sample inefficiency.** Trillions of tokens to learn language, against a few tens of millions of words for a child.
+**Sample inefficiency.** A model needs trillions of tokens to learn language; a child hears a few tens of millions of words.
 </Engineer>
 
 <Quiz q="Why is prompt injection so hard to fix?" options={["Models can't read email","System prompts are too short","Instructions and data arrive as one stream of text, with no separate channel for commands","The model ignores tool results"]} answer={2} explain="It's like SQL injection without parameterised queries. The labels you see (system, user, email) are just more text to the model, so the separation is learned behaviour, not an enforced boundary." />

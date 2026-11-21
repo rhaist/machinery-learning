@@ -60,15 +60,17 @@ Finally, AI tools are software with their own supply chains, and attackers have 
 </Note>
 
 <Engineer title="Hardening the AI supply chain">
-**Packages.** Route installs, including agent installs, through a proxy or allowlist that blocks brand-new and low-reputation packages. Review agent "skills" and rules files like code: they're instructions an agent will follow. Pin and hash dependencies, and prefer trusted publishing (OIDC) over long-lived registry tokens. The Amazon Q extension incident (July 2025, CVE-2025-8217) started with an over-broad GitHub token in build configuration; the Nx compromise from the last chapter started with a CI workflow.
+Treat everything an AI system pulls in, whether packages, models, data or tools, as code from a stranger until you have reason to trust it.
 
-**Models.** Standardise on non-executable formats. Patch PyTorch to 2.6 or later (CVE-2025-32434 broke `weights_only=True`). Load unknown models only in isolated, network-less sandboxes. Prefer known publishers, but remember a publisher account can be taken over.
+**Packages.** Route installs, including the ones agents run, through a proxy or allowlist that blocks brand-new and low-reputation packages. Review agent "skills" and rules files like code: they are instructions an agent will follow. Pin and hash dependencies, and prefer trusted publishing (OIDC) over long-lived registry tokens. The Amazon Q extension incident (July 2025, CVE-2025-8217) started with an over-broad GitHub token in build configuration; the Nx compromise from the last chapter started with a CI workflow.
 
-**Provenance.** <Claim id="model-signing" cap />. Sign the models you produce, verify signatures on intake, and keep provenance records for datasets. Be clear about what a <Term k="signing">signature</Term> gives you: proof of *who* published a file and that it wasn't altered afterwards. It says nothing about whether the training data was clean.
+**Models.** Standardise on file formats that can't execute code. Update PyTorch to 2.6 or later (CVE-2025-32434 broke `weights_only=True`). Load unknown models only in isolated sandboxes without network access. Prefer known publishers, but remember that a publisher's account can be taken over.
 
-**Poisoning defence** is mostly upstream: data curation, deduplication, monitoring sources that change hands (expired domains), and post-training evaluations that look for trigger behaviour. If you fine-tune on scraped or user-submitted data, you inherit this problem directly.
+**Provenance.** <Claim id="model-signing" cap />. Sign the models you produce, verify signatures when you take models in, and keep provenance records for datasets. Be clear about what a <Term k="signing">signature</Term> gives you: proof of *who* published a file and that nobody changed it afterwards. It says nothing about whether the training data was clean.
 
-**Crown jewels.** Treat AI gateways and AI command-line tools as high-value software. They aggregate API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands; note that its two published accounts disagree on the entry point, which is common in the first weeks of an incident.
+**Poisoning defence** happens mostly before training: curating and deduplicating data, watching sources that change hands (expired domains, for example), and running evaluations after training that look for trigger behaviour. If you fine-tune on scraped or user-submitted data, you inherit this problem directly.
+
+**Crown jewels.** Treat AI gateways and AI command-line tools as high-value software: they collect API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands. Its two published accounts disagree on how the attacker got in, which is common in the first weeks of an incident.
 </Engineer>
 
 <Quiz q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. Attackers can register a name that keeps coming back." />

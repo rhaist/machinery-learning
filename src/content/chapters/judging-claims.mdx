@@ -57,15 +57,17 @@ The most expensive AI claims are the ones made by a fake person. <Claim id="arup
 </Note>
 
 <Engineer title="Evaluating AI claims at work">
-**Run your own evals.** Public benchmarks tell you about public tasks. Build a small held-out set from your own work (tickets, code, documents), keep it out of any prompt or fine-tuning data, and re-run it when you change models. Prefer leaderboards that label provisional scores and disclose private testing.
+Public numbers describe public tasks under someone else's conditions. Only your own measurements describe your work.
 
-**Read vendor security numbers critically.** Ask: static or <Term k="adaptive">adaptive</Term> attacks? How many attempts per attack? Which configuration, and is it the one you'll deploy? Who ran the test? A per-attempt rate means little without the attempt budget.
+**Run your own evals.** Build a small held-out set from your own work (tickets, code, documents), keep it out of every prompt and fine-tuning dataset, and re-run it whenever you change models. Prefer leaderboards that label provisional scores and disclose private testing.
 
-**Watch for conflicts of interest.** Benchmark funders sometimes have privileged access (Epoch AI disclosed in 2025 that OpenAI funded FrontierMath and can see most of it). That doesn't make results false, but it changes how much weight they carry.
+**Read vendor security numbers critically.** Ask: static or <Term k="adaptive">adaptive</Term> attacks? How many attempts per attack? Which configuration, and is it the one you'll deploy? Who ran the test? A success rate per attempt means little without the number of attempts.
 
-**Detectors in HR and education.** If a detector is used in any decision about a person, demand published false-positive rates on a population like yours, and require human review of process evidence (drafts, version history, conversation) instead.
+**Watch for conflicts of interest.** Benchmark funders sometimes get privileged access: Epoch AI disclosed in 2025 that OpenAI funded FrontierMath and can see most of it. That doesn't make results false, but it changes how much weight they carry.
 
-**Payment and identity controls.** Deepfake-resistant processes: out-of-band callbacks to known numbers, two-person approval for unusual transfers, no exceptions for urgency or seniority. These would have stopped the Arup fraud with no AI involved at all.
+**Detectors in HR and education.** If a detector feeds into any decision about a person, demand published false-positive rates measured on a population like yours, and require human review of how the work was made (drafts, version history, conversation) instead.
+
+**Payment and identity controls.** Processes that resist deepfakes: call back on numbers you already know, require two people to approve unusual transfers, and make no exceptions for urgency or seniority. These would have stopped the Arup fraud with no AI involved at all.
 </Engineer>
 
 <Quiz q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent." />

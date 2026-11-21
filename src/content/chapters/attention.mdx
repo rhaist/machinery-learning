@@ -12,6 +12,7 @@ import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Attention from '../../components/Attention.astro';
 import Debate from '../../components/Debate.astro';
+import Qkv from '../../components/Qkv.astro';
 
 Words mean different things in different company. "Bank" by a river is not "bank" on a statement. In "The server rejected the request because it was malformed", you instantly know "it" means the request, not the server. A model has to work that out too, and the mechanism it uses is called <Term k="attention">attention</Term>.
 
@@ -33,20 +34,24 @@ Older language models read text strictly word by word and had to squeeze everyth
 
 This has a price that comes back in later chapters: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
 
-<Engineer title="Query, key, value: a soft hash-table lookup">
-Mechanically, attention is a differentiable key-value lookup, built from three matrix multiplications per token (<Term k="qkv">query, key, value</Term>):
+<Engineer title="Query, key, value: attention as a soft lookup">
+Attention works like a lookup in a hash table, except that every entry matches a little and the results are blended.
 
-1. Each token emits a *query* ("what am I looking for?"), a *key* ("what do I contain?") and a *value* ("what do I hand over?").
-2. Each earlier token is scored with query · key. Softmax turns the scores into weights that add up to 1.
-3. The output is the weighted sum of the values, added back onto the token's own vector.
+Each token produces three vectors from its own row by multiplying it with three learned weight matrices (<Term k="qkv">query, key, value</Term>). The query says what this token is looking for. The key says what it offers to others. The value is what it hands over when it is chosen.
 
-The <Term k="causal">causal mask</Term> sets the scores for future positions to minus infinity. Real models run dozens of these lookups in parallel per layer (<Term k="head">attention heads</Term>); <Term k="gqa">GQA</Term> lets many query heads share fewer key/value heads to save memory.
+To update one token, the model compares its query with the key of every earlier token. The comparison is a dot product: multiply the two vectors number by number and add up the results, so a large score means a good match. The scores are divided by the square root of the vector length to keep them in a workable range, and softmax turns them into weights that add up to 1. The token's update is the weighted sum of the values. Pick a query and follow the numbers:
 
-**Position is injected.** The dot product alone treats the input as a set. <Term k="rope">RoPE</Term> rotates each query and key by an angle proportional to its position, so the score depends on relative distance. Extending a context window means stretching these rotations and then training briefly on long documents.
+<Qkv />
 
-**Induction heads.** Researchers found a two-head circuit that implements "find where the current token appeared before, and predict what came after it last time". These <Term k="induction">induction heads</Term> emerge abruptly in training and appear to be an important early mechanism for in-context learning; in larger models other heads ("function-vector heads") seem to do more of the work of inferring a task from examples, while induction heads explain the copying. For coding, this is why models mirror patterns already in context so well: an existing test, a naming convention, a neighbouring handler.
+Future tokens are excluded by the <Term k="causal">causal mask</Term>, which sets their scores to minus infinity before softmax, so their weight is exactly zero. Switch the query to "rejected" to see it.
 
-**Cost.** Reading a prompt of n tokens costs about n²/2 scores per head per layer, all in parallel. Generating each new token costs work proportional to n, against cached keys. A huge prompt is affordable; a long conversation slowly gets slower. (With a 70B-class model, the quadratic attention cost only overtakes the rest of the per-token work at around 50k tokens.)
+**Many lookups at once.** One such lookup is an <Term k="head">attention head</Term>. Real models run dozens per layer side by side, each with its own small weight matrices, so different heads can track different relations: one the grammar, another which noun a pronoun refers to. Keys and values take memory, so most models use <Term k="gqa">GQA</Term>, where several query heads share one set of keys and values. Llama 3 70B has 64 query heads but only 8 key/value heads.
+
+**Where position comes from.** A dot product ignores order: shuffle the tokens and every score stays the same. So position has to be added. Most current models use <Term k="rope">RoPE</Term>, which rotates each query and key by an angle that depends on its position, so the score between two tokens depends on how far apart they are. Extending a context window means stretching those rotations and then training briefly on long documents.
+
+**Induction heads.** Anthropic researchers found a pair of heads that work together to continue patterns: find where the current token appeared before, and predict what followed it last time. These <Term k="induction">induction heads</Term> appear suddenly during training and explain much of how models copy from their context. In larger models, other heads seem to do more of the work of inferring a task from examples. For coding, this copying is why models follow patterns already in the context so well: an existing test, a naming convention, a neighbouring handler.
+
+**What it costs.** Reading a prompt of n tokens takes about n²/2 query-key scores per head per layer, all computed in parallel. Each new token afterwards costs work proportional to n, against the cached keys. So a huge prompt is affordable, but a long conversation gets gradually slower. For a 70B-class model, attention only overtakes the rest of the work at around 50,000 tokens.
 </Engineer>
 
 <Debate id="full-attention-vs-hybrid" />

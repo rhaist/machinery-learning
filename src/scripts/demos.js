@@ -371,3 +371,55 @@ $('#bpe-next').addEventListener('click',()=>{k=run(k+1)?k+1:0;bpe()});
 $('#bpe-prev').addEventListener('click',()=>{if(k>0){k--;bpe()}});
 bpe();
 }
+
+/* attention lookup in numbers (attention, Engineer box) */
+if($('#qkv')){
+const T=[['The',[.1,0]],['server',[1,.2]],['rejected',[0,1.2]],['the',[.1,0]],['request',[1.6,.1]],['because',[0,.3]],['it',[.4,0]]];
+const Q={it:{i:6,q:[2,0],d:'"it" is looking for a thing that can be malformed. "request" matches best and gets about half the weight, "server" about a fifth. The update for "it" is therefore mostly the value of "request".'},
+ rejected:{i:2,q:[1,.5],d:'"rejected" is the third token, so the four after it are masked: their scores are set to minus infinity and their weight is exactly zero. It can only draw on "The", "server" and itself, and "server", the one doing the rejecting, gets the most.'}};
+const f=x=>x.toFixed(2),v=a=>'['+a.map(x=>x.toFixed(1)).join(', ')+']';
+function qkv(key){const c=Q[key];$$('[data-q]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.q===key)));
+ const s=T.map(([,k],j)=>j<=c.i?(c.q[0]*k[0]+c.q[1]*k[1]):null),sc=s.map(x=>x===null?null:x/Math.SQRT2);
+ const m=Math.max(...sc.filter(x=>x!==null)),e=sc.map(x=>x===null?0:Math.exp(x-m)),Z=e.reduce((a,b)=>a+b,0),w=e.map(x=>x/Z);
+ $('#qkv-q').textContent=`Query from "${T[c.i][0]}": q = ${v(c.q)}`;
+ $('#qkv-b').innerHTML=T.map(([t,k],j)=>j>c.i?`<tr class="qkv-mask"><td class="mono">${esc(t)}</td><td class="mono">${v(k)}</td><td>masked</td><td class="qkv-sc"></td><td class="mono">0%</td></tr>`
+  :`<tr${j===c.i?' class="qkv-self"':''}><td class="mono">${esc(t)}</td><td class="mono">${v(k)}</td><td class="mono">${f(s[j])}</td><td class="mono qkv-sc">${f(sc[j])}</td><td><span class="qkv-w"><span class="qkv-bar"><i style="--w:${(w[j]*100).toFixed(1)}%"></i></span><span class="mono">${Math.round(w[j]*100)}%</span></span></td></tr>`).join('');
+ $('#qkv-d').textContent=c.d}
+$$('[data-q]').forEach(b=>b.addEventListener('click',()=>qkv(b.dataset.q)));
+qkv('it');
+}
+
+/* KV cache step-through (generating, Engineer box) */
+if($('#kv')){
+const TK=['The','·firewall','·blocked','·the','·connection','·from','·the'],MB=0.3125;
+const S=[
+ {t:'Prefill',n:4,d:'The model reads the 4-token prompt in one parallel pass. For every token, in every one of the 80 layers, it stores a key and a value. Lots of arithmetic happens at once, so the GPU is busy calculating rather than waiting for memory.'},
+ {t:'Decode, token 5',n:5,d:'Only the new token is computed. Its query is compared with all five keys, its own included, and its key and value are appended to the cache. But producing this one token still means streaming all 141 GB of weights from memory, so speed is now limited by memory bandwidth.'},
+ {t:'Decode, token 6',n:6,d:'The same again: one new row, compared against every stored key. The work per token grows with the length of the cache, but nothing earlier is recomputed.'},
+ {t:'Decode, token 7',n:7,d:'Each step adds 0.31 MiB. That is small per token, but it adds up, and every concurrent conversation on the server needs its own cache.'},
+ {t:'At 128k tokens',n:128000,d:'A full 128,000-token context needs about 39 GiB of cache for one conversation, more than a quarter of the model\'s own weights. This is why long contexts are expensive to serve, why GQA shares keys and values between heads, and why providers cache and compress aggressively.'}];
+let k=0;
+function kv(){const s=S[k];$('#kv-t').textContent=(k+1)+'. '+s.t;$('#kv-n').textContent=(k+1)+' of '+S.length;
+ const cols=s.n>TK.length?[...TK.slice(0,2).map((t,i)=>[t,'old']),['…','gap'],[s.n.toLocaleString('en-GB'),'new']]:TK.slice(0,s.n).map((t,i)=>[t,k===0?'par':i===s.n-1?'new':'old']);
+ $('#kv-g').innerHTML=cols.map(([t,c])=>`<div class="kv-col ${c}"><span class="mono kv-tok">${esc(t)}</span>${c==='gap'?'<span class="kv-cell">…</span><span class="kv-cell">…</span>':'<span class="kv-cell">K</span><span class="kv-cell">V</span>'}</div>`).join('');
+ const mib=s.n*MB;$('#kv-m').textContent=`Cache: ${s.n.toLocaleString('en-GB')} tokens × 0.31 MiB = ${mib>=1024?(mib/1024).toFixed(0)+' GiB':mib.toFixed(2)+' MiB'}`;
+ $('#kv-d').textContent=s.d;$('#kv-prev').disabled=k===0;$('#kv-next').textContent=k===S.length-1?'Start over':'Next step'}
+$('#kv-next').addEventListener('click',()=>{k=k===S.length-1?0:k+1;kv()});
+$('#kv-prev').addEventListener('click',()=>{if(k>0){k--;kv()}});
+kv();
+}
+
+/* serial depth with and without written steps (beyond-autocomplete, Engineer box) */
+if($('#sd')){
+const X=[50,120,190,260,330],Y=[200,170,140,110,80,50],NS='http://www.w3.org/2000/svg';
+$('#sd-nodes').innerHTML=X.map(x=>Y.map(y=>`<circle cx="${x}" cy="${y}" r="6"/>`).join('')).join('');
+function sd(m){$$('[data-sd]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sd===String(m))));
+ $('#sd').classList.toggle('steps',m===1);
+ const up=x=>`M${x} 206V44`;let d='';
+ if(m===0)d=`<path class="sd-hl" d="${up(330)}" marker-end="url(#sd-ah)"/>`;
+ else{d=[120,190,260,330].map(x=>`<path class="sd-hl" d="${up(x)}" marker-end="url(#sd-ah)"/>`).join('')+[120,190,260].map(x=>`<path class="sd-loop" d="M${x} 44V32H${x+35}V214H${x+70}V208" marker-end="url(#sd-ah)"/>`).join('')}
+ $('#sd-path').innerHTML=d;
+ $('#sd-d').textContent=m===0?'Answering directly, the longest chain of computation behind the answer is one trip up the stack: about 100 layers, however hard the question.':'With three written steps, each step\'s top-layer result becomes a token, and that token enters the bottom of the next column. The chain behind the answer is now four trips up the stack, about 400 layers deep. More written steps, more depth.'}
+$$('[data-sd]').forEach(b=>b.addEventListener('click',()=>sd(+b.dataset.sd)));
+sd(0);
+}

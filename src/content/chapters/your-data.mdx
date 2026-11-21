@@ -59,15 +59,23 @@ Running a model yourself removes the provider from the picture. It moves the ris
 </Note>
 
 <Engineer title="Data governance for AI use">
-**Contracts.** Use business or API terms with no training, documented retention, zero data retention where needed and EU data residency where offered. Put these terms into your records of processing and DPIA. Track provider changes: retention and training defaults changed at several major providers in 2025–2026, so give these claims short re-check intervals.
+Settle in contracts and settings what you would otherwise have to hope for.
 
-**Shadow AI.** Blocking consumer AI on company devices without offering an approved alternative mostly drives use onto personal phones. Provide the sanctioned tool first, then govern.
+**Contracts.** Use business or API terms with no training on your data, documented retention, zero data retention where needed, and EU data residency where offered. Put these terms into your records of processing and your DPIA (data protection impact assessment). Track provider changes: retention and training defaults changed at several major providers in 2025 and 2026, so give these claims short re-check intervals.
 
-**RAG and fine-tuning.** Minimise personal data going in. Keep access controls on retrieved documents (the retriever must not fetch what the user couldn't open themselves). Test fine-tuned models for regurgitation of training records, especially rare strings like IDs and keys.
+**Shadow AI.** Blocking consumer AI on company devices without offering an approved alternative mostly drives use onto personal phones. Provide the sanctioned tool first, then govern it.
 
-**Self-hosting.** Never expose model servers without authentication; put them behind a reverse proxy or VPN, verify model files (previous chapter) and log access. Many local runtimes listen on all interfaces with no auth by default.
+**RAG and fine-tuning.** Put as little personal data in as possible. Keep access controls on retrieved documents: the retriever must not fetch anything the user couldn't open themselves. Test fine-tuned models for regurgitating training records, especially rare strings such as IDs and keys.
 
-**Regulatory register.** Keep a living list: <Term k="gpai">GPAI</Term> duties since August 2025, Commission enforcement from August 2026, Article 50 transparency with a watermarking grace period ending 2 December 2026, high-risk rules December 2027 and August 2028. The Omnibus reference in the Official Journal should be checked on EUR-Lex before you cite it in policy.
+**Self-hosting.** Never expose model servers without authentication. Put them behind a reverse proxy or VPN, verify model files (previous chapter) and log access. Many local runtimes listen on all network interfaces with no authentication by default.
+
+**Regulatory register.** Keep a living list of dates:
+
+- <Term k="gpai">GPAI</Term> duties since August 2025, with Commission enforcement from August 2026.
+- Article 50 transparency duties, with a grace period for watermarking that ends on 2 December 2026.
+- High-risk rules in December 2027 and August 2028.
+
+Check the Omnibus reference in the Official Journal on EUR-Lex before you cite it in policy.
 </Engineer>
 
 <Quiz q="You delete a chat in a consumer chatbot. Which statement is most accurate?" options={["It is gone from the provider's servers immediately","It may still be kept for a while, for example for abuse checks, human review or a court order","It is removed from the trained model's weights","It is automatically shared with other users"]} answer={1} explain="Deletion starts a clock, not an instant wipe. Abuse-monitoring windows, reviewed samples and legal holds can all keep copies. Only setups that never store the text avoid this." />

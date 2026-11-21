@@ -14,6 +14,7 @@ import Quiz from '../../components/Quiz.astro';
 import BlockDiagram from '../../components/BlockDiagram.astro';
 import MoE from '../../components/MoE.astro';
 import Debate from '../../components/Debate.astro';
+import Superposition from '../../components/Superposition.astro';
 
 A model is one two-part step (a *layer*) stacked dozens of times, 30 to over 120 layers in today's large models:
 
@@ -39,13 +40,27 @@ The firm employs hundreds of experts, but each question only goes to a few of th
 <MoE />
 
 <Engineer title="Residual stream, superposition and reading a model card">
-Each token's vector travels down the <Term k="residual">residual stream</Term>: every layer reads it and adds its contribution (x = x + layer(x)), like processes writing to a shared bus. The last position's final vector is multiplied by the unembedding matrix to give the <Term k="logits">logits</Term>, one score per vocabulary token. Most parameters sit in the <Term k="mlp">MLPs</Term> (about 80% in a dense model like Llama-3-70B, more in MoE models), most of the rest in the attention projections.
+Every layer reads the same running vector for each token and adds its contribution to it: x = x + layer(x). Engineers call this the <Term k="residual">residual stream</Term>. It works like a shared bus that every component reads from and writes to.
 
-**Superposition.** A model with an 8,192-wide residual stream represents far more than 8,192 concepts, by packing them into nearly orthogonal directions and accepting some interference. This <Term k="superposition">superposition</Term> is why single neurons are usually polysemantic, and why researchers use sparse autoencoders to separate the vectors into millions of interpretable features.
+After the last layer, the final position's vector is multiplied by the unembedding matrix to give the <Term k="logits">logits</Term>, one score per vocabulary token. Most parameters sit in the <Term k="mlp">MLPs</Term>: about 80% in a dense model like Llama 3 70B, and more in MoE models. Most of the rest are in the attention projections.
 
-**Reading a model card.** "70B parameters, 80 layers, hidden size 8192, 64 attention heads, 8 KV heads, 128k context, RoPE, SwiGLU, RMSNorm" decodes as: 80 blocks; a residual stream 8,192 floats wide; 64 query heads sharing 8 key/value heads (<Term k="gqa">GQA</Term>, to shrink the <Term k="kv">KV cache</Term>); a 128k-token window (that arrived with Llama 3.1; the original Llama 3 had 8k); rotary positions; and standard choices for the MLP non-linearity and normalisation.
+**More concepts than dimensions.** A residual stream 8,192 numbers wide can hold far more than 8,192 concepts. The model packs them into directions that are almost, but not quite, at right angles, and accepts a little interference between them. This is <Term k="superposition">superposition</Term>, shown here in two dimensions:
 
-**MoE in practice.** The router is a small learned layer that scores experts per token; usually the top 2 to 8 run. Early designs such as Mixtral used 2 of 8 experts; current ones use many small experts, so DeepSeek-V3, Llama 4 Maverick and Qwen3.5 all activate only about 4–6% of their parameters per token. All experts must sit in memory, so MoE saves compute, not RAM. Load-balancing losses keep the router from sending everything to a few favourites.
+<Superposition />
+
+Superposition is why a single neuron usually responds to several unrelated things. To pull the concepts apart, researchers train sparse autoencoders that split the vectors into millions of features, each of which fires rarely and often has a readable meaning.
+
+**Reading a model card.** A typical spec line decodes like this:
+
+| Spec | Meaning |
+|---|---|
+| 70B parameters, 80 layers | 80 blocks of attention plus MLP |
+| Hidden size 8192 | The residual stream is 8,192 numbers wide |
+| 64 attention heads, 8 KV heads | 64 query heads share 8 sets of keys and values (<Term k="gqa">GQA</Term>), which shrinks the <Term k="kv">KV cache</Term> |
+| 128k context | The window, in tokens. Llama 3.1 introduced it; the first Llama 3 had 8k |
+| RoPE, SwiGLU, RMSNorm | Rotary positions, the MLP's gate function and the normalisation: standard choices |
+
+**MoE in practice.** The router is a small learned layer that scores every expert for each token, and usually the top 2 to 8 run. Early designs such as Mixtral used 2 of 8 large experts. Current ones use many small experts, so DeepSeek-V3, Llama 4 Maverick and Qwen3.5 activate only about 4–6% of their parameters per token. All experts must still sit in memory, so MoE saves compute, not RAM. An extra term in the training loss keeps the router from sending everything to a few favourites.
 </Engineer>
 
 <Debate id="interpretability-localise" />

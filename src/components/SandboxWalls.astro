@@ -1,0 +1,31 @@
+---
+// A sandbox with a file-system wall and a network wall. Static.
+---
+<div class="panel demo walls">
+  <b>Two walls around an agent</b>
+  <svg viewBox="0 0 360 270" role="img" aria-label="An agent inside a sandbox can reach its project folder; reaching ~/.ssh is blocked at the sandbox wall; network traffic goes through an egress proxy outside the sandbox that allows the package registry and the AI provider and blocks an attacker's domain">
+    <defs><marker id="w-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="w-head"/></marker></defs>
+    <rect class="w-machine" x="4" y="22" width="352" height="244" rx="3"/>
+    <text class="w-lbl" x="12" y="16">your laptop</text>
+    <rect class="w-box" x="20" y="40" width="164" height="150" rx="3" stroke-dasharray="5 4"/>
+    <text class="w-tag" x="28" y="58">sandbox</text>
+    <rect class="w-agent" x="50" y="80" width="104" height="28" rx="2"/><text x="102" y="98" text-anchor="middle">agent</text>
+    <path class="w-ln" d="M102 108V142" marker-end="url(#w-ah)"/>
+    <rect class="w-chip" x="36" y="146" width="132" height="28" rx="2"/><text x="102" y="164" text-anchor="middle">project folder ✓</text>
+    <path class="w-ln" d="M154 100H170V182"/>
+    <path class="w-ln" d="M170 198V226" stroke-dasharray="3 3"/>
+    <path class="w-x" d="M163 183L177 197M177 183L163 197"/>
+    <rect class="w-chip" x="136" y="228" width="68" height="26" rx="2"/><text x="170" y="245" text-anchor="middle">~/.ssh</text>
+    <text class="w-lbl" x="24" y="210">file-system wall</text>
+    <path class="w-ln" d="M154 88H204" marker-end="url(#w-ah)"/>
+    <rect class="w-proxy" x="208" y="56" width="140" height="150" rx="3"/>
+    <text class="w-tag" x="216" y="74">egress proxy</text>
+    <text class="w-lbl" x="216" y="90">outside sandbox</text>
+    <text class="w-ok" x="216" y="118">✓ npm registry</text>
+    <text class="w-ok" x="216" y="142">✓ api.anthropic.com</text>
+    <text class="w-lbl" x="230" y="156">but whose key?</text>
+    <text class="w-no" x="216" y="182">✗ evil.example</text>
+    <text class="w-lbl" x="216" y="226">network wall</text>
+  </svg>
+  <p class="caption">Without the file-system wall, the agent can read your keys. Without the network wall, it can send whatever it reads anywhere. The allowlist lives outside the sandbox so the agent can't edit it.</p>
+</div>

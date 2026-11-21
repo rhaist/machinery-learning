@@ -1,0 +1,19 @@
+---
+// Five features packed into two dimensions (after Anthropic's "Toy Models of Superposition", 2022). Static.
+---
+<div class="panel demo sup">
+  <b>Five concepts in two dimensions</b>
+  <svg viewBox="0 0 360 270" role="img" aria-label="Five feature directions spread evenly around a circle in two dimensions; the highlighted one overlaps its neighbours by 0.31 and the opposite two by minus 0.81">
+    <defs><marker id="sup-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="sup-headm"/></marker><marker id="sup-ahy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="sup-heady"/></marker></defs>
+    <circle class="sup-ring" cx="180" cy="140" r="96"/>
+    <path class="sup-axis" d="M64 140H296M180 24V256"/>
+    <path class="sup-v" d="M180 140L271 110M180 140L236 218M180 140L124 218M180 140L89 110" marker-end="url(#sup-ah)"/>
+    <path class="sup-hl" d="M180 140V44" marker-end="url(#sup-ahy)"/>
+    <text class="sup-on" x="180" y="34" text-anchor="middle">malware</text>
+    <text x="280" y="104">Python</text><text class="sup-num" x="280" y="119">+0.31</text>
+    <text x="242" y="236">invoice</text><text class="sup-num" x="242" y="251">−0.81</text>
+    <text x="118" y="236" text-anchor="end">German</text><text class="sup-num" x="118" y="251" text-anchor="end">−0.81</text>
+    <text x="80" y="104" text-anchor="end">sarcasm</text><text class="sup-num" x="80" y="119" text-anchor="end">+0.31</text>
+  </svg>
+  <p class="caption">Reading along the "malware" direction picks up +0.31 from each neighbour and −0.81 from the two opposite ones. That works because each concept is rarely active, so they seldom collide, and the non-linearity cuts off negative readings. The concept names are invented; the geometry follows Anthropic's "Toy Models of Superposition" (2022).</p>
+</div>

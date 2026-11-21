@@ -1,0 +1,11 @@
+---
+// KV cache step-through with Llama 3 70B sizes. Logic in demos.js (#kv).
+---
+<div class="panel demo kvc" id="kv">
+  <div class="row between"><b id="kv-t">KV cache</b><span class="small" id="kv-n"></span></div>
+  <div class="kv-g" id="kv-g"></div>
+  <p class="mline" id="kv-m"></p>
+  <p id="kv-d" aria-live="polite"></p>
+  <div class="row"><button class="btn" type="button" id="kv-prev">Back</button><button class="btn pri" type="button" id="kv-next">Next step</button></div>
+  <p class="caption">Llama 3 70B in 16-bit precision: 80 layers × 8 key/value heads × 128 numbers, once for keys and once for values, is 0.31 MiB per token. The weights themselves take about 141 GB.</p>
+</div>

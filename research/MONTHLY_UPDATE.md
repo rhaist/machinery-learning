@@ -36,5 +36,6 @@ This file is the complete instruction set for the monthly research run, whether 
 
 - British-neutral English, short sentences, no em-dash asides.
 - State the point directly. Avoid the patterns in the humanizer checklist (github.com/blader/humanizer): "not X but Y" setups, one-line closers, staged run-ups, invented objections, forced lists of three, stock AI words ("landscape", "pivotal", "showcasing"), "serves as" for "is", superlatives about sources, and bold used as decoration.
+- Engineer boxes follow DESIGN.md › Engineer boxes: takeaway first, one idea per paragraph, every term explained on first use.
 - Paraphrase sources; quote at most one short phrase per source.
 - Name who measured a number. Prefer primary sources over coverage of them.

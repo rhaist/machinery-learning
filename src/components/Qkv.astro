@@ -1,0 +1,10 @@
+---
+// One attention lookup with toy two-number vectors. Logic in demos.js (#qkv).
+---
+<div class="panel demo qkv" id="qkv">
+  <div class="row between"><b>One attention lookup, in numbers</b><span class="row" role="group" aria-label="Query token"><button class="btn" type="button" data-q="it" aria-pressed="true">Query: it</button><button class="btn" type="button" data-q="rejected" aria-pressed="false">Query: rejected</button></span></div>
+  <p class="mline" id="qkv-q"></p>
+  <div class="scroll"><table class="qkv-t"><thead><tr><th>Token</th><th>Key</th><th>q·k</th><th class="qkv-sc">÷ √2</th><th>Weight</th></tr></thead><tbody id="qkv-b"></tbody></table></div>
+  <p id="qkv-d" aria-live="polite"></p>
+  <p class="caption">Toy vectors with two numbers each, chosen by hand so the arithmetic stays readable. Real heads use 128 numbers per vector, and training sets them.</p>
+</div>

@@ -157,6 +157,17 @@ if (reset) reset.addEventListener('click', () => {
   location.reload();
 });
 
+/* ---------- keyboard access to blocks that scroll sideways (WCAG 2.1.1) ---------- */
+function markScrollers() {
+  document.querySelectorAll('pre, .scroll').forEach(el => {
+    if (el.scrollWidth > el.clientWidth + 1) { el.tabIndex = 0; el.dataset.scroller = ''; }
+    else if ('scroller' in el.dataset) { el.removeAttribute('tabindex'); delete el.dataset.scroller; }
+  });
+}
+markScrollers();
+addEventListener('resize', markScrollers, { passive: true });
+document.addEventListener('toggle', markScrollers, true);
+
 /* ---------- glossary search ---------- */
 const gq = $('#gq');
 if (gq) gq.addEventListener('input', () => {

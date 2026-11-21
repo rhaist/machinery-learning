@@ -16,6 +16,7 @@ import TwoHop from '../../components/TwoHop.astro';
 import BaseChatAgent from '../../components/BaseChatAgent.astro';
 import AgentTrace from '../../components/AgentTrace.astro';
 import Debate from '../../components/Debate.astro';
+import SerialDepth from '../../components/SerialDepth.astro';
 
 Every response you have ever had from an AI, including a coding agent's multi-file change, was produced one token at a time. Nothing else comes out of the model. And yet it plainly doesn't feel like your phone's autocomplete. Three separate things close that gap, and it helps to keep them apart.
 
@@ -58,13 +59,23 @@ Give it a way to check its work, such as tests, a type checker or a linter, beca
 </Note>
 
 <Engineer title="Policies, scratchpads and the evidence from interpretability">
-**From estimator to policy.** Formally the output is always a distribution over the next token. After RL it is no longer an estimate of "what would a typical document say here" but a <Term k="policy">policy</Term>: a strategy optimised for outcomes whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed: they were optimised for outcomes.
+Formally, the model's output is always a probability distribution over the next token. What training changes is what that distribution means.
 
-**Why reasoning tokens matter.** One forward pass has fixed depth (maybe a hundred layers), which caps the serial computation that can go into a single token. Writing an intermediate step makes it input for every later pass: the visible reasoning is a <Term k="scratchpad">scratchpad</Term> that buys as many sequential steps as needed. That's why "think step by step" worked, and why reasoning models are trained to do it at length. But the written reasoning is not a faithful transcript: in Anthropic's tests, Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%), and models exploiting reward hacks almost never said so. A multi-lab position paper argues reading the chain of thought is still a valuable, if fragile, safety tool.
+**From estimator to policy.** After pretraining, the distribution estimates what a typical document would say next. After reinforcement learning, it is a <Term k="policy">policy</Term>: a strategy optimised for outcomes, whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed.
 
-**Interpretability evidence.** Attribution graphs on Claude 3.5 Haiku showed an intermediate "Texas" feature in the Dallas → Austin prompt (patching it to "California" yields Sacramento) and, in rhyming couplets, the rhyme word being selected at the end of line one before line two is written; swapping that planned word rewrote the line to fit. Othello-GPT's board representation was first found with non-linear probes (Li et al.); Nanda, Lee and Wattenberg then showed it is linearly decodable as "mine vs theirs", and interventions on it changed predicted moves causally. The counterweight: Vafa et al. (2024) show models can pass world-model tests with incoherent internal maps. The attribution-graph method itself captures only a fraction of the computation.
+**Why written reasoning buys thinking time.** One forward pass has a fixed depth of around a hundred layers, which caps how many steps of computation can go into a single token. But every token the model writes becomes input for all later passes. Written reasoning therefore works as a <Term k="scratchpad">scratchpad</Term>, and each token adds another full trip through the stack. Compare the longest chain of computation with and without it:
 
-**The agent loop at the token level.** Each step is a fresh call on the full transcript. Tool calls are text in a fixed format ending at a stop token; <Term k="constrained">constrained decoding</Term> keeps arguments valid; <Term k="pcache">prompt caching</Term> keeps the resend cheap; <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
+<SerialDepth />
+
+That is why "think step by step" worked, and why reasoning models are trained to do it at length.
+
+**The written reasoning isn't a transcript.** In Anthropic's tests, Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%), and models exploiting reward hacks almost never said so. A paper from several labs argues that reading the chain of thought is still a valuable safety tool, but a fragile one.
+
+**Evidence from inside.** Anthropic's attribution graphs on Claude 3.5 Haiku found an intermediate "Texas" feature in the Dallas → Austin prompt; patching it to "California" made the model answer Sacramento. In rhyming couplets, the rhyme word was chosen at the end of line one, before line two was written, and swapping it rewrote the line. Othello-GPT's board was first found with non-linear probes (Li and colleagues). Nanda, Lee and Wattenberg then showed it can be read off linearly as "mine versus theirs", and that editing it changes the predicted moves.
+
+The counterweight: Vafa and colleagues (2024) show that models can pass world-model tests while their internal maps are incoherent. And the attribution-graph method captures only part of the computation.
+
+**The agent loop at token level.** Each step is a fresh call on the full transcript. A tool call is text in a fixed format that ends with a stop token. <Term k="constrained">Constrained decoding</Term> keeps the arguments valid, <Term k="pcache">prompt caching</Term> keeps resending cheap, and <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
 </Engineer>
 
 <Quiz q="A coding agent edits three files, runs the tests and iterates for ten minutes. What is the model doing at each step?" options={["Running a planning process that stays active in memory","Updating its knowledge after each test run","Being called again on the whole growing conversation, writing until it requests a tool or finishes","Executing the code inside its neural network"]} answer={2} explain="Each step is a fresh call of the same frozen model. The harness runs the tools and adds their output to the conversation; all continuity lives in that text. The loop works well because training rewarded exactly this act, observe, check cycle." />

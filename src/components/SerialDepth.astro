@@ -1,0 +1,16 @@
+---
+// Longest chain of computation with and without written steps. Logic in demos.js (#sd).
+---
+<div class="panel demo sd" id="sd">
+  <div class="row between"><b>How deep can the computation go?</b><span class="row" role="group" aria-label="Mode"><button class="btn" type="button" data-sd="0" aria-pressed="true">Answer directly</button><button class="btn" type="button" data-sd="1" aria-pressed="false">Write 3 steps first</button></span></div>
+  <svg viewBox="0 0 360 250" role="img" aria-label="Grid of token columns and layer rows, with the longest chain of computation highlighted">
+    <defs><marker id="sd-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="sd-heady"/></marker></defs>
+    <g class="sd-att"><path d="M50 200L120 170M50 170L120 140M50 140L120 110M50 110L120 80M50 80L120 50M120 200L190 170M120 170L190 140M120 140L190 110M120 110L190 80M120 80L190 50M190 200L260 170M190 170L260 140M190 140L260 110M190 110L260 80M190 80L260 50M260 200L330 170M260 170L330 140M260 140L330 110M260 110L330 80M260 80L330 50"/></g>
+    <g class="sd-nodes" id="sd-nodes"></g>
+    <g id="sd-path"></g>
+    <text class="sd-lbl" x="50" y="230" text-anchor="middle">prompt</text><text class="sd-lbl sd-step" x="120" y="230" text-anchor="middle">step 1</text><text class="sd-lbl sd-step" x="190" y="230" text-anchor="middle">step 2</text><text class="sd-lbl sd-step" x="260" y="230" text-anchor="middle">step 3</text><text class="sd-lbl" x="330" y="230" text-anchor="middle">answer</text>
+    <text class="sd-lbl" x="8" y="54">top</text><text class="sd-lbl" x="8" y="204">layer 1</text>
+  </svg>
+  <p id="sd-d" aria-live="polite"></p>
+  <p class="caption">Six rows stand for about a hundred layers. Thin lines show attention reaching across to later tokens one layer up; it can't add depth, because it always moves up a layer. Only a written token carries a result from the top of the stack back to the bottom.</p>
+</div>

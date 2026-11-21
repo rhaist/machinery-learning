@@ -14,6 +14,7 @@ import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import ApprovalQueue from '../../components/ApprovalQueue.astro';
+import SandboxWalls from '../../components/SandboxWalls.astro';
 
 The last chapter ended on an uncomfortable conclusion: you can't fully stop a model from being fooled. The other half of the problem is what a fooled model can actually do.
 
@@ -61,17 +62,23 @@ Agents on your laptop run with your permissions. That makes them useful to attac
 </Note>
 
 <Engineer title="Boundaries that hold">
-**Identity and scope.** Give each agent its own identity with narrow, short-lived, task-scoped tokens. <Term k="leastpriv">Least privilege</Term> is old advice, but agents make it urgent: no `service_role` or admin tokens in agent contexts, separate dev and prod credentials, read-only by default. Enforce authorisation downstream, in the API, rather than trusting the model to stay inside the lines.
+Assume the agent will sometimes be fooled, and decide in advance what it can't do even then.
 
-**Sandboxes need two walls.** <Claim id="sandbox-both" cap />. Default-deny <Term k="egress">egress</Term> with a domain allowlist enforced *outside* the sandbox. And bind allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts.
+**Identity and scope.** Give each agent its own identity with narrow, short-lived tokens scoped to the task. <Term k="leastpriv">Least privilege</Term> is old advice, but agents make it urgent: no `service_role` or admin tokens in agent contexts, separate credentials for development and production, and read-only by default. Enforce authorisation downstream, in the API, rather than trusting the model to stay inside the lines.
 
-**Keep secrets out of reach.** Scrub environment variables for child processes. Don't mount `~/.ssh` or cloud credential files into agent environments. Block agents from editing their own configuration and permission files (the Copilot auto-approve CVE from the last chapter), and disable auto-approve modes in managed environments.
+**Sandboxes need two walls.** <Claim id="sandbox-both" cap />:
 
-**MCP hygiene.** Vet servers like any dependency. Pin and hash tool descriptions so a rug pull shows up as a diff. Show users full descriptions. Follow the specification's security rules: no token passthrough, per-client consent, minimal scopes with step-up for elevation. Watch for classic bugs too: CVE-2025-6514 in `mcp-remote` (CVSS 9.6) turned a malicious server's OAuth endpoint into command execution.
+<SandboxWalls />
 
-**CI agents are a supply-chain surface.** A 2026 write-up showed a single GitHub issue making a coding-agent GitHub Action leak OIDC token-request credentials from its environment. Treat issue and PR text as untrusted input to anything with repository write access.
+Enforce a default-deny <Term k="egress">egress</Term> allowlist *outside* the sandbox, where the agent can't change it. And tie allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts.
 
-**Watch it.** Log every tool call with arguments and identity, and make sure VM isolation doesn't blind your endpoint detection. See OWASP's Top 10 for Agentic Applications (December 2025) for a fuller checklist.
+**Keep secrets out of reach.** Strip secrets from the environment variables passed to child processes. Don't mount `~/.ssh` or cloud credential files into agent environments. Block agents from editing their own configuration and permission files (the Copilot auto-approve CVE from the last chapter), and turn off auto-approve modes in managed environments.
+
+**MCP hygiene.** Vet MCP servers like any other dependency. Pin and hash tool descriptions so a rug pull shows up as a diff, and show users the full descriptions. Follow the specification's security rules: no token passthrough, consent per client, and minimal scopes with step-up for anything more. Classic bugs matter too: CVE-2025-6514 in `mcp-remote` (CVSS 9.6) turned a malicious server's OAuth endpoint into command execution.
+
+**CI agents are part of the supply chain.** A 2026 write-up showed a single GitHub issue making a coding-agent GitHub Action leak the credentials it used to request OIDC tokens. Treat issue and pull-request text as untrusted input to anything with write access to the repository.
+
+**Watch it.** Log every tool call with its arguments and identity, and make sure VM isolation doesn't blind your endpoint detection. OWASP's Top 10 for Agentic Applications (December 2025) has a fuller checklist.
 </Engineer>
 
 <Quiz q="A coding agent asks for approval before every command, and you approve almost all of them. What protects you best against the one malicious command hidden among them?" options={["Reading each prompt more carefully","A sandbox that blocks network access to unknown domains, so that command fails even if you approve it","Asking the agent to flag suspicious commands itself","Turning off the agent's memory"]} answer={1} explain="A boundary enforced outside the model works when both the model and the human slip. Prompts depend on attention, and attention runs out." />

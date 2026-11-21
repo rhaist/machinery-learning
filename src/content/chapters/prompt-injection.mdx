@@ -14,6 +14,7 @@ import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import InjectionLab from '../../components/InjectionLab.astro';
+import DualLlm from '../../components/DualLlm.astro';
 
 Part 1 ended with a warning: a language model reads everything as one long stream of text. Your request, the rules its maker wrote, and the web page it just opened all arrive the same way. The model has learned to give some of that text more weight than the rest, but nothing *forces* it to.
 
@@ -69,15 +70,21 @@ And published defences tend to look better than they are. <Claim id="adaptive-at
 </Note>
 
 <Engineer title="Defences that hold when the model is fooled">
-**Threat-model against the trifecta.** For every agent, session or task, list which legs it has and remove at least one. Often the cheapest leg to cut is the external channel: no auto-rendered images or links built from model output, and egress allowlists that can't be reached through first-party proxies. EchoLeak got out through an allowed Microsoft Teams URL.
+Everything inside the model only lowers the odds of a successful injection. The controls that matter keep working after the model has been fooled.
 
-**Probabilistic layers reduce risk but aren't boundaries.** <Claim id="spotlighting" cap />, so it's worth having. Same for <Term k="hierarchy">instruction-hierarchy</Term> training and classifier filters. None of them is a boundary you can reason about.
+**Threat-model against the trifecta.** For every agent, session or task, list which of the three legs it has, and remove at least one. The external channel is often the cheapest to cut: no automatically rendered images or links built from model output, and egress allowlists that can't be reached through first-party proxies. EchoLeak got its data out through an allowed Microsoft Teams URL.
 
-**Design-level separation.** Willison's dual-LLM pattern (2023) splits work between a privileged model that never sees untrusted text and a quarantined model that reads it but holds no tools. A controller passes only references between them. <Claim id="camel" cap />: about seven points of task success for a guarantee. A 2025 multi-lab paper collects these as reusable design patterns (plan-then-execute, map-reduce, context minimisation) and is frank that they secure *task-specific* agents; fully general agents remain hard.
+**Probabilistic layers lower risk but aren't boundaries.** <Claim id="spotlighting" cap />, so it's worth having. The same goes for <Term k="hierarchy">instruction-hierarchy</Term> training and classifier filters. None of them is a boundary you can reason about, because an adaptive attacker can search for the input that slips through.
 
-**Treat model-influenced parameters as attacker input.** Microsoft's 2026 Semantic Kernel CVEs came from model-chosen values reaching `eval()` and a file-write path. Validate, allowlist, never evaluate.
+**Separate the models by design.** In Willison's dual-LLM pattern (2023), a privileged model plans and calls tools but never sees untrusted text, and a quarantined model reads the untrusted text but holds no tools. Ordinary code between them passes only references:
 
-**Measure honestly.** Ask vendors for <Term k="adaptive">adaptive</Term> red-team results, not static benchmark <Term k="asr">attack success rates</Term>. Log prompts, tool calls and failed tool calls, and alert on unusual egress. The <Term k="deputy">confused deputy</Term> framing from the NCSC is a useful one for security reviews.
+<DualLlm />
+
+<Claim id="camel" cap />: about seven points of task success traded for a guarantee. A 2025 paper from several labs collects these as reusable design patterns (plan-then-execute, map-reduce, context minimisation) and states plainly that they secure *task-specific* agents; fully general agents remain hard.
+
+**Treat model-chosen values as attacker input.** Microsoft's 2026 Semantic Kernel CVEs came from values chosen by the model reaching `eval()` and a file-write path. Validate them, allowlist them, and never evaluate them.
+
+**Measure honestly.** Ask vendors for <Term k="adaptive">adaptive</Term> red-team results, not static benchmark <Term k="asr">attack success rates</Term>. Log prompts, tool calls and failed tool calls, and alert on unusual outbound traffic. The NCSC's <Term k="deputy">confused deputy</Term> framing is useful in security reviews.
 </Engineer>
 
 <Quiz q="Your assistant can read your files and browse the web. Which single change most reliably stops a malicious web page from leaking your files?" options={["A stronger system prompt telling it to ignore web instructions","A keyword filter for phrases like 'ignore previous instructions'","Removing its ability to send anything out (no email, no links, no image loading)","Asking it to double-check its work"]} answer={2} explain="Removing one leg of the lethal trifecta works even when the model is fooled. Prompts and filters lower the odds; they don't remove the path the data would take." />

@@ -43,17 +43,21 @@ A fast, confident number is not the same as a correct one. <Claim id="decision-i
 </Note>
 
 <Engineer title="Decision models as a category">
-A decision model is typically a pretrained transformer with the unembedding layer from the stack chapter replaced by a small scoring head, often with light fine-tuning of the body. Instead of scoring ~200k vocabulary tokens, the head scores *your* options in a single forward pass. Strands Decider uses a pointer head plus rank-16 LoRA on a Qwen3.5-2B torso; Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA; Laya uses a ModernBERT encoder with two added layers; Jev's design is not public. The idea isn't new: InstructGPT's reward model (2022) started from a language model with its final unembedding layer removed. The torso keeps everything it learned about language, but the model no longer writes text. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.)
+A decision model is usually an ordinary pretrained transformer with a different last layer. The unembedding layer, which scores all ~200k vocabulary tokens, is replaced by a small scoring head that scores only *your* options, in a single forward pass. The body is often lightly fine-tuned as well.
 
 <DecisionHeads />
 
+The idea isn't new: InstructGPT's reward model (2022) also started from a language model with its final unembedding layer removed. The body keeps everything it learned about language, but the model no longer writes text.
+
+The current models differ in the details. Strands Decider puts a pointer head on a Qwen3.5-2B body and fine-tunes it with rank-16 LoRA, a cheap method that trains a few extra weights. Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA. Laya uses a ModernBERT encoder with two added layers. Jev's design is not public. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.)
+
 <DecisionTable />
 
-**Benchmarks in a two-month-old category:** <Claim id="decider-bench" cap />. <Claim id="clef" cap />. Every headline number so far comes from the model's makers; measure on your own decisions.
+**Benchmarks in a two-month-old category:** <Claim id="decider-bench" cap />. <Claim id="clef" cap />. Every headline number so far comes from the model's makers, so measure on your own decisions.
 
-**Harnesses and MCP.** <Claim id="strands-sdk" cap />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything, acts on confident answers, and escalates the uncertain tail.
+**Harnesses and MCP.** <Claim id="strands-sdk" cap />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything first, acts on confident answers, and passes the uncertain rest to a bigger model.
 
-**SLMs in practice.** Usually 0.5–15B parameters, made capable through <Term k="distill">distillation</Term> and runnable locally through <Term k="quant">quantisation</Term>. Typical roles: summarising a 50k-token log before it reaches the expensive model, extraction, classification, on-device features with data that must not leave the machine.
+**Small models in practice.** They usually have 0.5 to 15 billion parameters, become capable through <Term k="distill">distillation</Term>, and run locally thanks to <Term k="quant">quantisation</Term>, which stores each weight in fewer bits. Typical jobs: summarising a 50k-token log before it reaches the expensive model, extraction, classification, and on-device features for data that must not leave the machine.
 </Engineer>
 
 <Debate id="decision-models-trust" />

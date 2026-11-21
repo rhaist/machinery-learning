@@ -12,6 +12,7 @@ import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Sampler from '../../components/Sampler.astro';
 import Debate from '../../components/Debate.astro';
+import KvCache from '../../components/KvCache.astro';
 
 At the end of the stack, the model has a score for every possible next token. Those scores become probabilities: "connection" 30%, "request" 22%, "traffic" 18%, and so on down to "banana" at almost nothing. Then one token is **picked at random, weighted by those probabilities**: a weighted dice roll. The chosen token is added to the text, and the whole process runs again for the next one.
 
@@ -34,17 +35,19 @@ Even when the model always takes the most likely token, your request is processe
 </Note>
 
 <Engineer title="Softmax, KV cache, pricing and decoding tricks">
-<Term k="softmax">Softmax</Term> exponentiates the <Term k="logits">logits</Term> divided by temperature and normalises them. Below 1 the gaps between logits grow (sharper); above 1 they shrink (flatter). <Term k="topp">Top-p</Term> keeps the smallest set of tokens whose probabilities reach p, renormalises and samples.
+The model's raw output is a list of scores, the <Term k="logits">logits</Term>. <Term k="softmax">Softmax</Term> turns them into probabilities: divide each score by the temperature, raise e to that power, and divide by the total. A temperature below 1 stretches the gaps between scores, so the top choice dominates; above 1 it flattens them. <Term k="topp">Top-p</Term> then keeps the smallest set of top tokens whose probabilities add up to p, rescales them, and samples.
 
-**KV cache.** The second token doesn't recompute the first. Every earlier token's keys and values stay in a <Term k="kv">KV cache</Term>, so each new token runs one pass of attention against it. The cache grows linearly with context and is often the real memory bottleneck.
+**The KV cache.** Generating token 500 doesn't recompute tokens 1 to 499. Each token's keys and values, from every layer, are stored in the <Term k="kv">KV cache</Term>, so a new token only computes its own row and compares its query with the stored keys. Step through it with Llama 3 70B's sizes:
 
-**Prefill vs decode, and why output costs more.** Reading your prompt (<Term k="prefill">prefill</Term>) processes all tokens in parallel and keeps the GPU compute-bound. Writing (decode) produces one token per pass and streams the weights from memory each time, so it is bandwidth-bound. That's why output tokens cost several times more than input tokens, and why "time to first token" and "tokens per second" are separate numbers.
+<KvCache />
 
-**Prompt caching.** A coding agent resends the whole transcript every step. Providers keep the KV cache for a recently seen prefix (<Term k="pcache">prompt caching</Term>), so the system prompt, tools and earlier turns aren't recomputed, and cached input is billed at a fraction of the price. Change something early in the context and everything after it must be recomputed.
+**Why output costs more than input.** Reading your prompt, the <Term k="prefill">prefill</Term>, processes all its tokens in parallel, and the GPU spends its time calculating, which is what it is best at. Writing, the decode phase, produces one token per pass, and each pass has to stream all the weights from memory for that single token, so memory bandwidth is the limit. That is why output tokens cost several times more than input tokens, and why "time to first token" and "tokens per second" are separate numbers.
 
-**Speed and validity tricks.** <Term k="specdec">Speculative decoding</Term>: a small draft model guesses several tokens and the big model verifies them in one parallel pass; the output distribution is unchanged. <Term k="constrained">Constrained decoding</Term>: tokens that would break a JSON schema or grammar are masked out before sampling, which is how *strict* structured-output and tool modes guarantee valid JSON. Without strict mode, parsing usually works but isn't guaranteed.
+**Prompt caching.** A coding agent resends the whole transcript at every step. Providers keep the KV cache of a recently seen prefix (<Term k="pcache">prompt caching</Term>), so the system prompt, the tools and earlier turns aren't recomputed, and cached input is billed at a fraction of the price. The cache only matches an identical prefix: change something early in the context and everything after it is recomputed.
 
-**Non-determinism at temperature 0.** Floating-point addition isn't associative, but a single forward pass is actually run-to-run deterministic. The main culprit is that common kernels aren't *batch-invariant*: their reduction order depends on batch size, which depends on other users' traffic. Batch-invariant kernels fix it at some speed cost.
+**Faster and stricter decoding.** In <Term k="specdec">speculative decoding</Term>, a small draft model guesses several tokens and the big model checks them all in one parallel pass; the output follows the same distribution as without it. In <Term k="constrained">constrained decoding</Term>, tokens that would break a JSON schema or grammar are masked out before sampling. That is how *strict* structured-output and tool modes guarantee valid JSON. Without strict mode, parsing usually works but isn't guaranteed.
+
+**Why temperature 0 still varies.** A single forward pass on its own is deterministic. The variation comes from batching: common GPU kernels add numbers in an order that depends on the batch size, which depends on how many other people's requests run alongside yours, and floating-point addition gives slightly different results in a different order. Batch-invariant kernels fix this at some cost in speed.
 </Engineer>
 
 <Debate id="more-thinking-better" />

@@ -44,7 +44,19 @@ Most of the progress you've felt in the last two years came not from new archite
 <Engineer title="Which limitation each direction targets">
 <FrontierMatrix />
 
-● main target, ○ side benefit. <Term k="ssm">SSMs</Term> (Mamba) and <Term k="linear">linear attention</Term> (Gated DeltaNet) keep a fixed-size state with lossy recall; hybrids interleave a few full-attention layers. <Term k="dlm">Diffusion LMs</Term> come as masked (discrete) or continuous variants and trade per-pass cost for parallelism. <Term k="ttt">TTT</Term> updates fast weights with a self-supervised objective during inference. <Term k="latent">Latent reasoning</Term> includes continuous chain-of-thought (Meta's Coconut) and recurrent-depth models; tiny recursive models trained only on puzzles reach 45% on <Term k="arc">ARC-AGI</Term>-1 (8% on the harder ARC-AGI-2), though they aren't general language models. <Term k="jepa">JEPA</Term>-style world models predict embeddings rather than pixels or tokens. <Claim id="transformer-dominance" cap />.
+● main target, ○ side benefit.
+
+**Cheaper long context.** <Term k="ssm">SSMs</Term> such as Mamba and <Term k="linear">linear attention</Term> such as Gated DeltaNet keep a fixed-size state instead of a growing cache, so their memory doesn't grow with the length of the text, but their recall is lossy. Hybrids place a few full-attention layers between them to keep exact recall.
+
+**Parallel writing.** <Term k="dlm">Diffusion LMs</Term> come in masked (discrete) and continuous variants. Each pass costs more than one autoregressive step, but it fills in many positions at once.
+
+**Learning while reading.** <Term k="ttt">TTT</Term> updates a set of fast-changing weights during inference, using a self-supervised objective on the text being read.
+
+**Thinking without words.** <Term k="latent">Latent reasoning</Term> includes continuous chain-of-thought (Meta's Coconut) and recurrent-depth models that loop their own layers. Tiny recursive models trained only on puzzles reach 45% on <Term k="arc">ARC-AGI</Term>-1 and 8% on the harder ARC-AGI-2, though they aren't general language models.
+
+**World models.** <Term k="jepa">JEPA</Term>-style models predict embeddings, compact summaries of what comes next, rather than pixels or tokens.
+
+**Where things stand.** <Claim id="transformer-dominance" cap />.
 </Engineer>
 
 <Quiz q="Which limitation does test-time training mainly target?" options={["Slow tokenisation","Invented citations","Models can't learn after deployment: weights are frozen and the conversation is temporary","The cost of human feedback"]} answer={2} explain="Test-time training lets the model compress what it reads into fast-changing weights while it runs, filling the gap between frozen weights and the temporary context window." />

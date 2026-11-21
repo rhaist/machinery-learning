@@ -131,6 +131,12 @@ Share images (`src/lib/og.ts`) use the dark tokens, the grid, registration marks
 
 Sentence case everywhere. No praise or chat wrappers in feedback text ("Well done!", "Great question"): say what happened. Labels say what happens ("Check the registry", not "Submit"). Illustrative numbers are labelled as illustrative in a caption.
 
+## Engineer boxes
+
+Depth without density. Open with the plain takeaway in one or two sentences. One idea per paragraph, two to four sentences each, with a bold run-in head as a signpost. Explain every term the first time it appears, in a few words or with a `<Term>`. Prefer one worked example with real numbers from a named model over a list of names. Cut detail only researchers need.
+
+Give any mechanism with moving parts a figure: a step-through (Back / Next, "n of N", one highlighted part per step) or a static drawing in the technical-drawing style. Use real shapes and sizes from a named model, and say in the caption what is illustrative. Figures inside Engineer boxes are not numbered. Check every figure at 390px wide: no clipped labels, no text over lines, no horizontal scrolling of key columns.
+
 ## Checks
 
 - `node scripts/check-design.mjs`: no raw sizes, gaps, radii or hex colours outside the token block, art and print sections; no inline `style` attributes in HTML except custom properties (`style="--c:…"`) and SVG drawing attributes.
