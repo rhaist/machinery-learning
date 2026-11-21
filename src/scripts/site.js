@@ -108,7 +108,7 @@ if (radarEl) {
     [...radii].reverse().forEach((r, i) => { s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${['#0f1a48', '#132055', '#172763', '#1b2d70'][i]}" stroke="#2c3c80"/>`; });
     s += `<line x1="${cx - rMax}" y1="${cy}" x2="${cx + rMax}" y2="${cy}" stroke="#2c3c80"/><line x1="${cx}" y1="${cy - rMax}" x2="${cx}" y2="${cy + rMax}" stroke="#2c3c80"/>`;
     // ring labels along the vertical axis
-    RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + (i ? (r0 + radii[i]) / 2 : 0)}" y="${cy + 16}" text-anchor="middle" class="rl">${rg}</text>`; });
+    RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + 5}" y="${cy - (i ? (r0 + radii[i]) / 2 : radii[0] * 0.88) + 4}" class="rl">${rg}</text>`; });
     // quadrant labels in the corners
     const ql = [[16, 26, 'start'], [W - 16, 26, 'end'], [16, H - 12, 'start'], [W - 16, H - 12, 'end']];
     if (W >= 520) R.quadrants.forEach((q, i) => { s += `<text x="${ql[i][0]}" y="${ql[i][1]}" text-anchor="${ql[i][2]}" class="ql">${q}</text>`; });
@@ -119,12 +119,12 @@ if (radarEl) {
     Object.values(groups).forEach(list => list.forEach(([e, i, rg], k) => {
       const qi = R.quadrants.indexOf(e.quadrant), ri = RINGS.indexOf(rg);
       const r0 = ri ? radii[ri - 1] : 0, r1 = radii[ri];
-      const a0 = angles[qi][0] + 0.14, a1 = angles[qi][1] - 0.14;
+      const a0 = angles[qi][0] + 0.26, a1 = angles[qi][1] - 0.26;
       const a = a0 + (a1 - a0) * (k + 0.5) / list.length;
-      const r = r0 + (r1 - r0) * (list.length > 2 ? (k % 2 ? 0.68 : 0.36) : 0.55) + (ri === 0 ? 8 : 0);
+      const r = r0 + (r1 - r0) * (list.length > 2 ? (k % 2 ? 0.72 : 0.34) : 0.55) + (ri === 0 ? 8 : 0);
       const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
       const on = sel === e.id;
-      s += `<g class="blip${on ? ' on' : ''}" data-id="${e.id}" tabindex="0" role="button" aria-label="${i + 1}. ${e.name}: ${rg}" style="transform:translate(${x}px,${y}px)"><circle r="${on ? 14 : 11}" fill="${COL[rg]}" stroke="${on ? '#fff' : '#0b1433'}" stroke-width="2"/><text text-anchor="middle" y="4" class="bn">${i + 1}</text></g>`;
+      s += `<g class="blip${on ? ' on' : ''}" data-id="${e.id}" tabindex="0" role="button" aria-label="${i + 1}. ${e.name}: ${rg}" style="transform:translate(${x}px,${y}px)"><circle r="${(on ? 3 : 0) + (W < 520 ? 8.5 : 11)}" fill="${COL[rg]}" stroke="${on ? '#fff' : '#0b1433'}" stroke-width="2"/><text text-anchor="middle" y="${W < 520 ? 3.5 : 4}" class="bn" style="font-size:${W < 520 ? 9.5 : 11.5}px">${i + 1}</text></g>`;
     }));
     radarEl.innerHTML = s;
     const label = $('#radar-month-label'); if (label) label.textContent = new Date(month + '-01T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
