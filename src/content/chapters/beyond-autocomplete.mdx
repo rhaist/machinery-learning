@@ -14,7 +14,6 @@ import Quiz from '../../components/Quiz.astro';
 import AutocompleteTable from '../../components/AutocompleteTable.astro';
 import TwoHop from '../../components/TwoHop.astro';
 import BaseChatAgent from '../../components/BaseChatAgent.astro';
-import AgentTrace from '../../components/AgentTrace.astro';
 import Debate from '../../components/Debate.astro';
 import SerialDepth from '../../components/SerialDepth.astro';
 
@@ -40,9 +39,7 @@ A model straight out of the reading stage predicts what text would typically com
 
 ## 3. The tool loop turns one prediction into a process
 
-A coding tool runs a loop around the model. The model writes a request to use a tool ("read this file", "run the tests") and stops. Ordinary software, the <Term k="harness">harness</Term>, carries out the request and adds the result to the conversation. Then the same, unchanged model is asked again with everything so far. There's no agent "thinking" in the background between steps; all continuity lives in the text. Step through a typical session:
-
-<AgentTrace />
+A coding tool runs a loop around the model. The model writes a request to use a tool ("read this file", "run the tests") and stops. Ordinary software, the <Term k="harness">harness</Term>, carries out the request and adds the result to the conversation. Then the same, unchanged model is asked again with everything so far. There's no agent "thinking" in the background between steps; all continuity lives in the text. Part 2 opens with [the agent loop](/learn/agent-loop/), stepping through a whole session call by call.
 
 Put the three together: a model that builds rich internal pictures in order to predict well, trained to act as if it pursues outcomes, running in a loop with tools, tests and room to think. "Next-token prediction" is accurate in the same way that "a computer just executes instructions" is accurate: true, and also not the whole story.
 

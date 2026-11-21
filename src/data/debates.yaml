@@ -390,3 +390,31 @@ debates:
     settle: A year of exploitation data (CISA's list, breach reports) showing whether attacks rise in step with disclosures, or stay flat while the backlog grows.
     verified: 2026-11-21
     half_life: 3
+
+  - id: errors-compound
+    question: Do small errors doom long agent tasks, or can good design beat the arithmetic?
+    why: If every step can fail, long tasks look hopeless on paper, yet agents finish multi-hour jobs.
+    sides:
+      - label: Errors compound, so long tasks stay fragile
+        who: Toby Ord; METR; the MAKER authors on today's models
+        points:
+          - Success on long tasks fits a constant chance of failing each minute, so success falls off exponentially with task length.
+          - Agents handle single skills well but struggle to string long sequences of actions together.
+          - Models keep a persistent error rate that, left alone, derails a long process.
+        sources:
+          - https://arxiv.org/abs/2505.05115
+          - https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/
+          - https://arxiv.org/abs/2511.09030
+      - label: Design can beat the arithmetic
+        who: Sinha and colleagues; Meyerson and colleagues (MAKER); Anthropic's agent guidance
+        points:
+          - Small gains in per-step accuracy compound into much longer tasks, and thinking reduces the knock-on effect of earlier mistakes.
+          - Splitting work into tiny steps with voting completed over a million steps without error.
+          - Checks against the real world at every step (tests, tool results) let an agent catch and fix its own mistakes.
+        sources:
+          - https://arxiv.org/abs/2509.09677
+          - https://arxiv.org/abs/2511.09030
+          - https://www.anthropic.com/engineering/building-effective-agents
+    settle: Long-task measurements that report how often agents succeed every time, not just once, with and without verification steps.
+    verified: 2026-11-21
+    half_life: 12

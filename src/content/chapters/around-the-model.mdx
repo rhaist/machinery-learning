@@ -26,7 +26,7 @@ The senior doctor (a large frontier model) handles the hard, open-ended cases. A
 - **Large frontier models** do the open-ended thinking: understanding the task, planning, writing code.
 - **<Term k="slm">Small language models</Term>** are the same kind of model made much smaller. They're fast, cheap, private when run on your own device, and can run on a laptop or phone, but they know less and are weaker at long reasoning. They're good for summarising, sorting and extracting.
 - **<Term k="decision">Decision models</Term>** don't write text at all. You ask a narrow question with fixed answers ("allow, ask a human, or block?") and get back a probability for each option, in tens to hundreds of milliseconds. The category is new: <Claim id="jev-release" />. AWS (Strands Decider) and Cloudflare (Clef) followed with open versions on 1 October.
-- **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here.
+- **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here. Part 2 opens with [the agent loop](/learn/agent-loop/), step by step.
 
 Click through the steps of a typical agent loop to see who handles what:
 

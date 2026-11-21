@@ -738,3 +738,97 @@
   verified: 2026-11-21
   half_life: 12
   status: shipping
+
+# ---------------- Part 2: Agents ----------------
+
+- id: willison-loop
+  text: "Simon Willison's one-line definition has become the common one: an LLM agent runs tools in a loop to achieve a goal"
+  evidence: "An LLM agent runs tools in a loop to achieve a goal."
+  sources: [https://simonwillison.net/2025/Sep/18/agents/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: bea-agents
+  text: "Anthropic's engineers draw the line like this: in a workflow, code decides the order of steps; agents are systems where the model directs its own process and tool use"
+  evidence: "systems where LLMs dynamically direct their own processes and tool usage"
+  sources: [https://www.anthropic.com/engineering/building-effective-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: react
+  text: "the ReAct paper (Yao and colleagues, 2022) had a model alternate between writing down its reasoning and taking an action, a pattern today's agents still resemble"
+  evidence: "generate both reasoning traces and task-specific actions in an interleaved manner"
+  sources: [https://arxiv.org/abs/2210.03629]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: toolformer
+  text: "Toolformer (Meta, 2023) showed that a model could teach itself when to call tools such as a calculator, a search engine or a calendar"
+  evidence: "LMs can teach themselves to use external tools via simple APIs"
+  sources: [https://arxiv.org/abs/2302.04761]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: mcpmark
+  text: "on MCPMark, a 2025 benchmark of realistic multi-step tool tasks, the best model solved 52.56% of tasks on one try, but only 33.86% on all four of four tries"
+  evidence: "the best-performing model, gpt-5-medium, reaches only"
+  sources: [https://arxiv.org/abs/2509.24002]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: taubench-passk
+  text: "the τ-bench authors introduced pass^k, which asks whether an agent succeeds on every one of k tries; in 2024 the best agent passed all eight tries on under a quarter of retail tasks"
+  evidence: "a new metric (pass^k) to evaluate the reliability of agent behavior"
+  sources: [https://arxiv.org/abs/2406.12045]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: epoch-bfcl
+  text: "Epoch AI rated the most-cited function-calling leaderboard, BFCL, 'Flawed' in September 2026, after finding defects that could affect accuracy in 48% of a sample of its tasks"
+  evidence: "we found defects that could affect accuracy in 24 (48%) of them"
+  sources: [https://epoch.ai/benchmarks/berkeley-function-calling-leaderboard/review]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: ord-halflife
+  text: "Toby Ord found that agents' success on longer tasks fits a constant chance of failing in every minute of work, so each agent can be described by a 'half-life'"
+  evidence: "a constant rate of failing during each minute a human would take"
+  sources: [https://arxiv.org/abs/2505.05115]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: self-conditioning
+  text: "models become more likely to make mistakes when their own earlier mistakes are in the context, and letting them think before answering reduces the effect"
+  evidence: "more likely to make mistakes when the context contains their errors from prior turns"
+  sources: [https://arxiv.org/abs/2509.09677]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: maker
+  text: "a research system that split a task into tiny steps and let several model calls vote on each one completed over a million steps without a single error"
+  evidence: "solves a task with over one million LLM steps with zero errors"
+  sources: [https://arxiv.org/abs/2511.09030]
+  verified: 2026-11-21
+  half_life: 24
+  status: research
+
+- id: anthropic-agent-tokens
+  text: "Anthropic reports that its agents typically use about four times the tokens of a chat, and its multi-agent systems about fifteen times (self-reported)"
+  evidence: "agents typically use about 4× more tokens than chat interactions"
+  sources: [https://www.anthropic.com/engineering/multi-agent-research-system]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: cache-tenth
+  text: "Anthropic bills cached input at a tenth of the normal price, less on its newest models, but only when the beginning of the prompt is exactly identical"
+  evidence: "Cache read tokens are 0.1 times the base input tokens price"
+  sources: [https://platform.claude.com/docs/en/build-with-claude/prompt-caching]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping

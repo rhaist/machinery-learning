@@ -446,5 +446,17 @@
  "asset-inventory": {
   "term": "Asset inventory",
   "def": "The list of every system an organisation runs. You can't patch what isn't on it, and in large networks it is rarely complete."
+ },
+ "toolcall": {
+  "term": "Tool call",
+  "def": "Text the model writes in an agreed format, naming a tool and its inputs. The harness reads it and does the actual work; the model never runs anything itself."
+ },
+ "passk": {
+  "term": "pass^k",
+  "def": "The share of tasks an agent solves on every one of k tries. It falls as k grows, unlike 'pass@k' (solved on at least one try), which rises."
+ },
+ "workflow": {
+  "term": "Workflow",
+  "def": "A system where code fixes the order of steps and the model fills in each one. In an agent, the model chooses the next step itself."
  }
 }

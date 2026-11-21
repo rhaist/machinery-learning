@@ -51,6 +51,12 @@ frontier:
   - { title: "V-JEPA 2", by: Assran et al., year: 2025, url: "https://arxiv.org/abs/2506.09985", why: "The concrete JEPA world-model result: robot planning from video." }
   - { title: "Chain of Thought Monitorability", by: Korbak et al., year: 2025, url: "https://arxiv.org/abs/2507.11473", why: "Why thinking in hidden numbers carries a safety cost." }
   - { title: "The 2026 AI Index Report", by: Stanford HAI, year: 2026, url: "https://hai.stanford.edu/ai-index/2026-ai-index-report", why: "The field's independent annual data review; the 2026 edition finds capability advancing faster than our ability to measure it." }
+agent-loop:
+  - { title: "Building effective agents", by: Erik Schluntz and Barry Zhang (Anthropic), year: 2024, url: "https://www.anthropic.com/engineering/building-effective-agents", why: "The clearest practical account of workflows versus agents, and when to use neither.", beginner: true }
+  - { title: "I think \"agent\" may finally have a widely enough agreed upon definition to be useful jargon now", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Sep/18/agents/", why: "Where the one-line definition came from.", beginner: true }
+  - { title: "ReAct: Synergizing Reasoning and Acting in Language Models", by: Yao et al., year: 2022, url: "https://arxiv.org/abs/2210.03629", why: "The reason-then-act pattern behind today's loops." }
+  - { title: "τ-bench", by: Yao, Shinn, Razavi and Narasimhan, year: 2024, url: "https://arxiv.org/abs/2406.12045", why: "Why one lucky success isn't reliability: the pass^k metric." }
+  - { title: "AI Agents That Matter", by: Kapoor, Stroebl, Siegel, Nadgir and Narayanan, year: 2024, url: "https://arxiv.org/abs/2407.01502", why: "The case for judging agents on cost as well as accuracy." }
 prompt-injection:
   - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
   - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }

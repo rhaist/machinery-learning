@@ -1,8 +1,18 @@
-<div class="panel demo">
+---
+// Step through one agent session. Switches: raw message view, prompt caching, a planted instruction.
+// Logic and data in demos.js (#st-x).
+---
+<div class="panel demo at">
   <div class="row between"><b id="st-who"></b><span class="small" id="st-n"></span></div>
+  <div class="row at-sw" role="group" aria-label="Demo switches">
+    <button class="btn sm" type="button" id="st-raw" aria-pressed="false">Show raw messages</button>
+    <button class="btn sm" type="button" id="st-cache" aria-pressed="true">Prompt caching on</button>
+    <button class="btn sm" type="button" id="st-inj" aria-pressed="false">Plant an instruction in a file</button>
+  </div>
   <pre id="st-x" class="out-med"></pre>
-  <p id="st-d"></p>
+  <p id="st-d" aria-live="polite"></p>
   <div class="meter wide-l"><span>Context</span><span class="bt"><i id="st-m"></i></span><span class="v" id="st-v"></span></div>
+  <p class="small at-cost" id="st-cost"></p>
   <div class="row"><button class="btn" type="button" id="st-prev">Back</button><button class="btn pri" type="button" id="st-next">Next step</button></div>
-  <p class="caption">A typical, simplified agent session; token counts are realistic orders of magnitude.</p>
+  <p class="caption">A typical, simplified coding-agent session. Token counts are realistic orders of magnitude. The raw view uses one provider's message format, shortened; other providers use different names for the same shape. Cost assumes cached input is billed at a tenth of the normal price.</p>
 </div>

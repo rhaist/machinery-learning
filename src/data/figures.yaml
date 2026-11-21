@@ -9,7 +9,9 @@
 names:
   - Part 1
   - Part 2
-  - chapter 10
+  - Part 3
+  - pass@1
+  - pass^4
   - Llama 3 70B
   - 70B-class
   - Llama 3.1
@@ -28,6 +30,11 @@ names:
   - Article 50
 
 figures:
+  - page: chapters/agent-loop
+    text: "At 99% per step, a fifty-step task runs cleanly only about six times in ten"
+    kind: derived
+    calc: "0.99^50 = 0.605, about six in ten. Toy model with independent steps, as stated in the text."
+    based_on: [illustrative per-step rate]
   # --- derived: our own calculations ---
   - page: chapters/tokens
     text: "200,000 tokens × 8,192 numbers is 1.6 billion parameters"

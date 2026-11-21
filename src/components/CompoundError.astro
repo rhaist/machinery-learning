@@ -1,0 +1,14 @@
+---
+// Per-step reliability compounding over a task, with and without a check that lets the agent retry.
+// Logic in demos.js (#ce).
+---
+<div class="panel demo ce" id="ce">
+  <b>How small mistakes add up</b>
+  <label class="ce-row"><span>Each step goes right</span><input type="range" id="ce-p" min="90" max="99.9" step="0.1" value="99" aria-describedby="ce-pv"><output id="ce-pv"></output></label>
+  <label class="ce-row"><span>Steps in the task</span><input type="range" id="ce-n" min="1" max="200" step="1" value="50" aria-describedby="ce-nv"><output id="ce-nv"></output></label>
+  <div class="row"><button class="btn sm" type="button" id="ce-chk" aria-pressed="false">Add a check after every step</button></div>
+  <p class="ce-out"><span class="ce-big" id="ce-o"></span> <span id="ce-ot">chance that every step goes right</span></p>
+  <div class="meter wide-l" aria-hidden="true"><span>Whole task</span><span class="bt"><i id="ce-m"></i></span><span class="v" id="ce-mv"></span></div>
+  <p id="ce-d" class="small" aria-live="polite"></p>
+  <p class="caption">A toy model: every step fails independently with the same chance, and the check catches every failed step and allows one retry. Real agents break both assumptions, as the text below explains.</p>
+</div>

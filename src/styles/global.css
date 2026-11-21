@@ -510,6 +510,13 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .pg .pg-tbl summary{cursor:pointer;color:var(--ink);font-size:var(--fs-sm)}
 .pg .pg-tbl table{font-size:var(--fs-sm);margin-top:var(--sp-2)}
 .pg .pg-tbl td{text-align:right;font-family:var(--font-mono)}
+.at .at-sw{margin:var(--sp-2) 0}
+.at .at-cost{margin:var(--sp-2) 0 0;color:var(--mut)}
+.ce .ce-row{display:grid;grid-template-columns:minmax(8rem,12rem) 1fr 4.5rem;align-items:center;gap:var(--sp-3);margin-top:var(--sp-3);font-weight:400}
+.ce .ce-row output{font-family:var(--font-mono);text-align:right}
+.ce .ce-out{margin:var(--sp-4) 0 var(--sp-2);display:flex;align-items:baseline;gap:var(--sp-2);flex-wrap:wrap}
+.ce .ce-big{font:600 var(--fs-xl)/1 var(--font-mono)}
+@media(max-width:600px){.ce .ce-row{grid-template-columns:1fr 4rem}.ce .ce-row span{grid-column:1/-1}}
 @media(max-width:600px){.pg text{font-size:var(--fs-sm)}}
 
 /* training stages */
