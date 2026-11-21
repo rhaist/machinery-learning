@@ -1,0 +1,21 @@
+---
+// Which isolation layer stops which attack. Static table; no script.
+const Y = { s: '✓', t: 'stops it' }, N = { s: '✗', t: "doesn't stop it" }, M = { s: '~', t: 'depends' };
+const cols = ['Read your SSH keys', 'Break out through a kernel bug', 'Spy through a CPU side channel', 'Send your data to an allowed site', 'Misuse a token you gave it'];
+const rows: [string, string, typeof Y[], string][] = [
+  ['Plain process', 'runs as you', [N, N, N, N, N], 'Everything you can do, it can do.'],
+  ['OS sandbox', 'Seatbelt, bubblewrap, Landlock', [M, N, N, N, N], 'Limits files and network on the same kernel. Many tools still allow reading the whole disk.'],
+  ['Container', 'namespaces on a shared kernel', [Y, N, N, N, N], 'Hides your files, but one kernel bug reaches the host.'],
+  ['gVisor', 'user-space kernel', [Y, M, N, N, N], 'Handles most system calls itself, so far fewer reach the real kernel.'],
+  ['MicroVM', 'Firecracker, Kata', [Y, Y, M, N, N], 'Its own kernel; escapes need a hypervisor bug. Still shares the processor.'],
+  ['Separate machine', 'dedicated hardware', [Y, Y, Y, N, N], 'The strongest wall, and it still does nothing about what you allowed.'],
+];
+---
+<figure class="panel demo il">
+  <b>Which wall stops which attack?</b>
+  <div class="scroll"><table>
+    <thead><tr><th scope="col">Where the agent runs</th>{cols.map(c => <th scope="col">{c}</th>)}</tr></thead>
+    <tbody>{rows.map(([n, sub, v, note]) => <tr><th scope="row"><span class="il-name">{n}</span><span class="il-sub">{sub}</span><span class="il-note">{note}</span></th>{v.map(x => <td class={`il-${x === Y ? 'y' : x === N ? 'n' : 'm'}`}><span aria-hidden="true">{x.s}</span><span class="sr-only">{x.t}</span></td>)}</tr>)}</tbody>
+  </table></div>
+  <figcaption class="caption">✓ stops it · ~ depends on configuration · ✗ doesn't stop it. Simplified: every layer can have bugs. The last two columns are the point. No amount of isolation stops an agent from misusing what it was allowed to reach; only network allowlists, narrow short-lived credentials and approvals do.</figcaption>
+</figure>

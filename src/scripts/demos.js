@@ -491,3 +491,22 @@ const show=i=>{const[m,c,k]=D[i];out.textContent=`${m}: ${n(c)} critical CVEs pu
 pg.addEventListener('pointerover',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
 pg.addEventListener('pointerdown',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
 }
+
+// The desk fills up: context window, compaction, notes file (toy model).
+if($('#cd')){
+const CAP=100,FIX=18,STEP=11;let turns,sum,notes=false;
+const reset=()=>{turns=[{s:6,fact:true},{s:STEP}];sum=0};reset();
+function draw(msg){const used=FIX+sum+turns.reduce((t,x)=>t+x.s,0)+(notes?3:0);
+ const seg=(w,c,t)=>`<span class="cd-s ${c}" style="flex-basis:${w}%" title="${t}"></span>`;
+ $('#cd-bar').innerHTML=seg(FIX,'fixed','instructions and tools')+(sum?seg(sum,'sum','summary of earlier work'):'')+(notes?seg(3,'note','notes file reloaded'):'')+turns.map(x=>seg(x.s,x.fact?'turn fact':'turn',x.fact?'the turn with the API detail':'conversation')).join('');
+ $('#cd-fill').textContent=`${used}% of the window used`;if(msg!==undefined)$('#cd-out').textContent=msg}
+$('#cd-add').addEventListener('click',()=>{turns.push({s:STEP});let msg='Another tool call and its result land in the context.';
+ const used=FIX+sum+turns.reduce((t,x)=>t+x.s,0)+(notes?3:0);
+ if(used>CAP){const old=turns.slice(0,-2);turns=turns.slice(-2);sum=Math.min(14,sum+4+old.length);msg='The window was full, so the harness compacted: older steps were replaced by a short summary. "Fixed the login bug, updated tests, customer details discussed." The exact API version didn\'t make it into the summary.'}
+ draw(msg)});
+$('#cd-notes').addEventListener('click',e=>{notes=!notes;e.currentTarget.setAttribute('aria-pressed',String(notes));draw(notes?'The agent now writes key facts to a notes file outside the window, and the harness reloads the notes at each step.':'No notes file.')});
+$('#cd-reset').addEventListener('click',()=>{reset();draw('')});
+$('#cd-ask').addEventListener('click',()=>{const has=turns.some(x=>x.fact);
+ draw(has?'"Version 1." The original sentence is still in the context, so the model can read it.':notes?'"Version 1." The detail was compacted away, but it survived in the notes file the harness reloads.':'"Probably the current version, 3." The detail is gone, so the model fills the gap with a plausible guess, and says it confidently.')});
+draw('');
+}

@@ -1,0 +1,17 @@
+---
+// The context window as a desk that fills up; compaction and a notes file. Logic in demos.js (#cd).
+---
+<div class="panel demo cd" id="cd">
+  <b>The desk fills up</b>
+  <p class="small cd-intro">Early on, the user mentions one detail: the customer is still on version 1 of the API. Keep working and watch what happens to it.</p>
+  <div class="cd-bar" id="cd-bar" role="img" aria-label="How full the context window is"></div>
+  <div class="row between small"><span id="cd-fill"></span><span class="cd-key"><i class="cd-k fixed"></i>instructions and tools <i class="cd-k turn"></i>conversation <i class="cd-k sum"></i>summary <i class="cd-k note"></i>notes</span></div>
+  <div class="row" role="group" aria-label="Actions">
+    <button class="btn" type="button" id="cd-add">Work: one more step</button>
+    <button class="btn sm" type="button" id="cd-notes" aria-pressed="false">Agent keeps a notes file</button>
+    <button class="btn sm" type="button" id="cd-reset">Start over</button>
+  </div>
+  <div class="row"><button class="btn pri" type="button" id="cd-ask">Ask: which API version is the customer on?</button></div>
+  <p id="cd-out" aria-live="polite"></p>
+  <p class="caption">Simplified. Real harnesses compact at a set threshold, often by asking the model itself to write the summary. What survives depends on what the summary happens to keep.</p>
+</div>

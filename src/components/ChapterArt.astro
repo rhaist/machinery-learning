@@ -165,6 +165,18 @@ const art: Record<string, string> = {
     <path d="M620 110 H650" class="a-track"/>
     <text x="680" y="176" text-anchor="middle" class="a-cap">tools</text>`,
 
+  'context-and-memory': `${ground}
+    <rect x="60" y="120" width="420" height="16" rx="4" class="a-c3"/><text x="270" y="160" text-anchor="middle" class="a-cap">the desk: a fixed-size context</text>
+    <rect x="76" y="66" width="70" height="52" rx="4" class="a-s2"/><rect x="86" y="78" width="46" height="5" rx="2" class="a-ln"/><rect x="86" y="92" width="36" height="5" rx="2" class="a-ln"/>
+    <rect x="156" y="58" width="70" height="60" rx="4" class="a-s2"/><rect x="166" y="72" width="44" height="5" rx="2" class="a-ln"/><rect x="166" y="86" width="50" height="5" rx="2" class="a-ln"/>
+    <rect x="236" y="70" width="70" height="48" rx="4" class="a-y"/><rect x="246" y="84" width="44" height="5" rx="2" class="a-ln"/>
+    <rect x="316" y="62" width="70" height="56" rx="4" class="a-s2"/><rect x="326" y="76" width="46" height="5" rx="2" class="a-ln"/>
+    <rect x="396" y="74" width="70" height="44" rx="4" class="a-r" opacity=".85"/><text x="431" y="100" text-anchor="middle" class="a-cap" style="fill:var(--rt)">full</text>
+    <path d="M490 96 H560" class="a-ar"/><path d="M552 88 l10 8 l-10 8" class="a-ar"/>
+    <rect x="580" y="50" width="90" height="110" rx="6" class="a-c2"/><rect x="592" y="66" width="66" height="22" rx="3" class="a-s2"/><rect x="592" y="96" width="66" height="22" rx="3" class="a-s2"/><rect x="592" y="126" width="66" height="22" rx="3" class="a-t"/>
+    <text x="625" y="40" text-anchor="middle" class="a-cap">files and notes</text>
+    <rect x="696" y="88" width="70" height="40" rx="6" class="a-ink"/><text x="731" y="113" text-anchor="middle" class="a-mono" style="fill:var(--s2);font-size:12px">MCP</text>`,
+
   'patch-gap': `${ground}
     ${belt(40, 760, 170)}
     ${[0,1,2,3].map(r => [0,1,2,3,4].map(c => `<rect x="${60 + c * 34}" y="${40 + r * 30}" width="28" height="22" rx="3" class="${(r * 5 + c) % 3 === 0 ? 'a-r' : 'a-c2'}"/>`).join('')).join('')}

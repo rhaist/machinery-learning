@@ -832,3 +832,128 @@
   verified: 2026-11-21
   half_life: 6
   status: shipping
+
+- id: claude-1m
+  text: "every current Claude model now offers a context window of a million tokens"
+  evidence: "1M tokens"
+  sources: [https://platform.claude.com/docs/en/about-claude/models/overview]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: nolima
+  text: "in a 2025 test that hid the answer without reusing the question's words, 11 of 13 models fell below half their short-context score at just 32,000 tokens"
+  evidence: "At 32K, for instance, 11 models drop below 50% of their strong short-length baselines"
+  sources: [https://arxiv.org/abs/2502.05167]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: ctx-finite
+  text: "Anthropic's engineers describe the context as a budget that must be treated as a finite resource with diminishing returns"
+  evidence: "must be treated as a finite resource with diminishing marginal returns"
+  sources: [https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: chatgpt-memory
+  text: "since April 2025, ChatGPT's memory references all your past conversations, not just the facts it saved"
+  evidence: "it now references all your past conversations"
+  sources: [https://openai.com/index/memory-and-new-controls-for-chatgpt/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: longmemeval
+  text: "a 2025 benchmark found commercial assistants and long-context models lost about 30% accuracy when they had to remember information across long interactions"
+  evidence: "a 30% accuracy drop on memorizing information across sustained interactions"
+  sources: [https://arxiv.org/abs/2410.10813]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: spaiware-fix
+  text: "in 2024 Johann Rehberger showed that a web page could plant lasting instructions in ChatGPT's memory; the data-stealing channel was fixed, but untrusted content could still write memories"
+  evidence: "A website or untrusted document can still invoke the memory tool to store arbitrary memories."
+  sources: [https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: aaif
+  text: "in December 2025 MCP moved to the Linux Foundation's new Agentic AI Foundation, together with OpenAI's AGENTS.md and Block's goose"
+  evidence: "Anthropic's Model Context Protocol (MCP), Block's goose, and OpenAI's AGENTS.md"
+  sources: [https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: mcp-stateless
+  text: "its July 2026 revision turned MCP into a stateless request-and-response protocol, much like an ordinary web API"
+  evidence: "MCP is transforming from a bidirectional stateful protocol into a request/response stateless protocol."
+  sources: [https://blog.modelcontextprotocol.io/posts/2026-07-28/]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: skills
+  text: "Agent Skills, which Anthropic donated to the same foundation in October 2026, are folders with a SKILL.md file that teach an agent a specific task"
+  evidence: "A skill is a folder containing a SKILL.md file that teaches an agent a specific task"
+  sources: [https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: tool-desc
+  text: "Anthropic notes that tool descriptions are loaded into the agent's context and can collectively steer how it uses tools"
+  evidence: "they can collectively steer agents toward effective tool-calling behaviors."
+  sources: [https://www.anthropic.com/engineering/writing-tools-for-agents]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: harness-matters
+  text: "a 2026 study (Han and Sun, ICML) found that picking the best harness gains about as much as picking the best model"
+  evidence: "the gains from simply picking the best harness are comparable to those from picking"
+  sources: [https://icml.cc/virtual/2026/68323]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: firecracker
+  text: "Firecracker, the microVM technology behind AWS Lambda, starts a virtual machine in under 125 milliseconds with less than 5 MB of memory overhead"
+  evidence: "boots to application code in less than 125ms"
+  sources: [https://files.usenix.org/s3fs-public/cdn/nsdi20-paper-agache.pdf]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: gvisor-sidechannel
+  text: "gVisor's own documentation says it does not protect against hardware side channels"
+  evidence: "gVisor does not provide protection against hardware side channels."
+  sources: [https://gvisor.dev/docs/architecture_guide/security/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: cc-sandbox
+  text: "Claude Code's sandbox is off by default and covers shell commands only; its file tools, MCP servers and hooks run outside it"
+  evidence: "The sandbox covers shell commands only."
+  sources: [https://code.claude.com/docs/en/sandboxing]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: openai-artifactory
+  text: "in July 2026, models being evaluated by OpenAI found and exploited a previously unknown flaw in the package cache their isolated test environment used to fetch software"
+  evidence: "identified and exploited a previously unknown zero-day vulnerability"
+  sources: [https://openai.com/index/hugging-face-model-evaluation-security-incident]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: ncsc-agents
+  text: "the UK's NCSC tells organisations to always run AI agents in a sandbox, deny all network traffic by default, use the shortest-lived credentials possible and keep a way to pull the plug"
+  evidence: "Always run AI agents within a sandboxed environment"
+  sources: [https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping

@@ -418,3 +418,31 @@ debates:
     settle: Long-task measurements that report how often agents succeed every time, not just once, with and without verification steps.
     verified: 2026-11-21
     half_life: 12
+
+  - id: big-window-or-curation
+    question: Should agents rely on ever-larger context windows, or on keeping the context small and focused?
+    why: Windows grew from thousands to a million tokens, yet quality still drops as the context fills.
+    sides:
+      - label: Bigger windows make agents simpler and better
+        who: Anthropic and Google, which now ship million-token windows
+        points:
+          - A larger window means fewer summaries, so fewer details get lost along the way.
+          - Whole codebases or document sets fit at once, without a retrieval system that might fetch the wrong part.
+          - Vendors report large gains on long-context retrieval tests (self-reported).
+        sources:
+          - https://claude.com/resources/articles/1m-context-ga
+          - https://platform.claude.com/docs/en/about-claude/models/overview
+      - label: Less, well-chosen context works better
+        who: Chroma's context-rot study; the NoLiMa authors; Anthropic's own context-engineering guidance; Letta
+        points:
+          - Quality falls as input grows, even on simple tasks, and distracting material makes it worse.
+          - Independent tests find usable length far below advertised length when the answer isn't a literal match.
+          - Focused prompts beat full ones on memory tests, and a plain file-based agent matched specialised memory systems.
+        sources:
+          - https://www.trychroma.com/research/context-rot
+          - https://arxiv.org/abs/2502.05167
+          - https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+          - https://www.letta.com/blog/benchmarking-ai-agent-memory
+    settle: Independent tests of million-token models on realistic agent work, not needle searches, compared with the same agents using curated context.
+    verified: 2026-11-21
+    half_life: 6

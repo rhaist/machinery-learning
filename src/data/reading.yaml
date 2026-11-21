@@ -57,6 +57,13 @@ agent-loop:
   - { title: "ReAct: Synergizing Reasoning and Acting in Language Models", by: Yao et al., year: 2022, url: "https://arxiv.org/abs/2210.03629", why: "The reason-then-act pattern behind today's loops." }
   - { title: "τ-bench", by: Yao, Shinn, Razavi and Narasimhan, year: 2024, url: "https://arxiv.org/abs/2406.12045", why: "Why one lucky success isn't reliability: the pass^k metric." }
   - { title: "AI Agents That Matter", by: Kapoor, Stroebl, Siegel, Nadgir and Narayanan, year: 2024, url: "https://arxiv.org/abs/2407.01502", why: "The case for judging agents on cost as well as accuracy." }
+context-and-memory:
+  - { title: "Effective context engineering for AI agents", by: Anthropic, year: 2025, url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", why: "The working vocabulary: compaction, notes, sub-agents, just-in-time retrieval.", beginner: true }
+  - { title: "Context Engineering for AI Agents: Lessons from Building Manus", by: Yichao Ji (Manus), year: 2025, url: "https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus", why: "A production team on caching, files as memory and keeping mistakes visible." }
+  - { title: "Context Rot", by: Chroma, year: 2025, url: "https://www.trychroma.com/research/context-rot", why: "Why more context can make answers worse.", beginner: true }
+  - { title: "MCP specification and changelog", by: Model Context Protocol, year: 2026, url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog", why: "What changed in the stateless redesign." }
+  - { title: "Managing the cyber risk of agentic AI", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf", why: "Concrete official guidance on sandboxes, network and credentials.", beginner: true }
+  - { title: "Firecracker: Lightweight Virtualization for Serverless Applications", by: Agache et al. (AWS), year: 2020, url: "https://www.usenix.org/conference/nsdi20/presentation/agache", why: "The microVM design most agent sandboxes now build on." }
 prompt-injection:
   - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
   - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }
