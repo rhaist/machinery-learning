@@ -6,6 +6,8 @@ A living, interactive guide to how AI works, starting with large language models
 
 **Live site:** https://machinerylearning.eu (once Pages and DNS are set up)
 
+See `DESIGN.md` for the design system (tokens, signatures, rules enforced by `scripts/check-design.mjs`).
+
 ## How it stays alive
 
 | Layer | Where | Changes |

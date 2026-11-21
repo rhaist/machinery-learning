@@ -11,6 +11,7 @@ const data = { months: radarMonths, quadrants, entries: radarEntries };
     <div class="radar-wrap">
       <div class="radar-col">
         <div class="radar-fig"><svg id="radar" role="group" aria-label="Radar of AI research directions by maturity; each numbered dot matches an entry in the list"></svg></div>
+        <div class="legend" aria-label="Ring colours"><span style="--c:var(--t)">Shipping</span><span style="--c:var(--y)">Emerging</span><span style="--c:var(--bsoft)">Research</span><span style="--c:var(--faint)">Faded</span></div>
         {radarMonths.length > 1
           ? <div class="ctl"><label for="radar-month">Replay history</label><output id="radar-month-label"></output><input type="range" id="radar-month" min="0" step="1"></div>
           : <p class="caption">History starts in <span id="radar-month-label">{monthLabel(radarMonths[0])}</span>. From next month on, a slider here replays how entries moved.</p>}

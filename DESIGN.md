@@ -6,15 +6,18 @@ All tokens live at the top of `src/styles/global.css`. **Never write a raw size,
 
 ## Character
 
-Calm, precise, a little playful in the demos. A field guide with live instruments, not a marketing site. Every fact shows when it was last checked. No gradients except the brand mark, no drop shadows except the tooltip, no decorative motion.
+**A technical drawing of the machine.** Calm, precise, a little playful in the demos. Pages read like engineering plates: a faint drafting grid, hairline rules, square corners, numbered figures, small uppercase labels, and one amber signal colour. Every fact carries an inspection stamp showing when it was last checked. Dark is a blueprint at night; light is drafting paper.
+
+No gradients (the frontier drawing's horizon is the one exception), no drop shadows except the tooltip, no decorative motion, no photos of people.
 
 ## Type
 
-Three families, all self-hosted: **Red Hat Display** (headings, labels that act as headings), **Red Hat Text** (everything else), **Red Hat Mono** (tokens, code, model output).
+Two families, both open-source and self-hosted: **Instrument Sans** (headings and all reading and UI text) and **Martian Mono** (labels, code, tokens, model output, numbers in drawings).
 
 | Token | Size | Use |
 |---|---|---|
-| `--fs-xs` | 12px | Badges, tags, axis ticks, token IDs |
+| `--fs-label` | 11px | Mono labels only (see Labels) |
+| `--fs-xs` | 12px | Code blocks, axis ticks, token IDs |
 | `--fs-sm` | 14px | Captions, meta lines, legends, footers, compact controls, table cells on phones |
 | `--fs-md` | 15px | Secondary text: card descriptions, notes in panels, tables, debate points, UI buttons and navigation |
 | `--fs-base` | 17px | Reading text. Body default |
@@ -24,7 +27,9 @@ Three families, all self-hosted: **Red Hat Display** (headings, labels that act 
 | `--fs-2xl` | 26–32px fluid | Every h2 |
 | `--fs-3xl` | 34–52px fluid | Every h1 (one per page) |
 
-Line height: `--lh-tight` 1.1 for headings, `--lh-snug` 1.35 for UI and compact lists, `--lh-body` 1.6 for reading text. Weights: 400 body, 500 UI emphasis, 700 labels and h3, 800 h1/h2 and the wordmark only.
+Line height: `--lh-tight` 1.1 for headings (h1 1.02), `--lh-snug` 1.35 for UI and compact lists, `--lh-body` 1.6 for reading text. Weights: 400 body, 500 h1/h2 and UI emphasis, 600 h3 and component titles. Nothing heavier: the large, light headings are part of the identity.
+
+**Labels** are Martian Mono, `--fs-label`, uppercase, tracked `--ls-label`. They are for kickers, figure tags, stamps and badges, table heads, meta lines and card footers. Never for navigation, buttons, body text or anything longer than one line. The wordmark is the one larger mono element.
 
 Headings use `text-wrap: balance`. Reading text never exceeds `--w-text` (about 75 characters).
 
@@ -62,9 +67,9 @@ The footer sits at the bottom of the viewport on short pages.
 
 ## Shape
 
-Radii: `--r-xs` 4 (bars, badges, inline marks) · `--r-sm` 8 (buttons, inputs, chips, nav pills) · `--r-md` 12 (list rows, notes, inner panels) · `--r-lg` 16 (panels, cards, debates, drawings) · `--r-pill` (chapter bar, round markers). An inner element's radius is one step below its container's.
+Corners are nearly square. Radii: `--r-xs` 2 (bars, badges) · `--r-sm` 2 (buttons, inputs, chips) · `--r-md` 3 (list rows, notes, inner panels) · `--r-lg` 4 (panels, cards, debates, drawings) · `--r-pill` only for true circles. Don't round anything else.
 
-Borders: 1px `--line` by default. 2px only for selected or accent outlines. Coloured edges (notes, verdicts, data rows, debate sides) are `--edge` (4px) on one side only.
+Borders: 1px `--line` hairlines by default. 1.5–2px only for selected or accent outlines. Coloured edges (notes, verdicts, data rows, debate sides) are `--edge` (2px) on one side only.
 
 Controls: `--ctl` 44px for anything tapped in content (WCAG target size); `--ctl-sm` 36px only for header controls and dense rows inside demos.
 
@@ -77,24 +82,37 @@ Colours come only from the theme variables, which switch for light and dark. Nev
 | Ground and surfaces, lowest to highest | `--bg`, `--s1`, `--s2` (panels), `--sunk` (inputs, rows inside panels) |
 | Text | `--ink`, `--mut` (secondary), `--faint` (tertiary, never for body text) |
 | Lines | `--line` |
-| Teal: links, "fresh", positive, progress | `--t` (fills), `--tt` (text) |
-| Yellow: the one primary action, selection, current item | `--y` (fills), `--yt` (text), `--onY` (text on yellow) |
+| Cyan: links, "fresh", positive, progress, blueprint lines | `--t` (lines and fills), `--tt` (text) |
+| Amber, the signal colour: the one primary action, selection, current item, kickers | `--y` (fills), `--yt` (text), `--onY` (text on amber) |
 | Red: risk, attack, error | `--r`, `--rt` |
-| Blue: structure, system, the Engineer path | `--b`, `--bsoft` |
+| Violet-blue: structure, system, the Engineer path | `--b`, `--bsoft` |
+| Grid | `--grid` (4–5% ink) |
 
-One yellow primary action per view. Red means risk, never decoration. Text colour on every fill must pass WCAG AA in both themes; axe runs on every page in both themes.
+One amber primary action per view. Red means risk, never decoration. Text colour on every fill must pass WCAG AA in both themes; axe runs on every page in both themes.
 
 ## Components
 
-- **Panel** (`.panel`): surface `--s2`, 1px line, `--r-lg`, `--pad`. Demos are panels.
-- **Card** (`.card`): same as a panel; whole card is the link; hover changes the border to teal.
-- **Note** (`.note`): `--s1`, left edge in teal (analogy), yellow (key point) or red (warning). Title in Display 700.
+- **Panel** (`.panel`): translucent `--s1` over the grid, 1px hairline, `--r-lg`, `--pad`. Demos are panels and carry registration marks and a figure tag.
+- **Card** (`.card`): same as a panel; whole card is the link; hover changes the border to cyan.
+- **Note** (`.note`): `--s1`, 2px left edge in cyan (analogy), amber (key point) or red (warning). Title in sans 600.
 - **Debate** (`.debate`): panel on `--s1`; two sides with a top edge in blue and red.
 - **Engineer block** (`details.eng`): blue-tinted, collapsed on the beginner path.
 - **Quiz** (`.quiz`): sunk surface, options as full-width 44px buttons.
-- **Badge** (`.badge` family: claim dates, ring labels, freshness, tags): `--fs-xs`, 700, `--r-xs`, `0 --sp-2` padding.
+- **Badge / stamp** (`.badge` family: claim dates, ring labels, freshness, tags): a mono label inside a 1px outline in its own colour, no fill. The "new" tag is the one filled badge.
 - **Caption** (`.caption`): `--fs-sm`, `--mut`. The last line of a demo that explains what is illustrative.
-- **Buttons**: `.btn` (secondary) and `.btn.pri` (the primary, yellow). Segmented toggles use `aria-pressed`.
+- **Buttons**: `.btn` (secondary) and `.btn.pri` (the primary, amber). Segmented toggles use `aria-pressed`.
+
+## Signatures
+
+The five elements that make a page recognisably ours. Use them as specified, nowhere else.
+
+1. **Drafting grid**: `--grid` lines every `--sp-5` (24px) behind every page. Alternate sections (`.alt`) are solid, which gives the page its rhythm.
+2. **Registration marks**: L-shaped corner marks 5px outside lab panels and chapter drawings. Not on cards, notes or debates.
+3. **Figure tags**: every lab panel in a chapter gets "Fig. n" on its top edge, numbered automatically. Don't number anything else.
+4. **Line-art plates**: chapter drawings are stroke-only (1.5px neutral, 1.75px colour), with a 14–18% tint inside coloured shapes, mono labels and gears drawn as rim, hub and teeth. Drawn at 800×220.
+5. **Crosshair mark**: the brand mark (amber circle with crosshair) in the header, favicon and share images.
+
+Share images (`src/lib/og.ts`) use the dark tokens, the grid, registration marks, an amber mono kicker and the large light title.
 
 ## Writing in the interface
 

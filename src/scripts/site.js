@@ -137,7 +137,7 @@ if (radarEl) {
     [...radii].reverse().forEach((r, i) => { s += `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:var(--ring${i + 1});stroke:var(--line)"/>`; });
     s += `<line x1="${cx - rMax}" y1="${cy}" x2="${cx + rMax}" y2="${cy}" style="stroke:var(--line)"/><line x1="${cx}" y1="${cy - rMax}" x2="${cx}" y2="${cy + rMax}" style="stroke:var(--line)"/>`;
     // ring labels along the vertical axis
-    RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + 5}" y="${cy - (i ? (r0 + radii[i]) / 2 : radii[0] * 0.88) + 4}" class="rl">${rg}</text>`; });
+    if (W >= 520) RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + 5}" y="${cy - (i ? (r0 + radii[i]) / 2 : radii[0] * 0.88) + 4}" class="rl">${rg}</text>`; });
     // quadrant labels in the corners
     const ql = [[16, 26, 'start'], [W - 16, 26, 'end'], [16, H - 12, 'start'], [W - 16, H - 12, 'end']];
     if (W >= 520) R.quadrants.forEach((q, i) => { s += `<text x="${ql[i][0]}" y="${ql[i][1]}" text-anchor="${ql[i][2]}" class="ql">${q}</text>`; });
@@ -148,7 +148,8 @@ if (radarEl) {
     Object.values(groups).forEach(list => list.forEach(([e, i, rg], k) => {
       const qi = R.quadrants.indexOf(e.quadrant), ri = RINGS.indexOf(rg);
       const r0 = ri ? radii[ri - 1] : 0, r1 = radii[ri];
-      const a0 = angles[qi][0] + 0.26, a1 = angles[qi][1] - 0.26;
+      const m = W < 520 ? 0.46 : 0.3; // keep blips clear of the axes, where the ring labels sit
+      const a0 = angles[qi][0] + m, a1 = angles[qi][1] - m;
       const a = a0 + (a1 - a0) * (k + 0.5) / list.length;
       const r = r0 + (r1 - r0) * (list.length > 2 ? (k % 2 ? 0.72 : 0.34) : 0.55) + (ri === 0 ? 8 : 0);
       const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
