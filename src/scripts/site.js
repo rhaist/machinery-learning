@@ -1,4 +1,6 @@
 // Site-level behaviour: Engineer-box default, theme, reader (progress, resume, sheet), freshness, "new since last visit", quizzes, glossary search, radar.
+// Escape text before it goes into HTML or an attribute. Data from the page (JSON, headings) is never trusted as markup.
+const escH = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -203,10 +205,10 @@ if (radarEl) {
     [...radii].reverse().forEach((r, i) => { s += `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:var(--ring${i + 1});stroke:var(--line)"/>`; });
     s += `<line x1="${cx - rMax}" y1="${cy}" x2="${cx + rMax}" y2="${cy}" style="stroke:var(--line)"/><line x1="${cx}" y1="${cy - rMax}" x2="${cx}" y2="${cy + rMax}" style="stroke:var(--line)"/>`;
     // ring labels along the vertical axis
-    if (W >= 520) RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + 5}" y="${cy - (i ? (r0 + radii[i]) / 2 : radii[0] * 0.88) + 4}" class="rl">${rg}</text>`; });
+    if (W >= 520) RINGS.forEach((rg, i) => { const r0 = i ? radii[i - 1] : 0; s += `<text x="${cx + 5}" y="${cy - (i ? (r0 + radii[i]) / 2 : radii[0] * 0.88) + 4}" class="rl">${escH(rg)}</text>`; });
     // quadrant labels in the corners
     const ql = [[16, 26, 'start'], [W - 16, 26, 'end'], [16, H - 12, 'start'], [W - 16, H - 12, 'end']];
-    if (W >= 520) R.quadrants.forEach((q, i) => { s += `<text x="${ql[i][0]}" y="${ql[i][1]}" text-anchor="${ql[i][2]}" class="ql">${q}</text>`; });
+    if (W >= 520) R.quadrants.forEach((q, i) => { s += `<text x="${ql[i][0]}" y="${ql[i][1]}" text-anchor="${ql[i][2]}" class="ql">${escH(q)}</text>`; });
     // blips: entries sharing a quadrant and ring are spread evenly so they never overlap; numbers match the list
     const angles = [[Math.PI, 1.5 * Math.PI], [1.5 * Math.PI, 2 * Math.PI], [0.5 * Math.PI, Math.PI], [0, 0.5 * Math.PI]];
     const groups = {};
@@ -220,7 +222,7 @@ if (radarEl) {
       const r = r0 + (r1 - r0) * (list.length > 2 ? (k % 2 ? 0.72 : 0.34) : 0.55) + (ri === 0 ? 8 : 0);
       const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
       const on = sel === e.id;
-      s += `<g class="blip${on ? ' on' : ''}" data-id="${e.id}" tabindex="0" role="button" aria-label="${i + 1}. ${e.name}: ${rg}" style="transform:translate(${x}px,${y}px)"><circle r="${(on ? 3 : 0) + (W < 520 ? 8.5 : 11)}" style="fill:${COL[rg]};stroke:${on ? 'var(--ink)' : 'var(--bg)'}" stroke-width="2"/><text text-anchor="middle" y="${W < 520 ? 3.5 : 4}" class="bn" style="font-size:${W < 520 ? 9.5 : 11.5}px;fill:${rg === 'emerging' ? 'var(--onY)' : 'var(--blipink)'}">${i + 1}</text></g>`;
+      s += `<g class="blip${on ? ' on' : ''}" data-id="${escH(e.id)}" tabindex="0" role="button" aria-label="${i + 1}. ${escH(e.name)}: ${escH(rg)}" style="transform:translate(${x}px,${y}px)"><circle r="${(on ? 3 : 0) + (W < 520 ? 8.5 : 11)}" style="fill:${COL[rg]};stroke:${on ? 'var(--ink)' : 'var(--bg)'}" stroke-width="2"/><text text-anchor="middle" y="${W < 520 ? 3.5 : 4}" class="bn" style="font-size:${W < 520 ? 9.5 : 11.5}px;fill:${rg === 'emerging' ? 'var(--onY)' : 'var(--blipink)'}">${i + 1}</text></g>`;
     }));
     radarEl.innerHTML = s;
     const label = $('#radar-month-label'); if (label) label.textContent = new Date(month + '-01T00:00:00Z').toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -267,7 +269,7 @@ if (radarEl) {
   const left = $('#rb-left');
   const heads = $$('.chapter .prose > h2');
   const toc = $('#sheet-toc');
-  if (toc) toc.innerHTML = heads.map((h, i) => { if (!h.id) h.id = 's-' + (h.textContent || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48); return `<li><a href="#${h.id}">${h.textContent.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))}</a></li>`; }).join('');
+  if (toc) toc.innerHTML = heads.map((h, i) => { if (!h.id) h.id = 's-' + (h.textContent || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48); return `<li><a href="#${escH(h.id)}">${escH(h.textContent)}</a></li>`; }).join('');
   const tocLinks = toc ? [...toc.querySelectorAll('a')] : [];
   const pos = store.get('lfg-pos', {});
   const anchorAt = () => innerHeight * 0.3;
