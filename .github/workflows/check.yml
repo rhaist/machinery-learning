@@ -4,19 +4,21 @@ on:
   pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
       - run: npm ci
       - name: Claims freshness and integrity
@@ -24,9 +26,11 @@ jobs:
       - name: Design rules (DESIGN.md)
         run: node scripts/check-design.mjs
       - run: npm run build
-      - name: Guard protected paths
+      - name: Guard protected paths in monthly update PRs
         if: startsWith(github.head_ref, 'update/')
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          if git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '^(\.claude/|\.github/|astro\.config\.mjs|package(-lock)?\.json|scripts/|research/MONTHLY_UPDATE\.md)'; then
+          if git diff --name-only "origin/${BASE_REF}...HEAD" | grep -E '^(\.claude/|\.github/|astro\.config\.mjs|package(-lock)?\.json|\.nvmrc|scripts/|research/MONTHLY_UPDATE\.md|DESIGN\.md)'; then
             echo "Monthly update PRs must not change protected paths." && exit 1
           fi

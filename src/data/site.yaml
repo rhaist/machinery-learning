@@ -3,14 +3,14 @@
 
 name: Machinery Learning
 tagline: A living field guide to how AI actually works   # used in page titles, search and link previews
-repo: https://github.com/rhaist/machinery
+repo: https://github.com/rhaist/machinery-learning
 domain: machinerylearning.eu
 
 # Legal notice (Impressum, § 5 DDG / § 18 MStV) and privacy notice.
 # Anything still set to TODO shows a visible "draft" warning on those pages.
 legal:
   name: Robert Haist
-  address: Postfach 11 02, 71666 Marbach, Germany   # same as shyrm.app; a PO box may not count as a servable address (ladungsfähige Anschrift)
+  address: Postfach 11 02, 71666 Marbach, Germany
   email: hello@machinerylearning.eu
   responsible: Robert Haist        # § 18 (2) MStV, responsible for editorial content
   supervisory_authority: "Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)"

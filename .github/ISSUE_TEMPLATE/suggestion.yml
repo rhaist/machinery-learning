@@ -1,0 +1,18 @@
+name: Suggestion
+description: A confusing passage, a missing topic, a counterpoint, or an idea for a demo.
+labels: [suggestion]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options: [Confusing or unclear, Missing topic, Expert counterpoint, Demo or lab idea, Design or accessibility, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Which page, what you expected, and who it would help (beginners, engineers, both).
+    validations:
+      required: true

@@ -1,0 +1,32 @@
+name: Factual error or outdated claim
+description: Something in the guide is wrong, overstated or no longer true.
+labels: [correction]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Link to the chapter or page, ideally with the heading.
+      placeholder: https://machinerylearning.eu/learn/tokens/
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the guide says
+      description: Quote the sentence or describe the demo.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What is correct
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Primary sources are best (papers, official posts, standards, documents). Vendor numbers about their own products count as self-reported.
+    validations:
+      required: true

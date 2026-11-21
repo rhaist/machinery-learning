@@ -1,0 +1,21 @@
+name: Broken or weak source
+description: A source link is dead, moved, paywalled, or a better primary source exists.
+labels: [sources]
+body:
+  - type: input
+    id: claim
+    attributes:
+      label: Claim or page
+      description: The claim id from the Sources & freshness page, or a link to the page.
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Problem link
+    validations:
+      required: true
+  - type: input
+    id: better
+    attributes:
+      label: Better source (if you know one)
