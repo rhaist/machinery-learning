@@ -1,4 +1,4 @@
-# Machinery
+# Machinery Learning
 
 *A living field guide to how AI actually works.*
 

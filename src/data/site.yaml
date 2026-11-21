@@ -1,7 +1,7 @@
 # Site identity. The name and tagline are stable; the edition subtitle evolves.
 # Add a new entry at the top of `editions` when the subtitle changes; never rewrite old ones.
 
-name: Machinery
+name: Machinery Learning
 tagline: A living field guide to how AI actually works   # used in page titles, search and link previews
 repo: https://github.com/rhaist/machinery
 domain: machinerylearning.eu

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
+import { site } from './data';
 
 const font = (pkg: string, file: string) => fs.readFileSync(path.resolve('node_modules/@fontsource', pkg, 'files', file));
 const fonts = [
@@ -19,7 +20,7 @@ export async function ogPng({ kicker, title, summary, footer }: { kicker: string
   const tree = h('div', { width: 1200, height: 630, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '64px 72px', background: '#0b1433', color: '#eef1fb', fontFamily: 'Text' }, [
     h('div', { display: 'flex', alignItems: 'center', fontFamily: 'Display', fontSize: 34, letterSpacing: -0.5 }, [
       h('div', { width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(135deg,#4fc1c6,#f7e463)', marginRight: 16 }),
-      'Machinery',
+      site.name,
     ]),
     h('div', { display: 'flex', flexDirection: 'column' }, [
       h('div', { fontSize: 28, fontWeight: 500, color: '#4fc1c6', marginBottom: 18 }, kicker),

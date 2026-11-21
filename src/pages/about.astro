@@ -8,8 +8,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <h1>How this guide works</h1>
     <p class="lede" style="margin:14px 0 8px">A book about AI goes out of date before it's printed. This guide is built to change: a stable core that explains how these systems work, and a living layer that is re-checked every month.</p>
 
-    <h2>Why "Machinery"</h2>
-    <p>In 1950 Alan Turing published "Computing Machinery and Intelligence", the paper that asked whether machines can think. This guide takes the more modest half of that title: it is about the machinery, how these systems actually work, so that you can form your own view on the bigger question. The name is meant to outlast any one technology. (And yes, the address machinerylearning.eu is a pun.) Today's content is about language models; when the field moves on, new parts will follow.</p>
+    <h2>Why "Machinery Learning"</h2>
+    <p>In 1950 Alan Turing published "Computing Machinery and Intelligence", the paper that asked whether machines can think. This guide takes the more modest half of that title: it is about the machinery, how these systems actually work, so that you can form your own view on the bigger question. The name reads two ways, and both are meant: you are learning about the machinery, and the machinery is learning. Yes, it is also a pun on "machine learning", but the guide isn't limited to that technique. It's meant to outlast any one technology. Today's content is about language models; when the field moves on, new parts will follow.</p>
     <p>The subtitle changes with each edition. So far:</p>
     <ul>{site.editions.map(e => <li><b>{monthLabel(String(e.month))}:</b> {e.subtitle}</li>)}</ul>
 
