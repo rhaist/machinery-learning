@@ -38,13 +38,19 @@ A number like 892 means nothing by itself. So each token number is translated in
 <EmbeddingMap />
 
 <Engineer title="Tokenizers and embedding tables">
-A <Term k="tokenizer">tokenizer</Term> is fixed preprocessing that maps text to integer IDs and back. Most use byte-level BPE: the vocabulary starts with all 256 byte values, then adds merged pieces learned from how often byte sequences co-occur in the training corpus. Any input can always be encoded; worst case it falls back to single bytes.
+A <Term k="tokenizer">tokenizer</Term> is a fixed lookup step in front of the model. It turns text into integer IDs, and IDs back into text. It is built once, before the model is trained, and never changes afterwards.
 
-Each ID then selects an <Term k="embedding">embedding</Term>: a row in the model's first weight matrix, typically 4,000–16,000 floats wide for large models (1,000–3,000 for small ones). That width (often called d_model) is also the width of the <Term k="residual">residual stream</Term>: every later layer reads and writes vectors of exactly that size.
+Most tokenizers today use byte-level BPE (byte-pair encoding). The vocabulary starts with the 256 possible byte values. Then the most frequent neighbouring pair in a large text sample is merged into a new token, again and again, until the vocabulary reaches its target size. Because every single byte stays in the vocabulary, any input can be encoded; the worst case is one token per byte.
 
-**Code, German and numbers cost differently.** Tokenizers trained on lots of code give common indentation runs and keywords their own tokens. German compounds like "Datenschutzgrundverordnung" split into many pieces. Numbers used to be chunked inconsistently ("12345" might become "123" + "45"), one reason arithmetic was shaky; many newer tokenizers split digits individually.
+Each token ID then selects one row of the model's first weight matrix, the <Term k="embedding">embedding</Term> table. That row is the token's vector: 4,000 to 16,000 numbers in large models, 1,000 to 3,000 in small ones. The width stays the same through the whole model. Every later layer reads and writes vectors of exactly that size, along what engineers call the <Term k="residual">residual stream</Term>.
 
-CS framing: the tokenizer is a deterministic compression codec; the embedding table is an array of vectors indexed by token ID.
+The tokenizer explains some cost and quality differences you'll meet:
+
+- Code is cheap if the tokenizer saw plenty of it, because common indentation and keywords get their own tokens.
+- German costs more: a compound like "Datenschutzgrundverordnung" splits into many pieces.
+- Older tokenizers chunked numbers unevenly ("12345" might become "123" + "45"), one reason arithmetic was shaky. Many newer ones split numbers into single digits.
+
+In computer-science terms, the tokenizer is a deterministic compression codec, and the embedding table is an array of vectors indexed by token ID.
 </Engineer>
 
 <Debate id="tokenizers-permanent" />
