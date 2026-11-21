@@ -9,7 +9,7 @@
  },
  "vocab": {
   "term": "Vocabulary",
-  "def": "The set of tokens a model knows, typically 100k–250k entries. Every output step is a choice among all of them."
+  "def": "The set of tokens a model knows, typically 100k–260k entries. Every output step is a choice among all of them."
  },
  "embedding": {
   "term": "Embedding",
@@ -41,7 +41,7 @@
  },
  "mlp": {
   "term": "MLP / feed-forward layer",
-  "def": "The per-token half of a block: two large matrix multiplications with a non-linearity in between. Holds much of the stored knowledge and roughly two-thirds of the parameters."
+  "def": "The per-token half of a block: two or three large matrix multiplications with a non-linearity (gated variants such as SwiGLU use three). Holds much of the stored knowledge and about 80% of the parameters in a dense model."
  },
  "residual": {
   "term": "Residual stream",
@@ -213,7 +213,7 @@
  },
  "decision": {
   "term": "Decision model",
-  "def": "A pretrained transformer with its text-generating head swapped for one that scores a fixed set of options. It answers typed questions (yes/no, choice, score) with a probability per option in one forward pass. Examples: Jev (TypeSafe AI), Strands Decider (AWS, open weights)."
+  "def": "Typically a pretrained transformer whose text-generating head is replaced by a small scoring head for a fixed set of options, often with light fine-tuning of the body. It answers typed questions (yes/no, choice, score) with a probability per option in one forward pass. Examples: Jev (TypeSafe AI), Strands Decider (AWS) and Clef (Cloudflare), the last two with open weights. The trick goes back to the reward models of 2022."
  },
  "harness": {
   "term": "Agent harness / SDK",
@@ -245,7 +245,7 @@
  },
  "constrained": {
   "term": "Constrained decoding",
-  "def": "Masking out tokens that would violate a grammar or JSON schema before sampling, so structured outputs and tool calls always parse."
+  "def": "Masking out tokens that would violate a grammar or JSON schema before sampling, so structured outputs and tool calls always parse. Only guaranteed when a provider's strict or structured mode is switched on."
  },
  "superposition": {
   "term": "Superposition",
@@ -257,7 +257,7 @@
  },
  "contextrot": {
   "term": "Context rot",
-  "def": "The decline in how well a model uses its context as the context gets long, including weaker recall of information in the middle."
+  "def": "The decline in how well a model uses its context as the context gets long, driven mostly by length and distracting, similar-looking material. (Older models also used the middle of long inputs worst.)"
  },
  "sycophancy": {
   "term": "Sycophancy",

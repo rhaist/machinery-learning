@@ -11,24 +11,24 @@ import Engineer from '../../components/Engineer.astro';
 import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 
-A large language model (LLM) is a program that has read an enormous amount of text and learned one skill extremely well: **continuing text**. Give it the beginning of something, and it predicts what comes next, one small piece at a time. ChatGPT, Claude, Gemini and the AI in your coding tools are all built around this one skill.
+A large language model (LLM) is a program that has read an enormous amount of text and learned one skill extremely well: **continuing text**. Give it the beginning of something, and it predicts what comes next, one small piece (a word or part of a word) at a time. ChatGPT, Claude, Gemini and the AI in your coding tools are all built around this one skill.
 
-That sounds like the autocomplete on your phone, and in a sense it is. The difference is scale. Your phone has learned a few common phrases. An LLM has learned from a large share of everything humans have written: books, websites, code, scientific papers, forum discussions. To predict well across all of that, it had to pick up far more than vocabulary: grammar, facts, writing styles, how arguments are structured, how code behaves. Nobody programmed those things in. They emerged because they help with predicting the next word.
+That sounds like the autocomplete on your phone, and in a sense it is. The difference is scale. Your phone has learned a few common phrases. An LLM has learned from a huge slice of the public internet, plus books, code and scientific papers: far more text than any person could read in many lifetimes. To predict well across all of that, it had to pick up far more than vocabulary: grammar, facts, writing styles, how arguments are structured, how code behaves. Nobody programmed those things in. They emerged because they help with predicting the next word.
 
 <Note title="A useful picture">
-Think of an extraordinarily well-read intern who has never left the library. Brilliant with language and patterns, has read about almost everything, but has no first-hand experience of the world, no way to look things up unless you give them a phone, and no memory of yesterday's conversation.
+Think of an extraordinarily well-read intern who has never left the library. Brilliant with language and patterns, has read about almost everything, but has no first-hand experience of the world, no way to look things up unless you give them a phone, and no memory of yesterday's conversation. (An analogy for its skills, not a claim that anyone is home.)
 </Note>
 
 ## How it was built, in three stages
 
-1. **Reading.** The model reads trillions of words and practises predicting the next one, billions of times over. This is where its knowledge comes from. At the end it is a superb autocomplete, but not yet an assistant: ask it a question and it might just write more questions.
+1. **Reading.** The model reads trillions of words, and for each one it practises guessing the next word, then nudges itself to guess better. This is where its knowledge comes from. At the end it is a superb autocomplete, but not yet an assistant: ask it a question and it might just write more questions.
 2. **Apprenticeship.** It is shown many examples of helpful conversations, and taught which answers people prefer. Now it answers like an assistant.
-3. **Practice with feedback.** It attempts tasks, such as solving maths problems or fixing code, and gets rewarded when the result checks out. This stage taught modern models to work through problems step by step and use tools, which is why today's AI can do things like run tests and fix the bug it finds.
+3. **Practice with feedback.** It practises tasks with automatic checking, such as maths with known answers or code with tests, and is rewarded when it gets them right. This made models far better at long, careful problem solving and at using tools reliably, which is why today's AI can run tests and fix the bug it finds.
 
 ## What it is not
 
 - **Not a database.** It doesn't look facts up. It reconstructs them from patterns it learned, which is why it can be confidently wrong. Tools like web search help, when they're connected.
-- **Not learning from you.** Once trained, the model is frozen. It "remembers" a conversation only because the whole conversation is fed back in each time. Memory features in apps work the same way: saved notes get added to what the model reads.
+- **Not learning from you during the chat.** Once trained, the model is frozen and doesn't change while you talk to it. It "remembers" a conversation only because the whole conversation is fed back in each time. Memory features in apps work the same way: saved notes get added to what the model reads. Whether your chats are used to train *later* versions is a separate question that depends on the provider and your settings; [Where your words go](/learn/your-data/) explains it.
 - **Not a person,** even though it writes like one. It has absorbed how people talk about feelings and intentions; that doesn't settle whether it has any.
 
 ## How to use this guide

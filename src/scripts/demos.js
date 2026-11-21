@@ -206,7 +206,7 @@ stp();
 }
 
 if (document.querySelector('#dec-demo')) {
-$('#dec-demo').innerHTML=[['billing',.86],['sales',.03],['retail',.11]].map(d=>barRow(d[0],d[1])).join('');
+$('#dec-demo').innerHTML=[['billing',.773],['sales',.121],['retail',.106]].map(d=>barRow(d[0],d[1])).join('');
 
 }
 

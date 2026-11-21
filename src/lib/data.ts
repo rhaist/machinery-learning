@@ -20,6 +20,7 @@ export const claims: Claim[] = (load('claims.yaml') as Claim[]).map(c => ({ ...c
 export const claimById = Object.fromEntries(claims.map(c => [c.id, c]));
 export const debates: any[] = ((load('debates.yaml') as any)?.debates ?? []).map((d: any) => ({ ...d, verified: iso(d.verified) }));
 export const debateById = Object.fromEntries(debates.map(d => [d.id, d]));
+export const reading: Record<string, any[]> = (load('reading.yaml') as any) ?? {};
 export const glossary: Record<string, { term: string; def: string }> = JSON.parse(
   fs.readFileSync(path.join(dataDir, 'glossary.json'), 'utf8'));
 

@@ -13,11 +13,12 @@ import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Tokenizer from '../../components/Tokenizer.astro';
 import EmbeddingMap from '../../components/EmbeddingMap.astro';
+import Debate from '../../components/Debate.astro';
 
 Before a model can do anything with your text, the text gets chopped into pieces called <Term k="token">tokens</Term>. A token is usually a word or a chunk of a word. Common words like "the" or "firewall" are one token each. Rare or long words get split into several pieces. The model works with <Claim id="vocab-size" />, and every piece has a number.
 
 <Note title="Like Lego bricks">
-Imagine a box of Lego with a few hundred thousand brick types. Common words have their own custom brick. Unusual words have to be built from several smaller, generic bricks. The model only ever sees brick numbers, never the letters printed on them.
+Imagine a box of Lego with a few hundred thousand brick types. Common words (with the space in front of them) have their own custom brick. Unusual words have to be built from several smaller, generic bricks. The model only ever sees brick numbers, never the letters printed on them.
 </Note>
 
 Try it. Type a sentence and watch it split. Then try "Strawberry", a long German word, or some code.
@@ -26,24 +27,26 @@ Try it. Type a sentence and watch it split. Then try "Strawberry", a long German
 
 ## Why this matters to you
 
-- **Limits and prices are counted in tokens,** not words. In English, 1,000 tokens is roughly 750 words. Other languages, German included, usually need more tokens for the same content.
-- **Letter-level tasks can be surprisingly hard.** "How many r's are in strawberry?" used to trip models up, because the model sees two opaque pieces, `Straw` and `berry`, not ten letters.
-- **Strange input still works.** There's never an "unknown word": anything can be broken down into small enough pieces. It's just more expensive.
+- **Limits and prices are counted in tokens** (how much you can paste in, how long the answer can be), not words. In English, 1,000 tokens is roughly 750 words. Other languages, German included, usually need more tokens for the same content.
+- **Letter-level tasks can be surprisingly hard.** "How many r's are in strawberry?" used to trip models up, because the model may see chunks like `Straw` and `berry`, not ten letters, so counting means recalling how each chunk is spelled. (The exact split depends on the tokenizer, and research suggests counting itself is also a weak spot.)
+- **Strange input still works.** There's never an "unknown word": anything can be broken down into small enough pieces. It just takes more tokens, so it costs more and fills up the model's working memory faster.
 
 ## From pieces to meaning
 
-A number like 892 means nothing by itself. So each token number is translated into a long list of numbers, thousands of them, that act like coordinates on a map of meaning. Training arranges this map so that related words end up near each other, and relationships turn into consistent directions. The step from "king" to "queen" points the same way as from "man" to "woman".
+A number like 892 means nothing by itself. So each token number is translated into a long list of numbers, thousands of them, that act like coordinates on a map of meaning. Imagine a map with thousands of directions instead of two; the picture below squashes it flat. Training arranges this map so that related words end up near each other, and some relationships become *roughly* consistent directions. The step from "king" to "queen" points roughly the same way as from "man" to "woman". That was first shown in older word-embedding models, and it's only approximately true inside LLMs.
 
 <EmbeddingMap />
 
 <Engineer title="Tokenizers and embedding tables">
 A <Term k="tokenizer">tokenizer</Term> is fixed preprocessing that maps text to integer IDs and back. Most use byte-level BPE: the vocabulary starts with all 256 byte values, then adds merged pieces learned from how often byte sequences co-occur in the training corpus. Any input can always be encoded; worst case it falls back to single bytes.
 
-Each ID then selects an <Term k="embedding">embedding</Term>: a row in the model's first weight matrix, typically 4,000–16,000 floats wide. That width (often called d_model) is also the width of the <Term k="residual">residual stream</Term>: every later layer reads and writes vectors of exactly that size.
+Each ID then selects an <Term k="embedding">embedding</Term>: a row in the model's first weight matrix, typically 4,000–16,000 floats wide for large models (1,000–3,000 for small ones). That width (often called d_model) is also the width of the <Term k="residual">residual stream</Term>: every later layer reads and writes vectors of exactly that size.
 
 **Code, German and numbers cost differently.** Tokenizers trained on lots of code give common indentation runs and keywords their own tokens. German compounds like "Datenschutzgrundverordnung" split into many pieces. Numbers used to be chunked inconsistently ("12345" might become "123" + "45"), one reason arithmetic was shaky; many newer tokenizers split digits individually.
 
 CS framing: the tokenizer is a deterministic compression codec; the embedding table is an array of vectors indexed by token ID.
 </Engineer>
 
-<Quiz q="Why did LLMs famously struggle to count the r's in “strawberry”?" options={["Their vocabulary lacks the letter r","They see subword tokens, not individual letters","Attention can't handle repeated characters","Counting needs a separate maths module"]} answer={1} explain="The input is two opaque IDs such as Straw + berry. The letters were never in the input, so any knowledge about spelling has to be learned indirectly." />
+<Debate id="tokenizers-permanent" />
+
+<Quiz q="Why did LLMs famously struggle to count the r's in “strawberry”?" options={["Their vocabulary lacks the letter r","They see subword tokens, not individual letters","Attention can't handle repeated characters","Counting needs a separate maths module"]} answer={1} explain="The input is token IDs, for example Straw + berry, not letters. Any knowledge about spelling has to be learned indirectly, which makes letter tasks harder. Research suggests counting is a weak spot too, so tokens aren't the whole story." />

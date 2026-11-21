@@ -1,0 +1,79 @@
+# Further reading, shown at the end of each chapter. Prefer primary sources and a few beginner-friendly ones.
+#   title, by, year, url, why (one line), beginner (true = no background needed)
+start-here:
+  - { title: "Intro to Large Language Models (1-hour talk)", by: Andrej Karpathy, year: 2023, url: "https://www.youtube.com/watch?v=zjkBMFhNj_g", why: "Still the best one-hour non-technical overview of the whole pipeline.", beginner: true }
+  - { title: "Large Language Models explained briefly", by: 3Blue1Brown, year: 2024, url: "https://www.youtube.com/watch?v=LPZh9BOjkQs", why: "An eight-minute visual version of this chapter.", beginner: true }
+  - { title: "Deep Dive into LLMs like ChatGPT", by: Andrej Karpathy, year: 2025, url: "https://www.youtube.com/watch?v=7xTGNNLPyMI", why: "Long, but covers pretraining, fine-tuning, RL and hallucination in plain terms.", beginner: true }
+  - { title: "Climbing towards NLU: on meaning, form and understanding", by: "Bender, Koller", year: 2020, url: "https://aclanthology.org/2020.acl-main.463/", why: "The classic sceptical argument that form alone can't give meaning." }
+tokens:
+  - { title: "Let's build the GPT Tokenizer", by: Andrej Karpathy, year: 2024, url: "https://www.youtube.com/watch?v=zduSFxRajkE", why: "The definitive hands-on explanation of BPE and its quirks." }
+  - { title: "Byte-Pair Encoding tokenization", by: Hugging Face LLM Course, year: 2024, url: "https://huggingface.co/learn/llm-course/chapter6/5", why: "A short worked example of how a tokenizer is trained.", beginner: true }
+  - { title: "Neural Machine Translation of Rare Words with Subword Units", by: "Sennrich, Haddow, Birch", year: 2016, url: "https://arxiv.org/abs/1508.07909", why: "The paper that brought BPE to language processing." }
+  - { title: "CharBench: the role of tokenization in character-level tasks", by: "Uzan, Pinter", year: 2025, url: "https://arxiv.org/html/2508.02591v2", why: "Current evidence on how much tokens explain the strawberry failures." }
+attention:
+  - { title: "Attention in transformers, step by step", by: 3Blue1Brown, year: 2024, url: "https://www.youtube.com/watch?v=eMlx5fFNoYc", why: "The clearest visual explanation of query, key and value.", beginner: true }
+  - { title: "The Illustrated Transformer", by: Jay Alammar, year: 2018, url: "https://jalammar.github.io/illustrated-transformer/", why: "A classic diagram-led walkthrough.", beginner: true }
+  - { title: "Attention Is All You Need", by: Vaswani et al., year: 2017, url: "https://arxiv.org/abs/1706.03762", why: "The transformer paper." }
+  - { title: "In-context Learning and Induction Heads", by: Olsson et al. (Anthropic), year: 2022, url: "https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html", why: "Primary source on induction heads, including its own caveats." }
+inside-the-stack:
+  - { title: "How might LLMs store facts", by: 3Blue1Brown, year: 2024, url: "https://www.youtube.com/watch?v=9-Jl0dxWQs8", why: "A visual account of the MLP as a knowledge store.", beginner: true }
+  - { title: "Transformer Feed-Forward Layers Are Key-Value Memories", by: Geva et al., year: 2021, url: "https://arxiv.org/abs/2012.14913", why: "Primary evidence for knowledge living in the MLP." }
+  - { title: "Scaling Monosemanticity", by: Templeton et al. (Anthropic), year: 2024, url: "https://transformer-circuits.pub/2024/scaling-monosemanticity/", why: "Millions of interpretable features from a production model; the introduction is readable." }
+  - { title: "DeepSeek-V3 Technical Report", by: DeepSeek-AI, year: 2024, url: "https://arxiv.org/abs/2412.19437", why: "A fully documented modern Mixture of Experts." }
+generating:
+  - { title: "Defeating Nondeterminism in LLM Inference", by: Horace He (Thinking Machines Lab), year: 2025, url: "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/", why: "Why temperature 0 still varies, and how to fix it. Very readable." }
+  - { title: "The Curious Case of Neural Text Degeneration", by: Holtzman et al., year: 2019, url: "https://arxiv.org/abs/1904.09751", why: "Introduces top-p sampling." }
+  - { title: "Fast Inference via Speculative Decoding", by: "Leviathan, Kalman, Matias", year: 2022, url: "https://arxiv.org/abs/2211.17192", why: "Draft-and-verify decoding." }
+  - { title: "Scaling LLM Test-Time Compute Optimally", by: Snell et al., year: 2024, url: "https://arxiv.org/abs/2408.03314", why: "Primary evidence on thinking longer versus a bigger model." }
+training:
+  - { title: "Training language models to follow instructions with human feedback", by: Ouyang et al. (OpenAI), year: 2022, url: "https://arxiv.org/abs/2203.02155", why: "The canonical fine-tuning plus RLHF recipe." }
+  - { title: "DeepSeek-R1", by: DeepSeek-AI, year: 2025, url: "https://arxiv.org/abs/2501.12948", why: "The open, documented recipe for reasoning through RL." }
+  - { title: "Tülu 3: open post-training", by: Lambert et al. (Ai2), year: 2024, url: "https://arxiv.org/abs/2411.15124", why: "Defines RLVR, with a fully open post-training pipeline." }
+  - { title: "Why We Think", by: Lilian Weng, year: 2025, url: "https://lilianweng.github.io/posts/2025-05-01-thinking/", why: "A careful survey of test-time compute, RL for reasoning and faithfulness." }
+beyond-autocomplete:
+  - { title: "Tracing the thoughts of a large language model", by: Anthropic, year: 2025, url: "https://www.anthropic.com/research/tracing-thoughts-language-model", why: "An accessible look inside a model.", beginner: true }
+  - { title: "Evaluating the World Model Implicit in a Generative Model", by: Vafa et al., year: 2024, url: "https://arxiv.org/abs/2406.03689v2", why: "The essential counterweight to the Othello result." }
+  - { title: "Reasoning models don't always say what they think", by: Anthropic, year: 2025, url: "https://www.anthropic.com/research/reasoning-models-dont-say-think", why: "Evidence that written reasoning isn't a faithful transcript.", beginner: true }
+  - { title: "Building effective AI agents", by: Anthropic, year: 2024, url: "https://www.anthropic.com/engineering/building-effective-agents", why: "A practical companion to the tool-loop section.", beginner: true }
+strengths-and-limits:
+  - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The clearest practical framing of prompt-injection risk.", beginner: true }
+  - { title: "Agents Rule of Two", by: Meta AI, year: 2025, url: "https://ai.meta.com/blog/practical-ai-agent-security/", why: "An actionable design rule for agents that read untrusted input.", beginner: true }
+  - { title: "Why Language Models Hallucinate", by: "Kalai, Nachum, Vempala, Zhang", year: 2025, url: "https://arxiv.org/abs/2509.04664", why: "How evaluations that reward guessing keep hallucination alive." }
+  - { title: "Context Rot", by: Chroma, year: 2025, url: "https://www.trychroma.com/research/context-rot", why: "Current-model evidence on long-context degradation." }
+around-the-model:
+  - { title: "Small Language Models are the Future of Agentic AI", by: Belcak et al. (NVIDIA), year: 2025, url: "https://arxiv.org/abs/2506.02153", why: "The strongest argument for small-model-heavy agent designs." }
+  - { title: "Introducing Clef: open-source decision models", by: Cloudflare, year: 2026, url: "https://blog.cloudflare.com/clef-decision-models/", why: "The second open decision-model family, with latency numbers." }
+  - { title: "Fast Models, Slow Evidence: evaluating System-1 decision models", by: Jiawei Li, year: 2026, url: "https://arxiv.org/abs/2610.02267", why: "An independent, sceptical evaluation (preprint)." }
+  - { title: "Model Context Protocol specification", by: MCP project, year: 2025, url: "https://modelcontextprotocol.io/specification/2025-11-25", why: "The primary reference for how agents connect to tools." }
+frontier:
+  - { title: "Beyond Standard LLMs", by: Sebastian Raschka, year: 2025, url: "https://magazine.sebastianraschka.com/i/177848019/24-qwen3-next", why: "A balanced tour of hybrids, diffusion models and recursive models.", beginner: true }
+  - { title: "Why did M2 end up as a full-attention model?", by: MiniMax, year: 2025, url: "https://www.minimax.io/news/why-did-m2-end-up-as-a-full-attention-model", why: "A rare candid account from a lab that abandoned a hybrid." }
+  - { title: "V-JEPA 2", by: Assran et al., year: 2025, url: "https://arxiv.org/abs/2506.09985", why: "The concrete JEPA world-model result: robot planning from video." }
+  - { title: "Chain of Thought Monitorability", by: Korbak et al., year: 2025, url: "https://arxiv.org/abs/2507.11473", why: "Why thinking in hidden numbers carries a safety cost." }
+prompt-injection:
+  - { title: "The lethal trifecta for AI agents", by: Simon Willison, year: 2025, url: "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/", why: "The framing this chapter is built on.", beginner: true }
+  - { title: "Prompt injection is not SQL injection", by: UK NCSC, year: 2025, url: "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection", why: "Why there is no parameterised-query fix.", beginner: true }
+  - { title: "Defeating Prompt Injections by Design (CaMeL)", by: Debenedetti et al. (Google DeepMind, ETH), year: 2025, url: "https://arxiv.org/abs/2503.18813", why: "Data-flow tracking with provable guarantees." }
+  - { title: "Design Patterns for Securing LLM Agents against Prompt Injections", by: Beurer-Kellner et al., year: 2025, url: "https://arxiv.org/abs/2506.08837", why: "Reusable patterns, and their honest limits." }
+  - { title: "The Attacker Moves Second", by: "Nasr, Carlini, Sitawarin et al.", year: 2025, url: "https://arxiv.org/abs/2510.09023", why: "Adaptive attacks against 12 published defences." }
+agents-permissions:
+  - { title: "OWASP LLM06: Excessive Agency", by: OWASP, year: 2025, url: "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/", why: "The root causes and mitigations in one page.", beginner: true }
+  - { title: "Beyond permission prompts: making Claude Code more secure and autonomous", by: Anthropic, year: 2025, url: "https://anthropic.com/engineering/claude-code-sandboxing", why: "Approval fatigue measured, and why sandboxes need two walls." }
+  - { title: "MCP security notification: tool poisoning attacks", by: Invariant Labs, year: 2025, url: "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks", why: "Tool poisoning, rug pulls and shadowing explained." }
+  - { title: "MCP security best practices", by: MCP project, year: 2026, url: "https://modelcontextprotocol.io/specification/draft/basic/security_best_practices", why: "The specification's own rules on tokens, scopes and consent." }
+supply-chain:
+  - { title: "We Have a Package for You! (package hallucinations)", by: Spracklen et al., year: 2025, url: "https://arxiv.org/abs/2406.10279", why: "The large-scale study behind slopsquatting." }
+  - { title: "Pickle scanning and safer formats", by: Hugging Face, year: 2026, url: "https://huggingface.co/docs/hub/security-pickle", why: "What the Hub scans, and what it can't promise.", beginner: true }
+  - { title: "Poisoning attacks need a near-constant number of samples", by: Anthropic, UK AISI, Alan Turing Institute, year: 2025, url: "https://www.anthropic.com/research/small-samples-poison", why: "The 250-document result, with its caveats.", beginner: true }
+  - { title: "Sleeper Agents", by: Hubinger et al. (Anthropic), year: 2024, url: "https://arxiv.org/abs/2401.05566", why: "Backdoors that survive safety training." }
+your-data:
+  - { title: "Updates to our consumer terms", by: Anthropic, year: 2025, url: "https://www.anthropic.com/news/updates-to-our-consumer-terms", why: "A clear example of a training opt-in and what it means for retention.", beginner: true }
+  - { title: "Gemini Apps Privacy Hub", by: Google, year: 2026, url: "https://support.google.com/gemini/answer/13594961", why: "Human review and retention, from the source.", beginner: true }
+  - { title: "Scalable Extraction of Training Data from (Production) Language Models", by: "Nasr, Carlini et al.", year: 2023, url: "https://arxiv.org/abs/2311.17035", why: "How memorised data comes back out." }
+  - { title: "EDPB Opinion 28/2024 on AI models", by: European Data Protection Board, year: 2024, url: "https://www.edpb.europa.eu/node/8396_en", why: "How GDPR applies to trained models." }
+judging-claims:
+  - { title: "Why we no longer evaluate SWE-bench Verified", by: OpenAI, year: 2026, url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/", why: "A lab explaining why its own flagship benchmark stopped working." }
+  - { title: "The Leaderboard Illusion", by: Singh et al., year: 2025, url: "https://arxiv.org/abs/2504.20879", why: "How leaderboards can be gamed; read with LMArena's response." }
+  - { title: "LMArena's response", by: LMArena, year: 2025, url: "https://arena.ai/blog/our-response", why: "The other side of the leaderboard dispute." }
+  - { title: "GPT detectors are biased against non-native English writers", by: Liang et al., year: 2023, url: "https://arxiv.org/abs/2304.02819", why: "Why detector scores can't be evidence.", beginner: true }
+  - { title: "Measuring the impact of early-2025 AI on developer productivity", by: METR, year: 2025, url: "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/", why: "Perceived versus measured speed-up.", beginner: true }

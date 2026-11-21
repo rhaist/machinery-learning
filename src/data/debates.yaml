@@ -135,3 +135,227 @@ debates:
     settle: Robustness of deployed watermarks against cheap paraphrasing, and how audiences actually interpret missing labels.
     verified: 2026-11-21
     half_life: 6
+
+  # ---- Part 1 ----
+  - id: tokenizers-permanent
+    question: Are tokenizers a permanent part of language models, or a bottleneck we'll remove?
+    why: Many odd failures (spelling, counting letters, some languages costing more) get blamed on tokens. Whether that blame is fair tells you which failures will go away.
+    sides:
+      - label: Tokenizer-free models are coming
+        who: Meta's Byte Latent Transformer team (Pagnoni and colleagues)
+        points:
+          - A model that reads raw bytes, grouped into flexible patches, matched tokenized models at the scales tested.
+          - It was more robust to typos and unusual text, and spent compute where text was hard rather than evenly.
+        sources:
+          - https://arxiv.org/abs/2412.09871
+      - label: Tokens are a minor factor and here to stay
+        who: Uzan and Pinter (CharBench); current frontier practice
+        points:
+          - Every frontier model still ships a subword tokenizer, and vocabularies are growing (Qwen3.5 went from about 150k to 250k).
+          - CharBench finds tokenization explains less of the letter-counting failures than usually claimed; word length matters more.
+        sources:
+          - https://arxiv.org/html/2508.02591v2
+          - https://www.alibabacloud.com/blog/qwen3-5-towards-native-multimodal-agents_602894
+    settle: A tokenizer-free model competitive at frontier scale, or clear evidence on which character-level failures survive without tokens.
+    verified: 2026-11-21
+    half_life: 12
+
+  - id: full-attention-vs-hybrid
+    question: Is full attention necessary, or can cheaper layers replace most of it?
+    why: Attention's cost is what makes long documents slow and expensive. If cheaper layers work, long-context AI gets much cheaper.
+    sides:
+      - label: Keep full attention
+        who: MiniMax; Sebastian Raschka
+        points:
+          - MiniMax built a hybrid for its M2 model, saw it fall behind on multi-step reasoning at scale, and went back to full attention.
+          - Tooling and hardware for the alternatives are still immature.
+        sources:
+          - https://www.minimax.io/news/why-did-m2-end-up-as-a-full-attention-model
+          - https://magazine.sebastianraschka.com/i/177848019/24-qwen3-next
+      - label: Hybrids are already shipping
+        who: Alibaba (Qwen team); Fichtl, Groh and colleagues at TU Munich
+        points:
+          - Alibaba's flagship open model Qwen3.5 (February 2026) mixes a few full-attention layers with cheaper linear-attention layers.
+          - A critical TU Munich review finds it plausible that pure-attention models will soon be challenged, especially on small devices.
+        sources:
+          - https://www.alibabacloud.com/blog/qwen3-5-towards-native-multimodal-agents_602894
+          - https://arxiv.org/abs/2510.05364
+    settle: Head-to-head results at the same scale on long, multi-step tasks, and which design the next generation of flagships picks.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: interpretability-localise
+    question: Can we find where a model keeps what it knows?
+    why: If we can read a model's internals, we can check it for problems directly instead of only testing its outputs.
+    sides:
+      - label: Yes, and it's getting practical
+        who: Geva and colleagues; Anthropic's interpretability team; Dario Amodei
+        points:
+          - The "think" layers behave like key-value memories for facts.
+          - Anthropic extracted millions of human-interpretable features from a production model.
+          - Amodei argues interpretability could reliably catch most model problems by 2027.
+        sources:
+          - https://arxiv.org/abs/2012.14913
+          - https://transformer-circuits.pub/2024/scaling-monosemanticity/
+          - https://www.darioamodei.com/post/the-urgency-of-interpretability
+      - label: The maps are less useful than they look
+        who: Hase, Bansal, Kim and Ghandeharioun; Google DeepMind's interpretability team (Nanda and colleagues)
+        points:
+          - Finding where a fact "lives" doesn't predict which layer is best to edit to change it.
+          - DeepMind found these feature dictionaries did worse than simple probes on a real safety task, and scaled back that research line.
+        sources:
+          - https://arxiv.org/abs/2301.04213
+          - https://www.lesswrong.com/posts/4uXCAJNuPKtKBsi28/negative-results-for-saes-on-downstream-tasks
+    settle: Interpretability tools that catch a real problem in a frontier model that ordinary testing missed.
+    verified: 2026-11-21
+    half_life: 12
+
+  - id: more-thinking-better
+    question: Does letting a model "think" longer reliably give better answers?
+    why: You pay for thinking tokens and wait for them. Knowing when they help tells you when to switch thinking on.
+    sides:
+      - label: More thinking buys accuracy
+        who: OpenAI; Snell and colleagues (Google DeepMind and UC Berkeley)
+        points:
+          - OpenAI reports o1's accuracy rises steadily with time spent thinking.
+          - Spending compute well at answer time can beat a model 14 times larger on suitable problems.
+        sources:
+          - https://openai.com/index/learning-to-reason-with-llms/
+          - https://arxiv.org/abs/2408.03314
+      - label: Sometimes it hurts
+        who: Gema and colleagues (Anthropic Fellows and collaborators); Shojaee and colleagues (Apple)
+        points:
+          - On purpose-built tasks, longer reasoning lowered accuracy through distraction and over-thinking the framing.
+          - On the hardest puzzles, reasoning models' effort and accuracy collapsed despite spare budget (a result others attribute partly to test design).
+        sources:
+          - https://arxiv.org/abs/2507.14417
+          - https://arxiv.org/abs/2506.06941
+          - https://arxiv.org/abs/2506.09250
+    settle: Clear guidance on which kinds of task benefit, measured on real work rather than puzzles.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: rl-new-abilities
+    question: Does the "practice exam" stage teach new abilities, or just bring out what the model already had?
+    why: It decides whether the recent jumps in maths and coding can keep coming from more practice, or need better base models.
+    sides:
+      - label: Mostly bringing out what's there
+        who: Yue, Chen, Lu and colleagues (Tsinghua University)
+        points:
+          - Trained models get the right answer on the first try more often than their base models.
+          - But given many attempts, the base models solve more problems, so the training narrowed the model onto paths it could already find.
+        sources:
+          - https://arxiv.org/abs/2504.13837
+      - label: It finds genuinely new strategies
+        who: Liu, Diao, Choi, Kautz and colleagues (NVIDIA); DeepSeek
+        points:
+          - Long, stable practice found strategies the base model couldn't reach even with very many attempts.
+          - DeepSeek-R1 reports self-checking and changes of strategy appearing from practice alone.
+        sources:
+          - https://arxiv.org/abs/2505.24864
+          - https://arxiv.org/abs/2501.12948
+    settle: Results that hold across longer training runs, more domains and agreed ways of counting "solved with many attempts".
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: world-models-or-heuristics
+    question: Do language models build an internal picture of the world, or a pile of shortcuts that looks like one?
+    why: It's the core of the "just autocomplete" argument, and it tells you how far to trust a model on situations unlike its training data.
+    sides:
+      - label: They build internal models
+        who: Li and colleagues; Nanda, Lee and Wattenberg; Anthropic's interpretability team
+        points:
+          - A model trained only on Othello moves built a board representation, and editing it changed its moves.
+          - In a production model, researchers saw hidden in-between steps and forward planning.
+        sources:
+          - https://arxiv.org/abs/2210.13382
+          - https://arxiv.org/abs/2309.00941
+          - https://www.anthropic.com/research/tracing-thoughts-language-model
+      - label: Partial, patchy shortcuts
+        who: Vafa, Kleinberg, Mullainathan and colleagues; Emily Bender and Alexander Koller
+        points:
+          - Models passed standard world-model tests while their internal maps were incoherent and broke on slightly different tasks.
+          - A model trained on planetary orbits learned task-specific tricks, not Newton's laws.
+          - Bender and Koller argue that text alone can't connect words to the things they mean.
+        sources:
+          - https://arxiv.org/abs/2406.03689v2
+          - https://arxiv.org/abs/2507.06952
+          - https://aclanthology.org/2020.acl-main.463/
+    settle: Tests that check whether internal pictures stay coherent when the situation changes, applied to frontier models.
+    verified: 2026-11-21
+    half_life: 12
+
+  - id: hallucination-fixable
+    question: Can making things up be fixed, or only reduced?
+    why: It decides whether you should ever trust an unsourced answer, or always check.
+    sides:
+      - label: It can't reach zero
+        who: Xu, Jain and Kankanhalli; Kalai and Vempala
+        points:
+          - Learning theory suggests any general-purpose model must sometimes produce false answers.
+          - A model honest about its uncertainty must still invent some facts it saw only once.
+        sources:
+          - https://arxiv.org/abs/2401.11817
+          - https://arxiv.org/abs/2311.14648
+      - label: It's largely an incentive problem
+        who: Kalai, Nachum, Vempala and Zhang (OpenAI)
+        points:
+          - Benchmarks reward confident guessing over "I don't know", so training learns to guess.
+          - Scoring abstention fairly in mainstream tests would cut hallucination substantially; repeated and systematic facts need not be hallucinated at all.
+        sources:
+          - https://arxiv.org/abs/2509.04664
+    settle: Benchmarks that reward abstention becoming standard, and whether models trained against them hallucinate much less in daily use.
+    verified: 2026-11-21
+    half_life: 12
+
+  - id: decision-models-trust
+    question: Can you trust a decision model's confident numbers?
+    why: If decision models sit at every checkpoint of an agent, their mistakes decide what the agent is allowed to do.
+    sides:
+      - label: Yes, fast and reasonably calibrated
+        who: Strands Labs (AWS); Cloudflare
+        points:
+          - Strands reports 0.78 accuracy on JevBench with good calibration at about 115 ms on a consumer graphics card.
+          - Cloudflare reports its Clef models ahead of Jev on Jev's own index, with Clef-flash at under 40 ms.
+        sources:
+          - https://github.com/strands-labs/strands-decider
+          - https://blog.cloudflare.com/clef-decision-models/
+      - label: The evidence is thin
+        who: Jiawei Li (independent preprint); a study relayed by Amplitude
+        points:
+          - One evaluation found Jev at chance on routing and "confidently constant", with the open Laya model no better.
+          - Another found a decision model copied the big model, mistakes included, more than it matched the correct answers.
+          - Every headline benchmark so far is self-reported.
+        sources:
+          - https://arxiv.org/abs/2610.02267
+          - https://amplitude.com/blog/jev-analysis
+    settle: Independent replication on shared tasks, especially on decisions from real deployments.
+    verified: 2026-11-21
+    half_life: 3
+
+  - id: imitation-dead-end
+    question: Is learning from human text a dead end for more general intelligence?
+    why: It decides whether the next big step comes from scaling today's recipe or from something quite different.
+    sides:
+      - label: Imitation will hit a wall
+        who: Richard Sutton; Ilya Sutskever; Yann LeCun
+        points:
+          - Sutton argues LLMs copy what people said instead of learning from the consequences of their own actions.
+          - Sutskever says models generalise far worse than people and the "age of scaling" is giving way to an age of research.
+          - LeCun's AMI Labs bets on world models that predict in an abstract space instead of word by word.
+        sources:
+          - https://www.dwarkesh.com/p/richard-sutton
+          - https://www.dwarkesh.com/p/ilya-sutskever-2
+          - https://amilabs.xyz/updates
+      - label: The recipe already goes beyond imitation
+        who: DeepSeek; NVIDIA's ProRL team; Epoch AI
+        points:
+          - The practice-exam stage is learning from consequences, and it produced self-checking and new strategies.
+          - Epoch AI finds much larger training runs remain feasible this decade, limited by power and chips.
+        sources:
+          - https://arxiv.org/abs/2501.12948
+          - https://arxiv.org/abs/2505.24864
+          - https://epoch.ai/blog/can-ai-scaling-continue-through-2030
+    settle: Whether gains from more practice and compute keep showing up in real-world work, not just benchmarks, over the next few model generations.
+    verified: 2026-11-21
+    half_life: 6

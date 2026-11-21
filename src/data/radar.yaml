@@ -26,14 +26,14 @@ entries:
     name: Mixture of Experts
     quadrant: Architecture
     chapter: inside-the-stack
-    note: Huge total capacity, small per-token compute. Standard in frontier models.
+    note: Huge total capacity, small per-token compute (about 5% of parameters per token). Standard in leading open-weight models and Gemini; closed labs mostly don't say.
     history: { 2026-11: shipping }
 
   - id: diffusion-lms
     name: Diffusion language models
     quadrant: Architecture
     chapter: frontier
-    note: Parallel, iterative decoding. Several-fold faster in recent work; reasoning and long sequences still open.
+    note: Parallel, iterative decoding. Several-fold faster in recent work, but currently more prone to hallucination than comparable autoregressive models.
     history: { 2026-11: emerging }
 
   - id: test-time-training
@@ -110,7 +110,7 @@ entries:
     name: Decision models
     quadrant: Systems & agents
     chapter: around-the-model
-    note: Typed answers with probabilities, no text generation. Jev, Strands Decider. Benchmarks still disagree.
+    note: Typed answers with probabilities, no text generation. Jev, Strands Decider, Clef. All headline benchmarks self-reported so far.
     history: { 2026-11: emerging }
 
   - id: prompt-caching
@@ -123,8 +123,8 @@ entries:
   - id: injection-defenses
     name: Prompt-injection defences
     quadrant: Security & trust
-    chapter: strengths-and-limits
-    note: Classifiers, privilege separation, confirmation. All probabilistic; no architectural fix.
+    chapter: prompt-injection
+    note: Classifiers, spotlighting, instruction-hierarchy training. Reduce risk; adaptive attackers beat all published ones studied.
     history: { 2026-11: emerging }
 
   - id: decision-gates
@@ -137,8 +137,29 @@ entries:
   - id: agent-sandboxing
     name: Agent sandboxing and least privilege
     quadrant: Security & trust
-    chapter: beyond-autocomplete
-    note: Scoped permissions, isolated execution, no auto-approval where network meets secrets.
+    chapter: agents-permissions
+    note: Scoped permissions, file-system and network isolation, no auto-approval where network meets secrets.
+    history: { 2026-11: shipping }
+
+  - id: data-flow-defences
+    name: Data-flow defences (CaMeL-style)
+    quadrant: Security & trust
+    chapter: prompt-injection
+    note: Track where data came from and enforce rules at tool calls in code. Provable for task-specific agents, at some cost in usefulness.
+    history: { 2026-11: research }
+
+  - id: model-signing
+    name: Model signing and provenance
+    quadrant: Security & trust
+    chapter: supply-chain
+    note: Sigstore-based signatures for model files; proves who published, not what went into training. Adoption still early.
+    history: { 2026-11: emerging }
+
+  - id: content-credentials
+    name: Watermarks and content credentials
+    quadrant: Security & trust
+    chapter: judging-claims
+    note: SynthID and C2PA label generated media at the source. Deployed at scale, but strippable and paraphrasable.
     history: { 2026-11: shipping }
 
   - id: interpretability

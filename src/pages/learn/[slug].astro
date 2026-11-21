@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ChapterArt from '../../components/ChapterArt.astro';
+import Reading from '../../components/Reading.astro';
 import { byPart } from '../../lib/data';
 
 export async function getStaticPaths() {
@@ -29,7 +30,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
       <p class="lede" style="margin-top:14px">{entry.data.summary}</p>
       <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>
     </header>
-    <div class="prose"><Content /></div>
+    <div class="prose"><Content /><Reading id={entry.id} /></div>
     <nav class="pager" aria-label="Previous and next chapter">
       {prev && <a href={`${base}/learn/${prev.id}/`}><small>Previous</small>{prev.data.title}</a>}
       {next && <a class="next" href={`${base}/learn/${next.id}/`}><small>Next</small>{next.data.title}</a>}

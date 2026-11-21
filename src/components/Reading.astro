@@ -1,0 +1,21 @@
+---
+// Further reading at the end of a chapter, from src/data/reading.yaml.
+import { reading } from '../lib/data';
+const { id } = Astro.props;
+const items = reading[id] ?? [];
+const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+---
+{items.length > 0 && (
+  <section class="reading" aria-labelledby="reading-h">
+    <h2 id="reading-h">Further reading</h2>
+    <ul>
+      {items.map((r: any) => (
+        <li>
+          <a href={r.url}>{r.title}</a>{r.beginner && <span class="rd-b">no background needed</span>}
+          <span class="rd-m">{r.by}, {r.year} · {host(r.url)}</span>
+          <span class="rd-w">{r.why}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

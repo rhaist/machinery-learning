@@ -15,12 +15,13 @@ import AutocompleteTable from '../../components/AutocompleteTable.astro';
 import TwoHop from '../../components/TwoHop.astro';
 import BaseChatAgent from '../../components/BaseChatAgent.astro';
 import AgentTrace from '../../components/AgentTrace.astro';
+import Debate from '../../components/Debate.astro';
 
 Every response you have ever had from an AI, including a coding agent's multi-file change, was produced one token at a time. Nothing else comes out of the model. And yet it plainly doesn't feel like your phone's autocomplete. Three separate things close that gap, and it helps to keep them apart.
 
 ## 1. To predict well, the model has to understand what it's predicting
 
-"Predict the next word" describes how the model was *trained*, not what happens inside it. To predict the next line of a proof, a stack trace or a detective story across trillions of examples, the cheapest strategy turned out to be to build an internal picture of what's going on: the state of the program, the structure of the argument, who the murderer probably is.
+"Predict the next word" describes how the model was *trained*, not what happens inside it. To predict the next line of a proof, a stack trace or a detective story across trillions of examples, the cheapest strategy often seems to be to build internal pictures of what's going on: the state of the program, the structure of the argument, who the murderer probably is. How complete and reliable those pictures are is actively debated (see the box further down).
 
 <Note title="An everyday comparison">
 To finish someone else's sentences reliably, you have to understand what they're talking about. Do it for every topic ever written about, and you end up needing to understand a great deal.
@@ -32,7 +33,7 @@ There's direct evidence for this. <Claim id="othello-gpt" />, and editing that i
 
 ## 2. Training changed what the predictions are *for*
 
-A model straight out of the reading stage predicts what text would typically come next on the internet. Ask it to fix a failing test, and it may well continue the GitHub issue thread instead. Later training changes the goal: in practice environments, the tokens that eventually lead to passing tests get rewarded, even when the payoff comes fifty steps later. The model ends up pursuing outcomes. Same kind of model, same prompt, three stages of training:
+A model straight out of the reading stage predicts what text would typically come next on the internet. Ask it to fix a failing test, and it may well continue the GitHub issue thread instead. Later training changes the goal: in practice environments, the tokens that eventually lead to passing tests get rewarded, even when the payoff comes fifty steps later. The model ends up *behaving as if* it pursues outcomes, because that is what was rewarded. Same kind of model, same prompt, three stages of training:
 
 <BaseChatAgent />
 
@@ -42,7 +43,9 @@ What you use in a coding tool isn't just a model. It's a loop around one. The mo
 
 <AgentTrace />
 
-Put the three together: a model that builds rich internal pictures in order to predict well, trained to pursue outcomes, running in a loop with tools, tests and room to think. "Next-token prediction" is accurate in the same way that "a computer just executes instructions" is accurate.
+Put the three together: a model that builds rich internal pictures in order to predict well, trained to act as if it pursues outcomes, running in a loop with tools, tests and room to think. "Next-token prediction" is accurate in the same way that "a computer just executes instructions" is accurate: true, and also not the whole story.
+
+<Debate id="world-models-or-heuristics" />
 
 ## When it feels like autocomplete again
 
@@ -57,9 +60,9 @@ The illusion breaks in predictable ways, and each one traces back to a mechanism
 <Engineer title="Policies, scratchpads and the evidence from interpretability">
 **From estimator to policy.** Formally the output is always a distribution over the next token. After RL it is no longer an estimate of "what would a typical document say here" but a <Term k="policy">policy</Term>: a strategy optimised for outcomes whose actions happen to be tokens. That is the biggest single reason modern coding models feel goal-directed. They were optimised to be.
 
-**Why reasoning tokens matter.** One forward pass has fixed depth (maybe a hundred layers), which caps the serial computation that can go into a single token. Writing an intermediate step makes it input for every later pass: the visible reasoning is a <Term k="scratchpad">scratchpad</Term> that buys as many sequential steps as needed. That's why "think step by step" worked, and why reasoning models are trained to do it at length.
+**Why reasoning tokens matter.** One forward pass has fixed depth (maybe a hundred layers), which caps the serial computation that can go into a single token. Writing an intermediate step makes it input for every later pass: the visible reasoning is a <Term k="scratchpad">scratchpad</Term> that buys as many sequential steps as needed. That's why "think step by step" worked, and why reasoning models are trained to do it at length. But the written reasoning is not a faithful transcript: in Anthropic's tests, Claude 3.7 Sonnet mentioned a hint it had used only 25% of the time (DeepSeek-R1: 39%), and models exploiting reward hacks almost never said so. A multi-lab position paper argues reading the chain of thought is still a valuable, if fragile, safety tool.
 
-**Interpretability evidence.** Attribution graphs on Claude 3.5 Haiku showed an intermediate "Texas" feature in the Dallas → Austin prompt (patching it to "California" yields Sacramento) and, in rhyming couplets, the rhyme word being selected at the end of line one before line two is written; swapping that planned word rewrote the line to fit. Othello-GPT's board representation turned out to be linearly decodable, and interventions on it changed predicted moves causally.
+**Interpretability evidence.** Attribution graphs on Claude 3.5 Haiku showed an intermediate "Texas" feature in the Dallas → Austin prompt (patching it to "California" yields Sacramento) and, in rhyming couplets, the rhyme word being selected at the end of line one before line two is written; swapping that planned word rewrote the line to fit. Othello-GPT's board representation was first found with non-linear probes (Li et al.); Nanda, Lee and Wattenberg then showed it is linearly decodable as "mine vs theirs", and interventions on it changed predicted moves causally. The counterweight: Vafa et al. (2024) show models can pass world-model tests with incoherent internal maps. The attribution-graph method itself captures only a fraction of the computation.
 
 **The agent loop at the token level.** Each step is a fresh call on the full transcript. Tool calls are text in a fixed format ending at a stop token; <Term k="constrained">constrained decoding</Term> keeps arguments valid; <Term k="pcache">prompt caching</Term> keeps the resend cheap; <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
 </Engineer>

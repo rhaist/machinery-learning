@@ -11,26 +11,27 @@ import Engineer from '../../components/Engineer.astro';
 import Note from '../../components/Note.astro';
 import Quiz from '../../components/Quiz.astro';
 import Attention from '../../components/Attention.astro';
+import Debate from '../../components/Debate.astro';
 
 Words mean different things in different company. "Bank" by a river is not "bank" on a statement. In "The server rejected the request because it was malformed", you instantly know "it" means the request, not the server. A model has to work that out too, and the mechanism it uses is called <Term k="attention">attention</Term>.
 
-After the previous chapter, each word is a point on the map of meaning, but each one only knows about itself. Attention lets every word look back at the words before it, decide which ones matter for its own meaning, and blend in information from them.
+After the previous chapter, each word is a point on the map of meaning (strictly, each token, but "word" is easier to picture), but each one only knows about itself. Attention lets every word look back at the words before it, decide which ones matter for its own meaning, and blend in information from them.
 
 <Note title="Like a good meeting">
-Picture a meeting where, before anyone speaks, they glance around the table and listen hardest to the people whose points are relevant to what they're about to say. Everyone does this at once, and many times over.
+Picture a meeting where each person, before speaking, can only listen back to those who have already spoken, and pays most attention to the ones whose points matter for what they're about to say. Everyone does this at once, and many times over.
 </Note>
 
 **Click any word below** to see where it looks. Click "it" first.
 
 <Attention />
 
-Notice the dashed words: a word can only look *backwards*. When the model writes text, the future doesn't exist yet, so it is never allowed to peek ahead.
+Notice the dashed words: a word can only look *backwards*. The model is trained never to look ahead, even in text it has already been given, because when it writes, the future really doesn't exist yet.
 
 ## Why this was the breakthrough
 
-Older language models read text strictly word by word and had to squeeze everything they'd read into a small running summary, so they forgot the beginning of long sentences. Attention lets every word reach back to *any* earlier word directly. The 2017 paper that introduced the <Term k="transformer">transformer</Term> built a whole model around this idea, and nearly every modern LLM descends from it.
+Older language models read text strictly word by word and had to squeeze everything they'd read into a small running summary, so they forgot the beginning of long sentences. Attention lets every word reach back to *any* earlier word directly. Attention itself appeared in 2014, as an add-on to those older models. The 2017 paper that introduced the <Term k="transformer">transformer</Term>, the design behind almost every chatbot today, threw away the word-by-word reading entirely and kept only attention.
 
-There is a price, which comes back later: every word compares itself with every earlier word. Double the length of the text and the work roughly quadruples.
+There is a price, which comes back later: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
 
 <Engineer title="Query, key, value: a soft hash-table lookup">
 Mechanically, attention is a differentiable key-value lookup, built from three matrix multiplications per token (<Term k="qkv">query, key, value</Term>):
@@ -41,11 +42,13 @@ Mechanically, attention is a differentiable key-value lookup, built from three m
 
 The <Term k="causal">causal mask</Term> sets the scores for future positions to minus infinity. Real models run dozens of these lookups in parallel per layer (<Term k="head">attention heads</Term>); <Term k="gqa">GQA</Term> lets many query heads share fewer key/value heads to save memory.
 
-**Position is injected.** The dot product alone treats the input as a set. <Term k="rope">RoPE</Term> rotates each query and key by an angle proportional to its position, so the score depends on relative distance. Extending a context window mostly means stretching these rotations.
+**Position is injected.** The dot product alone treats the input as a set. <Term k="rope">RoPE</Term> rotates each query and key by an angle proportional to its position, so the score depends on relative distance. Extending a context window means stretching these rotations and then training briefly on long documents.
 
-**Induction heads.** Researchers found a two-head circuit that implements "find where the current token appeared before, and predict what came after it last time". These <Term k="induction">induction heads</Term> emerge abruptly in training and drive much of in-context learning. For coding, this is why models mirror patterns already in context so well: an existing test, a naming convention, a neighbouring handler.
+**Induction heads.** Researchers found a two-head circuit that implements "find where the current token appeared before, and predict what came after it last time". These <Term k="induction">induction heads</Term> emerge abruptly in training and appear to be an important early mechanism for in-context learning; in larger models other heads ("function-vector heads") seem to do more of the work of inferring a task from examples, while induction heads explain the copying. For coding, this is why models mirror patterns already in context so well: an existing test, a naming convention, a neighbouring handler.
 
-**Cost.** Reading a prompt of n tokens costs about n²/2 scores per head per layer, all in parallel. Generating each new token costs work proportional to n, against cached keys. A huge prompt is affordable; a long conversation slowly gets slower.
+**Cost.** Reading a prompt of n tokens costs about n²/2 scores per head per layer, all in parallel. Generating each new token costs work proportional to n, against cached keys. A huge prompt is affordable; a long conversation slowly gets slower. (With a 70B-class model, the quadratic attention cost only overtakes the rest of the per-token work at around 50k tokens.)
 </Engineer>
+
+<Debate id="full-attention-vs-hybrid" />
 
 <Quiz q="In “The server rejected the request because it was malformed”, what lets “it” pick up meaning from “request”?" options={["The tokenizer merges them","The rule that words can't look ahead","Attention: “it” looks back and weights “request” most heavily","A grammar rule stored somewhere in the model"]} answer={2} explain="Attention lets each word blend in information from the earlier words most relevant to it. For “it”, that is “request”. Under the hood, its query matches request's key, so request's value dominates the mix." />
