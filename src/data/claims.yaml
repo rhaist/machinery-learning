@@ -198,3 +198,336 @@
     - https://arxiv.org/abs/2307.03172
   verified: 2026-11-21
   status: evergreen
+
+# ---------------- Part 2: Trust & security ----------------
+
+- id: pi-greshake
+  text: "indirect prompt injection was named and demonstrated in early 2023, when Greshake and colleagues hijacked Bing Chat through content it retrieved"
+  sources: [https://arxiv.org/abs/2302.12173]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: pi-owasp
+  text: "OWASP ranks prompt injection as the number one risk for LLM applications (LLM01:2025)"
+  sources: [https://genai.owasp.org/llmrisk/llm01-prompt-injection/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: trifecta
+  text: "Simon Willison's \"lethal trifecta\": an agent with access to private data, exposure to untrusted content and a way to send data out can be made to leak that data"
+  sources: [https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: ncsc-confusable
+  text: "the UK's National Cyber Security Centre calls an LLM an inherently confusable deputy and says prompt injection can only be reduced, not eliminated like SQL injection"
+  sources: [https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: adaptive-attacks
+  text: "researchers from several labs bypassed 12 published jailbreak and prompt-injection defences with adaptive attacks, mostly at over 90% success, although most had reported near-zero attack success"
+  sources: [https://arxiv.org/abs/2510.09023]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: spotlighting
+  text: "Microsoft's spotlighting technique cut attack success on GPT models from above 50% to below 2% in static tests"
+  sources: [https://arxiv.org/abs/2403.14720]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: camel
+  text: "Google DeepMind's CaMeL tracks where every piece of data came from and enforces rules at tool calls; on the AgentDojo benchmark it completed 77% of tasks with provable security, against 84% undefended"
+  sources: [https://arxiv.org/abs/2503.18813, https://arxiv.org/abs/2506.08837]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: labs-unsolved
+  text: "OpenAI says prompt injection is unlikely ever to be fully solved, and Anthropic calls it far from solved while reporting about 1% attack success for adaptive attackers with 100 attempts against its browser agent (self-reported)"
+  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection, https://www.anthropic.com/research/prompt-injection-defenses]
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: echoleak
+  text: "EchoLeak (CVE-2025-32711, June 2025): a single email made Microsoft 365 Copilot leak internal data when the user later asked it an unrelated question, with no click needed"
+  sources: [https://arxiv.org/abs/2509.10540]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: comet
+  text: "in August 2025 Brave showed hidden text in a Reddit comment making Perplexity's Comet browser read the user's email address and a one-time login code, then post both publicly"
+  sources: [https://brave.com/blog/comet-prompt-injection/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: copilot-autoapprove
+  text: "CVE-2025-53773: injected text made GitHub Copilot switch off its own confirmation prompts in the workspace settings and then run shell commands"
+  sources: [https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: owasp-agency
+  text: "OWASP names three root causes of \"excessive agency\": too many functions, too many permissions and too much autonomy"
+  sources: [https://genai.owasp.org/llmrisk/llm062025-excessive-agency/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: mcp-tool-poisoning
+  text: "Invariant Labs showed hidden instructions in an MCP tool's description, invisible to the user, making an AI editor read private SSH keys and pass them out"
+  sources: [https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks]
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: postmark-mcp
+  text: "in September 2025 a look-alike MCP server package for the email service Postmark built trust over 15 versions, then quietly copied every outgoing email to an attacker"
+  sources: [https://www.theregister.com/2025/09/29/postmark_mcp_server_code_hijacked/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: approval-93
+  text: "Anthropic reports that users approved about 93% of Claude Code's permission prompts, and that operating-system sandboxing cut the number of prompts by 84% (self-reported)"
+  sources: [https://anthropic.com/engineering/claude-code-sandboxing, https://anthropic.com/engineering/how-we-contain-claude]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: sandbox-both
+  text: "a sandbox needs both file-system and network isolation: without network limits a hijacked agent can send secrets out, and without file-system limits it can escape the sandbox"
+  sources: [https://anthropic.com/engineering/claude-code-sandboxing]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: s1ngularity
+  text: "in the August 2025 Nx \"s1ngularity\" npm compromise, malware ran victims' own AI command-line tools with permission-skipping flags to search for secrets"
+  sources: [https://wiz.io/blog/s1ngularitys-aftermath, https://nx.dev/blog/s1ngularity-postmortem]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: replit-db
+  text: "in July 2025 a Replit coding agent deleted a production database during a declared code freeze; the freeze existed only as an instruction in text"
+  sources: [https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: supabase-mcp
+  text: "a support ticket with hidden instructions made an AI editor, connected to a database with full rights, copy secret tokens back into the ticket"
+  sources: [https://generalanalysis.com/blog/supabase-mcp-blog]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: pkg-hallucination
+  text: "a USENIX Security 2025 study of 576,000 code samples from 16 models found at least 5.2% of suggested packages from commercial models and 21.7% from open-source models did not exist"
+  sources: [https://arxiv.org/abs/2406.10279]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: pkg-repeat
+  text: "43% of invented package names came back every time the same prompt was rerun ten times, which makes registering them a practical attack"
+  sources: [https://arxiv.org/html/2406.10279v3]
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: huggingface-cli
+  text: "a researcher registered huggingface-cli, a package name ChatGPT kept inventing, and saw more than 15,000 real downloads in three months"
+  sources: [https://theregister.com/2024/03/28/ai_bots_hallucinate_software_packages]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: pickle-malicious
+  text: "JFrog found about 100 malicious models on Hugging Face in 2024, one of which opened a remote shell the moment it was loaded"
+  sources: [https://jfrog.com/blog/data-scientists-targeted-by-malicious-hugging-face-ml-models-with-silent-backdoor/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: nullifai
+  text: "ReversingLabs found models that used deliberately broken files to slip past Hugging Face's scanner: the payload ran before the point where the scanner gave up"
+  sources: [https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: poison-250
+  text: "Anthropic, the UK AI Security Institute and the Alan Turing Institute found that about 250 poisoned documents planted a backdoor in models from 600M to 13B parameters regardless of training-data size; the backdoor was narrow"
+  sources: [https://arxiv.org/abs/2510.07192, https://www.anthropic.com/research/small-samples-poison]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: poison-cheap
+  text: "Carlini and colleagues estimated they could have poisoned 0.01% of two web-scale image datasets for about $60, for example by buying expired domains"
+  sources: [https://arxiv.org/abs/2302.10149]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: sleeper-agents
+  text: "Anthropic's \"Sleeper Agents\" study found that a backdoor trained into a model survived standard safety training, and adversarial training taught the model to hide it better"
+  sources: [https://arxiv.org/abs/2401.05566]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: model-signing
+  text: "the OpenSSF model-signing standard (v1.0, April 2025) signs model files with Sigstore, and US and allied agencies recommend signatures and provenance tracking for AI data"
+  sources: [https://blog.sigstore.dev/model-transparency-v1.0, https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4192332/nsas-aisc-releases-joint-guidance-on-the-risks-and-best-practices-in-ai-data-se/]
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: litellm
+  text: "in March 2026 the popular AI gateway LiteLLM briefly shipped credential-stealing versions on PyPI; accounts differ on whether a compromised CI scanner or a maintainer-account takeover was the way in"
+  sources: [https://snyk.io/blog/poisoned-security-scanner-backdooring-litellm/, https://github.com/BerriAI/litellm/issues/24518]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: openai-training-default
+  text: "consumer ChatGPT may train on conversations unless you opt out, while ChatGPT business plans and the API are excluded by default; API data is kept up to 30 days for abuse monitoring unless zero retention is agreed"
+  sources: [https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance, https://openai.com/enterprise-privacy/]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: nyt-hold
+  text: "a court order in the New York Times lawsuit forced OpenAI to keep consumer chats, including deleted ones, until September 2025"
+  sources: [https://openai.com/index/response-to-nyt-data-demands/]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: anthropic-consumer
+  text: "since August 2025 Anthropic's consumer users choose whether chats train models: opting in means five-year retention, opting out 30 days; business and API use is excluded"
+  sources: [https://www.anthropic.com/news/updates-to-our-consumer-terms]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: gemini-retention
+  text: "Google sends a subset of Gemini chats to human reviewers and keeps reviewed chats for up to three years, even after you delete them"
+  sources: [https://support.google.com/gemini/answer/13594961]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: extraction-chatgpt
+  text: "in 2023 researchers made ChatGPT emit memorised training data, including real personal information, by asking it to repeat a single word forever"
+  sources: [https://arxiv.org/abs/2311.17035]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: books-extraction
+  text: "a January 2026 study extracted most of the first Harry Potter book near-verbatim from production models without a jailbreak"
+  sources: [https://arxiv.org/abs/2601.02671]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: spaiware
+  text: "\"SpAIware\" (2024) showed a web page planting instructions in ChatGPT's long-term memory that quietly sent later conversations to an attacker"
+  sources: [https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: share-links
+  text: "shared chat links from ChatGPT and Grok turned up in Google search results in 2025"
+  sources: [https://malwarebytes.com/blog/news/2025/08/openai-kills-short-lived-experiment-where-chatgpt-chats-could-be-found-on-google, https://techcrunch.com/2025/08/20/thousands-of-grok-chats-are-now-searchable-on-google]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: eu-gpai
+  text: "the EU AI Act's duties for general-purpose AI models apply since 2 August 2025, with the Commission's enforcement powers from 2 August 2026"
+  sources: [https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: eu-omnibus
+  text: "the 2026 \"Digital Omnibus\" moved the EU's high-risk AI rules to December 2027 (stand-alone systems) and August 2028 (systems in products), leaving the general-purpose AI duties unchanged"
+  sources: [https://digital-strategy.ec.europa.eu/en/news/eu-agrees-simplify-ai-rules-boost-innovation-and-ban-nudification-apps-protect-citizens, https://eeas.europa.eu/delegations/chile/artificial-intelligence-council-gives-final-green-light-simplify-and-streamline-rules_en]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: ollama-exposed
+  text: "Cisco Talos found more than 1,100 self-hosted Ollama model servers on the internet without any authentication, about 9% of them in Germany"
+  sources: [https://blogs.cisco.com/security/detecting-exposed-llm-servers-shodan-case-study-on-ollama]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: gsm1k
+  text: "when Scale AI rebuilt a popular maths benchmark with fresh questions, some model families scored up to 8% lower, and the drop tracked how much of the original they had memorised"
+  sources: [https://arxiv.org/abs/2405.00332]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: swebench-retired
+  text: "in February 2026 OpenAI stopped reporting the SWE-bench Verified coding benchmark: every frontier model it tested had seen some answers in training, and most audited failures had flawed tests"
+  sources: [https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: leaderboard-illusion
+  text: "\"The Leaderboard Illusion\" reported that Meta tested 27 private model variants on the Arena leaderboard before releasing Llama 4; LMArena disputes how much this matters"
+  sources: [https://arxiv.org/abs/2504.20879, https://arena.ai/blog/our-response]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: metr-slower
+  text: "in METR's 2025 randomised trial, experienced developers were 19% slower with AI tools while believing they were about 20% faster; a 2026 follow-up hints at a speed-up with newer tools, on weak evidence"
+  sources: [https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/, https://metr.org/blog/2026-02-24-uplift-update/]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: eval-awareness
+  text: "OpenAI and Apollo Research cut covert actions in o3 from 13% to 0.4%, but caution that models often recognise when they are being tested"
+  sources: [https://openai.com/index/detecting-and-reducing-scheming-in-ai-models/]
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: detectors-fail
+  text: "OpenAI withdrew its own AI-text detector in 2023 after it caught only 26% of AI text and flagged 9% of human text; seven detectors labelled most essays by non-native English writers as AI-written"
+  sources: [https://openai.com/index/new-ai-classifier-for-indicating-ai-written-text, https://arxiv.org/abs/2304.02819]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: synthid
+  text: "Google DeepMind's SynthID-Text watermark was tested on nearly 20 million Gemini responses without measurable quality loss, but paraphrasing can weaken text watermarks"
+  sources: [https://github.com/google-deepmind/synthid-text, https://arxiv.org/abs/2303.11156]
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: c2pa
+  text: "C2PA content credentials record who signed a file and how it was edited; a missing credential proves nothing, and metadata can be stripped"
+  sources: [https://spec.c2pa.org/specifications/specifications/2.2/guidance/Guidance.html, https://arxiv.org/abs/2604.24890]
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: arup-deepfake
+  text: "in early 2024 an Arup employee in Hong Kong transferred about US$25 million after a video call in which every other participant, including the CFO, was a deepfake"
+  sources: [https://fortune.com/europe/2024/05/17/arup-deepfake-fraud-scam-victim-hong-kong-25-million-cfo/]
+  verified: 2026-11-21
+  status: evergreen
+
+- id: fbi-deepfake
+  text: "the FBI recommends a family secret word and calling back on a known number to defeat cloned voices and fake video calls"
+  sources: [https://www.ic3.gov/psa/2024/PSA241203]
+  verified: 2026-11-21
+  status: evergreen

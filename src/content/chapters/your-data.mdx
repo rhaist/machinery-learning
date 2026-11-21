@@ -1,0 +1,73 @@
+---
+title: "Where your words go: your data and the model"
+short: Your data
+order: 13
+part: trust-security
+summary: Training, retention, human review, memory and share links, explained without the legalese, plus what EU law says.
+minutes: 12
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import Debate from '../../components/Debate.astro';
+import DataPath from '../../components/DataPath.astro';
+
+Part 1 said a model doesn't learn from your conversation while you're having it. That's true: the weights are frozen. But your words don't vanish when the chat ends. Depending on which product you use and how it's set up, they may be stored, read by a reviewer, used to train the *next* model, held for a court case, or published by accident.
+
+<Note title="Postcard, envelope, notebook">
+Typing into a free consumer chatbot is a bit like writing a postcard. The postal service promises not to look for long, but some staff might, copies can be kept for legal reasons, and if you pin it to a noticeboard (a share link) anyone can read it. A business contract is a sealed envelope with a written promise. A model on your own laptop is your private notebook: nobody else reads it, but it's only as safe as the lock on your door.
+</Note>
+
+## Consumer and business are different products
+
+The biggest difference isn't between providers. It's between free or personal plans and business ones. For example, <Claim id="openai-training-default" />. Anthropic made the choice explicit: <Claim id="anthropic-consumer" />. Google adds people to the loop: <Claim id="gemini-retention" />.
+
+Deletion isn't always the end either. <Claim id="nyt-hold" />. A <Term k="legalhold">legal hold</Term> overrides the provider's normal promise. Only setups that never store your text, such as <Term k="zdr">zero data retention</Term> or a local model, avoid that.
+
+## Try it: follow your prompt
+
+<DataPath />
+
+## Can a model remember what it learned?
+
+Here's the subtler question. Even if nobody stores your chat, what about text that went *into* training? Models mostly learn patterns, but they also <Term k="memorization">memorise</Term> some rare or often-repeated text word for word, like a student who learned a few textbook pages by heart, phone numbers included.
+
+That memory can be pulled back out. <Claim id="extraction-chatgpt" />. Long copyrighted texts too: <Claim id="books-extraction" />. Practical rule: assume anything public on the web may be inside a model somewhere.
+
+<Debate id="models-contain-data" />
+
+## Memory and share links
+
+Two convenience features deserve their own warning. **Memory** lets an assistant keep facts about you across chats, which also makes injection persistent: <Claim id="spaiware" />. And **share links** are publishing: <Claim id="share-links" />.
+
+## What EU law says
+
+If you're in Europe, two sets of rules matter. GDPR already applies: the European data protection board says whether a model counts as "anonymous" must be judged case by case, and Italy's regulator fined OpenAI €15 million in 2024. The EU AI Act adds duties for model makers: <Claim id="eu-gpai" />. Its timetable moved this year: <Claim id="eu-omnibus" />. None of this changes what a chatbot does with your words today; your provider's terms and settings do.
+
+## Local isn't automatically safe
+
+Running a model yourself removes the provider from the picture. It doesn't remove risk, it moves it to you. <Claim id="ollama-exposed" />.
+
+<Note title="Everyday habits" kind="key">
+- Check your settings. Turn off "improve the model" if you don't want your chats used for training.
+- Don't paste passwords, health records, client data or other people's personal details into a consumer chatbot. Use your employer's approved tool for work.
+- A share link is publishing. Review old shared links and stored memories now and then.
+- Use temporary or incognito chat modes for sensitive one-off questions.
+</Note>
+
+<Engineer title="Data governance for AI use">
+**Contract, don't hope.** Use business or API terms with no training, documented retention, zero data retention where needed and EU data residency where offered. Put these terms into your records of processing and DPIA. Track provider changes: retention and training defaults changed at several major providers in 2025–2026, so give these claims short re-check intervals.
+
+**Shadow AI.** Blocking consumer AI on company devices without offering an approved alternative mostly drives use onto personal phones. Provide the sanctioned tool first, then govern.
+
+**RAG and fine-tuning.** Minimise personal data going in. Keep access controls on retrieved documents (the retriever must not fetch what the user couldn't open themselves). Test fine-tuned models for regurgitation of training records, especially rare strings like IDs and keys.
+
+**Self-hosting.** Never expose model servers without authentication; put them behind a reverse proxy or VPN, verify model files (previous chapter) and log access. Many local runtimes listen on all interfaces with no auth by default.
+
+**Regulatory register.** Keep a living list: <Term k="gpai">GPAI</Term> duties since August 2025, Commission enforcement from August 2026, Article 50 transparency with a watermarking grace period ending 2 December 2026, high-risk rules December 2027 and August 2028. The Omnibus reference in the Official Journal should be checked on EUR-Lex before you cite it in policy.
+</Engineer>
+
+<Quiz q="You delete a chat in a consumer chatbot. Which statement is most accurate?" options={["It is gone from the provider's servers immediately","It may still be kept for a while, for example for abuse checks, human review or a court order","It is removed from the trained model's weights","It is automatically shared with other users"]} answer={1} explain="Deletion starts a clock, not an instant wipe. Abuse-monitoring windows, reviewed samples and legal holds can all keep copies. Only setups that never store the text avoid this." />

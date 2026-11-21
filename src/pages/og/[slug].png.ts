@@ -1,16 +1,17 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { ogPng } from '../../lib/og';
-import { site, edition, monthLabel } from '../../lib/data';
+import { site, edition, monthLabel, byPart } from '../../lib/data';
 
 export async function getStaticPaths() {
   const chapters = await getCollection('chapters');
   const notes = await getCollection('notes');
-  const n = chapters.length - 1;
+  const parts = byPart(chapters as any[]);
+  const kick = (id: string) => { const p = parts.find(p => p.chapters.some(x => x.c.id === id))!; const num = p.chapters.find(x => x.c.id === id)!.num; return `${parts.length > 1 ? p.title.split(':')[0] + ' · ' : ''}Chapter ${num} of ${p.chapters[p.chapters.length - 1].num}`; };
   const pages = [
     { slug: 'home', kicker: `${monthLabel(String(edition.month))} edition`, title: 'How AI like ChatGPT actually works, explained as it changes', summary: site.tagline + '. Interactive, plain-language, updated monthly.' },
     { slug: 'radar', kicker: 'Frontier radar', title: 'Where AI research stands this month', summary: 'From research to emerging to shipping, reviewed monthly. History is never rewritten.' },
-    ...chapters.map(c => ({ slug: `learn-${c.id}`, kicker: `Chapter ${c.data.order} of ${n}`, title: c.data.title, summary: c.data.summary })),
+    ...chapters.map(c => ({ slug: `learn-${c.id}`, kicker: kick(c.id), title: c.data.title, summary: c.data.summary })),
     ...notes.map(x => ({ slug: `notes-${x.id}`, kicker: `Field notes · ${monthLabel(x.data.month)}`, title: x.data.title, summary: x.data.summary })),
   ];
   return pages.map(p => ({ params: { slug: p.slug }, props: p }));

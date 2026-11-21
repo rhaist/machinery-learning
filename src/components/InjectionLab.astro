@@ -1,0 +1,23 @@
+<div class="panel demo" id="ilab">
+  <p class="lab-h">Your assistant can…</p>
+  <div class="legs">
+    <label class="leg"><input type="checkbox" id="il-data" checked> <span><b>read private data</b><small>your notes, files, inbox</small></span></label>
+    <label class="leg"><input type="checkbox" id="il-untrusted" checked> <span><b>read untrusted content</b><small>incoming email, web pages</small></span></label>
+    <label class="leg"><input type="checkbox" id="il-send" checked> <span><b>send things out</b><small>email, links, images</small></span></label>
+  </div>
+  <div class="lab-row">
+    <div><label for="il-attack">The attacker's email says</label><select id="il-attack"><option value="plain">"Ignore previous instructions…" (blunt)</option><option value="hidden">The same, in white text on white</option><option value="para">A polite paraphrase, no trigger words</option></select></div>
+    <div><p class="lab-h" style="margin:0 0 4px">Defences</p>
+      <label class="chk"><input type="checkbox" id="il-filter"> keyword filter</label>
+      <label class="chk"><input type="checkbox" id="il-spot"> spotlighting (mark untrusted text)</label>
+      <label class="chk"><input type="checkbox" id="il-confirm"> ask me before sending</label>
+      <label class="chk"><input type="checkbox" id="il-flow"> data-flow rule: untrusted text can't reach "send"</label>
+    </div>
+  </div>
+  <div class="ctxw" id="il-stream" aria-live="polite"></div>
+  <div class="ctl" style="margin-top:14px"><label for="il-n">Attacker gets this many tries</label><output id="il-n-o">1</output><input type="range" id="il-n" min="1" max="100" step="1" value="1"></div>
+  <div class="meter"><span>Chance one try leaks your notes</span><span class="bt"><i id="il-m1"></i></span><span class="v" id="il-v1"></span></div>
+  <div class="meter"><span>Chance at least one try works</span><span class="bt"><i id="il-m2"></i></span><span class="v" id="il-v2"></span></div>
+  <p class="lab-verdict" id="il-verdict"></p>
+  <p class="small" style="margin:6px 0 0">Illustrative probabilities to show the mechanism, not measurements of any product.</p>
+</div>

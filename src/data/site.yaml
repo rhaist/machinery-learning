@@ -23,3 +23,6 @@ parts:
   - id: language-models
     title: "Part 1: Language models"
     summary: How today's AI reads, predicts, is trained, and where it breaks. Ten short chapters, each with a hands-on demo and a checkpoint question.
+  - id: trust-security
+    title: "Part 2: Trust & security"
+    summary: What goes wrong when AI reads, acts and remembers on your behalf, and the habits and controls that still work when the model is fooled. Five chapters for users and for the people who build and defend these systems.

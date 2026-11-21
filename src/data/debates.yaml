@@ -8,4 +8,130 @@
 #   settle      what evidence would move the debate
 #   verified    date a human last checked both sides against their sources
 #   half_life   months until re-check (debates move; usually 6)
-debates: []
+debates:
+  - id: injection-training-vs-architecture
+    question: Can better training make prompt injection rare enough, or only system design?
+    why: It decides whether you can trust an AI with your inbox once the vendor says its model resists attacks.
+    sides:
+      - label: Training and layers can manage it
+        who: OpenAI, Anthropic
+        points:
+          - Models trained to rank instructions by source, plus automated red-teaming, cut measured attack success sharply.
+          - Anthropic reports about 1% success for an adaptive attacker with 100 attempts in browser use (self-reported).
+          - Spam filters made email usable without being perfect; monitoring and confirmations change real-world risk the same way.
+        sources:
+          - https://openai.com/index/hardening-atlas-against-prompt-injection
+          - https://openai.com/index/instruction-hierarchy-challenge
+          - https://www.anthropic.com/research/prompt-injection-defenses
+      - label: Only deterministic boundaries count
+        who: Simon Willison, the UK NCSC, Nasr, Carlini, Tramèr and colleagues
+        points:
+          - Adaptive attacks broke 12 published defences that had reported near-zero attack success.
+          - A 1% failure rate against an attacker who can retry many times is close to certain failure.
+          - So untrusted input must never be able to reach privileged tools, whatever the model decides.
+        sources:
+          - https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+          - https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection
+          - https://arxiv.org/abs/2510.09023
+    settle: Adaptive, independent red-team results on shipping products over time, and whether data-flow designs like CaMeL become usable for general assistants.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: approval-prompts
+    question: Are "Allow this action?" prompts a real safeguard or security theatre?
+    why: Almost every AI agent today relies on you clicking approve. If that doesn't work, something else has to.
+    sides:
+      - label: Keep a human in the loop
+        who: OWASP, Brave
+        points:
+          - Some actions, such as payments, emails to new recipients or deletions, can't be undone.
+          - Only the human knows what they actually intended, so confirmation for high-impact steps is a core mitigation.
+        sources:
+          - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+          - https://brave.com/blog/comet-prompt-injection/
+      - label: Enforce boundaries instead
+        who: Anthropic engineering, Invariant Labs
+        points:
+          - Users approved about 93% of prompts; sandboxing removed 84% of them without losing safety (self-reported).
+          - People pick "Always allow" and stop reading, so the prompt gives false assurance.
+          - Better to make dangerous actions impossible by default and keep prompts for rare boundary crossings.
+        sources:
+          - https://anthropic.com/engineering/how-we-contain-claude
+          - https://invariantlabs.ai/blog/mcp-github-vulnerability
+    settle: Field data on how often people catch a malicious action among routine prompts, compared with incidents in sandboxed setups.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: data-poisoning-risk
+    question: How worried should we be about poisoned training data in frontier models?
+    why: Anyone can publish text on the web, and the web is what models learn from.
+    sides:
+      - label: Practical and cheap
+        who: Nicholas Carlini and colleagues; Souly and colleagues (Anthropic, UK AISI, Alan Turing Institute)
+        points:
+          - Poisoning a web-scale dataset could cost about $60.
+          - About 250 documents planted a backdoor regardless of model size, so attackers need a fixed number of pages, not a share of the web.
+        sources:
+          - https://arxiv.org/abs/2302.10149
+          - https://arxiv.org/abs/2510.07192
+      - label: Real, but narrower than the headlines
+        who: The same research team's own caveats
+        points:
+          - The demonstrated backdoor was a narrow trigger that produced gibberish; more harmful behaviours have been harder to implant.
+          - Attackers must survive data filtering and post-training, so curation and evaluation are the right investment.
+          - Counterweight from Sleeper Agents work: once a backdoor is in, today's safety training may not remove it.
+        sources:
+          - https://www.anthropic.com/research/small-samples-poison
+          - https://arxiv.org/abs/2401.05566
+    settle: Poisoning experiments on frontier-scale models with harmful target behaviours, run against realistic data curation.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: models-contain-data
+    question: Does a trained model "contain" the personal data and texts it learned from?
+    why: It decides whether you can demand deletion from a model, and whether training on your writing is copying.
+    sides:
+      - label: No, it holds abstract numbers
+        who: Hamburg Data Protection Commissioner (discussion paper, 2024)
+        points:
+          - Storing a model is not processing personal data; rights apply to what goes in and comes out.
+          - Extraction attacks take disproportionate effort, and treating weights as a data store would make erasure impossible.
+        sources:
+          - https://datenschutz-hamburg.de/fileadmin/user_upload/HmbBfDI/Datenschutz/Informationen/240715_Discussion_Paper_Hamburg_DPA_KI_Models.pdf
+      - label: It depends, and often yes
+        who: European Data Protection Board; Munich Regional Court I (GEMA v OpenAI, not final); extraction researchers
+        points:
+          - The EDPB says a model counts as anonymous only if extracting personal data is very unlikely, decided case by case.
+          - The Munich court held that song lyrics memorised in model parameters are a reproduction under copyright law.
+          - Researchers recovered personal data and near-complete books from production systems.
+        sources:
+          - https://www.edpb.europa.eu/node/8396_en
+          - https://cms.law/en/deu/legal-updates/gema-vs.-openai-munich-regional-court-i-issues-landmark-copyright-decision
+          - https://arxiv.org/abs/2311.17035
+    settle: Final appeal rulings in cases like GEMA v OpenAI, and EU-level guidance applied to concrete models.
+    verified: 2026-11-21
+    half_life: 6
+
+  - id: watermarking-worth-it
+    question: Are AI watermarks and content credentials worth building?
+    why: The EU AI Act now requires machine-readable marking of AI output, so this shapes what you will see on every platform.
+    sides:
+      - label: Yes, as one layer at scale
+        who: Google DeepMind's SynthID team; the C2PA coalition; EU lawmakers
+        points:
+          - Text watermarks can work with no measurable quality loss and are cheap to check at platform scale.
+          - Even imperfect signals raise the cost of mass misuse.
+        sources:
+          - https://github.com/google-deepmind/synthid-text
+          - https://spec.c2pa.org/specifications/specifications/2.2/guidance/Guidance.html
+      - label: They create false confidence
+        who: Sadasivan, Feizi and colleagues; authors of a 2026 C2PA security analysis
+        points:
+          - Paraphrasing weakens text watermarks, and watermarks can be spoofed to frame humans.
+          - A missing label will be misread as proof that something is real.
+        sources:
+          - https://arxiv.org/abs/2303.11156
+          - https://arxiv.org/abs/2604.24890
+    settle: Robustness of deployed watermarks against cheap paraphrasing, and how audiences actually interpret missing labels.
+    verified: 2026-11-21
+    half_life: 6

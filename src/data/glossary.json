@@ -278,5 +278,145 @@
  "cascade": {
   "term": "Cascade / router",
   "def": "A pattern where a cheap model handles every request, acts on the confident answers, and escalates the uncertain ones to a stronger model or a human."
+ },
+ "adaptive": {
+  "term": "Adaptive attack",
+  "def": "An attack tuned against one specific defence, often with many attempts, rather than a fixed list of known tricks. The honest way to test a defence."
+ },
+ "approvalfatigue": {
+  "term": "Approval fatigue",
+  "def": "When people are asked to confirm actions so often that they start approving without reading."
+ },
+ "asr": {
+  "term": "Attack success rate",
+  "def": "The share of attempts in which an attack works. Meaningless without knowing how many tries the attacker got and how clever they were."
+ },
+ "backdoor": {
+  "term": "Backdoor / sleeper agent",
+  "def": "Hidden behaviour planted in a model during training that only shows up when a secret trigger appears."
+ },
+ "contamination": {
+  "term": "Benchmark contamination",
+  "def": "When test questions or their answers leaked into a model's training data, so a high score partly reflects memory."
+ },
+ "saturation": {
+  "term": "Benchmark saturation",
+  "def": "When top models all score near the maximum, so a test can no longer tell them apart."
+ },
+ "c2pa": {
+  "term": "C2PA / Content Credentials",
+  "def": "An industry standard for attaching signed records of where an image, video or audio file came from and how it was edited."
+ },
+ "deputy": {
+  "term": "Confused deputy",
+  "def": "A program with legitimate powers that is tricked into using them for someone who shouldn't have them. An AI agent is a very persuadable deputy."
+ },
+ "poisoning": {
+  "term": "Data poisoning",
+  "def": "Deliberately slipping crafted examples into training data to change what a model learns."
+ },
+ "deepfake": {
+  "term": "Deepfake",
+  "def": "AI-generated or altered audio, image or video that imitates a real person."
+ },
+ "pickle": {
+  "term": "Pickle (model files)",
+  "def": "Python's save format. Loading a pickle file can run code hidden inside it, which makes downloaded model files in this format as risky as programs."
+ },
+ "indirect": {
+  "term": "Direct vs indirect prompt injection",
+  "def": "Direct: the person typing tries to override the rules. Indirect: instructions hidden in content the AI reads, such as web pages, emails or files."
+ },
+ "egress": {
+  "term": "Egress control",
+  "def": "Rules about where a program may send data over the network, for example only to three named websites."
+ },
+ "exfiltration": {
+  "term": "Exfiltration",
+  "def": "Getting data out of a system to an attacker, for example through a link, an image address or an email."
+ },
+ "agency": {
+  "term": "Excessive agency",
+  "def": "An AI system given more functions, permissions or autonomy than its job needs."
+ },
+ "fpr": {
+  "term": "False positive rate",
+  "def": "How often a detector raises an alarm on something innocent."
+ },
+ "baserate": {
+  "term": "Base rate",
+  "def": "How common the thing you're looking for actually is. A rare thing plus an imperfect test means most alarms are false."
+ },
+ "gpai": {
+  "term": "General-purpose AI model (GPAI)",
+  "def": "The EU AI Act's term for large models, like LLMs, that can be used for many tasks. Their makers have specific obligations."
+ },
+ "hitl": {
+  "term": "Human in the loop",
+  "def": "A design where a person must approve certain actions before the AI carries them out."
+ },
+ "hierarchy": {
+  "term": "Instruction hierarchy",
+  "def": "Training a model to give more weight to instructions from trusted sources (system, developer) than from untrusted ones (web pages, tool results)."
+ },
+ "trifecta": {
+  "term": "Lethal trifecta",
+  "def": "Simon Willison's term for an agent that has private data, reads untrusted content and can send data out. With all three, prompt injection can steal data."
+ },
+ "leastpriv": {
+  "term": "Least privilege",
+  "def": "Giving a person or program only the minimum access needed for the task at hand."
+ },
+ "legalhold": {
+  "term": "Legal hold",
+  "def": "A court or legal requirement to keep data that would otherwise be deleted."
+ },
+ "memorization": {
+  "term": "Memorisation",
+  "def": "When a model has stored specific pieces of training text closely enough to reproduce them word for word."
+ },
+ "signing": {
+  "term": "Model signing / provenance",
+  "def": "Cryptographically proving who produced a model file and that it hasn't been changed since."
+ },
+ "redteam": {
+  "term": "Red teaming",
+  "def": "Deliberately attacking your own system, as an adversary would, to find weaknesses before others do."
+ },
+ "rugpull": {
+  "term": "Rug pull (MCP)",
+  "def": "A tool that changes its behaviour or description after you approved it."
+ },
+ "safetensors": {
+  "term": "Safetensors",
+  "def": "A model file format that stores only numbers and a simple header, so loading it cannot run hidden code."
+ },
+ "sandbox": {
+  "term": "Sandbox",
+  "def": "A restricted environment that limits which files, network destinations and system functions a program can reach."
+ },
+ "toolpoison": {
+  "term": "Tool poisoning",
+  "def": "Hiding instructions in a tool's description, which the AI reads but the user doesn't see."
+ },
+ "extraction": {
+  "term": "Training-data extraction",
+  "def": "Attacks that coax a model into revealing text it memorised during training."
+ },
+ "typosquat": {
+  "term": "Typosquatting",
+  "def": "Registering names that look like popular packages or domains, one letter off, to catch mistakes."
+ },
+ "watermark": {
+  "term": "Watermarking (AI output)",
+  "def": "Hiding a statistical signal in generated text, images or audio so a detector can later recognise it as AI-made."
+ },
+ "zdr": {
+  "term": "Zero data retention",
+  "def": "A business arrangement where the provider doesn't store your prompts and outputs after processing them."
+ },
+ "spotlight": {
+  "term": "Spotlighting / delimiting",
+  "def": "Marking or encoding untrusted text so the model can tell it apart from real instructions. It helps, but doesn't guarantee safety."
  }
 }

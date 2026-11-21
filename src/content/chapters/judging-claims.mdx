@@ -1,0 +1,71 @@
+---
+title: "Don't trust the scoreboard: judging AI claims"
+short: Judging claims
+order: 14
+part: trust-security
+summary: Benchmarks, vendor security numbers, AI detectors and deepfakes. Habits for telling what's real.
+minutes: 12
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import Debate from '../../components/Debate.astro';
+import BaseRate from '../../components/BaseRate.astro';
+
+Every chapter in this part has quoted numbers: attack success rates, approval rates, percentages of invented packages. This last chapter is about how to read numbers like that, and the ones you'll meet in product launches, news stories and your own inbox. Most of it comes down to one question: *measured how, by whom, against what?*
+
+<Note title="The student who saw the exam">
+A student who memorised last year's exam scores brilliantly on last year's exam. Give them fresh questions and you find out what they actually know. A lot of AI benchmarking is the same problem: models are trained on the internet, and the internet contains the tests.
+</Note>
+
+## Benchmarks leak
+
+When test questions end up in training data, scores go up without ability going up. That's <Term k="contamination">contamination</Term>. <Claim id="gsm1k" />. It's not only small labs: <Claim id="swebench-retired" />. A benchmark where every top model scores about the same has also stopped telling you much, which is <Term k="saturation">saturation</Term>.
+
+Leaderboards where people vote between models have their own issues. <Claim id="leaderboard-illusion" />. A score describes the variant that was tested, under that board's conditions.
+
+## Feelings aren't measurements
+
+Even our own impressions can mislead us. <Claim id="metr-slower" />. And models can behave differently when they think they're being watched: <Claim id="eval-awareness" />. The same lesson from chapter 10 applies to every security number: a defence measured against a fixed test set looks better than it will against someone who adapts.
+
+## Try it: the AI-essay detector
+
+Detectors that claim to spot AI-written text are a perfect case study, because the maths catches people out. <Claim id="detectors-fail" />. Play with the sliders below, and watch the red squares.
+
+<BaseRate />
+
+This is the <Term k="baserate">base-rate</Term> problem. When most essays are honest, even a small <Term k="fpr">false-positive rate</Term> produces a crowd of wrongly accused students, often the ones who write in simple, careful English. Never treat a detector score as evidence on its own.
+
+## Labels on the content itself
+
+Instead of guessing afterwards, you can mark content when it's made. A <Term k="watermark">watermark</Term> hides a statistical signal in generated text or images: <Claim id="synthid" />. <Term k="c2pa">Content credentials</Term> attach a signed record of origin: <Claim id="c2pa" />.
+
+<Debate id="watermarking-worth-it" />
+
+## Deepfakes: verify the channel, not the face
+
+The most expensive AI claims are the ones made by a fake person. <Claim id="arup-deepfake" />. A <Term k="deepfake">deepfake</Term> doesn't need to be perfect, only good enough under time pressure. The defence is procedural, not technical: <Claim id="fbi-deepfake" />.
+
+<Note title="Everyday habits" kind="key">
+- For any AI number, ask: measured how, by whom, on what, and could the model have seen the test?
+- Self-reported vendor numbers are a starting point. Look for independent or adaptive testing.
+- Never accuse someone on an AI detector's say-so.
+- Agree a family code word, and verify unusual payment requests by calling back on a number you already have.
+</Note>
+
+<Engineer title="Evaluating AI claims at work">
+**Run your own evals.** Public benchmarks tell you about public tasks. Build a small held-out set from your own work (tickets, code, documents), keep it out of any prompt or fine-tuning data, and re-run it when you change models. Prefer leaderboards that label provisional scores and disclose private testing.
+
+**Read vendor security numbers critically.** Ask: static or <Term k="adaptive">adaptive</Term> attacks? How many attempts per attack? Which configuration, and is it the one you'll deploy? Who ran the test? A per-attempt rate means little without the attempt budget.
+
+**Watch for conflicts of interest.** Benchmark funders sometimes have privileged access (Epoch AI disclosed in 2025 that OpenAI funded FrontierMath and can see most of it). That doesn't make results false, but it changes how much weight they carry.
+
+**Detectors in HR and education.** If a detector is used in any decision about a person, demand published false-positive rates on a population like yours, and require human review of process evidence (drafts, version history, conversation) instead.
+
+**Payment and identity controls.** Deepfake-resistant processes: out-of-band callbacks to known numbers, two-person approval for unusual transfers, no exceptions for urgency or seniority. These would have stopped the Arup fraud with no AI involved at all.
+</Engineer>
+
+<Quiz q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent. A small error rate on a big group adds up." />
