@@ -453,3 +453,12 @@ $$('[data-sf-c]').forEach(b=>b.addEventListener('click',()=>{C=+b.dataset.sfC;sf
 $$('[data-sf-fit]').forEach(b=>b.addEventListener('click',()=>{fit=b.dataset.sfFit;sf()}));
 sf();
 }
+
+// Patch gap: pointing at a month in either chart shows that month's numbers and marks it in both.
+if($('#pg')){
+const pg=$('#pg'),D=JSON.parse(pg.dataset.months),out=$('#pg-read'),n=v=>v.toLocaleString('en-GB');
+const show=i=>{const[m,c,k]=D[i];out.textContent=`${m}: ${n(c)} critical CVEs published, ${n(k)} added to the exploited list`;
+ $$('#pg .pg-bar').forEach(b=>b.classList.toggle('on',b.dataset.i===String(i)))};
+pg.addEventListener('pointerover',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
+pg.addEventListener('pointerdown',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
+}

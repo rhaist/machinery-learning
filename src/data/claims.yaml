@@ -646,3 +646,95 @@
   sources: [https://www.ic3.gov/psa/2024/PSA241203]
   verified: 2026-11-21
   status: evergreen
+
+# ---------------- Part 2: the patch gap ----------------
+
+- id: glasswing-bottleneck
+  text: "Anthropic, whose Project Glasswing points its Mythos model at critical software, wrote in May 2026 that progress is now limited by how quickly findings can be verified, disclosed and patched"
+  evidence: "limited by how quickly we can verify, disclose, and patch"
+  evidence_src: https://www.anthropic.com/news/glasswing-initial-update
+  sources: [https://www.anthropic.com/news/glasswing-initial-update]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: msrc-ai
+  text: "Microsoft's security response team says AI is changing the scale and speed of vulnerability discovery"
+  evidence: "AI is changing the scale and speed of vulnerability discovery"
+  evidence_src: https://www.microsoft.com/en-us/msrc/blog/2026/05/a-note-on-patch-tuesday
+  sources: [https://www.microsoft.com/en-us/msrc/blog/2026/05/a-note-on-patch-tuesday]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: ms-1413
+  text: "its October 2026 Patch Tuesday fixed 1,413 vulnerabilities, more than in all of 2025, and only one of them was already under attack"
+  evidence: "containing 1,413 defects affecting the company’s various enterprise products and services"
+  evidence_src: https://cyberscoop.com/microsoft-patch-tuesday-october-2026/
+  sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/, https://www.infosecurity-magazine.com/news/microsoft-patch-tuesday-record-1/]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: nist-263
+  text: "NIST, which runs the US National Vulnerability Database, says CVE submissions rose 263% between 2020 and 2025; since April 2026 it fully analyses only exploited vulnerabilities and software the US government relies on"
+  evidence: "driven by a surge in CVE submissions, which increased 263% between 2020 and 2025"
+  evidence_src: https://www.nist.gov/news-events/news/2026/04/nist-updates-nvd-operations-address-record-cve-growth
+  sources: [https://www.nist.gov/news-events/news/2026/04/nist-updates-nvd-operations-address-record-cve-growth]
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: zdi-childs
+  text: "Dustin Childs of Trend Micro's Zero Day Initiative put it this way in October 2026: discovery is scaling faster than exploitation"
+  evidence: "What matters is that discovery is scaling faster than exploitation"
+  evidence_src: https://cyberscoop.com/microsoft-patch-tuesday-october-2026/
+  sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: glasswing-vulncheck
+  text: "VulnCheck, which tracks the project from outside, counted 442 published CVEs attributable to Anthropic by November 2026, and only two of them known to be exploited in the wild"
+  evidence: "442 CVEs attributable to Anthropic, roughly 0.5% of all CVEs published this year"
+  evidence_src: https://www.vulncheck.com/blog/anthropic-glasswing-november-update
+  sources: [https://www.vulncheck.com/blog/anthropic-glasswing-november-update]
+  verified: 2026-11-21
+  half_life: 3
+  status: shipping
+
+- id: ncsc-legacy
+  text: "the UK's National Cyber Security Centre warns that some of this debt sits in legacy technology that is out of support and can't receive updates at all"
+  evidence: "legacy technology that is out of support, and so can’t receive updates"
+  evidence_src: https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf
+  sources: [https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: ncsc-wave
+  text: "the NCSC tells every organisation to prepare now for a wave of patches that will address decades of technical debt, and to patch quickly, more often and at scale"
+  evidence: "prepare for a wave of patches that will address decades of technical debt"
+  evidence_src: https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf
+  sources: [https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: dbir-31
+  text: "in Verizon's 2026 Data Breach Investigations Report, 31% of breaches started with an exploited vulnerability, which overtook stolen credentials for the first time in the report's 19 years"
+  evidence: "Nearly a third (31%) of all breaches start with vulnerability exploitation"
+  evidence_src: https://www.verizon.com/about/news/breach%2Dindustry%2Dwide%2Ddbir%2Dfinds
+  sources: [https://www.verizon.com/about/news/breach%2Dindustry%2Dwide%2Ddbir%2Dfinds]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: dbir-43
+  text: "the same report found the median time to fully patch rose to 43 days, up from 32, and that organisations fully patched only 26% of the flaws on CISA's exploited list"
+  evidence: "The median time for full patching increased to 43 days in 2025"
+  evidence_src: https://www.securityweek.com/verizon-dbir-2026-vulnerability-exploitation-overtakes-credential-theft-as-top-breach-vector/
+  sources: [https://www.securityweek.com/verizon-dbir-2026-vulnerability-exploitation-overtakes-credential-theft-as-top-breach-vector/]
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping

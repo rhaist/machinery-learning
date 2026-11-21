@@ -1,0 +1,60 @@
+---
+// Small multiples on one timeline: critical CVEs published per month, and additions to CISA's
+// Known Exploited Vulnerabilities catalogue. Two charts, never one chart with two axes.
+// Data: src/data/vulnwave.json, rebuilt by scripts/vuln-wave.py. Hover readout in demos.js (#pg).
+import wave from '../data/vulnwave.json';
+
+const ms = wave.months;
+const n = ms.length;
+const W = 440, H = 140, L = 44, R = 8, T = 10, B = 24;
+const pw = W - L - R, ph = H - T - B;
+const step = pw / n, bw = Math.max(2, step - 2);
+const fmt = (v: number) => v.toLocaleString('en-GB');
+const mon = (m: string) => new Date(m + '-01T00:00:00Z').toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const nice = (v: number) => { const p = 10 ** Math.floor(Math.log10(v)); return [1, 2, 2.5, 5, 10].map(k => k * p).find(k => k >= v / 3)! ; };
+
+function chart(key: 'crit' | 'kev', cls: string, label: string) {
+  const max = Math.max(...ms.map(r => r[key]));
+  const tick = nice(max), top = Math.ceil(max / tick) * tick;
+  const y = (v: number) => T + ph - (v / top) * ph;
+  let g = '';
+  for (let v = 0; v <= top; v += tick) g += `<line class="pg-grid" x1="${L}" x2="${W - R}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="pg-lbl" x="${L - 6}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${fmt(v)}</text>`;
+  ms.forEach((r, i) => {
+    if (r.m.endsWith('-01')) g += `<text class="pg-lbl" x="${(L + i * step).toFixed(1)}" y="${H - 6}">${r.m.slice(0, 4)}</text><line class="pg-tick" x1="${(L + i * step).toFixed(1)}" x2="${(L + i * step).toFixed(1)}" y1="${T + ph}" y2="${T + ph + 4}"/>`;
+  });
+  const bars = ms.map((r, i) => {
+    const x = L + i * step + (step - bw) / 2, h = Math.max(0.5, T + ph - y(r[key]));
+    const r0 = Math.min(2, bw / 2);
+    return `<g class="pg-bar" data-i="${i}"><rect class="pg-hit" x="${(L + i * step).toFixed(1)}" y="${T}" width="${step.toFixed(1)}" height="${ph}"/><path class="${cls}" d="M${x.toFixed(1)} ${T + ph} v-${(h - r0).toFixed(1)} q0 -${r0} ${r0} -${r0} h${(bw - 2 * r0).toFixed(1)} q${r0} 0 ${r0} ${r0} v${(h - r0).toFixed(1)} z"/><title>${mon(r.m)}: ${fmt(r[key])} ${label}</title></g>`;
+  }).join('');
+  return `<line class="pg-axis" x1="${L}" x2="${W - R}" y1="${T + ph}" y2="${T + ph}"/>${g}${bars}`;
+}
+
+// Headline ratios: last three complete months against the same three months a year earlier.
+const last3 = ms.slice(-3), prev3 = ms.slice(-15, -12);
+const sum = (rs: typeof ms, k: 'crit' | 'kev') => rs.reduce((t, r) => t + r[k], 0);
+const ratio = (k: 'crit' | 'kev') => prev3.length === 3 ? (sum(last3, k) / sum(prev3, k)) : NaN;
+const span = `${mon(last3[0].m)} to ${mon(last3[2].m)}`;
+const x = (v: number) => Number.isFinite(v) ? `${v.toFixed(1)}×` : 'n/a';
+---
+<figure class="panel demo pg" id="pg" data-months={JSON.stringify(ms.map(r => [mon(r.m), r.crit, r.kev]))}>
+  <b>Found versus exploited, month by month</b>
+  <div class="pg-stats">
+    <p><span class="pg-big pg-crit-t">{x(ratio('crit'))}</span> critical CVEs published</p>
+    <p><span class="pg-big pg-kev-t">{x(ratio('kev'))}</span> vulnerabilities newly confirmed as exploited</p>
+    <p class="small pg-span">{span}, compared with the same three months a year earlier</p>
+  </div>
+  <p class="pg-h"><b>Critical CVEs published</b> <span class="small">(CVSS 9.0 or higher)</span></p>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Bar chart of critical CVEs published per month; see the table below for the values" set:html={chart('crit', 'pg-crit', 'critical CVEs published')} />
+  <p class="pg-h"><b>Added to CISA's list of exploited vulnerabilities</b></p>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Bar chart of vulnerabilities added to CISA's Known Exploited Vulnerabilities catalogue per month; see the table below for the values" set:html={chart('kev', 'pg-kev', 'added to the exploited list')} />
+  <p class="pg-read small" id="pg-read" aria-live="polite">Point at a month to see its numbers.</p>
+  <details class="pg-tbl">
+    <summary>Show the numbers</summary>
+    <div class="scroll"><table>
+      <thead><tr><th scope="col">Month</th><th scope="col">All CVEs</th><th scope="col">Critical</th><th scope="col">Critical, network, no login</th><th scope="col">Added to KEV</th></tr></thead>
+      <tbody>{[...ms].reverse().map(r => <tr><th scope="row">{mon(r.m)}</th><td>{fmt(r.all)}</td><td>{fmt(r.crit)}</td><td>{fmt(r.critnet)}</td><td>{fmt(r.kev)}</td></tr>)}</tbody>
+    </table></div>
+  </details>
+  <figcaption class="caption">Counted from the <a href="https://github.com/fkie-cad/nvd-json-data-feeds">NVD feeds</a> (mirror of {wave.nvd_feed}) and <a href="https://github.com/cisagov/kev-data">CISA's KEV catalogue</a> (version {wave.kev_catalog}) by <a href="https://github.com/rhaist/machinery-learning/blob/main/scripts/vuln-wave.py">a short script</a> you can re-run. Month is the NVD publication date; rejected CVEs are left out. Severity comes from NVD where it scored the CVE and otherwise from the organisation that published it, which since April 2026 is most of them. A CVE count measures disclosure, not danger, and CISA's list only includes exploitation that someone confirmed publicly.</figcaption>
+</figure>
