@@ -953,7 +953,7 @@
 - id: ncsc-agents
   text: "the UK's NCSC tells organisations to always run AI agents in a sandbox, deny all network traffic by default, use the shortest-lived credentials possible and keep a way to pull the plug"
   evidence: "Always run AI agents within a sandboxed environment"
-  sources: [https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf]
+  sources: [https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai]
   verified: 2026-11-21
   half_life: 12
   status: shipping

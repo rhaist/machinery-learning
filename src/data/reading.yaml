@@ -62,7 +62,7 @@ context-and-memory:
   - { title: "Context Engineering for AI Agents: Lessons from Building Manus", by: Yichao Ji (Manus), year: 2025, url: "https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus", why: "A production team on caching, files as memory and keeping mistakes visible." }
   - { title: "Context Rot", by: Chroma, year: 2025, url: "https://www.trychroma.com/research/context-rot", why: "Why more context can make answers worse.", beginner: true }
   - { title: "MCP specification and changelog", by: Model Context Protocol, year: 2026, url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog", why: "What changed in the stateless redesign." }
-  - { title: "Managing the cyber risk of agentic AI", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/sites/default/files/2026-08/Managing-the-cyber-risk-of-agentic-AI.pdf", why: "Concrete official guidance on sandboxes, network and credentials.", beginner: true }
+  - { title: "Managing the cyber risk of agentic AI", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai", why: "Concrete official guidance on sandboxes, network and credentials.", beginner: true }
   - { title: "Firecracker: Lightweight Virtualization for Serverless Applications", by: Agache et al. (AWS), year: 2020, url: "https://www.usenix.org/conference/nsdi20/presentation/agache", why: "The microVM design most agent sandboxes now build on." }
 agents-at-work:
   - { title: "Measuring AI Ability to Complete Long Tasks", by: Kwa et al. (METR), year: 2025, url: "https://arxiv.org/abs/2503.14499", why: "Where the time-horizon idea comes from." }
