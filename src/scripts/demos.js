@@ -423,3 +423,33 @@ function sd(m){$$('[data-sd]').forEach(b=>b.setAttribute('aria-pressed',String(b
 $$('[data-sd]').forEach(b=>b.addEventListener('click',()=>sd(+b.dataset.sd)));
 sd(0);
 }
+
+/* Chinchilla fits (training, Engineer box) */
+if($('#sf')){
+const FIT={epoch:[1.8172,482.01,2085.43,0.3478,0.3658],hoff:[1.6934,406.4,410.7,0.3392,0.2849]};
+let C=5.76e23,fit='epoch';
+const X0=44,X1=348,Y0=16,Y1=200,lo=9,hi=13,L=(f,N,D)=>f[0]+f[1]*N**-f[3]+f[2]*D**-f[4];
+const fmtN=n=>n>=1e12?(+(n/1e12).toFixed(1))+'T':n>=1e9?Math.round(n/1e9)+'B':(n/1e6).toFixed(0)+'M';
+const sup=e=>String(e).split('').map(c=>'⁰¹²³⁴⁵⁶⁷⁸⁹'[+c]).join('');
+function sf(){const f=FIT[fit];$$('[data-sf-c]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.sfC===C)));$$('[data-sf-fit]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sfFit===fit)));
+ const pts=[];let best=null;for(let i=0;i<=300;i++){const lN=lo+(hi-lo)*i/300,N=10**lN,D=C/(6*N),l=L(f,N,D);pts.push([lN,l]);if(!best||l<best[1])best=[lN,l,N,D]}
+ const ymin=Math.floor((best[1]-0.04)*20)/20,ymax=ymin+0.6,xs=lN=>X0+(lN-lo)/(hi-lo)*(X1-X0),ys=l=>Y1-(l-ymin)/(ymax-ymin)*(Y1-Y0);
+ $('#sf-curve').setAttribute('d',pts.map((p,i)=>(i?'L':'M')+xs(p[0]).toFixed(1)+' '+ys(Math.min(p[1],ymax+1)).toFixed(1)).join(''));
+ let ax=`<path class="sf-axis" d="M${X0} ${Y0}V${Y1}H${X1}"/>`;
+ for(let e=lo;e<=hi;e++)ax+=`<path class="sf-tick" d="M${xs(e)} ${Y1}v4"/><text class="sf-lbl" x="${xs(e)}" y="${Y1+16}" text-anchor="middle">${fmtN(10**e)}</text>`;
+ for(let k=0;k<=2;k++){const v=ymin+k*0.2;ax+=`<path class="sf-grid" d="M${X0} ${ys(v)}H${X1}"/><text class="sf-lbl" x="${X0-6}" y="${ys(v)+4}" text-anchor="end">${v.toFixed(1)}</text>`}
+ ax+=`<text class="sf-lbl" x="${(X0+X1)/2}" y="236" text-anchor="middle">parameters (log scale)</text><text class="sf-lbl" x="10" y="${Y0+4}">loss</text>`;
+ $('#sf-axes').innerHTML=ax;
+ let mk=`<circle class="sf-best" cx="${xs(best[0])}" cy="${ys(best[1])}" r="5"/><text class="sf-blbl" x="${xs(best[0])}" y="${ys(best[1])-10}" text-anchor="middle">best: ${fmtN(best[2])}</text>`;
+ const ref=C===5.76e23?{N:70e9,D:1.4e12,n:'Chinchilla'}:C===6.35e24?{N:70.6e9,D:15e12,n:'Llama 3 70B'}:null;
+ if(ref){const l=L(f,ref.N,ref.D),x=xs(Math.log10(ref.N)),y=ys(l);mk+=`<circle class="sf-ref" cx="${x}" cy="${y}" r="5"/><text class="sf-rlbl" x="${x-8}" y="${y+16}" text-anchor="end">${ref.n}</text>`}
+ $('#sf-marks').innerHTML=mk;
+ const e=Math.floor(Math.log10(C)),m=C/10**e,cs=(m===1?'':m.toFixed(m<10&&m%1?1:0).replace(/\.0$/,'')+'×')+'10'+sup(e);
+ let d=`At ${cs} FLOPs, this fit's lowest loss (${best[1].toFixed(2)}) comes from about ${fmtN(best[2])} parameters trained on ${fmtN(best[3])} tokens, ${Math.round(best[3]/best[2])} tokens per parameter.`;
+ if(ref){const l=L(f,ref.N,ref.D);d+=ref.n==='Chinchilla'?` Chinchilla itself used 70B parameters and 1.4T tokens, 20 per parameter (predicted loss ${l.toFixed(2)}).`:` Llama 3 70B spent this budget on 70B parameters and 15T tokens, about 210 per parameter. Its predicted loss is ${l.toFixed(2)}: barely worse, from a model ${(best[2]/ref.N).toFixed(1)} times smaller and cheaper to run. Training past the optimum on purpose is now common.`}
+ if(fit==='hoff')d+=' This is the fit as published. Epoch AI found it inconsistent with the paper\'s own other two methods and with the data; its re-fit agrees with them.';
+ $('#sf-d').textContent=d}
+$$('[data-sf-c]').forEach(b=>b.addEventListener('click',()=>{C=+b.dataset.sfC;sf()}));
+$$('[data-sf-fit]').forEach(b=>b.addEventListener('click',()=>{fit=b.dataset.sfFit;sf()}));
+sf();
+}

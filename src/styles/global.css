@@ -462,6 +462,18 @@ svg .al{fill:var(--yt);font-size:var(--fs-xs);font-weight:700;paint-order:stroke
 .walls .w-ok{fill:var(--ink)}
 .walls .w-no{fill:var(--rt);font-weight:600}
 
+.sf svg{display:block;width:100%;max-width:460px;margin:var(--sp-3) auto 0}
+.sf .row+.row{margin-top:var(--sp-2)}
+.sf text{font-size:var(--fs-xs)}
+.sf .sf-lbl{font-family:var(--font-mono);fill:var(--mut)}
+.sf .sf-axis,.sf .sf-tick{stroke:var(--mut);fill:none}
+.sf .sf-grid{stroke:var(--line);stroke-dasharray:2 4}
+.sf .sf-curve{stroke:var(--t);stroke-width:2.5;fill:none}
+.sf .sf-best{fill:var(--y)}
+.sf .sf-blbl{fill:var(--yt);font-weight:600}
+.sf .sf-ref{fill:none;stroke:var(--ink);stroke-width:2}
+.sf .sf-rlbl{fill:var(--ink)}
+
 /* training stages */
 .tr{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
 .tr .btn{flex:1 1 9em}

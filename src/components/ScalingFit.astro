@@ -1,0 +1,24 @@
+---
+// Chinchilla scaling-law fits: loss versus model size at a fixed compute budget. Logic in demos.js (#sf).
+---
+<div class="panel demo sf" id="sf">
+  <b>The best model size for a compute budget</b>
+  <div class="row" role="group" aria-label="Compute budget">
+    <button class="btn" type="button" data-sf-c="1e21" aria-pressed="false">10²¹ FLOPs</button>
+    <button class="btn" type="button" data-sf-c="5.76e23" aria-pressed="true">Chinchilla's budget</button>
+    <button class="btn" type="button" data-sf-c="6.35e24" aria-pressed="false">Llama 3 70B's budget</button>
+    <button class="btn" type="button" data-sf-c="1e26" aria-pressed="false">10²⁶ FLOPs</button>
+  </div>
+  <div class="row" role="group" aria-label="Which fit">
+    <button class="btn sm" type="button" data-sf-fit="epoch" aria-pressed="true">Epoch AI re-fit (2024)</button>
+    <button class="btn sm" type="button" data-sf-fit="hoff" aria-pressed="false">Hoffmann et al. (2022)</button>
+  </div>
+  <svg viewBox="0 0 360 240" role="img" aria-label="Predicted loss against model size at a fixed compute budget, with the lowest point marked" id="sf-svg">
+    <defs><clipPath id="sf-clip"><rect x="44" y="16" width="304" height="184"/></clipPath></defs>
+    <g id="sf-axes"></g>
+    <path id="sf-curve" class="sf-curve" clip-path="url(#sf-clip)"/>
+    <g id="sf-marks"></g>
+  </svg>
+  <p id="sf-d" aria-live="polite"></p>
+  <p class="caption">Predicted loss L = E + A/N<sup>α</sup> + B/D<sup>β</sup> for N parameters and D training tokens, with compute C ≈ 6·N·D held fixed. Constants from Hoffmann et al. (2022) and Besiroglu et al., Epoch AI (2024). The fits describe Chinchilla-style training runs; newer models use different data and recipes.</p>
+</div>
