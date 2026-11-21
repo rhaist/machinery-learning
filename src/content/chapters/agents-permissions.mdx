@@ -25,17 +25,17 @@ When you hand your car to a parking attendant, you give them a key that starts t
 
 ## Too much power, too much freedom
 
-Security people have a name for the problem: <Term k="agency">excessive agency</Term>. <Claim id="owasp-agency" />. The real incidents fit that list neatly:
+Security people have a name for the problem: <Term k="agency">excessive agency</Term>. <Claim id="owasp-agency" cap />. The real incidents fit that list neatly:
 
-- **The code freeze that wasn't.** <Claim id="replit-db" />. Nothing in the system enforced the freeze. It was a sentence in a chat.
-- **The helpful support agent.** <Claim id="supabase-mcp" />. A human support worker would never have had those rights.
-- **The plug-in that added one line.** <Claim id="postmark-mcp" />. No clever AI trick at all, just a trusted-looking add-on.
+- **The code freeze that wasn't.** <Claim id="replit-db" cap />. Nothing in the system enforced the freeze. It was a sentence in a chat.
+- **The helpful support agent.** <Claim id="supabase-mcp" cap />. A human support worker would never have had those rights.
+- **The plug-in that added one line.** <Claim id="postmark-mcp" cap />. No clever AI trick at all, just a trusted-looking add-on.
 
 The common thread: the agent had more access than its job needed, and the only thing standing between it and disaster was its own judgement.
 
 ## Plug-ins speak to the model, not to you
 
-Most agents now connect to tools through <Term k="mcp">MCP</Term>, a standard plug-in protocol. Each tool comes with a description written for the model. You usually never see it. <Claim id="mcp-tool-poisoning" />. That's <Term k="toolpoison">tool poisoning</Term>. A related trick, the <Term k="rugpull">rug pull</Term>, changes a tool's description after you've approved it.
+Most agents now connect to tools through <Term k="mcp">MCP</Term>, a standard plug-in protocol. Each tool comes with a description written for the model. You usually never see it. <Claim id="mcp-tool-poisoning" cap />. That's <Term k="toolpoison">tool poisoning</Term>. A related trick, the <Term k="rugpull">rug pull</Term>, changes a tool's description after you've approved it.
 
 ## Try it: approve, approve, approve
 
@@ -51,7 +51,7 @@ The sandbox round is the point of the demo. Instead of asking a tired human thir
 
 ## Attackers use your agents too
 
-Agents on your laptop run with your permissions. That makes them useful to attackers who get code onto your machine some other way. <Claim id="s1ngularity" />. The "skip all permissions" flags exist for convenience. Malware likes them too.
+Agents on your laptop run with your permissions. That makes them useful to attackers who get code onto your machine some other way. <Claim id="s1ngularity" cap />. The "skip all permissions" flags exist for convenience. Malware likes them too.
 
 <Note title="Everyday habits" kind="key">
 - Connect only the apps an assistant really needs, and disconnect them when you're done.
@@ -63,7 +63,7 @@ Agents on your laptop run with your permissions. That makes them useful to attac
 <Engineer title="Boundaries that hold">
 **Identity and scope.** Give each agent its own identity with narrow, short-lived, task-scoped tokens. <Term k="leastpriv">Least privilege</Term> is old advice, but agents make it urgent: no `service_role` or admin tokens in agent contexts, separate dev and prod credentials, read-only by default. Enforce authorisation downstream, in the API, rather than trusting the model to stay inside the lines.
 
-**Sandboxes need two walls.** <Claim id="sandbox-both" />. Default-deny <Term k="egress">egress</Term> with a domain allowlist enforced *outside* the sandbox. And bind allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts.
+**Sandboxes need two walls.** <Claim id="sandbox-both" cap />. Default-deny <Term k="egress">egress</Term> with a domain allowlist enforced *outside* the sandbox. And bind allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts.
 
 **Keep secrets out of reach.** Scrub environment variables for child processes. Don't mount `~/.ssh` or cloud credential files into agent environments. Block agents from editing their own configuration and permission files (the Copilot auto-approve CVE from the last chapter), and disable auto-approve modes in managed environments.
 

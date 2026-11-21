@@ -1,10 +1,12 @@
 ---
 // A time-sensitive fact from src/data/claims.yaml, with a freshness badge linking to its sources.
 import { claimById, freshness } from '../lib/data';
-const { id } = Astro.props;
+const { id, cap = false } = Astro.props;
 const c = claimById[id];
 if (!c) throw new Error(`Unknown claim id: ${id}`);
+// cap: the claim starts a sentence, so capitalise its first letter (skipping quotes and tags)
+const text = cap ? c.text.replace(/^((?:<[^>]+>|[^A-Za-z0-9<])*)([a-z])/, (_m: string, pre: string, ch: string) => pre + ch.toUpperCase()) : c.text;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const label = new Date(c.verified + 'T00:00:00Z').toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 ---
-<span class={`claim ${freshness(c)}`} data-verified={c.verified} data-hl={c.half_life ?? ''}><Fragment set:html={c.text} /><a class="cb" href={`${base}/sources/#${c.id}`} aria-label={`Verified ${label}; see sources`}>{c.half_life ? label : 'source'}</a></span>
+<span class={`claim ${freshness(c)}`} data-verified={c.verified} data-hl={c.half_life ?? ''}><Fragment set:html={text} /><a class="cb" href={`${base}/sources/#${c.id}`} aria-label={`Verified ${label}; see sources`}>{c.half_life ? label : 'source'}</a></span>

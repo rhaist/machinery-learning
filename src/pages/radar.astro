@@ -6,14 +6,14 @@ const data = { months: radarMonths, quadrants, entries: radarEntries };
 ---
 <Base title="Frontier radar" description="Where research directions in AI stand this month, from research to shipping." nav="radar" og="radar">
   <section class="band"><div class="wrap">
-    <h1>Frontier radar</h1>
-    <p class="lede" style="margin:14px 0 22px">Where each research direction and practice stands, from <b>research</b> (papers and prototypes) through <b>emerging</b> (first real releases, claims still contested) to <b>shipping</b> (in products people use). Positions are reviewed every month; history is never rewritten.</p>
+    <header class="page-head"><h1>Frontier radar</h1>
+    <p class="lede">Where each research direction and practice stands, from <b>research</b> (papers and prototypes) through <b>emerging</b> (first real releases, claims still contested) to <b>shipping</b> (in products people use). Positions are reviewed every month; history is never rewritten.</p></header>
     <div class="radar-wrap">
-      <div>
+      <div class="radar-col">
         <div class="radar-fig"><svg id="radar" role="group" aria-label="Radar of AI research directions by maturity; each numbered dot matches an entry in the list"></svg></div>
         {radarMonths.length > 1
-          ? <div class="ctl" style="margin-top:12px"><label for="radar-month">Replay history</label><output id="radar-month-label"></output><input type="range" id="radar-month" min="0" step="1"></div>
-          : <p class="small" style="margin-top:10px">History starts in <span id="radar-month-label">{monthLabel(radarMonths[0])}</span>. From next month on, a slider here replays how entries moved.</p>}
+          ? <div class="ctl"><label for="radar-month">Replay history</label><output id="radar-month-label"></output><input type="range" id="radar-month" min="0" step="1"></div>
+          : <p class="caption">History starts in <span id="radar-month-label">{monthLabel(radarMonths[0])}</span>. From next month on, a slider here replays how entries moved.</p>}
       </div>
       <div>
         {quadrants.map(q => <>

@@ -23,9 +23,9 @@ A recipe book sometimes names ingredients that don't exist: "use FreshCo baking 
 
 ## Packages that never existed
 
-Ask a chatbot how to set something up and it will often give you an install command. Sometimes the package it names doesn't exist. <Claim id="pkg-hallucination" />. On its own that's an annoyance: the install fails and you move on.
+Ask a chatbot how to set something up and it will often give you an install command. Sometimes the package it names doesn't exist. <Claim id="pkg-hallucination" cap />. On its own that's an annoyance: the install fails and you move on.
 
-It becomes an attack because the inventions are predictable. <Claim id="pkg-repeat" />. If a model keeps suggesting the same fake name, someone can register it and wait. This is called <Term k="slopsquat">slopsquatting</Term>, a cousin of <Term k="typosquat">typosquatting</Term>. The early proof was harmless: <Claim id="huggingface-cli" />. Now the invented commands are spreading through the instruction files that coding agents read, where an agent may run them without a human ever seeing the line.
+It becomes an attack because the inventions are predictable. <Claim id="pkg-repeat" cap />. If a model keeps suggesting the same fake name, someone can register it and wait. This is called <Term k="slopsquat">slopsquatting</Term>, a cousin of <Term k="typosquat">typosquatting</Term>. The early proof was harmless: <Claim id="huggingface-cli" />. Now the invented commands are spreading through the instruction files that coding agents read, where an agent may run them without a human ever seeing the line.
 
 ## Try it: install roulette
 
@@ -33,9 +33,9 @@ It becomes an attack because the inventions are predictable. <Claim id="pkg-repe
 
 ## Model files that run code
 
-A downloaded AI model sounds like data: a big file of numbers. Often it isn't. The most common format in the PyTorch world, <Term k="pickle">pickle</Term>, can carry instructions that run the moment you load it. <Claim id="pickle-malicious" />.
+A downloaded AI model sounds like data: a big file of numbers. Often it isn't. The most common format in the PyTorch world, <Term k="pickle">pickle</Term>, can carry instructions that run the moment you load it. <Claim id="pickle-malicious" cap />.
 
-Platforms scan for this, but scanners look for known-bad patterns, and attackers test against them. <Claim id="nullifai" />. Even PyTorch's "safe" loading mode had a hole until version 2.6. The real fix is a format with nothing to execute: <Term k="safetensors">safetensors</Term> stores only numbers and a header.
+Platforms scan for this, but scanners look for known-bad patterns, and attackers test against them. <Claim id="nullifai" cap />. Even PyTorch's "safe" loading mode had a hole until version 2.6. The real fix is a format with nothing to execute: <Term k="safetensors">safetensors</Term> stores only numbers and a header.
 
 <Note title="Flat-pack furniture" kind="key">
 A pickle file is flat-pack furniture that assembles itself when you open the box, including any extra instructions someone slipped in. Safetensors is a box of plain parts. Downloaded models are software: treat them like an `.exe` from a stranger.
@@ -45,13 +45,13 @@ A pickle file is flat-pack furniture that assembles itself when you open the box
 
 The deepest ingredient is the training data. Models learn from huge scrapes of the web, and anyone can write to the web. <Term k="poisoning">Data poisoning</Term> plants text designed to teach a model something its makers didn't intend, such as a hidden trigger that changes its behaviour, a <Term k="backdoor">backdoor</Term>.
 
-You might assume an attacker would need to control a big share of the data. Recent work suggests otherwise. <Claim id="poison-250" />, a trigger that made the model produce gibberish. And getting text into a dataset is cheap: <Claim id="poison-cheap" />. Worse, once a backdoor is in, it can be hard to get out. <Claim id="sleeper-agents" />.
+You might assume an attacker would need to control a big share of the data. Recent work suggests otherwise. <Claim id="poison-250" cap />, a trigger that made the model produce gibberish. And getting text into a dataset is cheap: <Claim id="poison-cheap" />. Worse, once a backdoor is in, it can be hard to get out. <Claim id="sleeper-agents" cap />.
 
 <Debate id="data-poisoning-risk" />
 
 ## The tools themselves
 
-Finally, AI tools are software with their own supply chains, and attackers have noticed. <Claim id="litellm" />. An AI gateway like that holds the keys to every model a company uses, and often cloud credentials too.
+Finally, AI tools are software with their own supply chains, and attackers have noticed. <Claim id="litellm" cap />. An AI gateway like that holds the keys to every model a company uses, and often cloud credentials too.
 
 <Note title="Everyday habits" kind="key">
 - Never paste an install command from a chatbot without checking that the package is real, established and the one the official docs name.
@@ -64,7 +64,7 @@ Finally, AI tools are software with their own supply chains, and attackers have 
 
 **Models.** Standardise on non-executable formats. Patch PyTorch to 2.6 or later (CVE-2025-32434 broke `weights_only=True`). Load unknown models only in isolated, network-less sandboxes. Prefer known publishers, but remember a publisher account can be taken over.
 
-**Provenance.** <Claim id="model-signing" />. Sign the models you produce, verify signatures on intake, and keep provenance records for datasets. Be clear about what a <Term k="signing">signature</Term> gives you: proof of *who* published a file and that it wasn't altered afterwards. It says nothing about whether the training data was clean.
+**Provenance.** <Claim id="model-signing" cap />. Sign the models you produce, verify signatures on intake, and keep provenance records for datasets. Be clear about what a <Term k="signing">signature</Term> gives you: proof of *who* published a file and that it wasn't altered afterwards. It says nothing about whether the training data was clean.
 
 **Poisoning defence** is mostly upstream: data curation, deduplication, monitoring sources that change hands (expired domains), and post-training evaluations that look for trigger behaviour. If you fine-tune on scraped or user-submitted data, you inherit this problem directly.
 

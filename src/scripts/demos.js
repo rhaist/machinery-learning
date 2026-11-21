@@ -133,7 +133,7 @@ const LP=[
 ];
 let li=3;
 $('#loop').innerHTML=LP.map((s,i)=>`<button class="btn" type="button" data-i="${i}" aria-pressed="false" style="--c:${CB[s.c]}">${s.n}<small>${s.w}</small></button>`).join('');
-function loop(){const s=LP[li];$$('#loop button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===li)));$('#loop-d').innerHTML=`<b style="color:${s.c==='dec'?'var(--yt)':CB[s.c]}">${esc(s.w)}</b><p style="margin:4px 0 0">${esc(s.d)}</p>`}
+function loop(){const s=LP[li];$$('#loop button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===li)));$('#loop-d').innerHTML=`<b style="color:${s.c==='dec'?'var(--yt)':CB[s.c]}">${esc(s.w)}</b><p>${esc(s.d)}</p>`}
 $('#loop').addEventListener('click',e=>{const b=e.target.closest('button');if(b){li=+b.dataset.i;loop()}});
 loop();
 }

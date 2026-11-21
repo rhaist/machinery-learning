@@ -14,8 +14,8 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
 <Base title={site.name} nav="">
   <section class="band home-hero"><div class="wrap">
     <div class="htop">
-      <div>
-        <p class="kicker">{site.name} · {monthLabel(String(edition.month))} edition: {edition.subtitle}</p>
+      <div class="hero-copy">
+        <p class="kicker">{monthLabel(String(edition.month))} edition · {edition.subtitle}</p>
         <h1>How AI like ChatGPT actually works, explained as it changes</h1>
         <div class="paths" role="group" aria-label="Choose your reading path">
           <button type="button" data-depth-btn="beginner" aria-pressed="true">I'm new to this<small>Plain language, everyday analogies</small></button>
@@ -30,8 +30,8 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
 
   {parts.map((p, pi) => (
   <section class={`band ${pi % 2 ? '' : 'alt'}`}><div class="wrap">
-    <h2>{p.title}</h2>
-    <p class="mut">{p.summary}{pi === 0 && " Start at zero if you're new; jump around if you're not."}</p>
+    <div class="part-head"><h2>{p.title}</h2>
+    <p>{p.summary}{pi === 0 && " Start at zero if you're new; jump around if you're not."}</p></div>
     <ol class="route" aria-label={`Your route through ${p.title}`}>
       {p.chapters.map(({ c, num }) => (
         <li data-chapter-link={c.id}><a href={`${base}/learn/${c.id}/`}><span class="st">{num}</span><span class="lb">{c.data.short}</span></a></li>
@@ -52,7 +52,7 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
   ))}
 
   <section class={`band ${parts.length % 2 ? '' : 'alt'}`}><div class="wrap">
-    <h2>This month in the field</h2>
+    <div class="part-head"><h2>This month in the field</h2></div>
     <div class="month">
       {latest && <a class="card" href={`${base}/notes/${latest.id}/`} data-updated={latest.data.date.toISOString().slice(0, 10)}>
         <span class="small">Field notes · {monthLabel(latest.data.month)}</span><span class="newtag">new</span>

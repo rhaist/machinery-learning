@@ -30,7 +30,7 @@ The <Term k="params">parameters</Term> are the model's dials: the numbers inside
 
 ## The trick that keeps giant models affordable
 
-Bigger models know more, but running every dial for every word is expensive. So most leading open-weight models, and at least some closed ones such as Google's Gemini, now use a <Term k="moe">Mixture of Experts</Term>: the "think" part is split into dozens or hundreds of specialists, and a small router picks a handful of them for each word, so only about 5% of the model works on any one word. <Claim id="deepseek-moe" />.
+Bigger models know more, but running every dial for every word is expensive. So most leading open-weight models, and at least some closed ones such as Google's Gemini, now use a <Term k="moe">Mixture of Experts</Term>: the "think" part is split into dozens or hundreds of specialists, and a small router picks a handful of them for each word, so only about 5% of the model works on any one word. <Claim id="deepseek-moe" cap />.
 
 <Note title="Like a large consultancy">
 The firm employs hundreds of experts, but each question only goes to a few of them, chosen by a router. The firm's total knowledge is huge; the cost of answering any single question stays modest. Unlike a real firm, the "experts" aren't the tax person or the lawyer: their specialisms are statistical, and nobody designed them.

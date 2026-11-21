@@ -39,19 +39,19 @@ An AI agent proposes a command. A decision model scores how risky it is, and pla
 <ToolGate />
 
 <Note title="Measure before you trust it" kind="warn">
-A fast, confident number is not the same as a correct one. <Claim id="decision-imitation" />, and <Claim id="jev-routing" />. A gate built on a decision model is still probabilistic.
+A fast, confident number is not the same as a correct one. <Claim id="decision-imitation" cap />, and <Claim id="jev-routing" />. A gate built on a decision model is still probabilistic.
 </Note>
 
 <Engineer title="Decision models as a category">
-A decision model is typically a pretrained transformer with the unembedding layer from the stack chapter replaced by a small scoring head, often with light fine-tuning of the body. Instead of scoring ~200k vocabulary tokens, the head scores *your* options in a single forward pass. Strands Decider uses a pointer head plus rank-16 LoRA on a Qwen3.5-2B torso; Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA; Laya uses a ModernBERT encoder with two added layers; Jev's design is not public. The idea isn't new: InstructGPT's reward model (2022) started from a language model with its final unembedding layer removed. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.) The torso keeps everything it learned about language; the model just loses the ability to ramble. Question types are typically predicate (yes/no), choice (one of N) and score.
+A decision model is typically a pretrained transformer with the unembedding layer from the stack chapter replaced by a small scoring head, often with light fine-tuning of the body. Instead of scoring ~200k vocabulary tokens, the head scores *your* options in a single forward pass. Strands Decider uses a pointer head plus rank-16 LoRA on a Qwen3.5-2B torso; Clef freezes a Qwen backbone and trains a routing head with rank-256 LoRA; Laya uses a ModernBERT encoder with two added layers; Jev's design is not public. The idea isn't new: InstructGPT's reward model (2022) started from a language model with its final unembedding layer removed. The torso keeps everything it learned about language; the model just loses the ability to ramble. (The Strands project also makes the Strands Agents SDK below, which is why the names blur.)
 
 <DecisionHeads />
 
 <DecisionTable />
 
-**Benchmarks in a two-month-old category:** <Claim id="decider-bench" />. <Claim id="clef" />. Every headline number so far comes from the model's makers; measure on your own decisions.
+**Benchmarks in a two-month-old category:** <Claim id="decider-bench" cap />. <Claim id="clef" cap />. Every headline number so far comes from the model's makers; measure on your own decisions.
 
-**Harnesses and MCP.** <Claim id="strands-sdk" />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything, acts on confident answers, and escalates the uncertain tail.
+**Harnesses and MCP.** <Claim id="strands-sdk" cap />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything, acts on confident answers, and escalates the uncertain tail.
 
 **SLMs in practice.** Usually 0.5–15B parameters, made capable through <Term k="distill">distillation</Term> and runnable locally through <Term k="quant">quantisation</Term>. Typical roles: summarising a 50k-token log before it reaches the expensive model, extraction, classification, on-device features with data that must not leave the machine.
 </Engineer>

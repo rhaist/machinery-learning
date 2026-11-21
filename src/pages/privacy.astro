@@ -5,10 +5,11 @@ import { site } from '../lib/data';
 const L = site.legal;
 ---
 <Base title="Privacy" description={`Privacy notice for ${site.name}.`} nav="about">
-  <section class="band"><div class="chapter prose">
-    <h1>Privacy notice</h1>
+  <section class="band"><div class="page-text">
+    <header class="page-head"><h1>Privacy notice</h1>
+    <p class="lede">Short version: no cookies, no tracking, no analytics, no third-party resources. Your reading progress stays in your own browser.</p></header>
+    <div class="prose">
     <LegalDraft />
-    <p class="lede" style="margin-bottom:8px">Short version: no cookies, no tracking, no analytics, no third-party resources. Your reading progress stays in your own browser.</p>
 
     <h2>Who is responsible</h2>
     <p>{L.name}, {L.address}. Email: {L.email}</p>
@@ -27,5 +28,5 @@ const L = site.legal;
 
     <h2>Your rights</h2>
     <p>Under the GDPR you have the right to access, rectification, erasure, restriction of processing, data portability and objection (Art. 15–21 GDPR). You also have the right to lodge a complaint with a supervisory authority, for example {L.supervisory_authority}.</p>
-  </div></section>
+  </div></div></section>
 </Base>

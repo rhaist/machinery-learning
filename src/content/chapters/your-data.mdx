@@ -25,7 +25,7 @@ Typing into a free consumer chatbot is a bit like writing a postcard. The postal
 
 The biggest difference isn't between providers. It's between free or personal plans and business ones. For example, <Claim id="openai-training-default" />. Anthropic made the choice explicit: <Claim id="anthropic-consumer" />. Google adds people to the loop: <Claim id="gemini-retention" />.
 
-Deletion isn't always the end either. <Claim id="nyt-hold" />. A <Term k="legalhold">legal hold</Term> overrides the provider's normal promise. Only setups that never store your text, such as <Term k="zdr">zero data retention</Term> or a local model, avoid that.
+Deletion isn't always the end either. <Claim id="nyt-hold" cap />. A <Term k="legalhold">legal hold</Term> overrides the provider's normal promise. Only setups that never store your text, such as <Term k="zdr">zero data retention</Term> or a local model, avoid that.
 
 ## Try it: follow your prompt
 
@@ -35,7 +35,7 @@ Deletion isn't always the end either. <Claim id="nyt-hold" />. A <Term k="legalh
 
 Here's the subtler question. Even if nobody stores your chat, what about text that went *into* training? Models mostly learn patterns, but they also <Term k="memorization">memorise</Term> some rare or often-repeated text word for word, like a student who learned a few textbook pages by heart, phone numbers included.
 
-That memory can be pulled back out. <Claim id="extraction-chatgpt" />. Long copyrighted texts too: <Claim id="books-extraction" />. Practical rule: assume anything public on the web may be inside a model somewhere.
+That memory can be pulled back out. <Claim id="extraction-chatgpt" cap />. Long copyrighted texts too: <Claim id="books-extraction" />. Practical rule: assume anything public on the web may be inside a model somewhere.
 
 <Debate id="models-contain-data" />
 
@@ -49,7 +49,7 @@ If you're in Europe, two sets of rules matter. GDPR already applies: the Europea
 
 ## Local isn't automatically safe
 
-Running a model yourself removes the provider from the picture. It doesn't remove risk, it moves it to you. <Claim id="ollama-exposed" />.
+Running a model yourself removes the provider from the picture. It doesn't remove risk, it moves it to you. <Claim id="ollama-exposed" cap />.
 
 <Note title="Everyday habits" kind="key">
 - Check your settings. Turn off "improve the model" if you don't want your chats used for training.

@@ -1,15 +1,15 @@
 <div class="panel demo">
-  <div class="row" style="justify-content:space-between;margin-bottom:6px"><b>A map of meanings, squashed to 2D</b><button class="btn" id="emb-btn" type="button" aria-pressed="false">Show directions</button></div>
+  <div class="row between"><b>A map of meanings, squashed to 2D</b><button class="btn" id="emb-btn" type="button" aria-pressed="false">Show directions</button></div>
   <svg class="emb" id="emb" viewBox="0 0 420 300" role="img" aria-label="2D cartoon of word embeddings">
-    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--yt)"/></marker></defs>
-    <ellipse cx="268" cy="232" rx="100" ry="50" style="fill:var(--t);stroke:var(--t)" fill-opacity=".1" stroke-opacity=".5" stroke-dasharray="4 4"/>
-    <g class="an" style="stroke:var(--yt)" stroke-width="2.5" fill="none" marker-end="url(#ah)"><path d="M70 76 L70 142"/><path d="M170 66 L170 132"/><path d="M362 46 L294 58"/><path d="M362 116 L294 128"/></g>
-    <g class="an"><text x="120" y="112" text-anchor="middle" style="fill:var(--yt);font-size:13px">same offset</text><text x="328" y="90" text-anchor="middle" style="fill:var(--yt);font-size:13px">capital-of</text></g>
-    <g style="fill:var(--t)"><circle cx="70" cy="70" r="5"/><circle cx="70" cy="148" r="5"/><circle cx="170" cy="60" r="5"/><circle cx="170" cy="138" r="5"/><circle cx="288" cy="60" r="5"/><circle cx="368" cy="44" r="5"/><circle cx="288" cy="130" r="5"/><circle cx="368" cy="114" r="5"/><circle cx="245" cy="215" r="5"/><circle cx="292" cy="250" r="5"/><circle cx="330" cy="200" r="5"/><circle cx="205" cy="262" r="5"/><circle cx="128" cy="232" r="5"/></g>
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ac"/></marker></defs>
+    <ellipse cx="268" cy="232" rx="100" ry="50" class="tl-f" fill-opacity=".1" stroke-opacity=".5" stroke-dasharray="4 4"/>
+    <g class="an acs" stroke-width="2.5" fill="none" marker-end="url(#ah)"><path d="M70 76 L70 142"/><path d="M170 66 L170 132"/><path d="M362 46 L294 58"/><path d="M362 116 L294 128"/></g>
+    <g class="an"><text x="120" y="112" text-anchor="middle" class="ac lbl">same offset</text><text x="328" y="90" text-anchor="middle" class="ac lbl">capital-of</text></g>
+    <g class="tl"><circle cx="70" cy="70" r="5"/><circle cx="70" cy="148" r="5"/><circle cx="170" cy="60" r="5"/><circle cx="170" cy="138" r="5"/><circle cx="288" cy="60" r="5"/><circle cx="368" cy="44" r="5"/><circle cx="288" cy="130" r="5"/><circle cx="368" cy="114" r="5"/><circle cx="245" cy="215" r="5"/><circle cx="292" cy="250" r="5"/><circle cx="330" cy="200" r="5"/><circle cx="205" cy="262" r="5"/><circle cx="128" cy="232" r="5"/></g>
     <text x="80" y="66">king</text><text x="80" y="154">queen</text><text x="180" y="56">man</text><text x="180" y="144">woman</text>
     <text x="288" y="44" text-anchor="middle">Berlin</text><text x="368" y="30" text-anchor="middle">Germany</text><text x="288" y="152" text-anchor="middle">Paris</text><text x="368" y="136" text-anchor="middle">France</text>
     <text x="253" y="219">malware</text><text x="300" y="254">ransomware</text><text x="338" y="204">trojan</text><text x="213" y="266">worm</text><text x="136" y="236">phishing</text>
-    <text x="268" y="176" text-anchor="middle" style="fill:var(--t);font-size:13px">malware family</text>
+    <text x="268" y="176" text-anchor="middle" class="tl lbl">malware family</text>
   </svg>
-  <p class="small" style="margin:6px 0 0">Hand-drawn cartoon. Real embeddings have thousands of dimensions, and the directions are only roughly this clean.</p>
+  <p class="caption">Hand-drawn cartoon. Real embeddings have thousands of dimensions, and the directions are only roughly this clean.</p>
 </div>

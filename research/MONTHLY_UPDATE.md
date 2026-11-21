@@ -21,7 +21,7 @@ This file is the complete instruction set for the monthly research run, whether 
 6b. **Further reading** (`src/data/reading.yaml`). Replace dead links; add a source only if it's primary or a clearly better beginner explanation. Keep each chapter to about four or five items.
 7. **Write the field notes** at `src/content/notes/YYYY-MM.md`: what changed and why it matters for understanding or use, what to be sceptical about, what we're watching. 400–800 words. Plain language. No hype.
 8. **Edition subtitle (rarely).** Propose a new subtitle in `src/data/site.yaml` only when the field's centre of gravity has visibly shifted, never just for freshness. Add a new entry at the top of `editions`; never edit old ones. The name and tagline are not changed by the monthly update.
-9. **Check.** Run `npm run build` and `node scripts/check-claims.mjs --strict`. Both must pass.
+9. **Check.** Run `npm run build`, `node scripts/check-claims.mjs --strict` and `node scripts/check-design.mjs`. All must pass. New or changed components follow `DESIGN.md`.
 
 ## Pull request description
 

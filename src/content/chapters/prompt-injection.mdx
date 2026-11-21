@@ -25,17 +25,17 @@ Imagine a new assistant who opens all your post and does whatever any letter say
 
 ## Direct and indirect
 
-There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" />, and the field has been chasing it ever since. Today <Claim id="pi-owasp" />.
+There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since. Today <Claim id="pi-owasp" />.
 
 Indirect injection is no longer a lab curiosity. Three real cases:
 
-- **One email, no clicks.** <Claim id="echoleak" />. The attacker never needed the victim to open the message. Copilot found it while searching for context.
-- **"Summarise this page."** <Claim id="comet" />. The user only asked for a summary.
-- **The agent that turned off its own brakes.** <Claim id="copilot-autoapprove" />.
+- **One email, no clicks.** <Claim id="echoleak" cap />. The attacker never needed the victim to open the message. Copilot found it while searching for context.
+- **"Summarise this page."** <Claim id="comet" cap />. The user only asked for a summary.
+- **The agent that turned off its own brakes.** <Claim id="copilot-autoapprove" cap />.
 
 ## The lethal trifecta
 
-So is every AI assistant doomed? No. Injection only turns into theft when three things meet. <Claim id="trifecta" />.
+So is every AI assistant doomed? No. Injection only turns into theft when three things meet. <Claim id="trifecta" cap />.
 
 <Note title="The house-sitter" kind="key">
 Your house-sitter has your keys (private data), lets strangers push notes under the door (untrusted content), and has a phone (a way to send things out). Take away any one of the three and a nasty note can do far less harm. No keys: nothing to steal. No notes: no instructions. No phone: nowhere to send anything.
@@ -51,11 +51,11 @@ Three things to notice. The keyword filter catches the blunt attack, even in whi
 
 ## Why "just train it better" isn't the whole answer
 
-You might expect this to be solved by now. The people closest to it say it isn't. <Claim id="ncsc-confusable" />. In SQL injection, the classic web attack, the fix was to send commands and data down separate channels. Language models have only one channel.
+You might expect this to be solved by now. The people closest to it say it isn't. <Claim id="ncsc-confusable" cap />. In SQL injection, the classic web attack, the fix was to send commands and data down separate channels. Language models have only one channel.
 
-The labs agree it's open. <Claim id="labs-unsolved" />. That 1% is real progress. But notice the "100 attempts": in security, a defence that fails one time in a hundred is a defence an attacker will get through eventually.
+The labs agree it's open. <Claim id="labs-unsolved" cap />. That 1% is real progress. But notice the "100 attempts": in security, a defence that fails one time in a hundred is a defence an attacker will get through eventually.
 
-And published defences tend to look better than they are. <Claim id="adaptive-attacks" />. A defence tested against a fixed list of known attacks is a bit like a lock tested only against the keys its maker owned.
+And published defences tend to look better than they are. <Claim id="adaptive-attacks" cap />. A defence tested against a fixed list of known attacks is a bit like a lock tested only against the keys its maker owned.
 
 <Debate id="injection-training-vs-architecture" />
 
@@ -71,9 +71,9 @@ And published defences tend to look better than they are. <Claim id="adaptive-at
 <Engineer title="Defences that hold when the model is fooled">
 **Threat-model against the trifecta.** For every agent, session or task, list which legs it has and remove at least one. Often the cheapest leg to cut is the external channel: no auto-rendered images or links built from model output, and egress allowlists that can't be reached through first-party proxies. EchoLeak got out through an allowed Microsoft Teams URL.
 
-**Probabilistic layers reduce risk but aren't boundaries.** <Claim id="spotlighting" />, so it's worth having. Same for <Term k="hierarchy">instruction-hierarchy</Term> training and classifier filters. None of them is a boundary you can reason about.
+**Probabilistic layers reduce risk but aren't boundaries.** <Claim id="spotlighting" cap />, so it's worth having. Same for <Term k="hierarchy">instruction-hierarchy</Term> training and classifier filters. None of them is a boundary you can reason about.
 
-**Design-level separation.** Willison's dual-LLM pattern (2023) splits work between a privileged model that never sees untrusted text and a quarantined model that reads it but holds no tools. A controller passes only references between them. <Claim id="camel" />: about seven points of task success for a guarantee. A 2025 multi-lab paper collects these as reusable design patterns (plan-then-execute, map-reduce, context minimisation) and is frank that they secure *task-specific* agents; fully general agents remain hard.
+**Design-level separation.** Willison's dual-LLM pattern (2023) splits work between a privileged model that never sees untrusted text and a quarantined model that reads it but holds no tools. A controller passes only references between them. <Claim id="camel" cap />: about seven points of task success for a guarantee. A 2025 multi-lab paper collects these as reusable design patterns (plan-then-execute, map-reduce, context minimisation) and is frank that they secure *task-specific* agents; fully general agents remain hard.
 
 **Treat model-influenced parameters as attacker input.** Microsoft's 2026 Semantic Kernel CVEs came from model-chosen values reaching `eval()` and a file-write path. Validate, allowlist, never evaluate.
 

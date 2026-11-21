@@ -4,7 +4,7 @@
     <div class="hcol"><div class="small">Generative LLM</div><div class="fb">Transformer stack</div><div class="harrow">↓</div><div class="fb att"><b>LM head</b><span>scores all ~200k tokens</span></div><div class="harrow">↓</div><div class="fb"><span>sample a token, repeat hundreds of times</span></div><div class="hout mono">"I think billing should take this, because…"</div></div>
     <div class="hcol"><div class="small">Decision model</div><div class="fb">Same pretrained stack</div><div class="harrow">↓</div><div class="fb dec"><b>Pointer head</b><span>scores only the options you passed</span></div><div class="harrow">↓</div><div class="fb"><span>one forward pass, done</span></div><div class="hout"><div class="bars" id="dec-demo"></div></div></div>
   </div>
-  <pre style="margin-top:12px">state:  "Help! My payouts have been failing for 3 days!"
+  <pre>state:  "Help! My payouts have been failing for 3 days!"
 choice: Which team should handle this? = billing, sales, retail</pre>
-  <p class="small" style="margin:8px 0 0">Question types: predicate (yes/no), choice (one of N), score (a value on a scale). Example and probabilities from the Strands Decider README (v1, run on CPU).</p>
+  <p class="caption">Question types: predicate (yes/no), choice (one of N), score (a value on a scale). Example and probabilities from the Strands Decider README (v1, run on CPU).</p>
 </div>

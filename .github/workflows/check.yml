@@ -21,6 +21,8 @@ jobs:
       - run: npm ci
       - name: Claims freshness and integrity
         run: node scripts/check-claims.mjs --strict
+      - name: Design rules (DESIGN.md)
+        run: node scripts/check-design.mjs
       - run: npm run build
       - name: Guard protected paths
         if: startsWith(github.head_ref, 'update/')

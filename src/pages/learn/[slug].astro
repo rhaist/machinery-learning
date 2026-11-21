@@ -23,13 +23,15 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
     {parts.map(p => <>{parts.length > 1 && <span class="chbar-part">Part {p.index}</span>}{p.chapters.map(({ c }) => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}</>)}
   </div></nav>
   <article class="band"><div class="chapter">
-    <ChapterArt name={entry.id} />
-    <header class="chapter-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
-      <div class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}Chapter {num} of {last}{entry.data.order === 0 ? ' · start here' : ''}</div>
-      <h1>{entry.data.title}</h1>
-      <p class="lede" style="margin-top:14px">{entry.data.summary}</p>
-      <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>
-    </header>
+    <div class="chapter-grid">
+      <ChapterArt name={entry.id} />
+      <header class="page-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
+        <p class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}Chapter {num} of {last}{entry.data.order === 0 ? ' · start here' : ''}</p>
+        <h1>{entry.data.title}</h1>
+        <p class="lede">{entry.data.summary}</p>
+        <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>
+      </header>
+    </div>
     <div class="prose"><Content /><Reading id={entry.id} /></div>
     <nav class="pager" aria-label="Previous and next chapter">
       {prev && <a href={`${base}/learn/${prev.id}/`}><small>Previous</small>{prev.data.title}</a>}
