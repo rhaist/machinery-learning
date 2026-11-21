@@ -1,4 +1,11 @@
 ---
+import '@fontsource/red-hat-display/latin-700.css';
+import '@fontsource/red-hat-display/latin-800.css';
+import '@fontsource/red-hat-text/latin-400.css';
+import '@fontsource/red-hat-text/latin-500.css';
+import '@fontsource/red-hat-text/latin-700.css';
+import '@fontsource/red-hat-mono/latin-400.css';
+import '@fontsource/red-hat-mono/latin-500.css';
 import '../styles/global.css';
 import { glossary, site } from '../lib/data';
 import { getCollection } from 'astro:content';
@@ -19,9 +26,6 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <meta name="description" content={description}>
   <link rel="alternate" type="application/rss+xml" title={`${site.name}: field notes`} href={`${base}/rss.xml`}>
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@700;800&family=Red+Hat+Text:wght@400;500;700&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script is:inline>try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d}catch(e){}</script>
 </head>
 <body data-chapter={chapter}>
@@ -34,7 +38,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <main><slot /></main>
   <footer class="site-foot band"><div class="in">
     <span>A living guide, updated monthly{lastUpdate && <> · last update {lastUpdate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</>}</span>
-    <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a></span>
+    <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a> · <a href={`${base}/impressum/`}>Legal notice</a> · <a href={`${base}/privacy/`}>Privacy</a></span>
   </div></footer>
   <div id="tip" hidden role="tooltip"></div>
   <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)} />

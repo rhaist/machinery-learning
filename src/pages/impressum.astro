@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import LegalDraft from '../components/LegalDraft.astro';
+import { site } from '../lib/data';
+const L = site.legal;
+---
+<Base title="Legal notice" description={`Legal notice (Impressum) for ${site.name}.`} nav="about">
+  <section class="band"><div class="chapter prose">
+    <h1>Legal notice <span class="mut" style="font-weight:700">(Impressum)</span></h1>
+    <LegalDraft />
+    <h2>Provider</h2>
+    <p>Information pursuant to § 5 DDG and § 18 (1) MStV</p>
+    <p>{L.name}<br>{L.address}</p>
+    <p>Email: {L.email}</p>
+    <h2>Responsible for content</h2>
+    <p>Responsible for editorial content pursuant to § 18 (2) MStV: {L.responsible}, address as above.</p>
+    <h2>Non-commercial project</h2>
+    <p>{site.name} is a private, non-commercial educational project. It carries no advertising and sells nothing.</p>
+    <h2>Links and content</h2>
+    <p>The guide links to external sources so readers can check its claims. Those pages are the responsibility of their operators; they were checked when the link was added, and every time-sensitive claim shows when it was last verified. If you spot an error or a broken source, please get in touch or open an issue on <a href={site.repo}>GitHub</a>.</p>
+  </div></section>
+</Base>

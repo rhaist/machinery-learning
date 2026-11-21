@@ -5,6 +5,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 const root = process.argv[2] || 'dist-preview';
 const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
+for (const f of walk(root).filter(f => f.endsWith('.css'))) {
+  // stylesheets live in assets/, so root-absolute asset URLs become siblings
+  fs.writeFileSync(f, fs.readFileSync(f, 'utf8').replace(/url\(\/assets\//g, 'url(./'));
+}
 for (const f of walk(root).filter(f => f.endsWith('.html'))) {
   const depth = path.relative(root, path.dirname(f)).split(path.sep).filter(Boolean).length;
   const up = depth ? '../'.repeat(depth) : './';

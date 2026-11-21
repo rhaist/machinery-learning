@@ -4,7 +4,7 @@
 
 A living, interactive guide to how AI works, starting with large language models, for people who use AI tools every day and want to understand what is going on inside them. Two reading paths (beginner and engineer), live demos in every chapter, and a monthly update as the field moves.
 
-**Live site:** https://rhaist.github.io/machinery/ (once Pages is enabled)
+**Live site:** https://machinerylearning.eu (once Pages and DNS are set up)
 
 ## How it stays alive
 
@@ -36,10 +36,39 @@ Demos are Astro components in `src/components/`; their behaviour lives in `src/s
 
 ```sh
 npm install
-npm run dev            # http://localhost:4321/machinery/
+npm run dev            # http://localhost:4321/
 npm run build
 npm run check:claims   # freshness report; --strict fails on stale claims
 ```
+
+## Going live
+
+**Before the repo goes public**
+
+- [ ] Fill `legal.address` and `legal.email` in `src/data/site.yaml` (the Impressum and privacy pages show a draft warning until you do)
+- [ ] Review the chapters, especially the beginner layers
+- [ ] Confirm licences (MIT code, CC BY-SA content) and the maintainer line on About
+
+**GitHub Pages with machinerylearning.eu**
+
+1. *Verify the domain first* (prevents domain takeover): GitHub → Settings (your account) → Pages → Add a domain → `machinerylearning.eu`, then add the TXT record GitHub shows you at your DNS provider.
+2. Repo → Settings → Pages → Source: **GitHub Actions**. Custom domain: `machinerylearning.eu` (the `public/CNAME` file sets it too).
+3. DNS at your registrar:
+
+   | Type | Host | Value |
+   |---|---|---|
+   | A | @ | 185.199.108.153 |
+   | A | @ | 185.199.109.153 |
+   | A | @ | 185.199.110.153 |
+   | A | @ | 185.199.111.153 |
+   | AAAA | @ | 2606:50c0:8000::153 |
+   | AAAA | @ | 2606:50c0:8001::153 |
+   | AAAA | @ | 2606:50c0:8002::153 |
+   | AAAA | @ | 2606:50c0:8003::153 |
+   | CNAME | www | rhaist.github.io |
+
+   Check these against GitHub's current docs ("Managing a custom domain for your GitHub Pages site") before entering them.
+4. Once the certificate is issued, tick **Enforce HTTPS**.
 
 ## Licence
 

@@ -4,6 +4,16 @@
 name: Machinery
 tagline: A living field guide to how AI actually works   # used in page titles, search and link previews
 repo: https://github.com/rhaist/machinery
+domain: machinerylearning.eu
+
+# Legal notice (Impressum, § 5 DDG / § 18 MStV) and privacy notice.
+# Anything still set to TODO shows a visible "draft" warning on those pages.
+legal:
+  name: Robert Haist
+  address: TODO street and number, postcode city, Germany   # must be an address where legal documents can be served
+  email: TODO contact address, e.g. a dedicated alias
+  responsible: Robert Haist        # § 18 (2) MStV, responsible for editorial content
+  supervisory_authority: "Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)"
 
 editions:
   - month: 2026-11

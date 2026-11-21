@@ -43,7 +43,7 @@ export function freshness(c: Claim, today = new Date()): string {
   return months < c.half_life ? 'fresh' : months < c.half_life * 2 ? 'aging' : 'stale';
 }
 
-export const site: { name: string; tagline: string; repo: string; editions: { month: string; subtitle: string }[]; parts: { id: string; title: string; summary: string }[] } = load('site.yaml');
+export const site: { name: string; tagline: string; repo: string; domain: string; legal: Record<string, string>; editions: { month: string; subtitle: string }[]; parts: { id: string; title: string; summary: string }[] } = load('site.yaml');
 export const edition = [...site.editions].sort((a, b) => String(b.month).localeCompare(String(a.month)))[0];
 
 export const monthLabel = (m: string) =>
