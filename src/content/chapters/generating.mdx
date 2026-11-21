@@ -1,0 +1,49 @@
+---
+title: Generating text, one token at a time
+short: Generating
+order: 4
+summary: A weighted dice roll, repeated. Why answers differ each time, what “temperature” does, and why thinking takes time.
+minutes: 9
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import Sampler from '../../components/Sampler.astro';
+
+At the end of the stack, the model has a score for every possible next token. Those scores become probabilities: "connection" 30%, "request" 22%, "traffic" 18%, and so on down to "banana" at almost nothing. Then one token is **picked at random, weighted by those probabilities**: a weighted dice roll. The chosen token is added to the text, and the whole process runs again for the next one.
+
+That's it. Every answer you have ever received from a chatbot was written this way, one piece at a time. It explains several things you've probably noticed:
+
+- **The same question gives different answers,** because the dice roll differs each time.
+- **Answers stream in word by word,** because that is literally how they are produced.
+- **Long answers take longer,** because every token needs another full pass through the model.
+
+Two settings shape the dice roll. <Term k="temperature">Temperature</Term> makes the model more predictable (low) or more adventurous (high). <Term k="topp">Top-p</Term> throws away the unlikely long tail before rolling. Move the sliders, then sample a few hundred times:
+
+<Sampler />
+
+## Why "thinking" models are slower
+
+Newer <Term k="reasoning">reasoning models</Term> first write out a long hidden draft (working through the problem, checking themselves) and only then write the answer you see. Those thinking tokens are generated the same way, one at a time, which is why they take longer and cost more. In return, answers to hard problems get much better. This is called <Term k="ttc">test-time compute</Term>: paying for quality when the question is asked rather than when the model was trained.
+
+<Note title="Why “temperature 0” still isn't perfectly repeatable" kind="key">
+Even when the model always takes the most likely token, tiny differences in how a computer adds up numbers in parallel can occasionally tip a close call the other way. Deterministic in theory, very nearly in practice.
+</Note>
+
+<Engineer title="Softmax, KV cache, pricing and decoding tricks">
+<Term k="softmax">Softmax</Term> exponentiates the <Term k="logits">logits</Term> divided by temperature and normalises them. Below 1 the gaps between logits grow (sharper); above 1 they shrink (flatter). <Term k="topp">Top-p</Term> keeps the smallest set of tokens whose probabilities reach p, renormalises and samples.
+
+**KV cache.** The second token doesn't recompute the first. Every earlier token's keys and values stay in a <Term k="kv">KV cache</Term>, so each new token runs one pass of attention against it. The cache grows linearly with context and is often the real memory bottleneck.
+
+**Prefill vs decode, and why output costs more.** Reading your prompt (<Term k="prefill">prefill</Term>) processes all tokens in parallel and keeps the GPU compute-bound. Writing (decode) produces one token per pass and streams the weights from memory each time, so it is bandwidth-bound. That's why output tokens cost several times more than input tokens, and why "time to first token" and "tokens per second" are separate numbers.
+
+**Prompt caching.** A coding agent resends the whole transcript every step. Providers keep the KV cache for a recently seen prefix (<Term k="pcache">prompt caching</Term>), so the system prompt, tools and earlier turns aren't recomputed, and cached input is billed at a fraction of the price. Change something early in the context and everything after it must be recomputed.
+
+**Speed and validity tricks.** <Term k="specdec">Speculative decoding</Term>: a small draft model guesses several tokens and the big model verifies them in one parallel pass; the output distribution is unchanged. <Term k="constrained">Constrained decoding</Term>: tokens that would break a JSON schema or grammar are masked out before sampling, which is how tool calls are guaranteed to parse.
+
+**Non-determinism at temperature 0.** Floating-point addition isn't associative, and batched GPU kernels sum in varying orders depending on load.
+</Engineer>
+
+<Quiz q="You turn the temperature down to 0.1. What happens?" options={["The model becomes more creative","The model can read less text","Top-p is switched off","The most likely word wins almost every time"]} answer={3} explain="Low temperature exaggerates the differences between scores before they become probabilities, so nearly all the probability lands on the single most likely token." />

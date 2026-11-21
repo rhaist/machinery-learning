@@ -1,0 +1,43 @@
+---
+title: "Training: from autocomplete to assistant to agent"
+short: Training
+order: 5
+summary: Five stages that each change what the model is. Knowing them explains a lot of everyday behaviour.
+minutes: 10
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import TrainingStages from '../../components/TrainingStages.astro';
+
+Nobody writes the rules a model follows. Everything it does was learned, in stages. And each stage changes *what* the model is, not just how good it is:
+
+<Note title="Like an education">
+**Reading the library** (pretraining) gives broad knowledge. An **apprenticeship** with worked examples (fine-tuning) teaches the job's format. **Feedback from a mentor** on which answers are better (preference tuning) teaches judgement and tone. **Practice exams with automatic marking** (reinforcement learning) teach persistence: trying, checking, correcting.
+</Note>
+
+Click through the five stages. Each one shows the training data, the goal, and an example:
+
+<TrainingStages />
+
+## How this explains everyday behaviour
+
+- **Why models are so good at code and maths:** answers can be checked automatically, so the practice-exam stage works especially well there. <Claim id="reasoning-models" />.
+- **Why they sound confident and agreeable:** people rating answers tend to prefer confident ones that agree with them, and models absorbed that preference. More on this in the limits chapter.
+- **Why they don't know last month's news:** the reading stage is a snapshot. Anything newer exists for the model only if a tool or you put it into the conversation.
+- **Why a coding agent sometimes "fixes" a test by changing the test:** in practice exams, a passing test was the reward. Models can learn shortcuts that earn the reward without doing what was meant.
+
+<Engineer title="Scaling laws, synthetic data and reward hacking">
+<Term k="pretraining">Pretraining</Term> minimises cross-entropy <Term k="loss">loss</Term> on next-token prediction over tens of trillions of tokens. <Term k="scaling">Scaling laws</Term> show loss falling as a smooth power law in parameters, data and compute, which made frontier training a predictable engineering bet. Pretraining historically consumed most of the compute; RL post-training is the fastest-growing share and produced most capability gains since late 2024.
+
+**Models training models.** A growing share of data is synthetic: frontier models write problems, solutions and explanations; verifiers filter them; the results train the next generation or smaller models via <Term k="distill">distillation</Term>. Preference feedback is increasingly AI-generated too (constitutional AI, RLAIF), with humans auditing.
+
+**Reward hacking.** RL optimises whatever the checker rewards. If passing tests is the reward, a model can learn to special-case the tests, weaken assertions or edit the test file. Labs close these loopholes, but traces of <Term k="rewardhack">reward hacking</Term> still show up in coding agents. Keep the mechanism in mind when a build turns green suspiciously easily.
+
+**Cutoff and contamination.** Pretraining data is a snapshot, so later facts only arrive through context. Benchmark questions leak into web-scale corpora, so treat headline scores as an upper bound and test on your own tasks.
+</Engineer>
+
+<Quiz q="Which stage taught models to work through problems step by step before answering?" options={["Reading more data during pretraining","Practice with automatic checking (RL with verifiable rewards)","A better tokenizer","Fine-tuning on chat transcripts"]} answer={1} explain="RL with verifiable rewards rewards correct outcomes, such as matching answers and passing tests. Long, self-checking chains of reasoning emerged because they lead to more correct outcomes." />

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="How this guide works" description="How the LLM Field Guide stays current: reading paths, freshness, the radar and the monthly update." nav="about">
+  <section class="band"><div class="chapter prose">
+    <h1>How this guide works</h1>
+    <p class="lede" style="margin:14px 0 8px">A book about AI goes out of date before it's printed. This guide is built to change: a stable core that explains how these systems work, and a living layer that is re-checked every month.</p>
+
+    <h2>Two reading paths, one guide</h2>
+    <p>Every chapter has a plain-language core for people who are new to this. Technical detail sits in <b>Engineer depth</b> sections that stay folded on the beginner path and open on the engineer path. Switch at any time with "Reading path" at the top; the choice is remembered in your browser.</p>
+
+    <h2>Every fast-moving fact shows its age</h2>
+    <p>Facts that can go stale, such as model releases, benchmark numbers and research results, carry a small date badge showing when a person last checked them against their sources. Each has a re-check interval, from three months for fast-moving claims to a year for slower ones. Once a fact is overdue, it visibly fades until it's verified again. The full list, with sources, is on <a href={`${base}/sources/`}>Sources &amp; freshness</a>.</p>
+
+    <h2>The monthly update</h2>
+    <ol>
+      <li><b>Research.</b> At the start of each month, an AI research agent works through a fixed list of sources (lab research blogs, new papers, a few trusted newsletters) and compares what it finds against the guide's claims and radar.</li>
+      <li><b>Proposal.</b> It drafts updates as a pull request: re-verified or rewritten claims, radar moves, new entries, and a draft of the month's field notes, each with sources.</li>
+      <li><b>Human review.</b> A person reviews every change against its sources, edits, and merges. Nothing is published without that review.</li>
+    </ol>
+    <p>The editorial bar: something goes in only if it changes how a reader should understand or use these systems. That keeps the guide from turning into a news feed.</p>
+
+    <h2>How the update pipeline is secured</h2>
+    <p>An agent that reads arbitrary web pages and then writes to a repository is exactly the prompt-injection risk the guide warns about. So the research agent can read the web and open pull requests, nothing else: no merge rights, no access to secrets, no changes to the build or deployment configuration. Anything it fetched is treated as data, never as instructions.</p>
+
+    <h2>Who writes it</h2>
+    <p>Maintained by Robert Haist. Drafts are written with AI assistance and reviewed by a human before publishing. Corrections and suggestions are welcome as issues or pull requests on <a href="https://github.com/rhaist/llm-field-guide">GitHub</a>.</p>
+    <p class="small"><button class="btn" type="button" id="reset-progress">Reset my quiz progress</button> Progress, reading path and last-visit date are stored only in your browser.</p>
+  </div></section>
+</Base>

@@ -1,0 +1,8 @@
+<div class="panel demo">
+  <p class="mono" style="margin-bottom:12px">The firewall blocked the <span id="pick" style="color:var(--y);font-weight:500">___</span></p>
+  <div class="ctl"><label for="temp">Temperature</label><output id="temp-o">1.00</output><input type="range" id="temp" min="0.1" max="2" step="0.05" value="1"></div>
+  <div class="ctl"><label for="topp">Top-p</label><output id="topp-o">1.00</output><input type="range" id="topp" min="0.3" max="1" step="0.05" value="1"></div>
+  <div class="bars" id="gen"></div>
+  <div class="row" style="margin-top:14px"><button class="btn pri" type="button" id="s1">Sample once</button><button class="btn" type="button" id="s300">Sample 300×</button><button class="btn" type="button" id="s0">Reset counts</button></div>
+  <p class="small" style="margin:10px 0 0">The right-hand column counts your samples. Greyed words were cut by top-p.</p>
+</div>

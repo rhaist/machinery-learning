@@ -1,0 +1,149 @@
+# Frontier radar. One entry per research direction or practice.
+# history maps a month (YYYY-MM) to a ring. Add a new key each month an entry moves;
+# months without a key inherit the previous ring. Never rewrite past months.
+#
+# rings: research -> emerging -> shipping -> faded
+#   research  papers and prototypes; not in products
+#   emerging  first real releases; claims still contested
+#   shipping  in mainstream products or open-weight models people use
+#   faded     overtaken or abandoned; kept so the history stays honest
+
+quadrants:
+  - Architecture
+  - Training & reasoning
+  - Systems & agents
+  - Security & trust
+
+entries:
+  - id: hybrid-attention
+    name: Hybrid / linear attention
+    quadrant: Architecture
+    chapter: frontier
+    note: Most layers keep a fixed-size state; a few full-attention layers keep exact recall.
+    history: { 2026-11: shipping }
+
+  - id: moe
+    name: Mixture of Experts
+    quadrant: Architecture
+    chapter: inside-the-stack
+    note: Huge total capacity, small per-token compute. Standard in frontier models.
+    history: { 2026-11: shipping }
+
+  - id: diffusion-lms
+    name: Diffusion language models
+    quadrant: Architecture
+    chapter: frontier
+    note: Parallel, iterative decoding. Several-fold faster in recent work; reasoning and long sequences still open.
+    history: { 2026-11: emerging }
+
+  - id: test-time-training
+    name: Test-time training
+    quadrant: Architecture
+    chapter: frontier
+    note: Writes what the model reads into fast weights. Targets the frozen-knowledge gap directly.
+    history: { 2026-11: research }
+
+  - id: latent-reasoning
+    name: Latent reasoning / recursive depth
+    quadrant: Architecture
+    chapter: frontier
+    note: Thinking in hidden vectors or looped layers instead of written tokens. Harder to monitor.
+    history: { 2026-11: research }
+
+  - id: world-models
+    name: World models / JEPA
+    quadrant: Architecture
+    chapter: frontier
+    note: Predicting in an abstract representation space. Heavily funded, no public product yet.
+    history: { 2026-11: research }
+
+  - id: rlvr
+    name: RL with verifiable rewards
+    quadrant: Training & reasoning
+    chapter: training
+    note: The recipe behind reasoning models and coding agents.
+    history: { 2026-11: shipping }
+
+  - id: test-time-compute
+    name: Test-time compute scaling
+    quadrant: Training & reasoning
+    chapter: generating
+    note: Buying accuracy with longer reasoning at inference time.
+    history: { 2026-11: shipping }
+
+  - id: synthetic-data
+    name: Synthetic data and distillation
+    quadrant: Training & reasoning
+    chapter: training
+    note: Models generating and filtering training data for the next generation.
+    history: { 2026-11: shipping }
+
+  - id: automated-research
+    name: Automated AI research agents
+    quadrant: Training & reasoning
+    chapter: frontier
+    note: Agents that edit training code and run experiments themselves.
+    history: { 2026-11: emerging }
+
+  - id: coding-agents
+    name: Coding agents
+    quadrant: Systems & agents
+    chapter: beyond-autocomplete
+    note: RL-trained models in a tool loop with tests as the verifier.
+    history: { 2026-11: shipping }
+
+  - id: mcp
+    name: MCP tool servers
+    quadrant: Systems & agents
+    chapter: around-the-model
+    note: A standard way to connect models to tools and data.
+    history: { 2026-11: shipping }
+
+  - id: slms
+    name: Small / local models
+    quadrant: Systems & agents
+    chapter: around-the-model
+    note: Distilled, quantised models for cheap, private, on-device steps.
+    history: { 2026-11: shipping }
+
+  - id: decision-models
+    name: Decision models
+    quadrant: Systems & agents
+    chapter: around-the-model
+    note: Typed answers with probabilities, no text generation. Jev, Strands Decider. Benchmarks still disagree.
+    history: { 2026-11: emerging }
+
+  - id: prompt-caching
+    name: Prompt caching
+    quadrant: Systems & agents
+    chapter: generating
+    note: Reusing the KV cache of a repeated prefix. What makes agent loops affordable.
+    history: { 2026-11: shipping }
+
+  - id: injection-defenses
+    name: Prompt-injection defences
+    quadrant: Security & trust
+    chapter: strengths-and-limits
+    note: Classifiers, privilege separation, confirmation. All probabilistic; no architectural fix.
+    history: { 2026-11: emerging }
+
+  - id: decision-gates
+    name: Decision-model tool gates
+    quadrant: Security & trust
+    chapter: around-the-model
+    note: A fast model scores risk; plain code enforces the policy. Calibration has to be measured.
+    history: { 2026-11: emerging }
+
+  - id: agent-sandboxing
+    name: Agent sandboxing and least privilege
+    quadrant: Security & trust
+    chapter: beyond-autocomplete
+    note: Scoped permissions, isolated execution, no auto-approval where network meets secrets.
+    history: { 2026-11: shipping }
+
+  - id: interpretability
+    name: Interpretability tooling
+    quadrant: Security & trust
+    chapter: beyond-autocomplete
+    note: Sparse autoencoders and attribution graphs that show what a model computes internally.
+    history: { 2026-11: research }

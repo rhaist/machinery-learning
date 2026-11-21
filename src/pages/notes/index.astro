@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { monthLabel } from '../../lib/data';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
+---
+<Base title="Field notes" description="Monthly notes on what changed in how LLMs work and how to use them." nav="notes">
+  <section class="band"><div class="chapter">
+    <h1>Field notes</h1>
+    <p class="lede" style="margin-top:14px">Once a month: what changed in the field, and whether it should change how you understand or use these systems. Subscribe via <a href={`${base}/rss.xml`}>RSS</a>.</p>
+    <div class="notes-list">{notes.map(n => <a class="card" href={`${base}/notes/${n.id}/`} data-updated={n.data.date.toISOString().slice(0, 10)}><span class="small">{monthLabel(n.data.month)}</span><span class="newtag">new</span><h3>{n.data.title}</h3><p>{n.data.summary}</p></a>)}</div>
+  </div></section>
+</Base>

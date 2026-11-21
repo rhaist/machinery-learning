@@ -1,0 +1,42 @@
+---
+title: What an LLM is, in five minutes
+short: Start here
+order: 0
+summary: The whole picture before the details. What these systems are, how they were built, and what they are not.
+minutes: 5
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+
+A large language model (LLM) is a program that has read an enormous amount of text and learned one skill extremely well: **continuing text**. Give it the beginning of something, and it predicts what comes next, one small piece at a time. ChatGPT, Claude, Gemini and the AI in your coding tools are all built around this one skill.
+
+That sounds like the autocomplete on your phone, and in a sense it is. The difference is scale. Your phone has learned a few common phrases. An LLM has learned from a large share of everything humans have written: books, websites, code, scientific papers, forum discussions. To predict well across all of that, it had to pick up far more than vocabulary: grammar, facts, writing styles, how arguments are structured, how code behaves. Nobody programmed those things in. They emerged because they help with predicting the next word.
+
+<Note title="A useful picture">
+Think of an extraordinarily well-read intern who has never left the library. Brilliant with language and patterns, has read about almost everything, but has no first-hand experience of the world, no way to look things up unless you give them a phone, and no memory of yesterday's conversation.
+</Note>
+
+## How it was built, in three stages
+
+1. **Reading.** The model reads trillions of words and practises predicting the next one, billions of times over. This is where its knowledge comes from. At the end it is a superb autocomplete, but not yet an assistant: ask it a question and it might just write more questions.
+2. **Apprenticeship.** It is shown many examples of helpful conversations, and taught which answers people prefer. Now it answers like an assistant.
+3. **Practice with feedback.** It attempts tasks, such as solving maths problems or fixing code, and gets rewarded when the result checks out. This stage taught modern models to work through problems step by step and use tools, which is why today's AI can do things like run tests and fix the bug it finds.
+
+## What it is not
+
+- **Not a database.** It doesn't look facts up. It reconstructs them from patterns it learned, which is why it can be confidently wrong. Tools like web search help, when they're connected.
+- **Not learning from you.** Once trained, the model is frozen. It "remembers" a conversation only because the whole conversation is fed back in each time. Memory features in apps work the same way: saved notes get added to what the model reads.
+- **Not a person,** even though it writes like one. It has absorbed how people talk about feelings and intentions; that doesn't settle whether it has any.
+
+## How to use this guide
+
+Each chapter has a plain-language core and optional **Engineer depth** sections. Switch the whole guide between the two with "Reading path" at the top. Hover or tap any <Term k="token">dotted term</Term> for a definition. Facts that change quickly carry a small date badge that shows when they were last checked. Chapters end with a checkpoint question, so you can see whether it stuck.
+
+<Engineer title="The one-paragraph technical version">
+An LLM is a decoder-only <Term k="transformer">transformer</Term>: a stack of identical blocks, each with an <Term k="attention">attention</Term> layer and an <Term k="mlp">MLP</Term>. Text is split into <Term k="token">tokens</Term>, embedded as vectors, and processed through the stack, which outputs a probability for every token in the vocabulary. Training runs in stages: <Term k="pretraining">pretraining</Term> on tens of trillions of tokens with next-token prediction; supervised fine-tuning (<Term k="sft">SFT</Term>) on demonstrations; preference optimisation (<Term k="rlhf">RLHF</Term>/<Term k="dpo">DPO</Term>); and increasingly reinforcement learning with verifiable rewards (<Term k="rlvr">RLVR</Term>). At inference the model generates <Term k="autoregressive">autoregressively</Term> with a <Term k="kv">KV cache</Term>; agents wrap it in a <Term k="harness">harness</Term> that executes tool calls. The key mental model: two memories, frozen weights and a temporary <Term k="context">context window</Term>, with nothing in between.
+</Engineer>
+
+<Quiz q="Why can an LLM state a wrong fact with complete confidence?" options={["It is programmed to never admit uncertainty","It reconstructs facts from learned patterns rather than looking them up","Its database is out of date","It deliberately makes things up to seem helpful"]} answer={1} explain="The model generates the most plausible continuation from patterns it learned. A plausible-sounding answer and a correct one usually coincide, but not always, and the fluency is the same either way." />

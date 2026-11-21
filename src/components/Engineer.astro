@@ -1,0 +1,8 @@
+---
+// Engineer-depth layer: collapsed on the beginner path, open on the engineer path.
+const { title = 'How it works underneath' } = Astro.props;
+---
+<details class="eng">
+  <summary><span class="eng-tag">Engineer depth</span><span class="eng-title">{title}</span></summary>
+  <div class="eng-body"><slot /></div>
+</details>

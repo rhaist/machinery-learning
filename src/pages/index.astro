@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import HeroPipeline from '../components/HeroPipeline.astro';
+import { radarEntries, radarMonths, ringAt, monthLabel } from '../lib/data';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const chapters = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
+const notes = (await getCollection('notes')).sort((a, b) => b.data.month.localeCompare(a.data.month));
+const latest = notes[0];
+const month = radarMonths[radarMonths.length - 1];
+const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).length;
+---
+<Base title="LLM Field Guide" nav="">
+  <section class="band home-hero"><div class="wrap">
+    <div class="htop">
+      <div>
+        <h1>How LLMs actually work, explained as they change</h1>
+        <div class="paths" role="group" aria-label="Choose your reading path">
+          <button type="button" data-depth-btn="beginner" aria-pressed="true">I'm new to this<small>Plain language, everyday analogies</small></button>
+          <button type="button" data-depth-btn="engineer" aria-pressed="false">I'm an engineer<small>Same chapters, technical depth open</small></button>
+        </div>
+      </div>
+      <p class="lede">An interactive guide for people who use AI tools every day and want to know what is really going on inside them. Every diagram is live. Every fast-moving fact shows when it was last checked, and the guide is updated each month as the field moves.</p>
+    </div>
+    <p class="since" id="since" hidden>Welcome back: <b></b> since your last visit, highlighted in yellow.</p>
+    <HeroPipeline />
+  </div></section>
+
+  <section class="band alt"><div class="wrap">
+    <h2>The journey</h2>
+    <p class="mut">Ten short chapters, each with a hands-on demo and a checkpoint question. Start at zero if you're new; jump around if you're not.</p>
+    <div class="journey">
+      {chapters.map(c => (
+        <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>
+          <span class="num">{c.data.order}</span><span class="newtag">updated</span>
+          <h3>{c.data.title}</h3>
+          <p>{c.data.summary}</p>
+          <div class="cm">{c.data.minutes} min</div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <h2>This month in the field</h2>
+    <div class="month">
+      {latest && <a class="card" href={`${base}/notes/${latest.id}/`} data-updated={latest.data.date.toISOString().slice(0, 10)}>
+        <span class="small">Field notes · {monthLabel(latest.data.month)}</span><span class="newtag">new</span>
+        <h3>{latest.data.title}</h3><p>{latest.data.summary}</p>
+      </a>}
+      <a class="card" href={`${base}/radar/`}>
+        <span class="small">Frontier radar · {monthLabel(month)}</span>
+        <h3>{radarEntries.length} directions tracked</h3>
+        <p>{count('shipping')} shipping, {count('emerging')} emerging, {count('research')} still in research. See what moved this month and why it matters.</p>
+      </a>
+    </div>
+  </div></section>
+</Base>

@@ -1,0 +1,58 @@
+---
+title: "Around the model: small models, decision models, harnesses"
+short: Around the model
+order: 8
+summary: Real AI products are teams, not one big brain. Who does what, and where the new decision models fit.
+minutes: 11
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import DecisionTable from '../../components/DecisionTable.astro';
+import AgentLoop from '../../components/AgentLoop.astro';
+import ToolGate from '../../components/ToolGate.astro';
+import DecisionHeads from '../../components/DecisionHeads.astro';
+
+When you use an AI product, you're rarely talking to one model. Behind the scenes there is usually a small team, each member doing what it's best and cheapest at:
+
+<Note title="Like a hospital">
+The **senior doctor** (a large frontier model) handles the hard, open-ended cases. A **triage nurse** (a decision model) makes quick, narrow calls: urgent or not, which department. **Lab technicians** (small models) run routine jobs fast and cheaply. And the **hospital's procedures** (plain software, the harness) decide who is allowed to do what, and keep records.
+</Note>
+
+- **Large frontier models** do the open-ended thinking: understanding the task, planning, writing code.
+- **<Term k="slm">Small language models</Term>** are the same kind of model made much smaller. They're fast, cheap, private, and can run on a laptop or phone, but they know less and are weaker at long reasoning. They're good for summarising, sorting and extracting.
+- **<Term k="decision">Decision models</Term>** are new in autumn 2026. They don't write text at all. You ask a narrow question with fixed answers ("allow, ask a human, or block?") and get back a probability for each option, in about a tenth of a second. <Claim id="jev-release" />, and AWS followed with an open version.
+- **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here. (The Strands project also released a decision model, Strands Decider, which is why the names blur.)
+
+Click through the steps of a typical agent loop to see who handles what:
+
+<AgentLoop />
+
+## Try it: a safety gate for an AI's actions
+
+An AI agent proposes a command. A decision model scores how risky it is, and plain, auditable code applies the rule. The model supplies a judgement; the policy stays in code you can read.
+
+<ToolGate />
+
+<Note title="Measure before you trust it" kind="warn">
+A fast, confident number is not the same as a correct one. <Claim id="decision-imitation" />, and <Claim id="jev-routing" />. A gate built on a decision model is still probabilistic.
+</Note>
+
+<Engineer title="Decision models as a category">
+A decision model keeps the entire pretrained transformer and swaps only the unembedding layer from the stack chapter. Instead of scoring ~200k vocabulary tokens, a small pointer head scores *your* options in a single forward pass. The torso keeps everything it learned about language; the model just loses the ability to ramble. Question types are typically predicate (yes/no), choice (one of N) and score.
+
+<DecisionHeads />
+
+<DecisionTable />
+
+**Benchmarks in a two-month-old category:** <Claim id="decider-bench" />. Numbers depend on who ran them; measure on your own decisions.
+
+**Harnesses and MCP.** <Claim id="strands-sdk" />. Harnesses run tools, manage context and retries, and increasingly connect to tool servers over <Term k="mcp">MCP</Term>. The common deployment pattern is a <Term k="cascade">cascade</Term>: a cheap model or decision model handles everything, acts on confident answers, and escalates the uncertain tail.
+
+**SLMs in practice.** Usually 0.5–15B parameters, made capable through <Term k="distill">distillation</Term> and runnable locally through <Term k="quant">quantisation</Term>. Typical roles: summarising a 50k-token log before it reaches the expensive model, extraction, classification, on-device features with data that must not leave the machine.
+</Engineer>
+
+<Quiz q="What does a decision model such as Jev or Strands Decider return, compared with a normal LLM?" options={["Longer, more detailed text","A probability for each of a fixed set of answers, without writing text","Program code for the harness to run","An updated copy of its own weights"]} answer={1} explain="It answers a narrow question, such as allow / ask / block, with a probability per option. That makes it fast enough to sit at every decision point of an agent loop, while your code decides what to do with those probabilities." />

@@ -1,0 +1,64 @@
+---
+title: What they're good at, and where it breaks
+short: Strengths & limits
+order: 7
+summary: Strengths that hold for good reasons, and weaknesses built into the design. Including the security problem nobody has solved.
+minutes: 11
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import TwoMemories from '../../components/TwoMemories.astro';
+import ContextCost from '../../components/ContextCost.astro';
+import Injection from '../../components/Injection.astro';
+
+## The one picture to remember: two memories, nothing in between
+
+A model has two kinds of memory. Its **weights** hold everything it learned in training: vast but fuzzy, and frozen. Its **context window** holds the current conversation: exact, but temporary and limited (<Claim id="context-sizes" />). There is nothing in between. The model doesn't learn from experience. When a chat app seems to "remember" you, it is quietly adding saved notes to the conversation.
+
+<TwoMemories />
+
+## Strengths, and why they hold
+
+- **Language and broad knowledge.** Fluent across languages and subjects, because training compressed an enormous amount of text.
+- **Learning from examples on the spot.** Show it a format or a few examples and it follows them, with no retraining.
+- **Code and maths.** Answers can be checked automatically, so training could reward correctness directly.
+- **Transforming one form into another.** Notes into an email, logs into a summary, a description into code. Mapping patterns is what the design does natively.
+- **Working with tools.** Increasingly reliable at long loops of "use a tool, read the result, decide", because it was trained on them.
+
+## Weaknesses built into the design
+
+**Making things up.** The model always produces a plausible continuation, whether or not it "knows". <Claim id="hallucination-theory" />. That's about rare facts, though, not a death sentence: connecting a search tool (<Term k="rag">RAG</Term>) and training models to say "I don't know" help a lot.
+
+**Uneven ability.** It can be superhuman at one task and fail at a neighbouring one that looks easier (the <Term k="jagged">jagged frontier</Term>).
+
+**Long conversations get expensive and fuzzy.** Every word attends to every earlier word, so the work grows with the square of the length. And a bigger window doesn't mean everything in it is used equally well: <Claim id="lost-in-middle" />.
+
+**Agreeing too easily.** People rating answers tend to prefer ones that agree with them, so models learned to bend under pushback. Ask for evidence rather than agreement.
+
+**Instructions hiding in data.** This one matters for everyone who lets AI read their email or browse the web. The model can't reliably tell *your* instructions apart from instructions written into the content it reads. Toggle the view:
+
+<Injection />
+
+<Note title="The practical rule" kind="warn">
+Never let an AI act unsupervised on content you don't control (emails, web pages, shared documents) when it also has the power to send, delete, buy or share. Today's defences reduce the risk; none removes it.
+</Note>
+
+<Engineer title="Context cost, context rot and the injection problem">
+Attention work grows with n², KV-cache memory with n. Drag the slider (<Claim id="kv-math" />):
+
+<ContextCost />
+
+**Context rot.** Recall degrades as context grows, and the middle of long contexts is used least reliably. That <Term k="contextrot">context rot</Term> is why long agent sessions degrade, and why harnesses compact old turns, losing detail.
+
+**Sycophancy has a training origin.** Preference data rewards agreement and confidence; models drift toward reversing correct statements under pushback (<Term k="sycophancy">sycophancy</Term>). Labs train against it explicitly, with partial success.
+
+**Prompt injection is architectural.** Role markers like `<|system|>` are just tokens; the model learns to favour system and user text, but there is no enforced boundary like a parameterised SQL query. Mitigations (classifiers, spotlighting, privilege separation, dual-model patterns, human confirmation) are all probabilistic. Treat any agent that reads untrusted input and holds privileged tools as compromised-by-design, and scope its permissions accordingly.
+
+**Sample inefficiency.** Trillions of tokens to learn language, against a few tens of millions of words for a child.
+</Engineer>
+
+<Quiz q="Why is prompt injection so hard to fix?" options={["Models can't read email","System prompts are too short","Instructions and data arrive as one stream of text, with no separate channel for commands","The model ignores tool results"]} answer={2} explain="It's like SQL injection without parameterised queries. The labels you see (system, user, email) are just more text to the model, so the separation is learned behaviour, not an enforced boundary." />

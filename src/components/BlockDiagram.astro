@@ -1,0 +1,13 @@
+<div class="panel demo">
+  <div class="flow">
+    <div class="fb"><b>Token embedding</b><span>ID → list of numbers (a lookup table)</span></div>
+    <div class="blk"><span class="tag">repeated 30–120 times</span>
+      <div class="fb att"><b>Attention</b><span>words share information with earlier words</span></div>
+      <div class="plus">+ added onto the running vector</div>
+      <div class="fb mlp"><b>MLP (or MoE experts)</b><span>each word processed alone; holds much of the knowledge</span></div>
+      <div class="plus">+ added onto the running vector</div>
+    </div>
+    <div class="fb"><b>Unembedding</b><span>vector → one score per possible next token</span></div>
+    <div class="fb"><b>Softmax + sampling</b><span>scores → probabilities → one chosen token</span></div>
+  </div>
+</div>

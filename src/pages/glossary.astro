@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { glossary } from '../lib/data';
+const items = Object.entries(glossary).sort((a, b) => a[1].term.localeCompare(b[1].term));
+---
+<Base title="Glossary" description="Plain-language definitions of LLM jargon." nav="glossary">
+  <section class="band"><div class="wrap">
+    <h1>Glossary</h1>
+    <p class="lede" style="margin:14px 0 18px">Every dotted term in the guide, in plain language. {items.length} terms.</p>
+    <div style="max-width:520px"><label for="gq" class="small">Search all terms</label><input type="search" id="gq" placeholder="e.g. cache, RLHF, router"></div>
+    <dl class="gl">{items.map(([k, v]) => <div class="gi" id={`g-${k}`} data-s={(v.term + ' ' + v.def).toLowerCase()}><dt>{v.term}</dt><dd>{v.def}</dd></div>)}</dl>
+  </div></section>
+</Base>

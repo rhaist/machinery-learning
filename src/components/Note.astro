@@ -1,0 +1,5 @@
+---
+// Small aside for analogies or warnings in the beginner core.
+const { kind = 'analogy', title } = Astro.props;
+---
+<aside class={`note note-${kind}`}>{title && <b>{title}</b>}<slot /></aside>

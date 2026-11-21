@@ -1,0 +1,200 @@
+# Claims registry: every fact in the guide that can go stale lives here.
+#
+#   id         stable key, used as <Claim id="..."/> in chapters
+#   text       what readers see (inline HTML allowed)
+#   sources    URLs that back the claim (at least one for anything time-sensitive)
+#   verified   date a human last confirmed the claim against its sources
+#   half_life  months until the claim should be re-checked; omit for evergreen facts
+#   status     research | emerging | shipping | faded | evergreen
+#
+# The site fades a claim once it is past its half-life, and scripts/check-claims.mjs
+# lists everything overdue. The monthly update re-verifies or rewrites these first.
+
+- id: vocab-size
+  text: "a fixed vocabulary of roughly 100k–250k entries"
+  sources:
+    - https://ai.meta.com/blog/meta-llama-3/
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: context-sizes
+  text: "today typically 128k to 1M+ tokens"
+  sources:
+    - https://ai.meta.com/blog/meta-llama-3-1/
+    - https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024/
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: transformer-dominance
+  text: "the largest and most capable open-weight models are still autoregressive decoder-only transformers"
+  sources:
+    - https://magazine.sebastianraschka.com/i/177848019/24-qwen3-next
+  verified: 2026-11-21
+  half_life: 6
+  status: shipping
+
+- id: deepseek-moe
+  text: "DeepSeek-V3, for example, has 671B parameters in total but uses only about 37B per token"
+  sources:
+    - https://arxiv.org/abs/2412.19437
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: kv-math
+  text: "a Llama-3-70B-style setup (80 layers, 8 KV heads × 128 dimensions, fp16) needs about 0.31 MiB of KV cache per token"
+  verified: 2026-11-21
+  status: evergreen
+
+- id: reasoning-models
+  text: "since late 2024, reinforcement learning with verifiable rewards has produced reasoning models (o1, DeepSeek-R1 and successors)"
+  sources:
+    - https://arxiv.org/abs/2501.12948
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: hallucination-theory
+  text: "Kalai and Vempala showed that a calibrated model must hallucinate at some rate on facts it rarely saw in training"
+  sources:
+    - https://arxiv.org/abs/2311.14648
+  verified: 2026-11-21
+  status: evergreen
+
+- id: interp-two-hop
+  text: "Anthropic's 2025 attribution-graph work traced two-hop reasoning and rhyme planning inside Claude 3.5 Haiku"
+  sources:
+    - https://www.anthropic.com/research/tracing-thoughts-language-model
+  verified: 2026-11-21
+  status: evergreen
+
+- id: othello-gpt
+  text: "Othello-GPT, trained only on move sequences, built an internal representation of the board"
+  sources:
+    - https://arxiv.org/abs/2210.13382
+  verified: 2026-11-21
+  status: evergreen
+
+- id: subquadratic-review
+  text: "researchers at TU Munich have critically compared sub-quadratic alternatives to attention on cost, benchmarks and fundamental limits"
+  sources:
+    - https://arxiv.org/abs/2510.05364
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: dlm-status
+  text: "a 2026 survey reports diffusion language models reaching several-fold speed-ups at performance comparable to autoregressive models"
+  sources:
+    - https://arxiv.org/abs/2508.10875
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: dlm-hallucination
+  text: "their hallucination behaviour is still largely unexplored"
+  sources:
+    - https://arxiv.org/abs/2604.10556
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: ttt-inplace
+  text: "ByteDance's In-Place TTT (ICLR 2026 oral) reuses the MLP's final projection as fast weights, so it can be added without retraining from scratch"
+  sources:
+    - https://arxiv.org/abs/2604.06169
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: ttt-e2e
+  text: "NVIDIA's TTT-E2E compresses the context a model reads into its weights through next-token prediction, aiming for full attention's quality at recurrent-model latency"
+  sources:
+    - https://developer.nvidia.com/blog/reimagining-llm-memory-using-context-as-training-data-unlocks-models-that-learn-at-test-time
+  verified: 2026-11-21
+  half_life: 6
+  status: research
+
+- id: ami-labs
+  text: "Yann LeCun's AMI Labs raised a $1.03B seed round in March 2026 to build JEPA-based world models"
+  sources:
+    - https://futurumgroup.com/insights/yann-lecuns-ami-raises-1bn-seed-round-is-the-world-model-era-finally-here
+  verified: 2026-11-21
+  half_life: 12
+  status: research
+
+- id: ami-product
+  text: "AMI Labs has no public product yet"
+  sources:
+    - https://simplify.jobs/c/AMI-Labs
+  verified: 2026-11-21
+  half_life: 3
+  status: research
+
+- id: autoresearch
+  text: "Karpathy's AutoResearch (March 2026) is a short script in which an agent changes training code, runs quick experiments and keeps what works"
+  sources:
+    - https://philippdubach.com/posts/the-last-architecture-designed-by-hand/
+  verified: 2026-11-21
+  half_life: 12
+  status: emerging
+
+- id: jev-release
+  text: "TypeSafe AI released Jev, the model that started the decision-model category, in mid-September 2026"
+  sources:
+    - https://www.wwt.com/blog/the-rise-of-decision-models
+    - https://amplitude.com/blog/jev-analysis
+  verified: 2026-11-21
+  half_life: 6
+  status: emerging
+
+- id: strands-decider
+  text: "AWS Strands Labs released Strands Decider 2B on 1 October 2026 under Apache 2.0: a Qwen3.5-2B torso whose text head is replaced by a pointer head, with Gemma-based variants from E2B to 26B-A4B"
+  sources:
+    - https://github.com/strands-labs/strands-decider
+    - https://tech-insider.org/amazon-strands-decider-2b-open-source-agent-model-2026/
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: decider-bench
+  text: "Strands' own table lists Decider 2B at 0.78 on JevBench, while an independent run on the 231 public tasks got 72.3%"
+  sources:
+    - https://tech-insider.org/?p=33046
+    - https://techstrong.ai/?p=70870
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: decision-imitation
+  text: "one evaluation found a decision model matched a frontier model's verdicts noticeably more often than it matched the true labels"
+  sources:
+    - https://amplitude.com/blog/jev-analysis
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: jev-routing
+  text: "another found Jev answering \"cheap\" for 99.5% of model-routing requests, no better than a constant"
+  sources:
+    - https://arxiv.org/pdf/2610.02267
+  verified: 2026-11-21
+  half_life: 3
+  status: emerging
+
+- id: strands-sdk
+  text: "a Strands agent boils down to a model, a system prompt and a list of tools, and the model itself decides when to call which tool"
+  sources:
+    - https://aws.amazon.com/blogs/machine-learning/strands-agents-sdk-a-technical-deep-dive-into-agent-architectures-and-observability/
+  verified: 2026-11-21
+  half_life: 12
+  status: shipping
+
+- id: lost-in-middle
+  text: "information in the middle of long contexts is used least reliably (\"lost in the middle\", Liu et al. 2023)"
+  sources:
+    - https://arxiv.org/abs/2307.03172
+  verified: 2026-11-21
+  status: evergreen

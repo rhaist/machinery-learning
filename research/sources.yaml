@@ -1,0 +1,28 @@
+# Sources the monthly research run works through, in this order.
+# Primary sources first; commentary only to find primary sources, never cited in place of them.
+
+primary:
+  labs:
+    - https://www.anthropic.com/research
+    - https://openai.com/research/index
+    - https://deepmind.google/discover/blog/
+    - https://ai.meta.com/blog/
+    - https://www.deepseek.com/en
+    - https://qwenlm.github.io/blog/
+    - https://mistral.ai/news
+    - https://strandsagents.com/blog/
+  papers:
+    - https://huggingface.co/papers           # daily trending papers
+    - https://arxiv.org/list/cs.CL/recent
+    - https://arxiv.org/list/cs.LG/recent
+    - https://transformer-circuits.pub/        # interpretability
+  security:
+    - https://genai.owasp.org/                 # OWASP GenAI / LLM Top 10
+    - https://simonwillison.net/tags/prompt-injection/
+
+finding_aids:   # read to discover developments; always follow through to the primary source
+  - https://magazine.sebastianraschka.com/
+  - https://simonwillison.net/
+  - https://www.interconnects.ai/
+  - https://jack-clark.net/                    # Import AI
+  - https://www.deeplearning.ai/the-batch/

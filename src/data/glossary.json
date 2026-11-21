@@ -1,0 +1,282 @@
+{
+ "token": {
+  "term": "Token",
+  "def": "The unit a model reads and writes: usually a word piece of 3–4 characters. Context limits and API prices are counted in tokens."
+ },
+ "tokenizer": {
+  "term": "Tokenizer",
+  "def": "Fixed preprocessing that maps text to integer token IDs and back. Most use BPE (byte-pair encoding): start from bytes, then repeatedly merge the most frequent adjacent pair."
+ },
+ "vocab": {
+  "term": "Vocabulary",
+  "def": "The set of tokens a model knows, typically 100k–250k entries. Every output step is a choice among all of them."
+ },
+ "embedding": {
+  "term": "Embedding",
+  "def": "A learned vector (thousands of floats) per token, looked up by token ID. Similar meanings end up near each other in this high-dimensional space."
+ },
+ "params": {
+  "term": "Parameters / weights",
+  "def": "The learned numbers in the model's matrices. A '70B model' has 70 billion of them. The weights are the model's long-term memory, frozen after training."
+ },
+ "transformer": {
+  "term": "Transformer",
+  "def": "The 2017 architecture behind nearly all LLMs: a stack of identical blocks, each with an attention layer and an MLP, joined by residual connections."
+ },
+ "attention": {
+  "term": "Attention",
+  "def": "The layer where tokens exchange information. Each token's query is matched against earlier tokens' keys, and the result is a weighted mix of their values: a differentiable, fuzzy key-value lookup."
+ },
+ "qkv": {
+  "term": "Query, key, value",
+  "def": "Three vectors computed from each token by matrix multiplication. Score = query · key; softmax of the scores gives weights; output = weighted sum of values."
+ },
+ "head": {
+  "term": "Attention head",
+  "def": "One independent attention computation. Models run dozens in parallel per layer (multi-head attention), each free to track a different relation: syntax, coreference, position."
+ },
+ "causal": {
+  "term": "Causal mask",
+  "def": "The rule that a token may only attend to itself and earlier tokens, never later ones. It's what makes the model a left-to-right generator."
+ },
+ "mlp": {
+  "term": "MLP / feed-forward layer",
+  "def": "The per-token half of a block: two large matrix multiplications with a non-linearity in between. Holds much of the stored knowledge and roughly two-thirds of the parameters."
+ },
+ "residual": {
+  "term": "Residual stream",
+  "def": "The running vector for each token that flows through the stack. Each layer reads it and adds its output (x = x + layer(x)), like writing to a shared bus."
+ },
+ "layer": {
+  "term": "Layer / block",
+  "def": "One attention + MLP unit. Frontier models stack roughly 30–120+ of them."
+ },
+ "logits": {
+  "term": "Logits",
+  "def": "The model's raw, unnormalised score for every vocabulary token at the next position."
+ },
+ "softmax": {
+  "term": "Softmax",
+  "def": "Turns a vector of scores into probabilities: exponentiate each score, then divide by the sum."
+ },
+ "temperature": {
+  "term": "Temperature",
+  "def": "The logits are divided by this number before softmax. Below 1 sharpens the distribution (more deterministic); above 1 flattens it (more random)."
+ },
+ "topp": {
+  "term": "Top-p (nucleus) sampling",
+  "def": "Keep only the most likely tokens whose probabilities add up to p, renormalise, and sample from those. Cuts off the long tail of nonsense."
+ },
+ "sampling": {
+  "term": "Sampling / decoding",
+  "def": "Picking the actual next token from the distribution. Greedy decoding always takes the top token; sampling rolls weighted dice."
+ },
+ "autoregressive": {
+  "term": "Autoregressive",
+  "def": "Generating one token at a time and feeding each output back in as input for the next step."
+ },
+ "context": {
+  "term": "Context window",
+  "def": "Everything the model sees in one call: system prompt, conversation, documents, tool results. Working memory: exact, but gone after the call."
+ },
+ "kv": {
+  "term": "KV cache",
+  "def": "The stored keys and values of all earlier tokens, so each new token only computes its own. Saves compute, but memory grows linearly with context length, which is often the real bottleneck."
+ },
+ "inference": {
+  "term": "Inference",
+  "def": "Running a trained model to produce output, as opposed to training it. Most of an LLM's lifetime cost."
+ },
+ "pretraining": {
+  "term": "Pretraining",
+  "def": "Phase one: next-token prediction over trillions of tokens. Produces a base model with broad knowledge that autocompletes but doesn't follow instructions."
+ },
+ "base": {
+  "term": "Base model",
+  "def": "The raw output of pretraining. It continues text rather than answering: ask it a question and it may write five more questions."
+ },
+ "loss": {
+  "term": "Loss / cross-entropy",
+  "def": "The training signal: how surprised the model was by the actual next token (the negative log of the probability it assigned). Training nudges the weights to lower it, using gradient descent."
+ },
+ "scaling": {
+  "term": "Scaling laws",
+  "def": "The empirical finding that loss falls as a smooth power law in parameters, data and compute. It made frontier training a predictable engineering bet."
+ },
+ "sft": {
+  "term": "SFT (supervised fine-tuning)",
+  "def": "Training on example conversations written by people or stronger models, so the model learns the assistant format."
+ },
+ "rlhf": {
+  "term": "RLHF",
+  "def": "Reinforcement learning from human feedback: people rank answers, a reward model learns their preferences, and the LLM is optimised against that reward model."
+ },
+ "reward": {
+  "term": "Reward model",
+  "def": "A separate model that scores answers, trained on preference comparisons. It stands in for a human grader at scale."
+ },
+ "dpo": {
+  "term": "DPO",
+  "def": "Direct preference optimisation: trains directly on chosen-vs-rejected answer pairs, with no separate reward model. A cheaper alternative to RLHF."
+ },
+ "rlvr": {
+  "term": "RLVR",
+  "def": "RL with verifiable rewards: the reward comes from an automatic check, such as a matching math answer, passing tests or a finished agent task. The recipe behind reasoning models."
+ },
+ "cot": {
+  "term": "Chain of thought",
+  "def": "Intermediate reasoning the model writes out before answering. Reasoning models are trained to produce long, self-correcting chains."
+ },
+ "reasoning": {
+  "term": "Reasoning model",
+  "def": "A model trained, mostly with RLVR, to think at length before answering, e.g. o1, DeepSeek-R1 and their successors."
+ },
+ "ttc": {
+  "term": "Test-time compute",
+  "def": "Spending more computation at inference (longer reasoning, several attempts, voting) to get better answers. A second scaling axis alongside training compute."
+ },
+ "moe": {
+  "term": "Mixture of Experts (MoE)",
+  "def": "The MLP is split into many experts, and a small router picks a few per token. Huge total capacity, small per-token compute."
+ },
+ "gqa": {
+  "term": "GQA / MLA",
+  "def": "Grouped-query attention and multi-head latent attention: tricks that share or compress keys and values to shrink the KV cache."
+ },
+ "quant": {
+  "term": "Quantisation",
+  "def": "Storing weights in fewer bits (8, 4 or even fewer) to cut memory and speed up inference, at some quality cost. It's why a 70B model can run on a workstation."
+ },
+ "distill": {
+  "term": "Distillation",
+  "def": "Training a small model to imitate a large one's outputs. How most small, fast models get good."
+ },
+ "hallucination": {
+  "term": "Hallucination",
+  "def": "Fluent, confident output that is false. Partly structural: the model always produces a plausible continuation, whether or not it 'knows'."
+ },
+ "rag": {
+  "term": "RAG",
+  "def": "Retrieval-augmented generation: search a document store and paste the relevant passages into the context before the model answers."
+ },
+ "agent": {
+  "term": "Agent / tool use",
+  "def": "A loop where the model emits structured tool calls (search, shell, API), a harness executes them, and the results go back into the context."
+ },
+ "injection": {
+  "term": "Prompt injection",
+  "def": "Untrusted text in the context (a web page, an email, a file) that contains instructions the model then follows. Hard to fix because data and instructions share one channel."
+ },
+ "openweight": {
+  "term": "Open-weight",
+  "def": "A model whose trained weights can be downloaded (Llama, Qwen, DeepSeek, Mistral and others). Not necessarily open source: training data and code often aren't published."
+ },
+ "ssm": {
+  "term": "State-space model (SSM)",
+  "def": "A recurrent-style layer (e.g. Mamba) that compresses the past into a fixed-size state. Cost is linear in sequence length, but recall is lossy."
+ },
+ "linear": {
+  "term": "Linear attention",
+  "def": "Attention variants that avoid the n² score matrix, e.g. Gated DeltaNet. Usually mixed with a few full-attention layers in hybrid models."
+ },
+ "dlm": {
+  "term": "Diffusion language model",
+  "def": "Generates by starting from a fully masked sequence and filling in or refining many tokens in parallel over several passes, instead of strictly left to right."
+ },
+ "ttt": {
+  "term": "Test-time training (TTT)",
+  "def": "Updating some weights during inference, so what the model reads gets compressed into 'fast weights' instead of living only in the context window."
+ },
+ "latent": {
+  "term": "Latent reasoning",
+  "def": "Reasoning in hidden vectors instead of written-out tokens. Potentially more efficient, but harder to inspect."
+ },
+ "jepa": {
+  "term": "World model / JEPA",
+  "def": "Models that learn to predict how a situation evolves, in an abstract representation space rather than pixel by pixel or token by token. LeCun's Joint Embedding Predictive Architecture is one approach."
+ },
+ "arc": {
+  "term": "ARC-AGI",
+  "def": "A benchmark of small visual puzzles that test learning a new rule from a few examples. Easy for humans, historically hard for LLMs."
+ },
+ "benchmark": {
+  "term": "Benchmark",
+  "def": "A standard test set for comparing models. Useful, but prone to contamination (test data leaking into training) and gaming."
+ },
+ "jagged": {
+  "term": "Jagged frontier",
+  "def": "Uneven capability: superhuman on some tasks, failing on neighbouring ones that look easier to a human."
+ },
+ "slm": {
+  "term": "Small language model (SLM)",
+  "def": "The same architecture at roughly 0.5–15B parameters, usually distilled and quantised. Fast, cheap and runs locally, but with less knowledge and weaker long reasoning."
+ },
+ "decision": {
+  "term": "Decision model",
+  "def": "A pretrained transformer with its text-generating head swapped for one that scores a fixed set of options. It answers typed questions (yes/no, choice, score) with a probability per option in one forward pass. Examples: Jev (TypeSafe AI), Strands Decider (AWS, open weights)."
+ },
+ "harness": {
+  "term": "Agent harness / SDK",
+  "def": "The code loop around a model: holds the system prompt and tools, executes tool calls, manages context and retries. Examples include Strands Agents, the Claude Agent SDK and LangGraph."
+ },
+ "mcp": {
+  "term": "MCP (Model Context Protocol)",
+  "def": "An open protocol for connecting models to tools and data sources through standard servers, so a tool can be written once and used by any compatible harness."
+ },
+ "rope": {
+  "term": "RoPE (rotary position embedding)",
+  "def": "Encodes position by rotating query and key vectors by an angle that grows with position, so attention scores depend on the relative distance between tokens."
+ },
+ "induction": {
+  "term": "Induction head",
+  "def": "A two-head attention circuit that finds an earlier occurrence of the current token and predicts what followed it. A key mechanism behind in-context learning and pattern copying."
+ },
+ "prefill": {
+  "term": "Prefill vs decode",
+  "def": "Prefill processes the whole prompt in parallel (compute-bound). Decode generates one token per pass (memory-bandwidth-bound). The reason output tokens cost more than input tokens."
+ },
+ "pcache": {
+  "term": "Prompt caching",
+  "def": "Reusing the KV cache of a prefix the provider has recently processed, such as the system prompt and earlier turns of an agent session. Cheaper and faster, as long as the prefix stays identical."
+ },
+ "specdec": {
+  "term": "Speculative decoding",
+  "def": "A small draft model proposes several tokens and the large model verifies them in one parallel pass. Faster generation with the same output distribution."
+ },
+ "constrained": {
+  "term": "Constrained decoding",
+  "def": "Masking out tokens that would violate a grammar or JSON schema before sampling, so structured outputs and tool calls always parse."
+ },
+ "superposition": {
+  "term": "Superposition",
+  "def": "Packing many more features than dimensions into a vector space using nearly orthogonal directions. Why individual neurons usually respond to several unrelated things."
+ },
+ "rewardhack": {
+  "term": "Reward hacking",
+  "def": "An RL-trained model exploiting a flaw in its reward signal, e.g. making tests pass by editing the tests rather than fixing the code."
+ },
+ "contextrot": {
+  "term": "Context rot",
+  "def": "The decline in how well a model uses its context as the context gets long, including weaker recall of information in the middle."
+ },
+ "sycophancy": {
+  "term": "Sycophancy",
+  "def": "The tendency to agree with the user and abandon correct answers under pushback, absorbed from preference training."
+ },
+ "slopsquat": {
+  "term": "Slopsquatting",
+  "def": "Registering package names that models tend to hallucinate, so generated code with a non-existent dependency installs the attacker's package."
+ },
+ "policy": {
+  "term": "Policy",
+  "def": "RL term for the behaviour being optimised: a mapping from situations to actions. After RL, an LLM's next-token distribution is a policy whose actions happen to be tokens."
+ },
+ "scratchpad": {
+  "term": "Scratchpad",
+  "def": "Written-out intermediate tokens used as working memory. Each token adds another full pass through the network, giving the model serial computation beyond its fixed depth."
+ },
+ "cascade": {
+  "term": "Cascade / router",
+  "def": "A pattern where a cheap model handles every request, acts on the confident answers, and escalates the uncertain ones to a stronger model or a human."
+ }
+}

@@ -1,0 +1,9 @@
+---
+// Checkpoint question. answer = index of the correct option.
+const { q, options, answer, explain } = Astro.props;
+---
+<div class="quiz" data-answer={answer} data-explain={explain}>
+  <p class="qq"><b>Checkpoint.</b> {q}</p>
+  <div class="qo">{options.map((o: string, j: number) => <button type="button" data-j={j}>{o}</button>)}</div>
+  <p class="qe" hidden></p>
+</div>
