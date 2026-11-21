@@ -5,6 +5,7 @@ import '@fontsource/martian-mono/latin-500.css';
 import '../styles/global.css';
 import { glossary, site, byPart } from '../lib/data';
 import { getCollection } from 'astro:content';
+import Mark from '../components/Mark.astro';
 const { title, description = 'How AI like ChatGPT works, explained in plain language with interactive diagrams: language models, agents and AI security. Updated every month.', chapter = '', nav = '', og = 'home', type = 'website', modified = null, published = null, noindex = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const ogUrl = new URL(`${base}/og/${og}.png`, Astro.site).href;
@@ -59,7 +60,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
 </head>
 <body data-chapter={chapter} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
   <header class="site-head"><div class="in">
-    <a class="brand" href={`${base}/`}><i></i>{site.name}</a>
+    <a class="brand" href={`${base}/`}><Mark />{site.name}</a>
     <nav class="site-nav" aria-label="Main">{links.map(([k, label, href]) => <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>)}</nav>
     <button type="button" class="menu-btn" data-sheet-open aria-haspopup="dialog" aria-controls="sheet"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg><span>Menu</span></button>
   </div>{cur && <div class="read-progress" aria-hidden="true"><i></i></div>}</header>

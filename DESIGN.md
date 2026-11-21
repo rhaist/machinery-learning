@@ -123,7 +123,7 @@ The five elements that make a page recognisably ours. Use them as specified, now
 2. **Registration marks**: L-shaped corner marks 5px outside lab panels and chapter drawings. Not on cards, notes or debates.
 3. **Figure tags**: every lab panel in a chapter gets "Fig. n" on its top edge, numbered automatically. Don't number anything else.
 4. **Line-art plates**: chapter drawings are stroke-only (1.5px neutral, 1.75px colour), with a 14–18% tint inside coloured shapes, mono labels and gears drawn as rim, hub and teeth. Drawn at 800×220.
-5. **Crosshair mark**: the brand mark (amber circle with crosshair) in the header, favicon and share images.
+5. **Attention mark**: the brand mark, three tokens where the newest (amber) attends back to the earlier two (teal arcs). On a dark rounded tile in the header, favicon and phone icon; without the tile on share images. Built on a 32-unit grid, centred with a slight upward optical nudge, strokes no thinner than 2.8 units so it holds at 16px. Source: `public/favicon.svg`.
 
 Share images (`src/lib/og.ts`) use the dark tokens, the grid, registration marks, an amber mono kicker and the large light title.
 

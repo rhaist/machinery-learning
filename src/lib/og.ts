@@ -13,6 +13,8 @@ const fonts = [
   { name: 'Mono', data: font('martian-mono', 'martian-mono-latin-400-normal.woff'), weight: 400 as const, style: 'normal' as const },
   { name: 'Mono', data: font('martian-mono', 'martian-mono-latin-500-normal.woff'), weight: 500 as const, style: 'normal' as const },
 ];
+// The brand mark without its tile (the card is already dark); same geometry as public/favicon.svg.
+const MARK = 'data:image/svg+xml;base64,' + Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g fill="none" stroke="#4fc1c6" stroke-width="2.8" stroke-linecap="round"><path d="M26.3 17.12A9.85 9.85 0 0 0 6.6 17.12"/><path d="M22.9 17.12A3.65 3.65 0 0 0 15.6 17.12"/></g><circle cx="6.6" cy="21.52" r="3.0" fill="#4fc1c6"/><circle cx="15.6" cy="21.52" r="3.0" fill="#4fc1c6"/><circle cx="24.6" cy="21.52" r="3.8" fill="#f5b544"/></svg>').toString('base64');
 // Dark-theme values from the token block in global.css.
 const C = { bg: '#0d1014', ink: '#e6e8ea', mut: '#9ba2a9', line: '#262c34', amber: '#f5b544', grid: 'rgba(230,232,234,0.05)', mark: 'rgba(230,232,234,0.5)' };
 
@@ -27,11 +29,7 @@ const corner = (x: number, y: number, rot: number) =>
 export async function ogPng({ kicker, title, summary, footer }: { kicker: string; title: string; summary: string; footer: string }) {
   const content = h('div', { position: 'absolute', left: 80, top: 72, width: 1040, height: 486, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }, [
     h('div', { display: 'flex', alignItems: 'center', fontFamily: 'Mono', fontWeight: 500, fontSize: 22, letterSpacing: 2.5, textTransform: 'uppercase' }, [
-      h('div', { width: 26, height: 26, marginRight: 22, display: 'flex', position: 'relative' }, [
-        h('div', { position: 'absolute', left: 0, top: 0, width: 26, height: 26, borderRadius: 13, border: `2.5px solid ${C.amber}` }),
-        h('div', { position: 'absolute', left: 11.75, top: -6, width: 2.5, height: 38, background: C.amber }),
-        h('div', { position: 'absolute', top: 11.75, left: -6, height: 2.5, width: 38, background: C.amber }),
-      ]),
+      { type: 'img', props: { src: MARK, width: 40, height: 40, style: { marginRight: 20 } } },
       site.name,
     ]),
     h('div', { display: 'flex', flexDirection: 'column' }, [
