@@ -13,7 +13,7 @@ const count = (r: string) => radarEntries.filter(e => ringAt(e, month) === r).le
 const mins = (p: any) => p.chapters.reduce((t: number, { c }: any) => t + c.data.minutes, 0);
 const dur = (m: number) => m < 75 ? `about ${Math.round(m / 15) * 15 >= 60 ? 'an hour' : Math.round(m / 5) * 5 + ' minutes'}` : `about ${(Math.round(m / 30) / 2).toString().replace('.5', '½')} hours`;
 const first = parts[0].chapters[0].c;
-const p2 = parts.find(p => p.id === 'trust-security');
+const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c: any) => c.id === 'prompt-injection');
 ---
 <Base title={site.name} nav="">
   <section class="band home-hero"><div class="wrap">
@@ -24,7 +24,7 @@ const p2 = parts.find(p => p.id === 'trust-security');
         <div class="hero-cta">
           <a class="btn pri" id="hero-start" href={`${base}/learn/${first.id}/`}>Start reading</a>
           <p class="hero-meta" id="hero-meta">Chapter 0 · {first.data.minutes} minutes · nothing to sign up for</p>
-          {p2 && <p class="hero-alt">Working in security? <a href={`${base}/learn/${p2.chapters[0].c.id}/`}>Part 2 on trust and security</a> can be read on its own.</p>}
+          {pi && <p class="hero-alt">Here for security? Skip ahead to <a href={`${base}/learn/${pi.id}/`}>prompt injection</a>: why a stranger's email can take over your assistant. {pi.data.minutes} minutes, no earlier chapters needed.</p>}
         </div>
       </div>
       <div class="hero-side">
