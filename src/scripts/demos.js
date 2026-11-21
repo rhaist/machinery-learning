@@ -45,12 +45,17 @@ tk();
 }
 
 if (document.querySelector('#presets')) {
-$('#presets').insertAdjacentHTML('beforeend',P.map((p,i)=>`<button class="btn" type="button" data-i="${i}" aria-pressed="false">${p.l}</button>`).join(''));
 const st=$('#stack');
 st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay" style="--i:${i}"><b>block ${i===6?'N':i}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
-function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=tokenize(p.p);$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');$$('#presets button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===pi)));st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
-$('#presets').addEventListener('click',e=>{const b=e.target.closest('button');if(b){pi=+b.dataset.i;hero()}});
-hero();
+function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=tokenize(p.p);$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
+// cycles through the examples on its own; pausable (WCAG 2.2.2), stops off-screen, and never moves under reduced motion
+const pb=$('#h-pause');let paused=reduce,seen=true,tm=null;
+const tick=()=>{clearTimeout(tm);if(!paused&&seen&&!document.hidden)tm=setTimeout(()=>{pi=(pi+1)%P.length;hero();tick()},6000)};
+const label=()=>{pb.textContent=reduce?'Next example':paused?'Play':'Pause';pb.setAttribute('aria-pressed',String(paused&&!reduce))};
+pb.addEventListener('click',()=>{if(reduce){pi=(pi+1)%P.length;hero();return}paused=!paused;label();tick()});
+if('IntersectionObserver' in window)new IntersectionObserver(es=>{seen=es[0].isIntersecting;tick()}).observe(st);
+document.addEventListener('visibilitychange',tick);
+label();hero();tick();
 }
 
 if (document.querySelector('#attn')) {

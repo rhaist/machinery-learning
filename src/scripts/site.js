@@ -135,6 +135,8 @@ function markDone() {
   stations.forEach(d => d.classList.toggle('next', d.dataset.chapterLink === t));
   const k = $('#hm-key-next'); if (k) k.textContent = target ? 'continue here' : 'start here';
   const key = $('#hm-key'); if (key) key.hidden = !done.size;
+  // the map is a progress tool: show it once there is progress to show
+  const side = $('#hero-side'); if (side) side.hidden = !(done.size || target);
 }
 quizzes.forEach((el, i) => {
   const ans = +el.dataset.answer, ex = el.querySelector('.qe');

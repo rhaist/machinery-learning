@@ -19,16 +19,16 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
   <section class="band home-hero"><div class="wrap">
     <div class="htop">
       <div class="hero-copy">
-        <p class="kicker">{monthLabel(String(edition.month))} edition · {edition.subtitle}</p>
+        <p class="kicker">{monthLabel(String(edition.month))} edition</p>
         <h1>How AI like ChatGPT works, updated every month</h1>
+        <p class="lede">Most of us use AI tools every day without knowing what happens between typing a question and getting an answer. This guide explains it from the ground up, in plain language, with diagrams you can try.</p>
         <div class="hero-cta">
           <a class="btn pri" id="hero-start" href={`${base}/learn/${first.id}/`}>Start reading</a>
           <p class="hero-meta" id="hero-meta">Chapter 0 · {first.data.minutes} minutes · nothing to sign up for</p>
-          {pi && <p class="hero-alt">Here for security? Skip ahead to <a href={`${base}/learn/${pi.id}/`}>prompt injection</a>: why a stranger's email can take over your assistant. {pi.data.minutes} minutes, no earlier chapters needed.</p>}
         </div>
+        {pi && <p class="hero-alt">Here for security? Start with <a href={`${base}/learn/${pi.id}/`}>prompt injection</a> ({pi.data.minutes} min, no earlier chapters needed).</p>}
       </div>
-      <div class="hero-side">
-        <p class="lede">Most of us use AI tools every day without knowing what happens between typing a question and getting an answer. This guide explains it from the ground up, in plain language and with diagrams you can try. The boxes marked Engineer hold the technical detail for anyone who wants it. The field changes every month, so every fast-moving fact shows when it was last checked.</p>
+      <div class="hero-side" id="hero-side" hidden>
         <nav class="hero-map" aria-label="The whole guide at a glance">
           {parts.map(p => <div class="hm-part">
             <p class="hm-h"><span class="label">{p.title.replace(':', ' ·')}</span> <span class="hm-meta">{p.chapters.length} {p.chapters.length === 1 ? "chapter" : "chapters"} · {dur(mins(p))}</span></p>

@@ -1,6 +1,6 @@
 <div class="hero-demo">
-  <div class="row" id="presets"><span class="small">Pick a prompt and watch one generation step:</span></div>
-  <div class="pipe">
+  <div class="hd-bar" id="presets"><span class="small">One generation step, shown for three example prompts</span><button class="linkbtn small" type="button" id="h-pause" aria-pressed="false">Pause</button></div>
+  <div class="pipe" aria-live="off">
     <div class="stage"><h2 class="stage-h">Your text, as tokens</h2><div class="prompt" id="h-prompt"></div><div class="toks" id="h-toks"></div><p class="caption">Each token then becomes a long list of numbers (24 of thousands shown):</p><div class="vecs" id="h-vec"></div></div>
     <div class="stage"><h2 class="stage-h">Through the layers</h2><div class="stack" id="stack"></div></div>
     <div class="stage"><h2 class="stage-h">Next-token probabilities</h2><div class="bars" id="h-out"></div><p class="caption">Illustrative numbers. A real model scores all ~200k tokens in its vocabulary at once.</p></div>
