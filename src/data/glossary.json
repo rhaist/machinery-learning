@@ -418,5 +418,33 @@
  "spotlight": {
   "term": "Spotlighting / delimiting",
   "def": "Marking or encoding untrusted text so the model can tell it apart from real instructions. It helps, but doesn't guarantee safety."
+ },
+ "cve": {
+  "term": "CVE",
+  "def": "Common Vulnerabilities and Exposures: the public ID system for software flaws, like CVE-2026-1234. One ID per flaw, so everyone means the same bug."
+ },
+ "cvss": {
+  "term": "CVSS",
+  "def": "A 0 to 10 severity score for a flaw on its own. It doesn't know whether the flaw is being attacked or whether you even run the software."
+ },
+ "kev": {
+  "term": "KEV",
+  "def": "CISA's Known Exploited Vulnerabilities catalogue: flaws with public evidence of real attacks. The shortest useful 'fix this first' list."
+ },
+ "epss": {
+  "term": "EPSS",
+  "def": "Exploit Prediction Scoring System: a daily estimate of how likely a flaw is to be attacked in the next 30 days, published by FIRST."
+ },
+ "ssvc": {
+  "term": "SSVC",
+  "def": "Stakeholder-Specific Vulnerability Categorization: a decision tree from CISA and Carnegie Mellon that turns exploitation, exposure and impact into act now, schedule, or track."
+ },
+ "eol": {
+  "term": "End of life",
+  "def": "Software or hardware the vendor no longer supports. New flaws in it will be found, but never fixed."
+ },
+ "asset-inventory": {
+  "term": "Asset inventory",
+  "def": "The list of every system an organisation runs. You can't patch what isn't on it, and in large networks it is rarely complete."
  }
 }

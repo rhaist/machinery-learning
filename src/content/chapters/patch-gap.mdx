@@ -1,0 +1,90 @@
+---
+title: "Finding got cheap: AI and the patch gap"
+short: Patch gap
+order: 15
+part: trust-security
+summary: AI now finds software flaws faster than anyone can fix them. Why the hard part of security moved to patching, and what still works.
+minutes: 12
+updated: 2026-11-21
+---
+import Term from '../../components/Term.astro';
+import Claim from '../../components/Claim.astro';
+import Engineer from '../../components/Engineer.astro';
+import Note from '../../components/Note.astro';
+import Quiz from '../../components/Quiz.astro';
+import Debate from '../../components/Debate.astro';
+import PatchGap from '../../components/PatchGap.astro';
+
+The other chapters in this part are about attacks on AI. This one is about what AI is doing to security everywhere else. For decades, the slow step in software security was finding the flaws. In 2026 that changed: AI models now read code and find flaws at a pace no human team could match. Fixing them did not speed up.
+
+<Note title="The inspector with a drone">
+A building inspector used to walk a building for a week and find a dozen problems. Now a drone finds a thousand overnight. The repair crew is the same size as before. Some rooms aren't on the floor plan, and some doors were welded shut years ago. The building isn't any worse than it was last month. It's just that nobody can pretend not to know any more.
+</Note>
+
+## The wave you can see in the data
+
+Software flaws get a public ID, a <Term k="cve">CVE</Term>, and a severity score, <Term k="cvss">CVSS</Term>. Through 2025 the number published each month grew slowly. In the summer of 2026 it jumped, and the companies publishing them say why. <Claim id="msrc-ai" cap />. At Microsoft, <Claim id="ms-1413" />. The lab behind one of the strongest bug-finding models says the same from the other side: <Claim id="glasswing-bottleneck" />.
+
+The volume broke the system that catalogues it. <Claim id="nist-263" cap />. Everything else is published without that analysis, so security tools that relied on it now see less detail.
+
+<PatchGap />
+
+Look at the two charts together. The top one counts flaws found and published. The bottom one counts flaws that someone has confirmed attackers are actually using, from CISA's <Term k="kev">Known Exploited Vulnerabilities</Term> list. Both rise, but not at the same speed. <Claim id="zdi-childs" cap />.
+
+## How AI finds flaws
+
+There is no single trick. Models do several jobs that used to need scarce experts:
+
+- **Reading code like a reviewer who never gets tired**, function by function, asking what happens with unexpected input.
+- **Writing the test inputs**: generating thousands of strange inputs to see what crashes, and then explaining why.
+- **Looking for siblings**: once one flaw is known, finding the same mistake everywhere else it was copied.
+- **Reading patches**: comparing a fixed version with the old one shows exactly what was broken. Defenders use this to check fixes. Attackers use it to build exploits for everyone who hasn't patched yet.
+
+The last point is why a published patch starts a clock. Not every finding is real or dangerous, though. <Claim id="glasswing-vulncheck" cap />. Many more were duplicates, outside what the project treats as a security boundary, or still waiting for a human to check them.
+
+## Fixing didn't get cheaper
+
+A patch only helps once it is installed. Between "a fix exists" and "we are safe" sit the same steps as ever:
+
+- **Knowing what you own.** You can't patch a server, a camera or a laptop that isn't on your <Term k="asset-inventory">asset inventory</Term>, and in large networks that list is rarely complete.
+- **Getting a fix at all.** Appliances and embedded devices wait for the vendor. <Claim id="ncsc-legacy" cap />: <Term k="eol">end-of-life</Term> systems that will collect new findings and never a fix.
+- **Finding a window.** Factories, hospitals and payment systems can't reboot whenever a patch lands. Each update has to be tested so it doesn't break the business it protects.
+
+None of this is new. It's the basic hygiene that security teams have asked for since the beginning, and the gaps were survivable while flaws trickled in. They aren't now. <Claim id="dbir-31" cap />, and <Claim id="dbir-43" />.
+
+## Crisis or backlog?
+
+<Debate id="ai-vuln-wave" />
+
+## What still works
+
+The answer isn't to patch everything faster. Nobody can. It's to patch the right things first and make the rest harder to reach. <Claim id="ncsc-wave" cap />.
+
+- **Fix what attackers are actually using.** Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else.
+- **Start at the edge.** Firewalls, VPN gateways and anything reachable from the internet come first, because attackers scan for them within hours.
+- **Know what you own.** An accurate asset inventory is the control every other control depends on.
+- **Shield what you can't fix.** Separate old systems from the rest of the network, put filters in front of them, and plan their replacement instead of waiting for a patch that won't come.
+
+<Note title="Everyday habits" kind="key">
+- Turn on automatic updates everywhere they exist, including your router, phone and smart-home devices.
+- Replace devices that no longer get updates, even if they still work.
+- If you run anything for others, a small office, a club, a family network, write down what's on it. You can't fix what you've forgotten.
+</Note>
+
+<Engineer title="Running vulnerability management at AI volume">
+When disclosure volume multiplies, a process built on reading every advisory stops working. Triage has to be automated, and inventory has to be right.
+
+**Prioritise on exploitation and exposure.** CVSS scores a flaw in isolation. Combine it with KEV status, EPSS probability and your own exposure (internet-facing or not, reachable code or not). <Term k="ssvc">SSVC</Term>, which the NCSC recommends, turns those inputs into a decision: act now, schedule, or track.
+
+**Cut the list with reachability.** Software bills of materials tell you which components you ship. Reachability analysis and vendor VEX statements tell you whether the vulnerable code path can actually run. Most critical CVEs in the chart above will never touch a given organisation. The work is proving which ones do.
+
+**Treat inventory as a security control.** Reconcile the asset database against network discovery and external attack-surface scans. Unknown assets are where "the basics" bite: they never get scanned, so their flaws never reach a ticket.
+
+**Expect the patch to start the clock.** AI can read a patch and work out the flaw it fixes, so the time between a vendor's release and working exploits keeps shrinking. Give internet-facing systems a pre-approved emergency change path, and measure time to remediate per tier rather than overall.
+
+**Don't trust one data source.** Since April 2026 NVD enriches only a minority of CVEs, so scanners that match on NVD product data can silently miss findings. Pull vendor advisories, the CNA records themselves and ecosystem databases such as OSV.
+
+**Use AI on your side too.** Models are good at summarising advisories, mapping them to your inventory and drafting fixes for code you own. They can't patch an appliance whose vendor hasn't shipped a fix. That part stays a contract, budget and replacement problem.
+</Engineer>
+
+<Quiz q="Your scanner reports hundreds of new critical CVEs this month. What should you fix first?" options={["The ones with the highest CVSS scores","The ones on internet-facing systems that attackers are known to exploit, for example those on CISA's KEV list","The oldest ones first, to clear the backlog","Whichever ones an AI tool found, because those are newest"]} answer={1} explain="CVSS rates a flaw in isolation. Evidence of real attacks plus exposure to the internet is the best signal of what will hurt you soon. Most critical CVEs are never exploited." />

@@ -72,6 +72,12 @@ your-data:
   - { title: "Gemini Apps Privacy Hub", by: Google, year: 2026, url: "https://support.google.com/gemini/answer/13594961", why: "Human review and retention, from the source.", beginner: true }
   - { title: "Scalable Extraction of Training Data from (Production) Language Models", by: "Nasr, Carlini et al.", year: 2023, url: "https://arxiv.org/abs/2311.17035", why: "How memorised data comes back out." }
   - { title: "EDPB Opinion 28/2024 on AI models", by: European Data Protection Board, year: 2024, url: "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en", why: "How GDPR applies to trained models." }
+patch-gap:
+  - { title: "Preparing for a vulnerability patch wave", by: UK NCSC, year: 2026, url: "https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf", why: "The clearest official guidance on what to do now, legacy systems included.", beginner: true }
+  - { title: "2026 Data Breach Investigations Report", by: Verizon, year: 2026, url: "https://www.verizon.com/about/news/breach%2Dindustry%2Dwide%2Ddbir%2Dfinds", why: "How breaches actually start, and how long patching really takes.", beginner: true }
+  - { title: "Project Glasswing: an initial update", by: Anthropic, year: 2026, url: "https://www.anthropic.com/news/glasswing-initial-update", why: "An AI lab's own account of finding flaws faster than they can be fixed." }
+  - { title: "After 7 months, Glasswing overwhelms maintainers with underwhelming findings", by: Patrick Garrity (VulnCheck), year: 2026, url: "https://www.vulncheck.com/blog/anthropic-glasswing-november-update", why: "The sceptical count: how many findings were real, fixed or exploited." }
+  - { title: "NIST updates NVD operations to address record CVE growth", by: NIST, year: 2026, url: "https://www.nist.gov/news-events/news/2026/04/nist-updates-nvd-operations-address-record-cve-growth", why: "Why the public vulnerability database stopped analysing every CVE." }
 judging-claims:
   - { title: "Why SWE-bench Verified no longer measures frontier coding capabilities", by: OpenAI, year: 2026, url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/", why: "A lab explaining why its own flagship benchmark stopped working." }
   - { title: "The Leaderboard Illusion", by: Singh et al., year: 2025, url: "https://arxiv.org/abs/2504.20879", why: "How leaderboards can be gamed; read with LMArena's response." }

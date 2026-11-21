@@ -364,3 +364,29 @@ debates:
     settle: Whether gains from more practice and compute keep showing up in real-world work, not just benchmarks, over the next few model generations.
     verified: 2026-11-21
     half_life: 6
+
+  - id: ai-vuln-wave
+    question: Is the AI vulnerability wave a real rise in risk, or mostly a bigger pile of paperwork?
+    why: Disclosures have multiplied in a few months, but confirmed attacks have grown much less.
+    sides:
+      - label: A real rise in risk
+        who: UK NCSC; Verizon's breach report; many practitioners running patch programmes
+        points:
+          - Every disclosed flaw is also a map for attackers, and a patch shows exactly what changed.
+          - Exploited vulnerabilities are now the most common way breaches start, while patching is getting slower.
+          - Old, unsupported systems will never get fixes, so the debt only moves from unknown to known.
+        sources:
+          - https://www.ncsc.gov.uk/sites/default/files/2026-10/Preparing-for-a-%E2%80%98vulnerability-patch-wave%E2%80%99.pdf
+          - https://www.verizon.com/about/news/breach%2Dindustry%2Dwide%2Ddbir%2Dfinds
+      - label: Mostly a bigger haystack, for now
+        who: Dustin Childs (Zero Day Initiative); Patrick Garrity (VulnCheck)
+        points:
+          - Discovery is scaling faster than exploitation; confirmed attacks have risen far less than disclosures.
+          - Many AI findings are duplicates, out of scope or never fixed, and very few have been exploited.
+          - Teams that triage by count instead of exploitability waste effort on the wrong bugs.
+        sources:
+          - https://cyberscoop.com/microsoft-patch-tuesday-october-2026/
+          - https://www.vulncheck.com/blog/anthropic-glasswing-november-update
+    settle: A year of exploitation data (CISA's list, breach reports) showing whether attacks rise in step with disclosures, or stay flat while the backlog grows.
+    verified: 2026-11-21
+    half_life: 3

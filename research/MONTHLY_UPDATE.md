@@ -27,8 +27,9 @@ This file is the complete instruction set for the monthly research run, whether 
 6b. **Further reading** (`src/data/reading.yaml`). Replace dead links; add a source only if it's primary or a clearly better beginner explanation. Keep each chapter to about four or five items.
 7. **Write the field notes** at `src/content/notes/YYYY-MM.md`: what changed and why it matters for understanding or use, what to be sceptical about, what we're watching. 400–800 words. Plain language. No hype.
 8. **Edition subtitle (rarely).** Propose a new subtitle in `src/data/site.yaml` only when the field's centre of gravity has visibly shifted, never just for freshness. Add a new entry at the top of `editions`; never edit old ones. The name and tagline are not changed by the monthly update.
-9. **Corrections.** If anything already published turns out to be wrong, fix it and add an entry to `src/data/corrections.yaml` (date, page, what it said, what it says now, `found_by: monthly review`). Also handle open GitHub issues labelled `correction`.
-10. **Check.** Run `npm run check` (claims, figures, design, build). It must pass. New or changed components follow `DESIGN.md`.
+9. **Vulnerability data.** Run `python3 scripts/vuln-wave.py` to refresh `src/data/vulnwave.json` (the chart in the patch-gap chapter). It downloads public NVD and CISA KEV feeds from GitHub and takes a minute. Commit the JSON only. If the chart changes the chapter's story (for example, exploitation starts rising as fast as disclosure), say so in the field notes; don't edit the script.
+10. **Corrections.** If anything already published turns out to be wrong, fix it and add an entry to `src/data/corrections.yaml` (date, page, what it said, what it says now, `found_by: monthly review`). Also handle open GitHub issues labelled `correction`.
+11. **Check.** Run `npm run check` (claims, figures, design, build). It must pass. New or changed components follow `DESIGN.md`.
 
 ## Pull request description
 
