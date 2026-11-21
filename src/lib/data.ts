@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import { load as parseYaml } from 'js-yaml';
 
 const dataDir = path.resolve('src/data');
-const load = (f: string) => yaml.load(fs.readFileSync(path.join(dataDir, f), 'utf8')) as any;
+const load = (f: string) => parseYaml(fs.readFileSync(path.join(dataDir, f), 'utf8')) as any;
 
 export type Claim = {
   id: string; text: string; sources?: string[]; verified: string | Date;

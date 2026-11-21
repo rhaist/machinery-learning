@@ -4,7 +4,7 @@
 //   --strict exits 1 if any claim is stale (past 2x half-life). Used by the monthly update and CI.
 import fs from 'node:fs';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import { load as parseYaml } from 'js-yaml';
 
 const args = process.argv.slice(2);
 const asOfArg = args.includes('--as-of') ? args[args.indexOf('--as-of') + 1] : null;
@@ -12,7 +12,7 @@ const today = asOfArg ? new Date(asOfArg + 'T00:00:00Z') : new Date();
 const strict = args.includes('--strict');
 
 const iso = d => (d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
-const claims = yaml.load(fs.readFileSync('src/data/claims.yaml', 'utf8')).map(c => ({ ...c, verified: iso(c.verified) }));
+const claims = parseYaml(fs.readFileSync('src/data/claims.yaml', 'utf8')).map(c => ({ ...c, verified: iso(c.verified) }));
 const chapterDir = 'src/content/chapters';
 const used = new Set();
 for (const f of fs.readdirSync(chapterDir)) {
@@ -37,7 +37,7 @@ for (const c of claims) {
 }
 for (const id of used) if (!ids.has(id)) problems.push(`chapter references unknown claim: ${id}`);
 // debates: both sides need sources; same freshness rules as claims
-const debates = (yaml.load(fs.readFileSync('src/data/debates.yaml', 'utf8'))?.debates ?? []).map(d => ({ ...d, verified: iso(d.verified) }));
+const debates = (parseYaml(fs.readFileSync('src/data/debates.yaml', 'utf8'))?.debates ?? []).map(d => ({ ...d, verified: iso(d.verified) }));
 for (const d of debates) {
   if (!d.sides || d.sides.length !== 2) problems.push(`debate needs exactly two sides: ${d.id}`);
   for (const sd of d.sides ?? []) if (!(sd.sources && sd.sources.length)) problems.push(`debate side without sources: ${d.id} / ${sd.label}`);
