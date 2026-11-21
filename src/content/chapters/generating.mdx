@@ -9,6 +9,7 @@ updated: 2026-11-21
 import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
 import Note from '../../components/Note.astro';
+import Claim from '../../components/Claim.astro';
 import Quiz from '../../components/Quiz.astro';
 import Sampler from '../../components/Sampler.astro';
 import Debate from '../../components/Debate.astro';
@@ -32,6 +33,10 @@ Newer <Term k="reasoning">reasoning models</Term> first write out a long draft, 
 
 <Note title="Why 'temperature 0' still isn't perfectly repeatable" kind="key">
 Even when the model always takes the most likely token, your request is processed together with other people's, and the size of that batch subtly changes the arithmetic. Occasionally that tips a close call the other way.
+</Note>
+
+<Note title="Security lens" kind="warn">
+Sampling produces fluent, plausible text, and a plausible name isn't necessarily a real one. That includes the names of software packages: <Claim id="pkg-hallucination" />. Attackers register the invented names and wait. [Poisoned ingredients](/learn/supply-chain/) in Part 3 covers this "slopsquatting" and how to defend against it.
 </Note>
 
 <Engineer title="Softmax, KV cache, pricing and decoding tricks">

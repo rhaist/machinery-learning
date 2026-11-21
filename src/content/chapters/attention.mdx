@@ -34,6 +34,10 @@ Older language models read text strictly word by word and had to squeeze everyth
 
 This has a price that comes back in later chapters: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
 
+<Note title="Security lens" kind="warn">
+Attention lets every token draw on every earlier token, whoever wrote it. Your instructions, the system prompt and a web page the model just read all sit in the same sequence, and nothing in the mechanism marks some of them as commands and the rest as data. That missing wall is why [prompt injection](/learn/prompt-injection/) works, and why Part 3 treats it as a design problem rather than a bug to patch.
+</Note>
+
 <Engineer title="Query, key, value: attention as a soft lookup">
 Attention works like a lookup in a hash table, except that every entry matches a little and the results are blended.
 

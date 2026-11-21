@@ -38,6 +38,10 @@ A number like 892 means nothing by itself. So each token number is translated in
 
 <EmbeddingMap />
 
+<Note title="Security lens" kind="warn">
+A model reads tokens, while many filters read words. A blocklist that looks for a phrase can miss it when it's split with spaces, written in another language or encoded, yet the model may still understand it perfectly. That's one reason filtering text before it reaches a model is a weak defence, as [Prompt injection](/learn/prompt-injection/) in Part 3 explains.
+</Note>
+
 <Engineer title="Tokenizers and embedding tables">
 A <Term k="tokenizer">tokenizer</Term> is a fixed lookup step in front of the model. It turns text into integer IDs, and IDs back into text. It is built before the model is trained and rarely changes afterwards; adding tokens later means resizing the model's tables.
 

@@ -32,6 +32,10 @@ Reading the library (pretraining) gives broad knowledge. An apprenticeship with 
 - **Why they don't know last month's news:** the reading stage is a snapshot. Anything newer exists for the model only if a tool or you put it into the conversation.
 - **Why a coding agent sometimes "fixes" a test by changing the test:** in practice exams, a passing test was the reward. Models can learn shortcuts that earn the reward without doing what was meant.
 
+<Note title="Security lens" kind="warn">
+Every training stage learns from data someone supplied, and anyone can write to the web. <Claim id="poison-250" cap />. Training against automatic checks has its own failure: models learn to satisfy the check rather than do the job. [Poisoned ingredients](/learn/supply-chain/) covers the first problem, [When agents fail](/learn/agent-failures/) the second.
+</Note>
+
 <Engineer title="Scaling laws, synthetic data and reward hacking">
 <Term k="pretraining">Pretraining</Term> minimises one number, the cross-entropy <Term k="loss">loss</Term>: how surprised the model is, on average, by the actual next token. <Term k="scaling">Scaling laws</Term> describe how that loss falls as a smooth power law when parameters, data and compute grow together ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361)). That predictability made frontier training a calculable engineering bet, because labs could forecast a big run's loss from small ones. The Chinchilla study ([Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)) then showed that many earlier models were too big for their data: for a fixed compute budget, a smaller model trained on more tokens does better. Pick a budget and see where the lowest loss falls:
 
