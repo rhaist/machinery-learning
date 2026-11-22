@@ -1,11 +1,19 @@
 ---
 title: "Where your words go: your data and the model"
 short: Your data
-order: 17
+order: 16
 part: trust-security
 summary: Training, retention, human review, memory and share links, explained without the legalese, plus what EU law says.
 minutes: 12
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain what can happen to your words after a chat ends"
+  - "Tell consumer and business AI products apart by how they handle data"
+  - "Pick the right tool and settings for sensitive material"
+takeaways:
+  - "The model doesn't learn during your chat, but your words may be stored, reviewed or used to train a later model."
+  - "The plan matters more than the provider: consumer and business products follow different rules."
+  - "A share link is publishing, and a local model moves the security work to you."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -35,7 +43,7 @@ Deletion isn't always the end either. <Claim id="nyt-hold" cap />. A <Term k="le
 
 Even if nobody stores your chat, what about text that went *into* training? Models mostly learn patterns, but they also <Term k="memorization">memorise</Term> some rare or often-repeated text word for word, like a student who learned a few textbook pages by heart, phone numbers included.
 
-That memory can be pulled back out. <Claim id="extraction-chatgpt" cap />. Long copyrighted texts too: <Claim id="books-extraction" />. Practical rule: assume anything public on the web may be inside a model somewhere.
+That memory can be pulled back out. <Claim id="extraction-chatgpt" cap />. Practical rule: assume anything public on the web may be inside a model somewhere.
 
 <Debate id="models-contain-data" />
 
@@ -45,7 +53,7 @@ Two convenience features deserve their own warning. Memory lets an assistant kee
 
 ## What EU law says
 
-If you're in Europe, two sets of rules matter. GDPR already applies: the European data protection board says whether a model counts as "anonymous" must be judged case by case, and Italy's regulator fined OpenAI €15 million in 2024, though a Rome court annulled the fine in March 2026 because the case belonged with the Irish regulator. The EU AI Act adds duties for model makers: <Claim id="eu-gpai" />. Its timetable moved this year: <Claim id="eu-omnibus" />. None of this changes what a chatbot does with your words today; your provider's terms and settings do.
+If you're in Europe, two sets of rules matter. GDPR already applies to what providers do with personal data. The EU AI Act adds duties for model makers: <Claim id="eu-gpai" />. None of this changes what a chatbot does with your words today; your provider's terms and settings do.
 
 ## Local isn't automatically safe
 
@@ -76,6 +84,13 @@ Settle in contracts and settings what you would otherwise have to hope for.
 - High-risk rules in December 2027 and August 2028.
 
 The Omnibus is Regulation (EU) 2026/1744, published in the Official Journal on 24 July 2026 and in force since 27 July 2026.
+**Long texts can be extracted too.** <Claim id="books-extraction" cap />.
+
+**EU detail.** The European data protection board says whether a model counts as "anonymous" must be judged case by case. Italy's regulator fined OpenAI €15 million in 2024, though a Rome court annulled the fine in March 2026 because the case belonged with the Irish regulator. The AI Act's timetable moved this year: <Claim id="eu-omnibus" />.
 </Engineer>
 
-<Quiz q="You delete a chat in a consumer chatbot. Which statement is most accurate?" options={["It is gone from the provider's servers immediately","It may still be kept for a while, for example for abuse checks, human review or a court order","It is removed from the trained model's weights","It is automatically shared with other users"]} answer={1} explain="Deletion starts a clock, not an instant wipe. Abuse-monitoring windows, reviewed samples and legal holds can all keep copies. Only setups that never store the text avoid this." />
+<Quiz kind="recall" q="You delete a chat in a consumer chatbot. Which statement is most accurate?" options={["It is gone from the provider's servers immediately","It may still be kept for a while, for example for abuse checks, human review or a court order","It is removed from the trained model's weights","It is automatically shared with other users"]} answer={1} explain="Deletion starts a clock, not an instant wipe. Abuse-monitoring windows, reviewed samples and legal holds can all keep copies. Only setups that never store the text avoid this." />
+
+<Quiz kind="apply" q="You want help rewording a letter that contains a client's personal details. What fits this chapter?" options={["Use your employer's approved tool, or take the personal details out first","Share the chat by link so that a colleague can check it","Delete the chat afterwards, which removes it everywhere at once","Paste it into any free chatbot; chats are private"]} answer={0} explain="Consumer chats may be stored, reviewed or used for training, and deleting isn't always the end. Business tools come with written promises, and data you never paste can't leak." />
+
+<Quiz kind="mistake" q="'I run the model on my own server, so data protection is taken care of.' What is wrong?" options={["Nothing: local means safe","Local models send everything to the vendor anyway","Running it yourself removes the provider but makes you responsible. An exposed or unpatched model server is a risk of its own","Local models can't process personal data"]} answer={2} explain="Local moves the risk to you. The server needs authentication, updates and access control like any other system holding sensitive data." />

@@ -1,9 +1,11 @@
 ---
 // Checkpoint question. answer = index of the correct option.
-const { q, options, answer, explain } = Astro.props;
+// kind (optional): recall | apply | mistake. Chapters end with one of each.
+const { q, options, answer, explain, kind, label: custom } = Astro.props;
+const label = custom ?? ({ recall: 'Recall.', apply: 'Apply it.', mistake: 'Spot the mistake.' } as Record<string, string>)[kind] ?? 'Checkpoint.';
 ---
 <div class="quiz" data-answer={answer} data-explain={explain}>
-  <p class="qq"><b>Checkpoint.</b> {q}</p>
+  <p class="qq"><b>{label}</b> {q}</p>
   <div class="qo">{options.map((o: string, j: number) => <button type="button" data-j={j}>{o}</button>)}</div>
   <p class="qe" hidden></p>
 </div>

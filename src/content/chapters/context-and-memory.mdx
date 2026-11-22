@@ -1,11 +1,19 @@
 ---
 title: "What the agent sees: context, memory and plug-ins"
 short: Context and memory
-order: 11
+order: 9
 part: agents
 summary: "The model only knows what the harness puts in front of it: how the context fills up, what product \"memory\" really is, how tools plug in, and where agent code should run."
 minutes: 13
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain why an agent only knows what its harness puts in front of it"
+  - "Say what product memory is, and why it goes stale"
+  - "Compare the places agent code can run, from your laptop to an isolated machine"
+takeaways:
+  - "The model only knows what is in its context. A bigger window doesn't mean everything in it is used well."
+  - "Product memory is saved text that gets pasted back in later. It can be stale or wrong, and the model can't tell."
+  - "Tool descriptions, instruction files and skills are all text that steers the agent. Treat them like code from a stranger."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -24,7 +32,7 @@ Think of the context as a desk and the harness as a clerk. The clerk decides whi
 
 ## A desk with limits
 
-The desk has grown fast. <Claim id="claude-1m" cap />, roughly the length of several novels. But a bigger desk doesn't mean everything on it gets read well. <Claim id="lost-in-middle" cap />. <Claim id="nolima" cap />. The [strengths and limits chapter](/learn/strengths-and-limits/) explains why. For agents the practical lesson is that the context is a budget to spend carefully, not a bin to fill. <Claim id="ctx-finite" cap />.
+The desk has grown fast. <Claim id="claude-1m" cap />, roughly the length of several novels. But a bigger desk doesn't mean everything on it gets read well. <Claim id="lost-in-middle" cap />. The [strengths and limits chapter](/learn/strengths-and-limits/) explains why. For agents the practical lesson is that the context is a budget to spend carefully, not a bin to fill.
 
 Choosing what goes on the desk at each step now has a name, <Term k="ctxeng">context engineering</Term>, and it is most of what separates a good harness from a bad one. When the desk fills up anyway, the harness falls back on <Term k="compaction">compaction</Term>: it summarises the conversation so far and starts again from the summary. Try it:
 
@@ -44,11 +52,11 @@ It works less well than the name suggests. <Claim id="longmemeval" cap />. Memor
 
 Agents need tools and data to work with. Instead of every product wiring up every service by hand, a few shared formats have emerged:
 
-- **MCP** (Model Context Protocol) is a standard plug for tools and data: a mail server, a database or a ticketing system describes its tools once, and any agent that speaks MCP can use them. <Claim id="aaif" cap />. <Claim id="mcp-stateless" cap />.
+- **MCP** (Model Context Protocol) is a standard plug for tools and data: a mail server, a database or a ticketing system describes its tools once, and any agent that speaks MCP can use them.
 - **Instruction files** such as AGENTS.md are a README for agents: the harness pastes them into the context at the start of a session.
 - **<Term k="skill">Skills</Term>** package know-how. <Claim id="skills" cap />. The harness loads a skill only when a task calls for it, which keeps the desk clear.
 
-All three are ways of getting text into the context: tool descriptions, instructions, results. That text steers the agent. <Claim id="tool-desc" cap />. It's also why the same model can do very differently in different products. <Claim id="harness-matters" cap />. A benchmark score belongs to a model *and* its harness, tools and settings, never to the model alone.
+All three are ways of getting text into the context: tool descriptions, instructions, results. That text steers the agent. It's also why the same model can do very differently in different products. <Claim id="harness-matters" cap />. A benchmark score belongs to a model *and* its harness, tools and settings, never to the model alone.
 
 <Note title="Security note: where the agent's code runs" kind="warn">
 Everything that enters the context can carry instructions: a tool description, a file, a web page, even a stored memory. <Claim id="spaiware-fix" cap />. Treat skills, instruction files and MCP servers like code from a stranger, as [Giving an AI the keys](/learn/agents-permissions/) explains.
@@ -57,7 +65,7 @@ Agents also run code, so it matters *where*. The options form a ladder, from a p
 
 <IsolationLadder />
 
-Cloud services that run agent code have largely settled on <Term k="microvm">microVMs</Term>. <Claim id="firecracker" cap />, cheap enough to give every session its own. <Term k="gvisor">gVisor</Term> is the main alternative, and its makers are clear about its limits: <Claim id="gvisor-sidechannel" />. On your own computer, protection is usually thinner. <Claim id="cc-sandbox" cap />.
+Cloud services that run agent code have largely settled on <Term k="microvm">microVMs</Term>, small virtual machines that start fast enough to give every session its own. On your own computer, protection is usually thinner. <Claim id="cc-sandbox" cap />.
 
 The most serious escapes so far went through a permitted path rather than through the isolation itself. <Claim id="openai-artifactory" cap />. Official guidance has caught up: <Claim id="ncsc-agents" />.
 </Note>
@@ -76,6 +84,15 @@ The context is assembled fresh for every call, so every design choice in a harne
 **Choose the sandbox by threat, not by habit.** OS-level sandboxes (Seatbelt, bubblewrap, Landlock with seccomp) are fine against an agent that makes mistakes on your own machine, provided they cover every tool, including file tools and MCP servers, and the unsandboxed escape hatch is disabled. Containers share the host kernel; treat them as packaging, not a security boundary, for untrusted code. For code from untrusted input or from many users, use gVisor or a microVM per session, ideally on hosts that run nothing else.
 
 **The network and the credentials are the real perimeter.** Route all traffic through a proxy outside the sandbox with a default-deny allowlist, keep secrets out of the sandbox (inject them at the proxy or use a credential broker), give each agent its own short-lived identity, and log every request. Allowed services are attack surface too: a package cache or internal API the sandbox may reach is where escapes have actually happened.
+**How fast long contexts degrade.** <Claim id="nolima" cap />. <Claim id="ctx-finite" cap />.
+
+**Where MCP stands.** <Claim id="aaif" cap />. <Claim id="mcp-stateless" cap />. <Claim id="tool-desc" cap />.
+
+**The isolation numbers.** <Claim id="firecracker" cap />. <Term k="gvisor">gVisor</Term> is the main alternative, and its makers are clear about its limits: <Claim id="gvisor-sidechannel" />.
 </Engineer>
 
-<Quiz q="An agent forgot a detail you mentioned at the start of a long session. What is the most likely reason?" options={["The model's weights decided to delete it","The context filled up and the harness compacted it into a summary that left the detail out","The detail was stored in the model's long-term memory and expired","The provider deletes everything older than an hour"]} answer={1} explain="The model only sees what's in its context. When it fills up, the harness summarises older parts, and summaries drop details nobody flagged. Notes files and memory features exist to bring such facts back." />
+<Quiz kind="recall" q="An agent forgot a detail you mentioned at the start of a long session. What is the most likely reason?" options={["The model's weights decided to delete it","The context filled up and the harness compacted it into a summary that left the detail out","The detail was stored in the model's long-term memory and expired","The provider deletes everything older than an hour"]} answer={1} explain="The model only sees what's in its context. When it fills up, the harness summarises older parts, and summaries drop details nobody flagged. Notes files and memory features exist to bring such facts back." />
+
+<Quiz kind="apply" q="You start a long agent session with one hard rule, for example a folder that must never be changed. How do you make the rule survive the whole task?" options={["Put it in a notes or instruction file that the harness reloads, because compaction can drop details","Write it in capital letters","Say it once at the start; the model will remember","Pick a model with a larger window and assume everything in it is read"]} answer={0} explain="When the context fills up, the harness summarises it, and summaries lose details. A file that is loaded again each time doesn't depend on the summary." />
+
+<Quiz kind="mistake" q="Which statement is wrong?" options={["A benchmark score belongs to a model together with its harness and tools","Memory features write text somewhere and paste it back in later","A tool's description is documentation for people and can't change what the agent does","Compaction keeps the gist and can lose details"]} answer={2} explain="The model reads tool descriptions on every call. They steer its behaviour like any other text in the context, which is also why a malicious description is an attack." />

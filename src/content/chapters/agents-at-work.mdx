@@ -1,11 +1,19 @@
 ---
 title: "Agents at work: code, computers and long tasks"
 short: Agents at work
-order: 12
+order: 11
 part: agents
 summary: "Agents do best where every step can be checked. What they handle today, how long a job you can hand over, and why benchmark results and real work disagree."
 minutes: 13
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Predict where agents do well: tasks where each step can be checked"
+  - "Read a time-horizon number correctly"
+  - "Explain why benchmark scores and everyday results disagree"
+takeaways:
+  - "Agents do best where the world answers back at every step. A test suite is the clearest example."
+  - "A time horizon at even odds is not a promise. At higher reliability, the same agent manages much shorter tasks."
+  - "A benchmark score describes fixed tasks. Judge agents on your own work, at the reliability you need."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -15,7 +23,7 @@ import Quiz from '../../components/Quiz.astro';
 import Debate from '../../components/Debate.astro';
 import HorizonExplorer from '../../components/HorizonExplorer.astro';
 
-The first two chapters of this part explained how an agent works. This one asks what it actually gets done, which depends less on how clever the model is than on one property of the task: can anyone tell, cheaply and right away, whether a step worked?
+The first three chapters of this part explained how an agent is put together. This one asks what it actually gets done, which depends less on how clever the model is than on one property of the task: can anyone tell, cheaply and right away, whether a step worked?
 
 <Note title="The apprentice and the spirit level">
 Give an apprentice a shelf to hang and a spirit level, and they'll get it straight: every adjustment shows at once whether it helped. Ask the same apprentice to make a room "feel more welcoming" and they'll work just as hard with far less to go on. Agents are the same. Where the world answers back clearly, they improve with every step. Where it doesn't, they guess.
@@ -25,29 +33,29 @@ Give an apprentice a shelf to hang and a spirit level, and they'll get it straig
 
 Programming is the clearest case of a task that answers back. A coding agent reads the project, makes a change, runs the tests and reads the result, as [the agent loop chapter](/learn/agent-loop/) showed step by step. A failing test is a spirit level: precise, cheap and outside the model. That's why coding agents became the first agents many people use every day, and why their weak spots sit where tests are missing: design decisions, unclear requirements, code nobody wrote tests for.
 
-The evidence on whether they make developers faster keeps shifting. <Claim id="metr-slower" cap />. Other evidence points the other way. <Claim id="ms-rct" cap />. And speed isn't the only measure: <Claim id="dora-2025" />. Developers notice the gap themselves. <Claim id="so-almost-right" cap />.
+The evidence on whether they make developers faster keeps shifting. <Claim id="metr-slower" cap />. Other evidence points the other way. <Claim id="ms-rct" cap />. Speed isn't the only measure either: surveys link AI tools to more output and to less stable software, and many developers describe answers that are almost right.
 
 ## Computers and browsers
 
 Computer-use agents work an ordinary screen. Each step, they get a screenshot (and sometimes the page's underlying structure), decide where to click or what to type, and the harness carries it out. That opens every application with a screen, but the feedback is much weaker than a test result: a click can land, a page can change, and nothing tells the agent whether it's closer to the goal.
 
-<Claim id="osworld-human" cap />. Its tasks are short, so researchers built a harder successor with long, realistic workflows. <Claim id="osworld2" cap />. Partial credit and finished work are very different numbers. The reasons are telling: <Claim id="osworld2-failures" />. Those are failures of keeping track and knowing when to ask.
+The usual test is OSWorld, a set of everyday computer tasks. Its first version used short tasks, so researchers built a harder successor with long, realistic workflows. <Claim id="osworld2" cap />. Partial credit and finished work are very different numbers. The reasons are telling: <Claim id="osworld2-failures" />. Those are failures of keeping track and knowing when to ask.
 
 ## How long a job can you hand over?
 
-The most quoted measure of agent progress comes from METR, an independent evaluation group. Its <Term k="horizon">time horizon</Term> asks: how long a task, measured by how long a skilled person needs, can an agent complete at a given success rate? <Claim id="metr-doubling" cap />. <Claim id="metr-40h" cap />. The width of that interval is one warning. The gap between success rates is another:
+The most quoted measure of agent progress comes from METR, an independent evaluation group. Its <Term k="horizon">time horizon</Term> asks: how long a task, measured by how long a skilled person needs, can an agent complete at a given success rate? <Claim id="metr-doubling" cap />. Its estimates come with very wide error bars, which is one warning. The gap between success rates is another:
 
 <HorizonExplorer />
 
-At 50% success, the newest model in this data handles tasks of about seventeen hours. Demand four successes in five and the same model manages about three. Most real work needs the second kind of number, or better. <Claim id="metr-not-delegate" cap />. <Claim id="metr-overestimate" cap />.
+At 50% success, the newest model in this data handles tasks of about seventeen hours. Demand four successes in five and the same model manages about three. Most real work needs the second kind of number, or better. <Claim id="metr-not-delegate" cap />.
 
 <Debate id="horizon-progress" />
 
 ## Why the benchmarks keep dying
 
-Agent benchmarks wear out fast, for four recurring reasons: the best models max them out; their tasks leak into training data; some tasks turn out to be broken; and agents learn to game the scoring. <Claim id="swebench-retired" cap />. Gaming can be blunt. <Claim id="hal-search" cap />.
+Agent benchmarks wear out fast, for four recurring reasons: the best models max them out; their tasks leak into training data; some tasks turn out to be broken; and agents learn to game the scoring. <Claim id="swebench-retired" cap />.
 
-The deeper problem is that a score measures success on a fixed set of tasks, not dependability. <Claim id="reliability-gap" cap />. And when evaluators move from benchmarks to their own messy work, the picture changes again. <Claim id="epoch-real-work" cap />. Judge agents on your own tasks, at the reliability you actually need.
+The deeper problem is that a score measures success on a fixed set of tasks, not dependability. <Claim id="reliability-gap" cap />. Judge agents on your own tasks, at the reliability you actually need.
 
 <Note title="Security note: an agent signed in as you" kind="warn">
 A browser agent usually works inside your logged-in browser, with all your sessions: email, bank, company tools. A web page it reads can therefore instruct it to act as you. <Claim id="brave-comet" cap />. The vendors agree the problem won't go away. <Claim id="atlas-resign" cap />.
@@ -69,6 +77,15 @@ Vendor tables and leaderboards tell you little about your use case. Build a smal
 **Look at the transcripts.** Scores hide how a result was reached. Read samples of successful runs as well as failed ones: agents sometimes reach the right answer for the wrong reason, or quietly work around the test. [The next chapter](/learn/agent-failures/) is about those failures.
 
 **Hold the harness constant.** A score belongs to a model, a harness, its tools and its settings together. Change one at a time, and re-run when any of them changes.
+**More on the productivity evidence.** <Claim id="dora-2025" cap />. <Claim id="so-almost-right" cap />.
+
+**Baselines and error bars.** <Claim id="osworld-human" cap />. <Claim id="metr-40h" cap />. <Claim id="metr-overestimate" cap />.
+
+**Benchmarks versus real work.** Gaming can be blunt: <Claim id="hal-search" />. And when evaluators move from benchmarks to their own messy work, the picture changes again: <Claim id="epoch-real-work" />.
 </Engineer>
 
-<Quiz q="An agent's 50% time horizon is about seventeen hours. What can you safely conclude?" options={["It can work on its own for seventeen hours without supervision","Any task under seventeen hours can be handed to it","It completes about half of tasks that take a skilled person around seventeen hours; at higher reliability the task length is much shorter","It finishes every task in seventeen hours or less"]} answer={2} explain="A time horizon measures task difficulty in human hours at a given success rate. Ask for four successes in five and the length drops sharply, and METR itself warns it doesn't mean tasks under that length can be delegated." />
+<Quiz kind="recall" q="An agent's 50% time horizon is about seventeen hours. What can you safely conclude?" options={["It can work on its own for seventeen hours without supervision","Any task under seventeen hours can be handed to it","It completes about half of tasks that take a skilled person around seventeen hours; at higher reliability the task length is much shorter","It finishes every task in seventeen hours or less"]} answer={2} explain="A time horizon measures task difficulty in human hours at a given success rate. Ask for four successes in five and the length drops sharply, and METR itself warns it doesn't mean tasks under that length can be delegated." />
+
+<Quiz kind="apply" q="Which of these is the best first job to hand to an agent?" options={["Fix a failing unit test in a project with a good test suite","Decide which supplier we should trust","Rewrite the strategy paper so that leadership likes it","Make our website feel more modern"]} answer={0} explain="A failing test answers back at once, precisely and from outside the model. The other tasks give the agent little to check its steps against." />
+
+<Quiz kind="mistake" q="A manager reads that an agent tops a coding benchmark and concludes it can clear the team's backlog on its own. What is wrong?" options={["Nothing: the benchmark covers all real work","Coding benchmarks measure typing speed","Benchmark scores are always lower than real results","Benchmarks leak into training data, get gamed and measure fixed tasks, so the score doesn't show how dependable the agent is on your own messy work"]} answer={3} explain="A score is success on a fixed set of tasks. Dependability on your own work, at the reliability you need, has to be measured there." />

@@ -1,11 +1,19 @@
 ---
 title: "Poisoned ingredients: the AI supply chain"
 short: Supply chain
-order: 16
+order: 15
 part: trust-security
 summary: Invented package names, model files that run code, poisoned training data, and what signing can and can't promise.
 minutes: 12
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain how an invented package name becomes an attack"
+  - "Say why a downloaded model file should be treated like a program"
+  - "Describe how training data and AI tools themselves can be tampered with"
+takeaways:
+  - "Models invent package names, and they repeat the same ones. Attackers register those names and wait."
+  - "A downloaded model can run code when it is loaded. Prefer formats that hold only numbers."
+  - "Check that a package is real and established before you install it, and get plug-ins from the vendor's own listing."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -35,7 +43,7 @@ It becomes an attack because the inventions are predictable. <Claim id="pkg-repe
 
 A downloaded AI model sounds like data: a big file of numbers. Often it isn't. The most common format in the PyTorch world, <Term k="pickle">pickle</Term>, can carry instructions that run the moment you load it. <Claim id="pickle-malicious" cap />.
 
-Platforms scan for this, but scanners look for known-bad patterns, and attackers test against them. <Claim id="nullifai" cap />. Even PyTorch's "safe" loading mode had a hole until version 2.6. The real fix is a format with nothing to execute: <Term k="safetensors">safetensors</Term> stores only numbers and a header.
+Platforms scan for this, but scanners look for known-bad patterns, and attackers test against them. The real fix is a format with nothing to execute: <Term k="safetensors">safetensors</Term> stores only numbers and a header.
 
 <Note title="Flat-pack furniture" kind="key">
 A pickle file is flat-pack furniture that assembles itself when you open the box, including any extra instructions someone slipped in. Safetensors is a box of plain parts. Downloaded models are software: treat them like an `.exe` from a stranger.
@@ -45,7 +53,7 @@ A pickle file is flat-pack furniture that assembles itself when you open the box
 
 The deepest ingredient is the training data. Models learn from huge scrapes of the web, and anyone can write to the web. <Term k="poisoning">Data poisoning</Term> plants text designed to teach a model something its makers didn't intend, such as a hidden trigger that changes its behaviour, a <Term k="backdoor">backdoor</Term>.
 
-Earlier work measured poisoning as a share of the training data, but the absolute number of documents turned out to matter: <Claim id="poison-250" />, a trigger that made the model produce gibberish. And getting text into a dataset is cheap: <Claim id="poison-cheap" />. Worse, once a backdoor is in, it can be hard to get out. <Claim id="sleeper-agents" cap />.
+Earlier work measured poisoning as a share of the training data, but the absolute number of documents turned out to matter: <Claim id="poison-250" />, a trigger that made the model produce gibberish. Getting text into a web-scale dataset is cheap, and once a backdoor is in, it can be hard to train out.
 
 <Debate id="data-poisoning-risk" />
 
@@ -71,6 +79,13 @@ Treat everything an AI system pulls in, whether packages, models, data or tools,
 **Poisoning defence** happens mostly before training: curating and deduplicating data, watching sources that change hands (expired domains, for example), and running evaluations after training that look for trigger behaviour. If you fine-tune on scraped or user-submitted data, you inherit this problem directly.
 
 **Crown jewels.** Treat AI gateways and AI command-line tools as high-value software: they collect API keys and often run with broad local permissions. Rotate credentials fast when an incident like LiteLLM's lands. The first reports differed on how the attacker got in; both LiteLLM and Snyk now trace it to a poisoned security scanner in CI that leaked the publishing token.
+**Scanners can be beaten.** <Claim id="nullifai" cap />.
+
+**Cheap to plant, hard to remove.** <Claim id="poison-cheap" cap />. <Claim id="sleeper-agents" cap />.
 </Engineer>
 
-<Quiz q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. Attackers can register a name that keeps coming back." />
+<Quiz kind="recall" q="Why is 'slopsquatting' a practical attack rather than a theoretical one?" options={["Because package registries don't allow new uploads","Because models often repeat the same invented package names, so attackers can register them in advance","Because every model invents a different random name each time","Because pip refuses to install unknown packages"]} answer={1} explain="Hallucinated names recur. In one large study, 43% came back every time the prompt was rerun ten times. Attackers can register a name that keeps coming back." />
+
+<Quiz kind="apply" q="A chatbot gives you an install command for a library you have never heard of. What do you do first?" options={["Run it; a chatbot wouldn't suggest something harmful","Ask the chatbot whether it is sure","Check that the package appears in the project's official documentation, exists in the registry and has a history","Try it on a colleague's machine first"]} answer={2} explain="The name may be invented, and invented names get registered by attackers. Asking the model again proves nothing, because it will often repeat the same name." />
+
+<Quiz kind="mistake" q="'It's only a model file, a big table of numbers, so downloading it can't hurt.' What is wrong?" options={["Nothing: model files are pure data","Model files are too large to contain malware","Only models from large companies can run code","Some common formats can carry code that runs the moment the file is loaded"]} answer={3} explain="Pickle-based files can execute instructions on loading. Treat a downloaded model like a program from a stranger, and prefer safetensors, which stores only numbers and a header." />

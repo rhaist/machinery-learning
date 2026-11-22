@@ -22,10 +22,13 @@ editions:
 parts:
   - id: language-models
     title: "Part 1: Language models"
-    summary: How a language model turns text into numbers, predicts the next word and learns from data, and where that breaks down. Each chapter has a demo to try and a question at the end.
+    summary: How a language model turns text into numbers, predicts the next word and learns from data, and where that breaks down. Each chapter has a demo to try and three questions at the end.
   - id: agents
     title: "Part 2: Agents"
     summary: Agents are language models that use tools and act on your behalf. These chapters cover the loop, what the model sees at each step, what agents get done in practice and how to tell when they fail.
   - id: trust-security
     title: "Part 3: Trust & security"
     summary: What goes wrong when AI reads, acts and remembers on your behalf, and the habits and controls that still help when a model is fooled. Written for everyday users and for the people who build and defend these systems.
+  - id: outlook
+    title: "Part 4: Looking ahead"
+    summary: Where research is trying to fix today's limits, and the guide's main points and habits on one page.

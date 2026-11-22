@@ -10,6 +10,7 @@ names:
   - Part 1
   - Part 2
   - Part 3
+  - Part 4
   - pass@1
   - pass^4
   - OSWorld 2.0
@@ -279,12 +280,6 @@ figures:
     kind: source
     sources: [https://nvd.nist.gov/vuln/detail/CVE-2025-6514]
     evidence: "OS command injection when connecting to untrusted MCP servers"
-    verified: 2026-11-21
-  - page: chapters/supply-chain
-    text: "had a hole until version 2.6"
-    kind: source
-    sources: [https://nvd.nist.gov/vuln/detail/CVE-2025-32434]
-    evidence: "fixed in version 2.6.0"
     verified: 2026-11-21
   - page: chapters/supply-chain
     text: "The Amazon Q extension incident (July 2025, CVE-2025-8217)"

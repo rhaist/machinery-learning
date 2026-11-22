@@ -2,9 +2,18 @@
 title: Generating text, one token at a time
 short: Generating
 order: 4
+part: language-models
 summary: "Each word is a weighted dice roll. That explains why answers differ every time, what \"temperature\" does and why thinking takes time."
-minutes: 9
-updated: 2026-11-21
+minutes: 10
+updated: 2026-11-22
+goals:
+  - "Explain why the same question gets different answers"
+  - "Say what temperature and top-p change"
+  - "Explain why reasoning models are slower and cost more"
+takeaways:
+  - "Every token is a weighted dice roll over the model's probabilities."
+  - "Temperature and top-p shape the roll. A low temperature makes text more predictable, not more correct."
+  - "Thinking models write a hidden draft first, token by token. That costs time and money, and usually helps on hard problems."
 ---
 import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
@@ -59,4 +68,8 @@ The model's raw output is a list of scores, the <Term k="logits">logits</Term>. 
 
 <Debate id="more-thinking-better" />
 
-<Quiz q="You turn the temperature down to 0.1. What happens?" options={["The model becomes more creative","The model can read less text","Top-p is switched off","The most likely word wins almost every time"]} answer={3} explain="Low temperature exaggerates the differences between scores before they become probabilities, so nearly all the probability lands on the single most likely token." />
+<Quiz kind="recall" q="You turn the temperature down to 0.1. What happens?" options={["The model becomes more creative","The model can read less text","Top-p is switched off","The most likely word wins almost every time"]} answer={3} explain="Low temperature exaggerates the differences between scores before they become probabilities, so nearly all the probability lands on the single most likely token." />
+
+<Quiz kind="apply" q="A simple lookup question takes a reasoning model half a minute and costs far more than usual. What happened?" options={["The model was updating its weights","The provider ranked your question as low priority","It wrote a long hidden draft first, one token at a time, and those tokens are billed too","It searched its training data line by line"]} answer={2} explain="Thinking tokens are generated like any others. They help on hard problems. For easy ones, a faster model or less thinking is often the better choice." />
+
+<Quiz kind="mistake" q="A team sets the temperature to zero and concludes: 'Now the answers are identical every time, and correct.' What is wrong?" options={["Zero makes output more predictable, but close calls can still tip the other way, and the most likely answer isn't always the right one","Temperature zero switches sampling off and the model stops answering","Temperature only affects images","Nothing: zero guarantees both"]} answer={0} explain="Batching on the provider's side can change a close call, so runs can still differ. And predictable is not the same as true: the likeliest continuation can be wrong." />

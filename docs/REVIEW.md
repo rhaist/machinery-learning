@@ -6,7 +6,7 @@ Automated fact-checks catch a lot, but they share blind spots with the model tha
 
 | Reviewer | Reads | Time |
 |---|---|---|
-| ML engineer or researcher | Part 1, chapters 1–9, and Part 2: the Engineer boxes first, then the main text | 90–120 minutes |
+| ML engineer or researcher | Part 1, Part 2 and the research chapter in Part 4: the Engineer boxes first, then the main text | 90–120 minutes |
 | Security practitioner | Part 3, all six chapters, and the security notes in Part 2, including the labs and Engineer boxes | 75 minutes |
 | Anyone new to the topic | Part 1, chapter 1 (start here) and one chapter of their choice, Engineer boxes closed | 20 minutes |
 
@@ -19,6 +19,7 @@ Read on the live site: <https://machinerylearning.eu>. To open every Engineer bo
 3. **Figures.** Do the drawings and step-throughs show the mechanism correctly? Are the sizes right for the model they name?
 4. **Missing caveats.** Places where the guide sounds more certain than the evidence allows, or where a well-known counter-argument is missing.
 5. **For newcomers:** the first sentence you had to read twice, and the first term that wasn't explained.
+6. **Questions.** Each chapter ends with three questions and each part with a mixed review. Is the marked answer the only defensible one? Could an expert argue for one of the wrong options?
 
 Style, wording and layout feedback is welcome but secondary.
 

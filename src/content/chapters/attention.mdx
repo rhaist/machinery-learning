@@ -2,9 +2,18 @@
 title: "Attention: how words borrow meaning"
 short: Attention
 order: 2
+part: language-models
 summary: "How each word looks back at the earlier words and pulls in what it needs. This is the core mechanism of the transformer."
-minutes: 9
-updated: 2026-11-21
+minutes: 10
+updated: 2026-11-22
+goals:
+  - "Explain how a word picks up meaning from the words before it"
+  - "Say why attention let models handle long text better than older designs"
+  - "Explain why everything you put in front of a model can change its answer"
+takeaways:
+  - "Attention lets every word look back at earlier words and blend in what it needs."
+  - "A word can only look backwards. That matches how text is written, one piece after another."
+  - "Nothing in attention separates instructions from data. Anything in the text can influence everything after it."
 ---
 import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
@@ -34,6 +43,12 @@ Older language models read text strictly word by word and had to squeeze everyth
 
 This has a price that comes back in later chapters: every word compares itself with every earlier word. Double the length of the text and the *attention* part of the work roughly quadruples. For everyday prompt lengths the total grows closer to double, but for very long texts the quadratic part dominates.
 
+## Why this matters to you
+
+- **Context steers the answer.** Each word takes its meaning from what came before it, so the same question gets a different answer when different material sits in front of it.
+- **Extra text isn't neutral.** A stray paragraph in a pasted document can colour the reply, because every later word can draw on it. Give the model what it needs and leave the rest out.
+- **Be specific where it counts.** If a pronoun or a name could point to several things, say which one you mean.
+
 <Note title="Security lens" kind="warn">
 Attention lets every token draw on every earlier token, whoever wrote it. Your instructions, the system prompt and a web page the model just read all sit in the same sequence, and nothing in the mechanism marks some of them as commands and the rest as data. That missing wall is why [prompt injection](/learn/prompt-injection/) works, and why Part 3 treats it as a design problem rather than a bug to patch.
 </Note>
@@ -62,4 +77,8 @@ Future tokens are excluded by the <Term k="causal">causal mask</Term>, which set
 
 <Debate id="full-attention-vs-hybrid" />
 
-<Quiz q="In 'The server rejected the request because it was malformed', what lets 'it' pick up meaning from 'request'?" options={["The tokenizer merges them","The rule that words can't look ahead","Attention: 'it' looks back and weights 'request' most heavily","A grammar rule stored somewhere in the model"]} answer={2} explain="Attention lets each word blend in information from the earlier words most relevant to it. For 'it', that is 'request'. Under the hood, its query matches request's key, so request's value dominates the mix." />
+<Quiz kind="recall" q="In 'The server rejected the request because it was malformed', what lets 'it' pick up meaning from 'request'?" options={["The tokenizer merges them","The rule that words can't look ahead","Attention: 'it' looks back and weights 'request' most heavily","A grammar rule stored somewhere in the model"]} answer={2} explain="Attention lets each word blend in information from the earlier words most relevant to it. For 'it', that is 'request'. Under the hood, its query matches request's key, so request's value dominates the mix." />
+
+<Quiz kind="apply" q="You paste a long email thread and ask 'What does she want?' The answer is about the wrong person. What is the most useful fix?" options={["Name the person, or cut the parts of the thread that don't matter","Add more of the thread for extra context","Ask again in capital letters","Wait and try again later"]} answer={0} explain="'She' gets its meaning from the earlier text it attends to. With several candidates in the thread, the model can pick the wrong one. Naming the person or trimming the context removes the ambiguity." />
+
+<Quiz kind="mistake" q="Which statement about attention is wrong?" options={["Each word can draw on any earlier word directly","A word can't look ahead at the words that come after it","For long texts, the work grows faster than the length","The mechanism treats the system prompt as commands and a pasted web page as data"]} answer={3} explain="Attention has no such wall. Instructions and pasted content sit in one sequence and can all influence what comes next, which is why prompt injection is possible." />

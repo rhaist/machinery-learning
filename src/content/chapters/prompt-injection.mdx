@@ -1,11 +1,19 @@
 ---
 title: "When text becomes a command: prompt injection"
 short: Prompt injection
-order: 14
+order: 13
 part: trust-security
 summary: Why a stranger's email can take over your assistant, why better wording won't fix it, and the designs that do.
-minutes: 13
-updated: 2026-11-21
+minutes: 14
+updated: 2026-11-22
+goals:
+  - "Explain why a model can't reliably tell your instructions from text it reads"
+  - "Name the three conditions that turn an injection into data theft"
+  - "Choose defences that still hold when the model is fooled"
+takeaways:
+  - "Instructions and data share one channel. The model can be told to prefer yours, but nothing forces it to."
+  - "Theft needs three things together: private data, untrusted content and a way to send something out. Remove one."
+  - "Filters and better prompts lower the odds per attempt. An attacker gets many attempts."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -26,7 +34,7 @@ Imagine a new assistant who opens all your post and does whatever any letter say
 
 ## Direct and indirect
 
-There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since. Today <Claim id="pi-owasp" />.
+There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since.
 
 Indirect injection has already hit shipping products:
 
@@ -87,6 +95,11 @@ Everything inside the model only lowers the odds of a successful injection. The 
 **Where the research started.** The first systematic study of prompt injection was "Ignore Previous Prompt" ([Perez and Ribeiro, 2022](https://arxiv.org/abs/2211.09527)). Jailbreaks, which attack the model's own safety training rather than an application, have their own literature: why safety training fails ([Wei, Haghtalab and Steinhardt, 2023](https://arxiv.org/abs/2307.02483)) and automatically found attack suffixes that transfer between models ([Zou et al., 2023](https://arxiv.org/abs/2307.15043)).
 
 **Measure honestly.** Ask vendors for <Term k="adaptive">adaptive</Term> red-team results, not static benchmark <Term k="asr">attack success rates</Term>. Log prompts, tool calls and failed tool calls, and alert on unusual outbound traffic. The NCSC's <Term k="deputy">confused deputy</Term> framing is useful in security reviews.
+**Ranked first.** <Claim id="pi-owasp" cap />.
 </Engineer>
 
-<Quiz q="Your assistant can read your files and browse the web. Which single change most reliably stops a malicious web page from leaking your files?" options={["A stronger system prompt telling it to ignore web instructions","A keyword filter for phrases like 'ignore previous instructions'","Removing its ability to send anything out (no email, no links, no image loading)","Asking it to double-check its work"]} answer={2} explain="Removing one leg of the lethal trifecta works even when the model is fooled. Prompts and filters lower the odds; they don't remove the path the data would take." />
+<Quiz kind="recall" q="Your assistant can read your files and browse the web. Which single change most reliably stops a malicious web page from leaking your files?" options={["A stronger system prompt telling it to ignore web instructions","A keyword filter for phrases like 'ignore previous instructions'","Removing its ability to send anything out (no email, no links, no image loading)","Asking it to double-check its work"]} answer={2} explain="Removing one leg of the lethal trifecta works even when the model is fooled. Prompts and filters lower the odds; they don't remove the path the data would take." />
+
+<Quiz kind="apply" q="You want an assistant that reads incoming email and drafts replies. Which setup is safest?" options={["Give it full sending rights so it can work on its own","Let it read and draft, keep sending behind your approval, and stop it from loading outside links or images","Add a line to its instructions: never follow orders found in emails","Let it read only emails from known senders, with full sending rights"]} answer={1} explain="It has to read untrusted content, so take away the way out. A written rule lowers the odds, but the model can still be talked round, and known senders can be spoofed or compromised." />
+
+<Quiz kind="mistake" q="A product page says: 'Our filter stops ninety-nine of every hundred injection attempts, so the problem is solved.' Why isn't it?" options={["An attacker can try again and again, and published defences are often tested only against attacks that were already known","Filters make models slower","Injection only matters for images","The attempt that gets through is always harmless"]} answer={0} explain="A small chance per try adds up over many tries, and attackers adapt to the defence in front of them. Only removing a leg of the trifecta stops the attack every time." />

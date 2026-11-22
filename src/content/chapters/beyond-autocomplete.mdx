@@ -2,9 +2,18 @@
 title: Is it really just predicting the next word?
 short: Beyond autocomplete
 order: 6
+part: language-models
 summary: "Technically, it is. Training, the model's internal representations and the tool loop explain why a coding agent can still do far more than autocomplete."
-minutes: 14
-updated: 2026-11-21
+minutes: 15
+updated: 2026-11-22
+goals:
+  - "Give a fair answer to the question 'isn't it just autocomplete?'"
+  - "Keep apart the three things that close the gap: what the model learned, what training rewarded, and the loop around it"
+  - "Recognise when a model falls back into plain pattern-matching, and what to do about it"
+takeaways:
+  - "'Predicts the next token' describes what comes out. It doesn't describe everything that happens inside."
+  - "Three things make it more than autocomplete: internal pictures of the task, training that rewards outcomes, and a loop with tools."
+  - "Give the model a way to check its work, and treat its confidence as style."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -75,4 +84,8 @@ The counterweight: Vafa and colleagues (2024) show that models can pass world-mo
 **The agent loop at token level.** The pattern of alternating reasoning with tool calls was named ReAct ([Yao et al., 2022](https://arxiv.org/abs/2210.03629)), and Toolformer showed that models can learn when to call a tool ([Schick et al., 2023](https://arxiv.org/abs/2302.04761)). Each step is a fresh call on the full transcript. A tool call is text in a fixed format that ends with a stop token. <Term k="constrained">Constrained decoding</Term> keeps the arguments valid, <Term k="pcache">prompt caching</Term> keeps resending cheap, and <Term k="contextrot">context rot</Term> and compaction are why long sessions degrade.
 </Engineer>
 
-<Quiz q="A coding agent edits three files, runs the tests and iterates for ten minutes. What is the model doing at each step?" options={["Running a planning process that stays active in memory","Updating its knowledge after each test run","Being called again on the whole growing conversation, writing until it requests a tool or finishes","Executing the code inside its neural network"]} answer={2} explain="Each step is a fresh call of the same frozen model. The harness runs the tools and adds their output to the conversation; all continuity lives in that text. The loop works well because training rewarded exactly this act, observe, check cycle." />
+<Quiz kind="recall" q="A coding agent edits three files, runs the tests and iterates for ten minutes. What is the model doing at each step?" options={["Running a planning process that stays active in memory","Updating its knowledge after each test run","Being called again on the whole growing conversation, writing until it requests a tool or finishes","Executing the code inside its neural network"]} answer={2} explain="Each step is a fresh call of the same frozen model. The harness runs the tools and adds their output to the conversation; all continuity lives in that text. The loop works well because training rewarded exactly this act, observe, check cycle." />
+
+<Quiz kind="apply" q="You want a coding agent to fix a bug reliably. Which setup follows from this chapter?" options={["Give it tests it can run, the relevant files and the constraints, and ask for a plan first","Paste the whole repository and let it choose what to read","Ask it to be extra careful","Open a very long session so it has time to settle in"]} answer={0} explain="Checkable feedback is the setting the model was trained in. Focused context and a plan keep it on the task, and only the tests tell you the code is right." />
+
+<Quiz kind="mistake" q="Someone argues: 'It only predicts the next word, so it can't be working anything out.' What does the evidence say?" options={["They are right: there is nothing inside but word counts","Newer models replaced prediction with reasoning","The model runs a separate logic program for reasoning","Researchers have found intermediate steps and internal pictures that the model never writes down, though how reliable they are is debated"]} answer={3} explain="To predict well, the model builds internal representations of what it is predicting. That has been shown in experiments. How complete those pictures are remains an open question." />

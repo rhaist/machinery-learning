@@ -11,6 +11,8 @@ const chapters = defineCollection({
     summary: z.string(),        // one sentence, shown on the journey map
     minutes: z.number(),
     updated: z.coerce.date(),   // last substantive change
+    goals: z.array(z.string()).default([]),      // "After this chapter you can…", shown at the top
+    takeaways: z.array(z.string()).default([]),  // "Remember this", shown after the checkpoint questions
   }),
 });
 

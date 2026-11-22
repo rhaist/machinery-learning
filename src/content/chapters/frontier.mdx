@@ -1,10 +1,19 @@
 ---
 title: Where research is heading next
 short: Frontier
-order: 9
+order: 19
+part: outlook
 summary: "What researchers are trying in order to fix today's limits. This chapter changes more than any other and is revised every month."
-minutes: 10
-updated: 2026-11-21
+minutes: 11
+updated: 2026-11-22
+goals:
+  - "Match each research direction to the limit it tries to fix"
+  - "Tell what is already in products apart from what is still research"
+  - "Read 'the next breakthrough' headlines with the right scepticism"
+takeaways:
+  - "Each research direction targets a known limit: frozen knowledge, the cost of long texts, slow generation, thinking in words."
+  - "Recent progress came mostly from better training and longer thinking, on the same core design."
+  - "New ideas tend to be absorbed into today's models. They rarely replace them overnight."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -15,7 +24,7 @@ import Diffusion from '../../components/Diffusion.astro';
 import FrontierMatrix from '../../components/FrontierMatrix.astro';
 import Debate from '../../components/Debate.astro';
 
-Most research directions aim at one of the limits from the previous chapters. Grouped by the problem they try to solve:
+Most research directions aim at one of the limits this guide has described. Grouped by the problem they try to solve:
 
 **"It can't learn after training."** *Test-time training* lets a model write what it reads into a small, changeable part of itself while it works, so knowledge isn't stuck between frozen weights and a temporary conversation. <Claim id="ttt-inplace" cap />, and <Claim id="ttt-e2e" />. It is still research, aimed at the gap between the two memories.
 
@@ -63,4 +72,8 @@ Better reasoning about code is also better reasoning about flaws in code. <Claim
 **Where things stand.** <Claim id="transformer-dominance" cap />.
 </Engineer>
 
-<Quiz q="Which limitation does test-time training mainly target?" options={["Slow tokenisation","Invented citations","Models can't learn after deployment: weights are frozen and the conversation is temporary","The cost of human feedback"]} answer={2} explain="Test-time training lets the model compress what it reads into fast-changing weights while it runs, filling the gap between frozen weights and the temporary context window." />
+<Quiz kind="recall" q="Which limitation does test-time training mainly target?" options={["Slow tokenisation","Invented citations","Models can't learn after deployment: weights are frozen and the conversation is temporary","The cost of human feedback"]} answer={2} explain="Test-time training lets the model compress what it reads into fast-changing weights while it runs, filling the gap between frozen weights and the temporary context window." />
+
+<Quiz kind="apply" q="A headline says: 'New architecture makes transformers obsolete.' What is the most useful first question?" options={["How many parameters does it have?","Will it be free to use?","Is it open source?","Which limit does it target, and has anyone outside the lab confirmed the result?"]} answer={3} explain="Every direction in this chapter aims at a specific limit. Knowing which one, and who has checked the claim, tells you more than the headline." />
+
+<Quiz kind="mistake" q="Which statement about recent AI progress is wrong?" options={["It came mainly from replacing the transformer with a new architecture","Letting models think longer improved their results on hard problems","Much of it came from practice with automatic checking","Ideas such as hybrid layers are being folded into existing designs"]} answer={0} explain="The core design dates from 2017. Most of the progress you have felt came from better training and more thinking time, not from a new architecture." />

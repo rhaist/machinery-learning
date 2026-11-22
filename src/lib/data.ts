@@ -49,6 +49,9 @@ export function freshness(c: Claim, today = new Date()): string {
 export const site: { name: string; tagline: string; repo: string; domain: string; legal: Record<string, string>; editions: { month: string; subtitle: string }[]; parts: { id: string; title: string; summary: string }[] } = load('site.yaml');
 export const edition = [...site.editions].sort((a, b) => String(b.month).localeCompare(String(a.month)))[0];
 
+/** Mixed review questions per part (src/data/reviews.yaml), keyed by part id. */
+export const reviews: Record<string, { intro: string; questions: { q: string; options: string[]; answer: number; explain: string; from: string[] }[] }> = load('reviews.yaml');
+
 /** Chapters grouped by part (in site.yaml order), each with its number inside the part. */
 export function byPart<T extends { id: string; data: { order: number; part: string } }>(chapters: T[]) {
   const sorted = [...chapters].sort((a, b) => a.data.order - b.data.order);

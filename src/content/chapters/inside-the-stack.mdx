@@ -2,9 +2,18 @@
 title: Inside the stack
 short: The stack
 order: 3
+part: language-models
 summary: "Each layer gathers context from other words and then processes it, and a model repeats that dozens of times. Also: the trick that lets giant models run cheaply."
-minutes: 8
-updated: 2026-11-21
+minutes: 9
+updated: 2026-11-22
+goals:
+  - "Describe what one layer does and why models stack many of them"
+  - "Explain what a parameter count and a knowledge cutoff mean"
+  - "Explain how a very large model can still be cheap to run"
+takeaways:
+  - "A model is one two-part step, look around and then think, repeated dozens of times."
+  - "Parameters are the dials that training adjusted. They are frozen afterwards, which is why a model has a knowledge cutoff."
+  - "With a mixture of experts, only a small share of a huge model works on each word."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -39,6 +48,12 @@ The firm employs hundreds of experts, but each question only goes to a few of th
 
 <MoE />
 
+## Why this matters to you
+
+- **Bigger models know more and cost more.** That is why most products offer a small, fast model next to a large, slow one. Choose by task.
+- **The cutoff is real.** Without a search tool, a model answers questions about recent events from older data, in the same confident tone.
+- **Look for the active parameters.** For a mixture-of-experts model, that figure tells you roughly what a word costs to produce. The headline total doesn't.
+
 <Engineer title="Residual stream, superposition and reading a model card">
 Every layer reads the same running vector for each token and adds its contribution to it: x = x + layer(x). Engineers call this the <Term k="residual">residual stream</Term>. It works like a shared bus that every component reads from and writes to.
 
@@ -65,4 +80,8 @@ Superposition is why a single neuron usually responds to several unrelated thing
 
 <Debate id="interpretability-localise" />
 
-<Quiz q="A model has 671B parameters but only about 37B are 'active'. What does that mean?" options={["Each word passes through a few specialist parts chosen by a router","Only 37B parameters were trained","The rest are compressed and unpacked on demand","It runs 18 copies of the model in parallel"]} answer={0} explain="That's Mixture of Experts. All parameters exist and were trained, but each word only goes through a small subset of them, so the compute per word is that of a much smaller model." />
+<Quiz kind="recall" q="A model has 671B parameters but only about 37B are 'active'. What does that mean?" options={["Each word passes through a few specialist parts chosen by a router","Only 37B parameters were trained","The rest are compressed and unpacked on demand","It runs 18 copies of the model in parallel"]} answer={0} explain="That's Mixture of Experts. All parameters exist and were trained, but each word only goes through a small subset of them, so the compute per word is that of a much smaller model." />
+
+<Quiz kind="apply" q="A chatbot without web search calls a product 'the newest version', although a newer one came out last month. Why?" options={["It is hiding the newer version","Newer products use tokens it can't read","It only reads the first search result","Its parameters were fixed when training ended, so it knows nothing after its cutoff unless a tool or you supply it"]} answer={3} explain="The dials don't change after training. Anything newer exists for the model only when it is put into the conversation." />
+
+<Quiz kind="mistake" q="A vendor says: 'Our model has ten times more parameters, so every answer costs ten times more to produce.' What does that overlook?" options={["Parameters have nothing to do with cost","With a mixture of experts only a few specialists run for each word, so cost follows the active share, not the total","Larger models always run faster","Cost depends only on the length of the question"]} answer={1} explain="All parameters exist and were trained, but each word passes through a small subset. The active count is the better guide to the cost per word." />

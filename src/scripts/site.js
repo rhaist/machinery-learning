@@ -110,9 +110,11 @@ if (prev) {
 /* ---------- quizzes and chapter progress ---------- */
 const page = document.body.dataset.chapter || '';
 const quizzes = $$('.quiz');
-const solved = new Set(store.get('lfg-quiz-' + page, []));
+const quizKey = page || document.body.dataset.quizKey || ''; // review pages keep answers without counting as a chapter
+const solved = new Set(store.get('lfg-quiz-' + quizKey, []));
 const done = new Set(store.get('lfg-done', []));
 function markDone() {
+  const score = $('[data-quiz-score]'); if (score && quizzes.length) score.textContent = `${solved.size} of ${quizzes.length} answered correctly`;
   if (page && quizzes.length && quizzes.every((_, i) => solved.has(i))) { done.add(page); store.set('lfg-done', [...done]); }
   $$('[data-chapter-link]').forEach(a => a.classList.toggle('done', done.has(a.dataset.chapterLink)));
   // where to continue: the chapter you were last reading if it isn't finished, otherwise the next unfinished one after it.
@@ -147,7 +149,7 @@ quizzes.forEach((el, i) => {
     b.classList.add(ok ? 'right' : 'wrong');
     ex.hidden = false;
     ex.innerHTML = (ok ? '<b>Right.</b> ' : '<b>Not quite.</b> ') + el.dataset.explain.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-    if (ok) { solved.add(i); store.set('lfg-quiz-' + page, [...solved]); markDone(); }
+    if (ok) { solved.add(i); store.set('lfg-quiz-' + quizKey, [...solved]); markDone(); }
   });
 });
 { const n = done.size, started = n || store.get('lfg-last', null); const row = $('#sheet-progress');

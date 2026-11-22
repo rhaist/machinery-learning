@@ -1,11 +1,19 @@
 ---
 title: "Don't trust the scoreboard: judging AI claims"
 short: Judging claims
-order: 19
+order: 18
 part: trust-security
 summary: "How to read benchmarks, vendor security numbers, AI detectors and deepfakes, with habits for telling what's real."
-minutes: 12
-updated: 2026-11-21
+minutes: 13
+updated: 2026-11-22
+goals:
+  - "Test any AI number with four questions: measured how, by whom, on what, and could the model have seen the test"
+  - "Explain why a detector that is rarely wrong can still accuse many innocent people"
+  - "Verify a person or a payment request without relying on what you see or hear"
+takeaways:
+  - "For any AI number, ask how it was measured, by whom, on what, and whether the model could have seen the test."
+  - "When the thing you are looking for is rare, even an accurate detector flags many innocent cases."
+  - "Against deepfakes, verify the channel: call back on a number you already have."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -24,8 +32,6 @@ A student who memorised last year's exam scores brilliantly on last year's exam.
 ## Benchmarks leak
 
 When test questions end up in training data, scores go up without ability going up. That's <Term k="contamination">contamination</Term>. <Claim id="gsm1k" cap />. A leading coding benchmark had the same problem: <Claim id="swebench-retired" />. A benchmark where every top model scores about the same has also stopped telling you much, which is <Term k="saturation">saturation</Term>.
-
-Leaderboards where people vote between models have their own issues. <Claim id="leaderboard-illusion" cap />. A score describes the variant that was tested, under that board's conditions.
 
 ## Feelings aren't measurements
 
@@ -76,6 +82,11 @@ Public numbers describe public tasks under someone else's conditions. Only your 
 **Detectors in HR and education.** If a detector feeds into any decision about a person, demand published false-positive rates measured on a population like yours, and require human review of how the work was made (drafts, version history, conversation) instead.
 
 **Payment and identity controls.** Processes that resist deepfakes: call back on numbers you already know, require two people to approve unusual transfers, and make no exceptions for urgency or seniority. These would have stopped the Arup fraud with no AI involved at all.
+**Voting leaderboards.** Leaderboards where people vote between models have their own issues. <Claim id="leaderboard-illusion" cap />. A score describes the variant that was tested, under that board's conditions.
 </Engineer>
 
-<Quiz q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent." />
+<Quiz kind="recall" q="An AI detector catches 90% of AI essays and wrongly flags only 2% of human ones. In a class where 5% of essays are AI-written, roughly what share of flagged essays were written by humans?" options={["About 2%","About 10%","About 30%","About 90%"]} answer={2} explain="Out of 1,000 essays: 50 are AI, of which 45 are caught. 950 are human, of which 2%, about 19, are flagged. So about 19 of 64 flagged essays, roughly 30%, are innocent." />
+
+<Quiz kind="apply" q="A finance colleague gets a video call from the 'CEO' asking for an urgent transfer. What is the right response?" options={["Study the video closely for glitches","Comply, because video is hard to fake","Ask the caller a personal question","End the call, call back on a number you already have, and require a second person to approve"]} answer={3} explain="A deepfake only has to be good enough under time pressure. The defence is procedure: a known channel and a second approver, with no exceptions for urgency or seniority." />
+
+<Quiz kind="mistake" q="A press release says a new model 'beats all rivals on a famous benchmark'. Which conclusion is not justified?" options={["The model will be the best choice for my own work","The vendor ran the test itself, so independent results would add weight","The score may be inflated if test questions leaked into the training data","If all top models score about the same, the benchmark no longer separates them"]} answer={0} explain="A public score describes public tasks under someone else's conditions. Only a test on your own work tells you how the model does there." />

@@ -1,11 +1,19 @@
 ---
 title: "Finding got cheap: AI and the patch gap"
 short: Patch gap
-order: 18
+order: 17
 part: trust-security
 summary: AI now finds software flaws faster than anyone can fix them. Why the hard part of security moved to patching, and what still works.
 minutes: 12
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain why AI made finding flaws cheap but not fixing them"
+  - "Tell flaws that were published apart from flaws attackers actually use"
+  - "Decide what to patch first when you can't patch everything"
+takeaways:
+  - "AI finds software flaws far faster than before. Installing fixes is as slow as ever."
+  - "Most published flaws are never used in attacks. Sort by evidence of exploitation and exposure, not by severity score alone."
+  - "You can't patch what you don't know you own. An accurate inventory comes first."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -24,8 +32,6 @@ A building inspector used to walk a building for a week and find a dozen problem
 ## The wave you can see in the data
 
 Software flaws get a public ID, a <Term k="cve">CVE</Term>, and a severity score, <Term k="cvss">CVSS</Term>. Through 2025 the number published each month grew slowly. In the summer of 2026 it jumped, and the companies publishing them say why. <Claim id="msrc-ai" cap />. At Microsoft, <Claim id="ms-1413" />. The lab behind one of the strongest bug-finding models says the same from the other side: <Claim id="glasswing-bottleneck" />.
-
-The volume broke the system that catalogues it. <Claim id="nist-263" cap />. Everything else is published without that analysis, so security tools that relied on it now see less detail.
 
 <PatchGap />
 
@@ -60,7 +66,7 @@ These are the basics security teams have asked for since the beginning, and the 
 
 Nobody can patch everything faster, so patch the right things first and make the rest harder to reach. <Claim id="ncsc-wave" cap />.
 
-- Fix what attackers are actually using. Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else. The difference is large: <Claim id="zdc-policy" />.
+- Fix what attackers are actually using. Sort by evidence of exploitation, not by the number of flaws or their severity score alone. The KEV list is the minimum. <Term k="epss">EPSS</Term> estimates the likelihood for everything else. Sorted this way, the list is shorter and catches more of what gets attacked than patching everything rated critical.
 - Start at the edge. Firewalls, VPN gateways and anything reachable from the internet come first, because attackers scan for them within hours.
 - Know what you own. An accurate asset inventory is the control every other control depends on.
 - Shield what you can't fix. Separate old systems from the rest of the network, put filters in front of them, and plan their replacement instead of waiting for a patch that won't come.
@@ -85,6 +91,13 @@ When disclosure volume multiplies, a process built on reading every advisory sto
 **Don't trust one data source.** Since April 2026 NVD enriches only a minority of CVEs, so scanners that match on NVD product data can silently miss findings. Pull vendor advisories, the CNA records themselves and ecosystem databases such as OSV.
 
 **Use AI on your side too.** Models are good at summarising advisories, mapping them to your inventory and drafting fixes for code you own. They can't patch an appliance whose vendor hasn't shipped a fix. That part stays a contract, budget and replacement problem.
+**Why the catalogue thinned out.** The volume broke the system that catalogues it. <Claim id="nist-263" cap />. Everything else is published without that analysis, so security tools that relied on it now see less detail.
+
+**What the sorting buys.** <Claim id="zdc-policy" cap />.
 </Engineer>
 
-<Quiz q="Your scanner reports hundreds of new critical CVEs this month. What should you fix first?" options={["The ones with the highest CVSS scores","The ones on internet-facing systems that attackers are known to exploit, for example those on CISA's KEV list","The oldest ones first, to clear the backlog","Whichever ones an AI tool found, because those are newest"]} answer={1} explain="CVSS rates a flaw in isolation. Evidence of real attacks plus exposure to the internet is the best signal of what will hurt you soon. Most critical CVEs are never exploited." />
+<Quiz kind="recall" q="Your scanner reports hundreds of new critical CVEs this month. What should you fix first?" options={["The ones with the highest CVSS scores","The ones on internet-facing systems that attackers are known to exploit, for example those on CISA's KEV list","The oldest ones first, to clear the backlog","Whichever ones an AI tool found, because those are newest"]} answer={1} explain="CVSS rates a flaw in isolation. Evidence of real attacks plus exposure to the internet is the best signal of what will hurt you soon. Most critical CVEs are never exploited." />
+
+<Quiz kind="apply" q="A small office has an old network camera that still works but no longer gets updates. What does this chapter suggest?" options={["Keep it: no updates means no new flaws","Wait for the vendor to release one more patch","Replace it, or separate it from the rest of the network until you can","Run a virus scan on it"]} answer={2} explain="End-of-life devices keep collecting new findings and never get a fix. Shield what you can't patch, and plan the replacement." />
+
+<Quiz kind="mistake" q="'A patch is out, so the danger is over.' What is wrong?" options={["Nothing: a published patch protects everyone","Patches only matter for servers","Attackers never read patches","A patch helps only once it is installed, and publishing it shows attackers exactly what was broken, which starts a clock"]} answer={3} explain="Comparing the fixed version with the old one reveals the flaw. Everyone who hasn't installed the patch yet is now easier to attack than before." />

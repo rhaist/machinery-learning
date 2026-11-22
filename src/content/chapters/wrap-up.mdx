@@ -1,0 +1,74 @@
+---
+title: The guide on one page
+short: On one page
+order: 20
+part: outlook
+summary: The main ideas and the habits from every chapter, on one page to keep.
+minutes: 4
+updated: 2026-11-22
+---
+import Note from '../../components/Note.astro';
+
+You've reached the end. This page collects what the guide tried to teach: a short model of how these systems work, and the habits that follow from it. Print it or bookmark it, and come back when a new tool lands on your desk.
+
+## How it works, in seven points
+
+- A language model predicts the next small piece of text, a token, from everything in front of it, and repeats that until the answer is done. ([Start here](/learn/start-here/), [Generating text](/learn/generating/))
+- It rebuilds facts from patterns learned in training, and that knowledge stops at a cutoff date. It doesn't look anything up unless a tool is connected. ([Inside the stack](/learn/inside-the-stack/), [Strengths and limits](/learn/strengths-and-limits/))
+- Its behaviour was learned from examples, human feedback and practice with automatic checks, which is why it is strongest where answers can be checked. ([Training](/learn/training/))
+- It doesn't learn from your chat. Whatever it seems to remember is text that was put back in front of it. ([What the agent sees](/learn/context-and-memory/))
+- An agent is the same model called in a loop, with ordinary software running tools in between. Small error rates multiply over long tasks. ([The agent loop](/learn/agent-loop/))
+- Instructions and data reach the model as one stream of text, so anything it reads can try to steer it. ([Prompt injection](/learn/prompt-injection/))
+- The model can't be its own guard. The safeguards that hold sit outside it: narrow access, sandboxes, independent checks and a way to undo. ([Giving an AI the keys](/learn/agents-permissions/), [When agents fail](/learn/agent-failures/))
+
+## Habits for everyday use
+
+**When you ask**
+
+- Give the model what it needs and leave the rest out. Everything in the context can colour the answer.
+- Treat confidence as a writing style. Verify rare facts, dates, quotes and anything you will act on.
+- Ask for evidence instead of agreement. Models bend when you push back.
+
+**When it reads or acts for you**
+
+- Assume anything an AI reads can try to give it orders: web pages, emails, PDFs, calendar invites.
+- Don't give one assistant private data, untrusted content and a way to send things out, all at once.
+- Give narrow tasks, and connect only the apps the task needs.
+- Keep approval on for anything that sends, buys, deletes or shares, and read what it wants to do.
+- Don't take "done" as proof. Check the result yourself, or with a check the agent couldn't change.
+
+**When you install something**
+
+- Check that a package a chatbot names is real, established and the one the official documentation names.
+- Get plug-ins, connectors and extensions from the vendor's own listing, and remove the ones you don't use.
+- Treat a downloaded model like a program from a stranger.
+
+**With your data**
+
+- Check your settings, and turn off training on your chats if you don't want it.
+- Keep passwords, health records, client data and other people's details out of consumer chatbots. Use your employer's approved tool for work.
+- A share link is publishing.
+
+**When you see a number or a face**
+
+- Ask how it was measured, by whom, on what, and whether the model could have seen the test.
+- Never accuse someone because an AI detector said so.
+- Verify unusual payment requests by calling back on a number you already have.
+
+**On every device you own**
+
+- Turn on automatic updates, and replace devices that no longer get them.
+
+<Note title="If you build or run these systems" kind="key">
+- Give every agent the least access its job needs, and run its code in a sandbox.
+- Put checks where the agent can't edit them, and keep logs and backups out of its reach.
+- Make actions reversible, and save human approval for the ones that can't be undone.
+- Patch what attackers are using on systems you expose first. Keep your inventory accurate.
+- Measure models and agents on your own tasks, at the reliability you need.
+</Note>
+
+## Staying current
+
+The explanations in this guide change slowly. The facts around them don't. Each month the [field notes](../../notes/) summarise what changed and why it matters, and the [radar](../../radar/) shows where each research direction stands. Facts with a date badge show when they were last checked, and a fact that is overdue for a check fades until someone has verified it again.
+
+If something here is wrong or unclear, every chapter has a link to report it.

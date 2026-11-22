@@ -1,5 +1,6 @@
 // Hand-built so <lastmod> comes from the content itself: a chapter's `updated` date, a note's date.
 import { getCollection } from 'astro:content';
+import { reviews } from '../lib/data';
 export async function GET({ site }: { site: URL }) {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const day = (d: Date) => d.toISOString().slice(0, 10);
@@ -10,6 +11,7 @@ export async function GET({ site }: { site: URL }) {
   const pages: [string, Date][] = [
     ['/', latest],
     ...chapters.map(c => [`/learn/${c.id}/`, c.data.updated] as [string, Date]),
+    ...Object.keys(reviews).map(id => [`/review/${id}/`, latest] as [string, Date]),
     ['/notes/', lastNote],
     ...notes.map(n => [`/notes/${n.id}/`, n.data.date] as [string, Date]),
     ['/radar/', lastNote], ['/glossary/', latest], ['/sources/', latest], ['/about/', latest], ['/corrections/', latest],

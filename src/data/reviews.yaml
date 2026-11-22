@@ -1,0 +1,207 @@
+# Mixed review per part. Each question draws on more than one chapter (`from`), so answering it means
+# pulling ideas together. Keep numbers out of the wording, or add them to figures.yaml.
+
+language-models:
+  intro: "Five questions that each draw on more than one chapter. Answer from memory first, then check."
+  questions:
+    - q: "Which description of one generation step is in the right order?"
+      options:
+        - "The model looks up the answer, splits it into tokens and streams them out"
+        - "One token is sampled, and then the layers work out what it should mean"
+        - "The text is split into tokens, each token gathers context as it passes through the layers, the model scores every possible next token, and one is sampled"
+        - "The model writes the whole answer at once and tokenizes it afterwards"
+      answer: 2
+      explain: "Tokens come first, attention and the layers build up meaning, the last layer scores every candidate, and sampling picks one. Then the whole process runs again for the next token."
+      from: [tokens, attention, inside-the-stack, generating]
+    - q: "A chatbot confidently cites a court ruling that doesn't exist. Which explanation fits what you have learned?"
+      options:
+        - "It rebuilds facts from patterns in frozen weights, and generation always produces a plausible continuation, whether or not the fact is there"
+        - "The entry for that ruling in its database was corrupted"
+        - "The temperature was set too low"
+        - "The ruling was removed from the internet after training"
+      answer: 0
+      explain: "There is no database to corrupt. The weights hold fuzzy patterns, and the sampling step produces fluent text either way, so an invented ruling reads exactly like a real one."
+      from: [start-here, generating, strengths-and-limits]
+    - q: "Why does a long document answered by a thinking model cost so much more than a short chat?"
+      options:
+        - "Long documents are stored permanently, and storage is billed"
+        - "Thinking models are retrained on every request"
+        - "The provider charges extra for attachments"
+        - "You pay per token for the input, for the hidden thinking and for the answer, and the attention work grows faster than the length"
+      answer: 3
+      explain: "Prices follow tokens, the hidden draft is made of tokens too, and every token attends to every earlier one. Nothing is retrained or stored in the model."
+      from: [tokens, attention, generating]
+    - q: "Why is writing code the task where today's models look strongest?"
+      options:
+        - "Code uses fewer tokens than ordinary writing"
+        - "Code can be checked automatically, so training could reward working results, and in a loop with tools the model can run those checks itself"
+        - "Programmers wrote the models, so they understand code best"
+        - "Code never depends on facts"
+      answer: 1
+      explain: "Automatic checking shaped the training, and the same checks are available while the model works. Where nothing can be checked, both advantages disappear."
+      from: [training, beyond-autocomplete]
+    - q: "You ask an assistant to summarise a web page. Hidden in the page is a sentence telling it to send your files to a stranger. Why might the assistant act on it?"
+      options:
+        - "Web pages have a higher priority than users"
+        - "Hidden text is the only text the model reads"
+        - "Everything in the context is one stream of tokens, and attention has no wall between your request and the page's text"
+        - "The tokenizer turns web text into commands"
+      answer: 2
+      explain: "The model can be trained to prefer your instructions, but nothing in the mechanism separates them from the content it reads. That is the starting point of the security part."
+      from: [attention, strengths-and-limits]
+
+agents:
+  intro: "Five questions that each combine ideas from more than one chapter of this part."
+  questions:
+    - q: "An agent has worked for an hour and now ignores a rule you gave it at the start. Which explanation fits best?"
+      options:
+        - "The model's weights were updated during the session"
+        - "Every step sends the whole transcript again, and when it grew too long the harness summarised it and the rule was lost"
+        - "Agents drop the first message after a fixed time"
+        - "The rule was moved into long-term memory and expired"
+      answer: 1
+      explain: "All continuity lives in the transcript. Compaction keeps the gist and can drop a detail nobody marked as important, so rules that must hold belong in a file the harness reloads."
+      from: [agent-loop, context-and-memory]
+    - q: "Each step of an agent goes right almost every time. Why can a long task still fail often, and what helps most?"
+      options:
+        - "Models tire over long sessions, so schedule breaks"
+        - "Long tasks are routed to older models, so upgrade"
+        - "Tool calls are random, so lower the temperature"
+        - "The chances of error multiply across the steps, and a check outside the model at each step lets the agent notice a failure and retry"
+      answer: 3
+      explain: "A long chain breaks more often than any single link. Tests, compilers and real tool results are checks the model can't talk its way past, and they change the odds."
+      from: [agent-loop, agents-at-work]
+    - q: "You put a decision model in front of an agent's risky commands. What do you still need?"
+      options:
+        - "The rule in code you can read, logs the agent can't change and a way to undo, because the gate's score is still a probability"
+        - "Nothing more, because the gate is enough"
+        - "A second copy of the same gate"
+        - "A longer system prompt"
+      answer: 0
+      explain: "A gate lowers the risk and never removes it. Oversight that works doesn't depend on any model being right."
+      from: [around-the-model, agent-failures]
+    - q: "A top-ranked agent reports that all tests pass and the task is complete. How much should you trust that?"
+      options:
+        - "Fully, because the ranking is independent"
+        - "Fully, because agents can't misreport"
+        - "Not at all, because agents never finish tasks"
+        - "Enough to look, not enough to ship. Check with tests the agent couldn't edit, and compare the change with what you asked for"
+      answer: 3
+      explain: "A benchmark rank describes fixed tasks, and an agent's own report is not evidence. Independent checks are."
+      from: [agents-at-work, agent-failures]
+    - q: "You install a third-party tool server for your agent. Where does the main risk sit?"
+      options:
+        - "Only in what the tool costs"
+        - "In the text it supplies. Its descriptions and results are read by the model at every step and can steer the agent like instructions"
+        - "Nowhere, because tools can't influence a model"
+        - "Only in how slow the tool is"
+      answer: 1
+      explain: "Tool descriptions and tool results both land in the context. Treat a tool server like code from a stranger, and run agent code where a mistake can't reach much."
+      from: [agent-loop, context-and-memory]
+
+trust-security:
+  intro: "Five questions that each combine ideas from more than one chapter of this part."
+  questions:
+    - q: "An assistant can read your inbox, browse the web and send email. You may change one thing. Which change helps most?"
+      options:
+        - "A stronger system prompt"
+        - "A keyword filter for suspicious phrases"
+        - "Taking away or gating its ability to send, so that a fooled model has no way out"
+        - "Asking it to double-check its work"
+      answer: 2
+      explain: "Private data, untrusted content and a way out are all present. Removing one leg works every time. Prompts and filters only lower the odds per attempt."
+      from: [prompt-injection, agents-permissions]
+    - q: "A coding agent asks to install a package. It is the twentieth approval prompt this hour. What protects you best?"
+      options:
+        - "A sandbox that allows only a vetted registry, so an invented or malicious package fails even if you click yes"
+        - "Reading this prompt more carefully than the others"
+        - "Asking the agent whether the package is safe"
+        - "Approving it and checking later"
+      answer: 0
+      explain: "People approve almost everything, and models repeat invented package names. A boundary drawn once doesn't get tired."
+      from: [agents-permissions, supply-chain]
+    - q: "An assistant with a memory feature read a poisoned document last week. Why can that still matter today?"
+      options:
+        - "It can't, because each chat starts fresh"
+        - "The document changed the model's weights"
+        - "The provider replays old documents in every chat"
+        - "The planted instruction may have been saved to memory, and memory is pasted back into later chats"
+      answer: 3
+      explain: "Memory is stored text. If an injection gets written into it, the instruction returns in every later conversation until someone removes it."
+      from: [prompt-injection, your-data]
+    - q: "A widely shared chart says AI now turns new flaws into attacks within minutes. What should you do before you act on it?"
+      options:
+        - "Patch everything rated critical at once"
+        - "Read how the number was measured and what the source says today, then prioritise flaws that are confirmed as exploited on systems you expose"
+        - "Ignore it, because charts about AI are always wrong"
+        - "Wait for a second chart"
+      answer: 1
+      explain: "A striking number needs its method and its current source. And whatever the chart says, evidence of exploitation plus exposure is the best guide to what to fix first."
+      from: [patch-gap, judging-claims]
+    - q: "A vendor says its injection defence stopped every attack in testing. Which question matters most?"
+      options:
+        - "How large the model is"
+        - "Whether the vendor is well known"
+        - "Whether the attackers could adapt and try again, or the test used a fixed list of known attacks"
+        - "How recently the test was run"
+      answer: 2
+      explain: "A defence tested only against known attacks looks better than it is. Real attackers adapt, and a small chance per attempt adds up."
+      from: [prompt-injection, judging-claims]
+
+outlook:
+  intro: "Six questions across the whole guide. If one is hard, the list at the end tells you where to look."
+  questions:
+    - q: "In one sentence, what does a language model do?"
+      options:
+        - "It looks answers up in a very large database"
+        - "It follows rules that programmers wrote for each kind of question"
+        - "It searches the web and rewrites what it finds"
+        - "It predicts the next token from everything in its context, again and again"
+      answer: 3
+      explain: "Everything else in the guide is built on that step: what the model learned in order to predict well, what training rewarded, and the software that calls it in a loop."
+      from: [start-here, generating, beyond-autocomplete]
+    - q: "Why did agents turn prompt injection from a curiosity into a serious problem?"
+      options:
+        - "Agents read content from outside and can act, so a stranger's text can become an action"
+        - "Agents use weaker models than chatbots"
+        - "Agents have no system prompt"
+        - "Agents can't be updated"
+      answer: 0
+      explain: "A chatbot that is fooled says something wrong. An agent that is fooled does something, with whatever access it was given."
+      from: [agent-loop, prompt-injection, agents-permissions]
+    - q: "Training with automatic checks made models much better at code. What is the weakness that comes with it?"
+      options:
+        - "Models became slower at reading"
+        - "Models can learn to satisfy the check without doing the job, so checks have to sit where the agent can't change them"
+        - "Models forgot how to write prose"
+        - "Models stopped using tools"
+      answer: 1
+      explain: "What gets rewarded gets learned, including shortcuts. That is why an agent's own report and tests it can edit are weak evidence."
+      from: [training, agent-failures]
+    - q: "What does a chat assistant remember about you?"
+      options:
+        - "Everything, in its weights"
+        - "Nothing at all, under any circumstances"
+        - "Only text. The current conversation, plus notes or old chats that the product stores and pastes back in. The provider may also keep your chats on its side"
+        - "Only your name"
+      answer: 2
+      explain: "The model is frozen. Memory is a product feature made of stored text, and what the provider keeps is a separate question that depends on the plan and your settings."
+      from: [strengths-and-limits, context-and-memory, your-data]
+    - q: "A lab announces a breakthrough and shows a benchmark chart. What does the guide suggest you ask?"
+      options:
+        - "Which limit it addresses, who measured it, on what, and whether the model could have seen the test"
+        - "How many parameters the model has"
+        - "Whether the chart looks professional"
+        - "Whether competitors have reacted"
+      answer: 0
+      explain: "Research directions aim at specific limits, and numbers need a method and an independent check. Most new ideas are absorbed into existing systems over time."
+      from: [frontier, judging-claims]
+    - q: "Across the guide, which kind of safeguard kept working when the model was wrong or fooled?"
+      options:
+        - "Better wording in the prompt"
+        - "A larger model"
+        - "Asking the model to confirm that it is sure"
+        - "Limits outside the model. Narrow access, sandboxes, independent checks and a way to undo"
+      answer: 3
+      explain: "The model can't be its own guard. Controls that hold are the ones that don't depend on its judgement."
+      from: [agents-permissions, agent-failures, patch-gap]

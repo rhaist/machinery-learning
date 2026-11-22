@@ -1,11 +1,19 @@
 ---
 title: "From chat to agent: tools and the loop"
 short: The agent loop
-order: 10
+order: 8
 part: agents
 summary: "An agent is a language model called again and again, with tools in between. Step through the loop and see why small mistakes add up and what each step costs."
 minutes: 12
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain what turns a chat model into an agent"
+  - "Say who carries out an action: the model, or the software around it"
+  - "Explain why long tasks fail more often than their single steps suggest"
+takeaways:
+  - "An agent is a model called again and again. Its tools run in ordinary software, the harness, in between."
+  - "Small error rates multiply over many steps. Checks outside the model bring reliability back."
+  - "Whatever a tool returns enters the conversation as text. That is the door prompt injection uses."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -36,39 +44,34 @@ Here is a coding agent fixing a failing test. Step through it, then use the swit
 
 All continuity lives in the transcript. There's no agent thinking in the background between steps: the same unchanged model reads a longer text each time. And the model never does anything itself. Every action passes through the harness, which is why the harness is where permissions, limits and logs belong.
 
-The pattern is older than today's products. <Claim id="react" cap />. <Claim id="toolformer" cap />. Today's models learn tool formats as part of their training, as the [training chapter](/learn/training/) describes, and use them far more reliably than those first experiments.
-
 ## Small mistakes add up
 
 An agent task is a chain of steps, and any step can go wrong: a misread error message, a wrong file, an edit in the wrong place. If each step goes right nearly every time, a long chain still breaks surprisingly often. Try it:
 
 <CompoundError />
 
-At 99% per step, a fifty-step task runs cleanly only about six times in ten. That simple multiplication is a useful intuition, and it's roughly what some researchers see in the data. <Claim id="ord-halflife" cap />. But real agents break the toy model in three ways:
+At 99% per step, a fifty-step task runs cleanly only about six times in ten. That simple multiplication is a useful intuition. Real agents depart from it in two ways that matter:
 
 - Mistakes aren't coin flips. Some tasks an agent gets right nearly every time, others it fails nearly every time. That makes repeated runs more consistent than the multiplication predicts, as the measurements below show.
 - Checks change the maths. When the loop includes something outside the model that can say "wrong", such as a test, a compiler or a real tool result, the agent can notice a failed step and try again. Add the check in the demo and the chance of a clean run jumps.
-- Mistakes breed mistakes. <Claim id="self-conditioning" cap />. So a bad early step can make later ones worse, not just add to them.
-
-Design can push this a long way. <Claim id="maker" cap />. That was an extreme lab set-up, and it shows how much of the limit lies in the system around the model.
 
 <Debate id="errors-compound" />
 
 ## How reliable is it today?
 
-Getting a single tool call into the right format is the easy part, especially with modes that force valid arguments. Long, realistic tasks are another matter. <Claim id="mcpmark" cap />.
+Getting a single tool call into the right format is the easy part, especially with modes that force valid arguments. Long, realistic tasks are another matter.
 
 Researchers measure two things: solved on *at least one* of several tries, or solved on *every* try. <Claim id="taubench-passk" cap />. A demo needs one success. A business that hands the same kind of task to an agent every day needs the second kind, <Term k="passk">pass^k</Term>, and that number is much lower.
 
 ## When does it stop?
 
-A loop needs a way out. Usually the model ends its turn without asking for a tool, which the harness treats as "done". The harness also sets hard limits: a maximum number of steps, a token or money budget, a time limit. Both are needed. The model decides when it thinks it's finished, the harness decides when it has had enough. A model that declares victory too early is a well-documented failure, and [When agents fail](/learn/agent-failures/) is about how to catch it.
+A loop needs a way out. Usually the model ends its turn without asking for a tool, and the harness treats that as "done". The harness also sets hard limits on steps, cost and time, because a model can stop too early or not at all. [When agents fail](/learn/agent-failures/) is about catching the model that declares victory too soon.
 
 ## Every step costs
 
 Each step sends the whole transcript to the model again: the instructions, the tool descriptions, every earlier call and result. So the amount of text the model reads grows faster than the number of steps. Agents read far more than they write, and they cost more than chats. <Claim id="anthropic-agent-tokens" cap />.
 
-What keeps this affordable is [prompt caching](/learn/generating/). <Claim id="cache-tenth" cap />. Switch caching off in the demo to see the difference. This is also why well-built harnesses avoid changing anything near the start of the context.
+What keeps this affordable is [prompt caching](/learn/generating/): the provider charges far less for the beginning of a prompt it has already processed. Switch caching off in the demo to see the difference. This is also why well-built harnesses avoid changing anything near the start of the context.
 
 <Note title="Security note: the result is the way in" kind="warn">
 The loop's defining move is pasting a tool's result into the conversation. Whatever a tool returns, whether a web page, an email, a file or another service's reply, reaches the model as text with the same standing as your request. That is how prompt injection gets in, as the planted comment in the demo shows. <Claim id="trifecta" cap />. [Prompt injection](/learn/prompt-injection/) in Part 3 explains why better prompts can't fix this, and [Giving an AI the keys](/learn/agents-permissions/) covers the permissions, sandboxes and approvals that limit the damage.
@@ -83,11 +86,20 @@ Under the hood, every major provider uses the same shape. You can rely on that a
 
 **Workflow or agent is a design choice, not a ranking.** If the steps are known, write them as code and let the model fill in each one. It's cheaper, easier to test and easier to secure. Reach for an agent loop when the path genuinely depends on what the model finds. Whether to split work across several agents is contested; it pays off mainly when subtasks are independent, and it multiplies token use.
 
-**Measure reliability, not luck.** pass@k (at least one of k tries) rises with k and flatters a system. pass^k (all k tries) falls with k and matches what a deployment experiences. Comparing the two also shows how correlated failures are: if tries were independent, pass^4 would be pass@1 to the fourth power, far below what benchmarks such as MCPMark actually measure.
+**Measure reliability, not luck.** pass@k (at least one of k tries) rises with k and flatters a system. pass^k (all k tries) falls with k and matches what a deployment experiences. Comparing the two also shows how correlated failures are: if tries were independent, pass^4 would be pass@1 to the fourth power, far below what benchmarks such as MCPMark actually measure. <Claim id="mcpmark" cap />.
 
 **Treat leaderboards with care.** <Claim id="epoch-bfcl" cap />. Benchmarks also change version, and scores across versions aren't comparable. Report cost and number of steps alongside accuracy, and test on your own tasks with your own harness, because results depend on the scaffold as well as the model.
 
 **Engineer the stop.** Combine the model's own end of turn with hard caps on steps, tokens, wall-clock time and spend, and a stop when the same failing action repeats. Log every call and result. The transcript is your audit trail, your debugging tool and your evaluation data.
+**Where the pattern comes from.** <Claim id="react" cap />. <Claim id="toolformer" cap />. Today's models learn tool formats as part of their training and use them far more reliably than those first experiments.
+
+**How far the multiplication holds.** A constant chance of failure per step is roughly what some researchers see in the data. <Claim id="ord-halflife" cap />. Two results pull in opposite directions. Mistakes breed mistakes: <Claim id="self-conditioning" />, so a bad early step can make later ones worse. And design can push reliability a long way: <Claim id="maker" />. That was an extreme lab set-up, and it shows how much of the limit lies in the system around the model.
+
+**Caching has a condition.** <Claim id="cache-tenth" cap />.
 </Engineer>
 
-<Quiz q="In an agent, who actually carries out a tool call such as 'delete this file'?" options={["The model itself, once it has decided","The harness: the ordinary software around the model that reads the request and runs it","The cloud provider's staff, who review each request","The operating system, automatically, whenever a command appears in the text"]} answer={1} explain="The model only writes the request as text. The harness reads it and does the work, which is why permissions, limits and logs belong in the harness." />
+<Quiz kind="recall" q="In an agent, who actually carries out a tool call such as 'delete this file'?" options={["The model itself, once it has decided","The harness: the ordinary software around the model that reads the request and runs it","The cloud provider's staff, who review each request","The operating system, automatically, whenever a command appears in the text"]} answer={1} explain="The model only writes the request as text. The harness reads it and does the work, which is why permissions, limits and logs belong in the harness." />
+
+<Quiz kind="apply" q="An agent completes a demo task on the first try. Before you give it the same kind of task every day, what should you find out?" options={["How often it succeeds across repeated runs, not whether it succeeded once","How fast it was","How many tools it has","Whether the demo used the newest model"]} answer={0} explain="A demo needs one success. Daily work needs success on every run, and that number is much lower than the best-of-several figure." />
+
+<Quiz kind="mistake" q="A colleague says: 'Between steps the agent is thinking in the background, so I shouldn't interrupt it.' What is wrong?" options={["Nothing: agents keep a process running between steps","Agents only think while a tool is running","The harness does the thinking between steps","Nothing runs between steps. The same model is called again with a longer transcript, and all continuity lives in that text"]} answer={3} explain="There is no background process. Each step is a fresh call to an unchanged model, which reads everything so far and writes the next request." />

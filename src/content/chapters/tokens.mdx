@@ -2,9 +2,18 @@
 title: Text becomes tokens, tokens become numbers
 short: Tokens
 order: 1
+part: language-models
 summary: Models never see letters or words. They see numbered pieces of text, and then points on a map of meaning.
-minutes: 8
-updated: 2026-11-21
+minutes: 9
+updated: 2026-11-22
+goals:
+  - "Explain what a token is and why limits and prices are counted in tokens"
+  - "Predict which kinds of text use more tokens"
+  - "Describe how a token number becomes a point on a map of meaning"
+takeaways:
+  - "Models read numbered pieces of text called tokens, not letters or words."
+  - "Limits and prices are counted in tokens. Rare words, other languages and code usually need more of them."
+  - "Each token becomes a long list of numbers, placed so that related meanings sit close together."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -66,4 +75,8 @@ In computer-science terms, the tokenizer is a deterministic compression codec, a
 
 <Debate id="tokenizers-permanent" />
 
-<Quiz q="Why did LLMs famously struggle to count the r's in 'strawberry'?" options={["Their vocabulary lacks the letter r","They see subword tokens, not individual letters","Attention can't handle repeated characters","Counting needs a separate maths module"]} answer={1} explain="The input is token IDs, for example str + aw + berry, not letters. Any knowledge about spelling has to be learned indirectly, which makes letter tasks harder. Research suggests counting is a weak spot too, so tokens aren't the whole story." />
+<Quiz kind="recall" q="Why did LLMs famously struggle to count the r's in 'strawberry'?" options={["Their vocabulary lacks the letter r","They see subword tokens, not individual letters","Attention can't handle repeated characters","Counting needs a separate maths module"]} answer={1} explain="The input is token IDs, for example str + aw + berry, not letters. Any knowledge about spelling has to be learned indirectly, which makes letter tasks harder. Research suggests counting is a weak spot too, so tokens aren't the whole story." />
+
+<Quiz kind="apply" q="You paste the same report into a chatbot twice, once in English and once in German. What should you expect?" options={["Both versions use exactly the same number of tokens","The German version can't be split into tokens","The German version usually uses more tokens, so it costs more and fills the context sooner","The English version uses more, because English has more words"]} answer={2} explain="Other languages, German included, usually need more tokens for the same content, and long compound words split into several pieces. Limits and prices follow the token count." />
+
+<Quiz kind="mistake" q="Someone proposes: 'We'll block the phrase ignore previous instructions with a word filter, so the model never acts on it.' Why is that weaker than it sounds?" options={["The model reads tokens and meaning, so the same request split up, translated or encoded slips past the filter and is still understood","Models can't read filtered text at all","Word filters only work on code","Filters slow the model down too much"]} answer={0} explain="A filter matches the words it was given. The model understands the request in many other forms, which is why filtering input is a weak defence." />

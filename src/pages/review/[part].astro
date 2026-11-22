@@ -1,0 +1,43 @@
+---
+// Mixed review at the end of a part: questions that each draw on several chapters (src/data/reviews.yaml).
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.astro';
+import { byPart, reviews } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const parts = byPart((await getCollection('chapters')) as any[]);
+  return parts.filter(p => reviews[p.id]).map((p, i, list) => ({ params: { part: p.id }, props: { part: p, parts } }));
+}
+const { part, parts } = Astro.props;
+const review = reviews[part.id];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = parts.flatMap((p: any) => p.chapters.map((x: any) => x.c));
+const name = (id: string) => all.find((c: any) => c.id === id);
+const nextPart = parts[parts.findIndex((p: any) => p.id === part.id) + 1];
+const whole = !nextPart;
+const label = part.title.split(':')[0];
+---
+<Base title={whole ? 'Final review' : `${label} review`} description={whole ? 'Six mixed questions across the whole guide.' : `Mixed questions that combine the chapters of ${part.title.replace(':', ',')}.`} nav="learn" quizKey={`review-${part.id}`}>
+  <article class="band"><div class="page-text">
+    <header class="page-head">
+      <p class="kicker">{whole ? 'The whole guide' : part.title}</p>
+      <h1>{whole ? 'Final review' : 'Mixed review'}</h1>
+      <p class="lede">{review.intro}</p>
+    </header>
+    <div class="prose">
+      {review.questions.map((q, i) => <Quiz label={`Question ${i + 1}.`} q={q.q} options={q.options} answer={q.answer} explain={q.explain} />)}
+      <p class="label" data-quiz-score aria-live="polite"></p>
+      <section aria-labelledby="back-h">
+        <h2 id="back-h">Where to look again</h2>
+        <ol>
+          {review.questions.map(q => <li>{q.from.map((id, j) => <>{j > 0 && ', '}<a href={`${base}/learn/${id}/`}>{name(id)?.data.short ?? id}</a></>)}</li>)}
+        </ol>
+      </section>
+      <nav class="pager" aria-label="Continue">
+        <a href={`${base}/`}><small>Overview</small>All chapters</a>
+        {nextPart && <a class="next" href={`${base}/learn/${nextPart.chapters[0].c.id}/`}><small>Next</small>{nextPart.title}</a>}
+      </nav>
+    </div>
+  </div></article>
+</Base>

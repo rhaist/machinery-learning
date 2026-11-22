@@ -2,9 +2,18 @@
 title: "Training: from autocomplete to assistant to agent"
 short: Training
 order: 5
+part: language-models
 summary: "A model goes through five training stages, and each one changes what it does. Knowing them explains a lot of everyday behaviour."
-minutes: 10
-updated: 2026-11-21
+minutes: 11
+updated: 2026-11-22
+goals:
+  - "Name the training stages and what each one adds"
+  - "Trace everyday behaviour, such as confident answers or stale knowledge, back to the stage that caused it"
+  - "Explain why models are strongest where answers can be checked automatically"
+takeaways:
+  - "Nobody hand-codes behaviour. It is learned in stages: reading, examples, feedback and practice with automatic checking."
+  - "Models are strongest where answers can be checked automatically, such as code and maths."
+  - "Training rewards what gets measured. That is where confident agreement and gamed tests come from."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -58,4 +67,8 @@ Pretraining has historically used most of the compute. Reinforcement learning af
 
 <Debate id="rl-new-abilities" />
 
-<Quiz q="Which stage made long, self-checking reasoning strong and reliable?" options={["Reading more data during pretraining","Practice with automatic checking (RL with verifiable rewards)","A better tokenizer","Fine-tuning on chat transcripts"]} answer={1} explain="Step-by-step reasoning could already be prompted in 2022, but practice with automatic checking rewards correct outcomes, such as matching answers and passing tests. Long, self-checking chains of reasoning grew because they lead to more correct outcomes." />
+<Quiz kind="recall" q="Which stage made long, self-checking reasoning strong and reliable?" options={["Reading more data during pretraining","Practice with automatic checking (RL with verifiable rewards)","A better tokenizer","Fine-tuning on chat transcripts"]} answer={1} explain="Step-by-step reasoning could already be prompted in 2022, but practice with automatic checking rewards correct outcomes, such as matching answers and passing tests. Long, self-checking chains of reasoning grew because they lead to more correct outcomes." />
+
+<Quiz kind="apply" q="You push back on a correct answer, and the model apologises and changes it to a wrong one. Which part of training best explains this?" options={["The reading stage contained too little text","The tokenizer split your reply badly","Feedback from people, who sometimes preferred agreeable answers over correct ones","Practice exams with automatic marking"]} answer={2} explain="Models absorbed the preferences of the people rating their answers, and people often like being agreed with. Ask for evidence, not agreement." />
+
+<Quiz kind="mistake" q="Which statement about training is wrong?" options={["Behaviour is shaped through examples and feedback, not hand-written rules","Automatic checking is a big reason code and maths improved so much","A model can learn to satisfy a check without doing the job","The model keeps learning from each conversation after it is released"]} answer={3} explain="Once trained, the model is frozen. Your chats may be used to train a later version, depending on the provider and your settings, but the model you talk to doesn't change." />

@@ -2,9 +2,18 @@
 title: What an LLM is, in five minutes
 short: Start here
 order: 0
+part: language-models
 summary: "The whole picture in five minutes: what these systems are, how they were built and what they are not."
-minutes: 5
-updated: 2026-11-21
+minutes: 6
+updated: 2026-11-22
+goals:
+  - "Say in one sentence what a language model does"
+  - "Name the three stages that turn a text predictor into an assistant"
+  - "Explain why a chatbot can be fluent and wrong at the same time"
+takeaways:
+  - "A language model continues text, one small piece at a time. Everything else is built on that."
+  - "It rebuilds facts from patterns and doesn't look them up, so fluent and correct are separate things."
+  - "It doesn't learn from your chat. Whatever it seems to remember was fed back in as text."
 ---
 import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
@@ -34,7 +43,7 @@ Think of an extraordinarily well-read intern who has never left the library. Bri
 
 ## How to use this guide
 
-Each chapter has a plain-language core and optional **Engineer depth** boxes: open the ones you want, or set them all to open under Settings in the menu. Hover or tap any <Term k="token">dotted term</Term> for a definition. Facts that change quickly carry a small date badge that shows when they were last checked. Chapters end with a checkpoint question, so you can see whether it stuck.
+Each chapter has a plain-language core and optional **Engineer depth** boxes: open the ones you want, or set them all to open under Settings in the menu. Hover or tap any <Term k="token">dotted term</Term> for a definition. Facts that change quickly carry a small date badge that shows when they were last checked. Each chapter opens with what you'll be able to do afterwards. It ends with three checkpoint questions and the points to remember, and each part closes with a mixed review.
 
 <Engineer title="The same story in engineering terms">
 Under the hood, an LLM is a <Term k="transformer">transformer</Term>: a stack of identical blocks that each refine a list of numbers for every piece of text.
@@ -54,4 +63,8 @@ When it answers, the model writes one token at a time, which is called <Term k="
 All of this rests on two memories with nothing in between: the frozen weights hold what the model learned in training, and the <Term k="context">context window</Term> holds the current conversation.
 </Engineer>
 
-<Quiz q="Why can an LLM state a wrong fact with complete confidence?" options={["It is programmed to never admit uncertainty","It reconstructs facts from learned patterns rather than looking them up","Its database is out of date","It deliberately makes things up to seem helpful"]} answer={1} explain="The model generates the most plausible continuation from patterns it learned. A plausible-sounding answer and a correct one usually coincide, but not always, and the fluency is the same either way." />
+<Quiz kind="recall" q="Why can an LLM state a wrong fact with complete confidence?" options={["It is programmed to never admit uncertainty","It reconstructs facts from learned patterns rather than looking them up","Its database is out of date","It deliberately makes things up to seem helpful"]} answer={1} explain="The model generates the most plausible continuation from patterns it learned. A plausible-sounding answer and a correct one usually coincide, but not always, and the fluency is the same either way." />
+
+<Quiz kind="apply" q="Last week you described a meeting to a chatbot. Today, in a new chat, it refers to that meeting correctly. What is the most likely explanation?" options={["The model learned it from you and updated itself","The model found it in its training data","The app saved a note about it and added that note to what the model reads","It guessed and happened to be right"]} answer={2} explain="The model itself is frozen. Memory features save notes and feed them back in as text, the same way the conversation so far is fed back in on every turn." />
+
+<Quiz kind="mistake" q="A colleague says: 'The chatbot gave me the report's figures with total confidence, so it must have checked them.' What is wrong with that?" options={["Nothing: confidence shows the model found a source","Models are only confident about recent facts","The model checks figures whenever it is asked politely","Confidence is a writing style. The model produces the most plausible text whether or not it has the facts"]} answer={3} explain="Fluency comes from how the text is generated, not from a lookup. Unless a search tool was connected and used, nothing was checked." />

@@ -10,9 +10,10 @@
 
 Most of us use AI tools every day without knowing what happens between typing a question and getting an answer. This guide explains it from the ground up, for two kinds of reader at once: each chapter is written in plain language with everyday analogies, and boxes marked *Engineer* fold open with the technical detail.
 
-- **Part 1: Language models.** Tokens, attention, training, generation, agents, limits and the research frontier. Ten chapters, each with a hands-on demo.
-- **Part 2: Agents.** The agent loop; context, memory, plug-ins and sandboxes; what agents get done; how to tell when they fail. Four chapters.
+- **Part 1: Language models.** Tokens, attention, training, generation and limits. Eight chapters, each with a hands-on demo.
+- **Part 2: Agents.** The agent loop; context, memory, plug-ins and sandboxes; what agents get done; the models and software around the model; how to tell when they fail. Five chapters.
 - **Part 3: Trust & security.** Prompt injection, agent permissions, the AI supply chain, where your data goes, what AI is doing to the security industry, and how to judge AI claims. Six chapters with interactive labs.
+- **Part 4: Looking ahead.** Where research is heading, and the guide's main points and habits on one page.
 
 ## How it stays honest
 

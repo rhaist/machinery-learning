@@ -1,10 +1,19 @@
 ---
 title: "Around the model: small models, decision models, harnesses"
 short: Around the model
-order: 8
+order: 10
+part: agents
 summary: Most AI products combine several models with plain software. Who does what, and where the new decision models fit.
-minutes: 11
-updated: 2026-11-21
+minutes: 12
+updated: 2026-11-22
+goals:
+  - "Name the roles in a typical AI product: large model, small model, decision model and harness"
+  - "Explain what a decision model returns and where it fits"
+  - "Explain why a fast, confident score still has to be measured"
+takeaways:
+  - "An AI product is usually a team: a large model, small models, sometimes a decision model, and plain software that sets the rules."
+  - "A decision model returns a probability for each of a few fixed answers. It writes no text."
+  - "Keep the policy in code you can read. The model supplies a judgement, and that judgement is still a probability."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -17,7 +26,7 @@ import ToolGate from '../../components/ToolGate.astro';
 import DecisionHeads from '../../components/DecisionHeads.astro';
 import Debate from '../../components/Debate.astro';
 
-When you use an AI product, you're rarely talking to one model. Behind the scenes there is often a small team, each member doing what it's best and cheapest at:
+The last two chapters followed one model through a loop. A real AI product rarely relies on one model alone. Behind the scenes there is often a small team, each member doing what it's best and cheapest at:
 
 <Note title="Like a hospital">
 The senior doctor (a large frontier model) handles the hard, open-ended cases. A triage nurse (a decision model) makes quick, narrow calls: urgent or not, which department. This nurse is new and still unproven, so check its calls. Lab technicians (small models) run routine jobs fast and cheaply. And the hospital's procedures (plain software, the harness) decide who is allowed to do what, and keep records.
@@ -26,9 +35,9 @@ The senior doctor (a large frontier model) handles the hard, open-ended cases. A
 - **Large frontier models** do the open-ended thinking: understanding the task, planning, writing code.
 - **<Term k="slm">Small language models</Term>** are the same kind of model made much smaller. They're fast, cheap, private when run on your own device, and can run on a laptop or phone, but they know less and are weaker at long reasoning. They're good for summarising, sorting and extracting.
 - **<Term k="decision">Decision models</Term>** don't write text at all. You ask a narrow question with fixed answers ("allow, ask a human, or block?") and get back a probability for each option, in tens to hundreds of milliseconds. The category is new: <Claim id="jev-release" />. AWS (Strands Decider) and Cloudflare (Clef) followed with open versions on 1 October.
-- **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here. Part 2 opens with [the agent loop](/learn/agent-loop/), step by step.
+- **The <Term k="harness">harness</Term>** is ordinary software: the loop that passes messages, runs tools, enforces permissions and keeps the conversation. Agent frameworks such as the Strands Agents SDK live here. [The agent loop](/learn/agent-loop/) stepped through it call by call.
 
-Click through the steps of a typical agent loop to see who handles what:
+You've stepped through a loop already. This time, watch who handles each step:
 
 <AgentLoop />
 
@@ -62,4 +71,8 @@ The current models differ in the details. Strands Decider puts a pointer head on
 
 <Debate id="decision-models-trust" />
 
-<Quiz q="What does a decision model such as Jev or Strands Decider return, compared with a normal LLM?" options={["Longer, more detailed text","A probability for each of a fixed set of answers, without writing text","Program code for the harness to run","An updated copy of its own weights"]} answer={1} explain="It answers a narrow question, such as allow / ask / block, with a probability per option. That makes it fast enough to sit at every decision point of an agent loop, while your code decides what to do with those probabilities." />
+<Quiz kind="recall" q="What does a decision model such as Jev or Strands Decider return, compared with a normal LLM?" options={["Longer, more detailed text","A probability for each of a fixed set of answers, without writing text","Program code for the harness to run","An updated copy of its own weights"]} answer={1} explain="It answers a narrow question, such as allow / ask / block, with a probability per option. That makes it fast enough to sit at every decision point of an agent loop, while your code decides what to do with those probabilities." />
+
+<Quiz kind="apply" q="You want an automatic gate that decides whether an agent's command may run. Which design follows from this chapter?" options={["A decision model scores the risk, and plain code applies a rule you can read and audit","Let the large model decide and run the command itself","A small model rewrites every command to make it safe","No gate, because speed matters more"]} answer={0} explain="The model supplies a judgement and the rule stays in ordinary code. That keeps the policy readable and the gate fast enough to sit at every step." />
+
+<Quiz kind="mistake" q="A vendor says: 'Our decision model answers in milliseconds with a clear probability, so the gate is reliable.' What is missing?" options={["Nothing: a probability is a guarantee","Decision models can't output probabilities","It should write an explanation instead of a score","Speed and confidence say nothing about accuracy. The category is new and most numbers are self-reported, so measure it on your own decisions"]} answer={3} explain="A fast, confident number is not the same as a correct one. A gate built on a decision model is still probabilistic." />

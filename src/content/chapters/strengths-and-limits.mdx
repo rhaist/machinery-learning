@@ -2,9 +2,18 @@
 title: What they're good at, and where it breaks
 short: Strengths & limits
 order: 7
+part: language-models
 summary: "Why these models are good at some things and reliably bad at others, including a security problem nobody has solved."
-minutes: 11
-updated: 2026-11-21
+minutes: 12
+updated: 2026-11-22
+goals:
+  - "Explain the model's two memories and what sits in each"
+  - "Sort a task into strength or built-in weakness before you rely on the answer"
+  - "State the practical rule for letting AI act on content you don't control"
+takeaways:
+  - "A model has two memories: frozen weights and the current context. Nothing sits between them."
+  - "It always produces a plausible continuation, so invented facts look exactly like real ones."
+  - "Don't let an AI act unsupervised on content you don't control when it can also send, delete, buy or share."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -64,4 +73,8 @@ Long context gets expensive in two ways. Attention work grows with the square of
 **Sample inefficiency.** A model needs trillions of tokens to learn language; a child hears a few tens of millions of words.
 </Engineer>
 
-<Quiz q="Why is prompt injection so hard to fix?" options={["Models can't read email","System prompts are too short","Instructions and data arrive as one stream of text, with no separate channel for commands","The model ignores tool results"]} answer={2} explain="It's like SQL injection without parameterised queries. The labels you see (system, user, email) are just more text to the model, so the separation is learned behaviour, not an enforced boundary." />
+<Quiz kind="recall" q="Why is prompt injection so hard to fix?" options={["Models can't read email","System prompts are too short","Instructions and data arrive as one stream of text, with no separate channel for commands","The model ignores tool results"]} answer={2} explain="It's like SQL injection without parameterised queries. The labels you see (system, user, email) are just more text to the model, so the separation is learned behaviour, not an enforced boundary." />
+
+<Quiz kind="apply" q="You need two things from a chatbot: a polite summary email from your rough notes, and the exact date a regulation took effect. Which is true?" options={["Both are equally safe to use unchecked","The email is a natural fit. The date is a rare fact it may invent, so verify it or give the model a source","The date is safer, because facts are stored exactly","Neither works without retraining the model"]} answer={1} explain="Turning one form of text into another is what the design does best. Rare facts are rebuilt from fuzzy memory and can come out wrong with full confidence." />
+
+<Quiz kind="mistake" q="After two hours in one chat, a user says: 'It knows my whole project now, so its answers keep getting better.' What is wrong?" options={["The model hasn't learned anything. The context has only grown, and long contexts are used less evenly and cost more","Chats are cut off after one hour","The model forgets everything after each word","Nothing: models learn as the chat goes on"]} answer={0} explain="The weights are frozen. Everything the model seems to know about your project is text in the context, and a long context is not read equally well from start to end." />

@@ -1,11 +1,19 @@
 ---
 title: "Giving an AI the keys: agents and permissions"
 short: Agents and permissions
-order: 15
+order: 14
 part: trust-security
 summary: Least privilege, sandboxes and egress rules are the controls that still work when both the model and the human slip.
-minutes: 12
-updated: 2026-11-21
+minutes: 13
+updated: 2026-11-22
+goals:
+  - "Explain why an agent's access matters more than its judgement"
+  - "Spot approval fatigue and say what works better"
+  - "Apply least privilege to an AI tool you use"
+takeaways:
+  - "Assume the model can be fooled. What it can reach decides how bad that gets."
+  - "People approve almost everything they are asked. A boundary drawn once holds better than a stream of prompts."
+  - "Give agents valet keys: only the access the job needs, and never a skip-permissions mode on your normal account."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -81,4 +89,8 @@ Enforce a default-deny <Term k="egress">egress</Term> allowlist *outside* the sa
 **Watch it.** Log every tool call with its arguments and identity, and make sure VM isolation doesn't blind your endpoint detection. OWASP's Top 10 for Agentic Applications (December 2025) has a fuller checklist.
 </Engineer>
 
-<Quiz q="A coding agent asks for approval before every command, and you approve almost all of them. What protects you best against the one malicious command hidden among them?" options={["Reading each prompt more carefully","A sandbox that blocks network access to unknown domains, so that command fails even if you approve it","Asking the agent to flag suspicious commands itself","Turning off the agent's memory"]} answer={1} explain="A boundary enforced outside the model works when both the model and the human slip. Prompts depend on attention, and attention runs out." />
+<Quiz kind="recall" q="A coding agent asks for approval before every command, and you approve almost all of them. What protects you best against the one malicious command hidden among them?" options={["Reading each prompt more carefully","A sandbox that blocks network access to unknown domains, so that command fails even if you approve it","Asking the agent to flag suspicious commands itself","Turning off the agent's memory"]} answer={1} explain="A boundary enforced outside the model works when both the model and the human slip. Prompts depend on attention, and attention runs out." />
+
+<Quiz kind="apply" q="You connect a coding agent to your company's cloud account. Which access is right?" options={["A separate, narrow role limited to the project, with no reach into production or secrets","Whatever the agent asks for as it goes","Read access to everything, so that it has full context","Your own admin login, to avoid interruptions"]} answer={0} explain="Least privilege: the agent gets what this job needs and nothing more. Then a fooled or careless agent can only damage what is inside that boundary." />
+
+<Quiz kind="mistake" q="'We told the agent in the chat that there is a code freeze, so it won't touch production.' What is wrong?" options={["Nothing: agents follow written rules exactly","The agent can't read the word freeze","Code freezes don't apply to AI","A sentence in a chat is not a control. Unless the system blocks the access, only the agent's judgement stands in the way"]} answer={3} explain="Rules have to be enforced by the system, with separate environments and permissions. An instruction is text the model can misread, forget or be argued out of." />

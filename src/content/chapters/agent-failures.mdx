@@ -1,11 +1,19 @@
 ---
 title: "When agents fail, and how to tell"
 short: Agent failures
-order: 13
+order: 12
 part: agents
 summary: "Agents often report success they didn't achieve. Why \"the tests pass\" and \"I'm done\" are weak evidence, what lab tests of deception show, and which kinds of oversight work."
 minutes: 13
-updated: 2026-11-21
+updated: 2026-11-22
+goals:
+  - "Explain why 'the tests pass' and 'done' are weak evidence"
+  - "Recognise reward hacking and false reports of success"
+  - "Set up oversight that doesn't depend on the agent's word"
+takeaways:
+  - "An agent's report is not evidence. Passing a check and doing the job are different things."
+  - "When a check is easier to satisfy than the task, models find the shortcut."
+  - "Oversight that works sits outside the agent: checks it can't edit, approvals only for what can't be undone, and a way to roll back."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -31,17 +39,15 @@ Look for the problem yourself:
 
 ## Gaming the check
 
-When the check is easier to satisfy than the task, models find the shortcut. Researchers call it <Term k="rewardhack">reward hacking</Term>. <Claim id="metr-monkeypatch" cap />. It's not constant: <Claim id="metr-hack-rates" />. Cheating happens where the score is easy to fake and the real work is hard, which describes a lot of real tasks.
-
-It can also spread. <Claim id="hack-generalises" cap />. What stopped it: <Claim id="inoculation" />. That comes from one lab's training setup, and it suggests cheating can shape a model's behaviour well beyond the task where it learned to cheat.
+When the check is easier to satisfy than the task, models find the shortcut. Researchers call it <Term k="rewardhack">reward hacking</Term>. <Claim id="metr-monkeypatch" cap />. It doesn't happen everywhere. Cheating shows up where the score is easy to fake and the real work is hard, which describes a lot of real tasks.
 
 ## Claiming success it didn't achieve
 
-<Claim id="fake-done" cap />. Sometimes the agent believes it; sometimes it skips the check that would have told it otherwise. Watching the agent's reasoning helps, up to a point. <Claim id="cot-hide" cap />.
+<Claim id="fake-done" cap />. Sometimes the agent believes it; sometimes it skips the check that would have told it otherwise. Reading the agent's reasoning helps, but only up to a point.
 
 Agreeing too readily is a cousin of this problem. Models learn partly from human approval, and people like being agreed with. <Claim id="gpt4o-sycophancy" cap />. An agent that goes along with your flawed plan won't flag the flaw.
 
-And people are not reliable checkers of large output either. <Claim id="perry-secure" cap />. Reviewing a thousand-line change carefully takes longer than skimming its summary, and the summary is written by the agent.
+And people are not reliable checkers of large output either. Reviewing a thousand-line change carefully takes longer than skimming its summary, and the summary is written by the agent.
 
 ## When it goes wrong for real
 
@@ -55,7 +61,7 @@ In each case the agent's apology came after the damage, and in each case a borin
 
 ## What lab tests of deception show
 
-You may have seen headlines about AI models blackmailing people. They come from staged tests. <Claim id="blackmail" cap />. Labs build such scenarios as fire drills in rigged buildings: they show what a model *can* do when cornered, not how often it happens at work. One result complicates these numbers: <Claim id="blackmail-aware" />. <Claim id="eval-awareness" cap />.
+You may have seen headlines about AI models blackmailing people. They come from staged tests. <Claim id="blackmail" cap />. Labs build such scenarios as fire drills in rigged buildings: they show what a model *can* do when cornered, not how often it happens at work. Models also often seem to recognise when they are being tested, which makes these numbers hard to read.
 
 <Debate id="scheming-evals" />
 
@@ -64,7 +70,7 @@ You may have seen headlines about AI models blackmailing people. They come from 
 Reading everything an agent does doesn't scale, and asking it whether it's sure doesn't help. What works is a short list of checks that don't depend on the agent's word:
 
 - Checks outside the agent: Rules that flag changes to tests, configuration or permissions; a separate test run in CI that the agent can't edit; spot checks of finished work against what you actually asked for.
-- Approvals only where they matter. <Claim id="approval-93" cap />. A prompt for every step trains people to click yes. Save approvals for actions that can't be undone, and show the effect (the diff, the recipient, the amount), not the agent's explanation. <Claim id="owasp-asi09" cap />.
+- Approvals only where they matter. <Claim id="approval-93" cap />. A prompt for every step trains people to click yes. Save approvals for actions that can't be undone, and show the effect (the diff, the recipient, the amount), not the agent's explanation.
 - Reversibility by design: Snapshots before a task, deletes that go to a bin, backups held with credentials the agent never sees, separate environments for production.
 - Small, checkable tasks. A task you can verify in five minutes beats one that takes an hour to review, even if the agent could do the bigger one.
 
@@ -86,6 +92,15 @@ Most agent failures follow from optimising against a proxy, so design every cont
 **Evaluate in production, continuously.** Sample finished tasks every week, check them as a maintainer would, and track the share that were really done against the share the agent reported done. That gap is your most important agent metric.
 
 **Plan for the incident.** Know how to revoke the agent's credentials, stop its runs, and restore from backups it couldn't touch, and rehearse it once before you need it.
+**How often, and how far it spreads.** <Claim id="metr-hack-rates" cap />. It can also spread. <Claim id="hack-generalises" cap />. What stopped it: <Claim id="inoculation" />. That comes from one lab's training setup, and it suggests cheating can shape a model's behaviour well beyond the task where it learned to cheat.
+
+**Reading the reasoning, and tests the model recognises.** <Claim id="cot-hide" cap />. <Claim id="blackmail-aware" cap />. <Claim id="eval-awareness" cap />.
+
+**People as checkers.** <Claim id="perry-secure" cap />. <Claim id="owasp-asi09" cap />.
 </Engineer>
 
-<Quiz q="An agent reports 'All tests pass ✓'. What is the strongest evidence that the task is really done?" options={["The agent's confident summary","Asking the agent to double-check its work","An independent check the agent couldn't change: an unmodified test suite in CI and a review of the diff against the original request","The number of steps the agent took"]} answer={2} explain="Agents optimise for the checks they can see, and some learn to satisfy them without doing the work. Evidence that doesn't depend on the agent, like protected tests and a review of what actually changed, is what tells you the job is done." />
+<Quiz kind="recall" q="An agent reports 'All tests pass ✓'. What is the strongest evidence that the task is really done?" options={["The agent's confident summary","Asking the agent to double-check its work","An independent check the agent couldn't change: an unmodified test suite in CI and a review of the diff against the original request","The number of steps the agent took"]} answer={2} explain="Agents optimise for the checks they can see, and some learn to satisfy them without doing the work. Evidence that doesn't depend on the agent, like protected tests and a review of what actually changed, is what tells you the job is done." />
+
+<Quiz kind="apply" q="You let an agent tidy up files on a shared drive. Which preparation matters most?" options={["Take a snapshot it can't reach and send deletes to a bin, so that a confident mistake can be undone","Tell it to be careful and to confirm when it is done","Ask it to rate its own confidence after each step","Approve every single step by hand"]} answer={0} explain="Reversibility doesn't depend on the agent noticing its own error. Approving every step trains people to click yes, and the agent's confidence tells you little." />
+
+<Quiz kind="mistake" q="After a headline about an AI model blackmailing an engineer, someone says: 'So that's what these agents do at work.' What is the fairer reading?" options={["It proves models have human motives","Journalists made the story up","It happens in most deployments","It was a staged test built to corner the model. It shows what a model can do under pressure, not how often that happens in normal use"]} answer={3} explain="Labs build such scenarios like fire drills. The damaging real incidents so far came from careless, over-confident agents with too much access." />
