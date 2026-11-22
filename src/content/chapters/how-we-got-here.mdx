@@ -24,8 +24,8 @@ The rest of this guide explains how today's systems work. This page is about the
 - **2013 to 2016:** networks learn by trial and error, first video games, then Go.
 - **2017:** the transformer, a design that reads a whole text at once.
 - **2018 to 2020:** transformers trained on huge amounts of plain text turn out to be steerable with words.
-- **2022:** ChatGPT turns a text predictor into an assistant anyone can use.
-- **2024 onwards:** trial and error returns, and models learn to reason through long tasks and to act.
+- **2022:** ChatGPT turns a text predictor into an assistant anyone can use. Trial and error returns, with people giving the score.
+- **2024 onwards:** models practise on tasks that can be checked automatically, and learn to reason through long problems and to act.
 
 </Note>
 
@@ -33,7 +33,7 @@ The rest of the page tells the same story with a little more detail.
 
 ## 2012: neural networks start winning
 
-A neural network is a program that learns from examples by adjusting millions of numbers. For decades it was one approach to AI among several, and not the favoured one. That changed with one contest result. <Claim id="alexnet" cap />. The network itself was an old idea. This time it had far more labelled images to learn from, more layers, and graphics chips to train on. Within a few years this approach, now called deep learning, was the default for images and speech, and then for text.
+A neural network is a program that learns from examples by adjusting millions of numbers. For decades it was one approach to AI among several, and not the favoured one: <Claim id="hand-built" />. That changed with one contest result. <Claim id="alexnet" cap />. The network itself was an old idea. This time it had far more labelled images to learn from, more layers, and graphics chips to train on. Within a few years this approach, now called deep learning, was the default for images and speech, and then for text.
 
 How learning by adjusting numbers works: [Training](/learn/training/).
 
@@ -41,11 +41,11 @@ How learning by adjusting numbers works: [Training](/learn/training/).
 
 Deep learning needs examples that come with the right answer. Reinforcement learning is a different way to learn: try something, get a score, adjust. The two fit together, because one is a kind of model and the other a way to train it. DeepMind, a London start-up that Google bought, combined them. <Claim id="dqn" cap />. Go was the harder test, because it has far too many positions to search through: <Claim id="alphago" />.
 
-This strand goes quiet for a few years in the story of language models. It comes back in the last step.
+This strand goes quiet for a few years in the story of language models. It comes back in the last two steps.
 
 ## 2017: the transformer
 
-Until then, networks read text one word after another, which made long texts slow to train on and easy to lose track of. <Claim id="transformer-2017" cap />. Because it handles a whole text in one go, it could be trained on far more text than anything before it. Its authors were trying to improve machine translation.
+Until then, networks read text one word after another, which made long texts slow to train on and easy to lose track of. <Claim id="transformer-2017" cap />. Because it handles a whole text in one go, it could be trained on far more text than anything before it. Its authors were trying to improve machine translation. The design turned out to be general: the same architecture now handles images and audio as well, as [Beyond autocomplete](/learn/beyond-autocomplete/) explains.
 
 How it works: [Attention](/learn/attention/) and [Inside the stack](/learn/inside-the-stack/).
 
@@ -57,13 +57,13 @@ This is reading, the first of the three stages in [the opening chapter](/learn/s
 
 ## 2022: a predictor becomes an assistant
 
-A raw text predictor continues text. Ask it a question and it may reply with more questions. The missing step was the second stage, apprenticeship: show the model helpful conversations and train it on which answers people prefer. <Claim id="chatgpt-2022" cap />. Most of the technology already existed. ChatGPT put it behind a chat window that anyone could use.
+A raw text predictor continues text. Ask it a question and it may reply with more questions. The missing step was the second stage, apprenticeship: show the model helpful conversations and train it on which answers people prefer. That last part is where trial and error comes back, in a mild form: the model tries an answer, and the score comes from people's preferences. <Claim id="chatgpt-2022" cap />. Most of the technology already existed. ChatGPT put it behind a chat window that anyone could use.
 
 More in [Training](/learn/training/).
 
-## 2024 onwards: trial and error returns
+## 2024 onwards: practice on checkable tasks
 
-Models now practise on tasks whose results can be checked automatically, such as maths with known answers or code with tests, much as AlphaGo practised by playing: <Claim id="reasoning-models" />. Models trained this way work through long problems more carefully and use tools more reliably, and a model that uses tools in a loop is what this guide calls an agent.
+The next step removes the person from the scoring. Models now practise on tasks whose results can be checked automatically, such as maths with known answers or code with tests, much as AlphaGo practised by playing: <Claim id="reasoning-models" />. Models trained this way work through long problems more carefully and use tools more reliably, and a model that uses tools in a loop is what this guide calls an agent.
 
 More in [Beyond autocomplete](/learn/beyond-autocomplete/) and [The agent loop](/learn/agent-loop/).
 
