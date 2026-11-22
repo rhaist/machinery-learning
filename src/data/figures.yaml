@@ -33,6 +33,12 @@ names:
 
 figures:
   - page: notes/2026-11
+    text: "an audit of the first 28 papers"
+    kind: source
+    sources: [https://arxiv.org/abs/2609.32160]
+    evidence: "the typed readout has not yet shown an independent accuracy advantage"
+    verified: 2026-11-22
+  - page: notes/2026-11
     text: "Microsoft's October update alone fixed 1,413 flaws, more than in all of 2025"
     kind: source
     sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/, https://www.infosecurity-magazine.com/news/microsoft-patch-tuesday-record-1/]
@@ -268,12 +274,6 @@ figures:
     kind: source
     sources: [https://arxiv.org/abs/2510.04871]
     evidence: "TRM obtains 45% test-accuracy on ARC-AGI-1 and 8% on ARC-AGI-2"
-    verified: 2026-11-21
-  - page: chapters/prompt-injection
-    text: "That 1% is real progress. But notice the \"100 attempts\""
-    kind: source
-    sources: [https://www.anthropic.com/research/prompt-injection-defenses]
-    evidence: "[note] Restates the labs-unsolved claim: about 1% success for an adaptive attacker with 100 attempts."
     verified: 2026-11-21
   - page: chapters/agents-permissions
     text: "CVE-2025-6514 in `mcp-remote` (CVSS 9.6)"
