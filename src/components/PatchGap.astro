@@ -48,7 +48,7 @@ const x = (v: number) => Number.isFinite(v) ? `${v.toFixed(1)}×` : 'n/a';
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Bar chart of critical CVEs published per month; see the table below for the values" set:html={chart('crit', 'pg-crit', 'critical CVEs published')} />
   <p class="pg-h"><b>Added to CISA's list of exploited vulnerabilities</b></p>
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Bar chart of vulnerabilities added to CISA's Known Exploited Vulnerabilities catalogue per month; see the table below for the values" set:html={chart('kev', 'pg-kev', 'added to the exploited list')} />
-  <p class="pg-read small" id="pg-read" aria-live="polite">Point at a month to see its numbers.</p>
+  <p class="pg-read small" id="pg-read" aria-live="polite">Point at a month, or drag a finger across a chart, to see its numbers.</p>
   <details class="pg-tbl">
     <summary>Show the numbers</summary>
     <div class="scroll"><table>

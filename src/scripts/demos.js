@@ -67,10 +67,12 @@ function drawAttn(){const r=asv.getBoundingClientRect();const W=r.width,H=r.heig
  for(const k in w){const j=+k;if(j===aq)continue;const v=w[k],x1=cx(aq),x2=cx(j);const h=Math.min(by-30,Math.abs(x1-x2)*0.3+26);const mx=(x1+x2)/2;arcs+=`<path d="M${x1} ${by} Q${mx} ${by-h*2} ${x2} ${by}" fill="none" style="stroke:var(--yt)" stroke-opacity="${(.3+v*.7).toFixed(2)}" stroke-width="${(1.5+v*14).toFixed(1)}" stroke-linecap="round"/>`;if(v>=.08)labs+=`<text class="al" x="${mx}" y="${by-h-8}" text-anchor="middle">${Math.round(v*100)}%</text>`}
  const boxes=AT.map((t,i)=>{const sel=i===aq,fut=i>aq;return `<g class="at" data-i="${i}" tabindex="0" role="button" aria-label="Select ${t}"><rect x="${pad+cw*i+3}" y="${by}" width="${cw-6}" height="${bh}" rx="8" style="fill:${sel?'var(--y)':fut?'transparent':'var(--chip2)'};stroke:${fut?'var(--line)':'none'}" stroke-dasharray="${fut?'4 4':'0'}"/><text x="${cx(i)}" y="${by+23}" text-anchor="middle" style="fill:${sel?'var(--onY)':fut?'var(--faint)':'var(--ink)'};font-weight:${sel?700:400}">${t}</text></g>`}).join('');
  asv.innerHTML=arcs+labs+boxes+`<text x="${cx(aq)}" y="${by+bh+20}" text-anchor="middle" style="fill:var(--mut);font-size:13px">self ${Math.round((w[aq]||0)*100)}%</text>`}
-asv.addEventListener('click',e=>{const g=e.target.closest('.at');if(g){aq=+g.dataset.i;drawAttn();const el=asv.querySelector(`.at[data-i="${aq}"]`);if(el)el.focus()}});
+asv.addEventListener('click',e=>{const g=e.target.closest('.at');if(g){aq=+g.dataset.i;drawAttn();centre();const el=asv.querySelector(`.at[data-i="${aq}"]`);if(el)el.focus()}});
 asv.addEventListener('keydown',e=>{const g=e.target.closest('.at');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();aq=+g.dataset.i;drawAttn();const el=asv.querySelector(`.at[data-i="${aq}"]`);if(el)el.focus()}});
-const roA=new ResizeObserver(drawAttn);roA.observe(asv);
-drawAttn();
+// on narrow screens the sentence is wider than the panel: keep the selected word in view
+const asc=asv.closest('.scroll');const centre=()=>{if(asc&&asc.scrollWidth>asc.clientWidth){const W=asv.getBoundingClientRect().width,cw=(W-20)/AT.length;asc.scrollLeft=10+cw*aq+cw/2-asc.clientWidth/2}};
+const roA=new ResizeObserver(()=>{drawAttn();centre()});roA.observe(asv);
+drawAttn();centre();
 }
 
 if (document.querySelector('#emb-btn')) {
@@ -495,6 +497,7 @@ const show=i=>{const[m,c,k]=D[i];out.textContent=`${m}: ${n(c)} critical CVEs pu
  $$('#pg .pg-bar').forEach(b=>b.classList.toggle('on',b.dataset.i===String(i)))};
 pg.addEventListener('pointerover',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
 pg.addEventListener('pointerdown',e=>{const b=e.target.closest('.pg-bar');if(b)show(+b.dataset.i)});
+pg.addEventListener('pointermove',e=>{if(e.pointerType==='mouse')return;const el=document.elementFromPoint(e.clientX,e.clientY),b=el&&el.closest&&el.closest('.pg-bar');if(b)show(+b.dataset.i)});
 }
 
 // The desk fills up: context window, compaction, notes file (toy model).
@@ -503,7 +506,7 @@ const CAP=100,FIX=18,STEP=11;let turns,sum,notes=false;
 const reset=()=>{turns=[{s:6,fact:true},{s:STEP}];sum=0};reset();
 function draw(msg){const used=FIX+sum+turns.reduce((t,x)=>t+x.s,0)+(notes?3:0);
  const seg=(w,c,t)=>`<span class="cd-s ${c}" style="flex-basis:${w}%" title="${t}"></span>`;
- $('#cd-bar').innerHTML=seg(FIX,'fixed','instructions and tools')+(sum?seg(sum,'sum','summary of earlier work'):'')+(notes?seg(3,'note','notes file reloaded'):'')+turns.map(x=>seg(x.s,x.fact?'turn fact':'turn',x.fact?'the turn with the API detail':'conversation')).join('');
+ $('#cd-bar').innerHTML=seg(FIX,'fixed','instructions and tools')+(sum?seg(sum,'sum','summary of earlier work'):'')+(notes?seg(3,'nfile','notes file reloaded'):'')+turns.map(x=>seg(x.s,x.fact?'turn fact':'turn',x.fact?'the turn with the API detail':'conversation')).join('');
  $('#cd-fill').textContent=`${used}% of the window used`;if(msg!==undefined)$('#cd-out').textContent=msg}
 $('#cd-add').addEventListener('click',()=>{turns.push({s:STEP});let msg='Another tool call and its result land in the context.';
  const used=FIX+sum+turns.reduce((t,x)=>t+x.s,0)+(notes?3:0);
