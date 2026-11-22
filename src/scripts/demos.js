@@ -10,7 +10,9 @@ const HUES=['var(--b)','var(--t)','var(--y)','var(--r)'];
 const vis=s=>esc(s).replace(/ /g,'·').replace(/\n/g,'↵');
 // a token that is only part of a character decodes to U+FFFD; show it as a byte fragment
 const frag=t=>t[0].includes('\uFFFD');
-const chips=ts=>ts.map((t,i)=>`<span class="tok${frag(t)?' raw':''}" style="--h:${HUES[i%4]}">${frag(t)?'byte':vis(t[0])}<small>${t[1]}</small></span>`).join('');
+const chips=ts=>ts.map((t,i)=>`<span class="tok${frag(t)?' raw':''}" style="--h:${HUES[i%4]}">${frag(t)?'byte':vis(t[0])}<small>${Number(t[1])||0}</small></span>`).join('');
+// token lists that arrive as JSON in the page (tokenized at build time): keep only [string, number] pairs
+const pairs=a=>Array.isArray(a)?a.filter(Array.isArray).map(t=>[String(t[0]),Number(t[1])||0]):[];
 let pi=0;
 function softmax(a,T){const m=Math.max(...a);const e=a.map(x=>Math.exp((x-m)/T));const s=e.reduce((x,y)=>x+y,0);return e.map(x=>x/s)}
 const pct=p=>p<0.001?'<0.1%':(p*100).toFixed(1)+'%';
@@ -42,7 +44,7 @@ const load=()=>loading||(loading=import('gpt-tokenizer/encoding/o200k_base').the
 inp.addEventListener('focus',load,{once:true});
 inp.addEventListener('input',()=>{if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()});
 let seed={};try{seed=JSON.parse($('#tk-seed').textContent)}catch(e){}
-if(seed.toks&&seed.text===inp.value)show(inp.value,seed.toks);else load();
+if(seed.toks&&seed.text===inp.value)show(inp.value,pairs(seed.toks));else load();
 }
 
 if (document.querySelector('#nw')) {
@@ -78,7 +80,7 @@ draw();
 if (document.querySelector('#presets')) {
 const st=$('#stack');
 st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay${i>1?' lay-more':''}" style="--i:${i}"><b>${i===1?'<span class="w-wide">block 1</span><span class="w-phone">blocks</span>':'block '+(i===6?'N':i)}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
-let HT=[];try{HT=JSON.parse($('#hero-toks').textContent)}catch(e){}
+let HT=[];try{HT=JSON.parse($('#hero-toks').textContent).map(pairs)}catch(e){}
 function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=HT[pi]||[[p.p,0]];$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
 // cycles through the examples on its own; pausable (WCAG 2.2.2), stops off-screen, and never moves under reduced motion
 const pb=$('#h-pause');let paused=reduce,seen=true,tm=null;
