@@ -27,6 +27,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - run: node scripts/check-data.mjs
       - run: node scripts/check-claims.mjs
       - run: node scripts/check-figures.mjs
       - run: node scripts/check-canon.mjs

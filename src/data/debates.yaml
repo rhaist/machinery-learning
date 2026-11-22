@@ -197,7 +197,7 @@ debates:
       - label: Yes, and it's getting practical
         who: Geva and colleagues; Meng and colleagues; Anthropic's interpretability team; Dario Amodei
         points:
-          - The "think" layers behave like key-value memories: keys detect text patterns, and values push towards likely next words.
+          - "The \"think\" layers behave like key-value memories: keys detect text patterns, and values push towards likely next words."
           - Meng and colleagues located factual associations in middle-layer MLPs and edited single facts directly (ROME).
           - Anthropic extracted millions of human-interpretable features from a production model.
           - Amodei has set Anthropic the goal that interpretability can reliably detect most model problems by 2027.
