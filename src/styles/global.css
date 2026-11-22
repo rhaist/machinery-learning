@@ -872,3 +872,26 @@ details.eng{border-color:#999}
 .qsheet{margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid var(--line)}
 .qsheet>*+*{margin-top:var(--sp-2)}
 .qsheet ol{margin-bottom:0}
+
+/* Two wordings of one label: the long one on wide screens, the short one on phones */
+.w-phone{display:none}
+.lay b span,.run .lay b span{background:none;padding:0;color:inherit;animation:none}
+@media(max-width:600px){.w-wide{display:none}.w-phone{display:inline}}
+
+/* Start-page demo on phones: tokens, three layer rows, four bars */
+@media(max-width:600px){
+.hd-bar{flex-wrap:nowrap;justify-content:space-between}
+.hero-demo .stage:first-child .caption,.hero-demo .vecs,.hero-demo .lay-more,.hero-demo .bars .bar:nth-child(n+5){display:none}
+.hero-demo .lay.end:last-child{--i:2!important}
+}
+
+/* Chapter 1 demo: one word at a time */
+.nw-line{font-size:var(--fs-base);margin:0;min-height:calc(2*var(--lh-snug)*1em)}
+.nw-new{background:color-mix(in srgb,var(--y) 30%,transparent);color:inherit;border-radius:var(--r-xs)}
+.nw-caret{color:var(--mut)}
+.nw-hint{margin:0}
+.nw-opts{display:grid;gap:var(--sp-2)}
+.nw-opt{display:block;width:100%;text-align:left}
+.nw-opt .bar .bt i{background:var(--t)}
+.nw-opt .bar .bl{color:var(--ink)}
+#nw-tally:empty{display:none}

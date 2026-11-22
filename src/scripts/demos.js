@@ -44,9 +44,39 @@ $('#tk-in').addEventListener('input',tk);
 tk();
 }
 
+if (document.querySelector('#nw')) {
+// Chapter 1: three choices, each a word; the first decides whether the sentence is true. Illustrative probabilities.
+const NW={start:'The capital of Australia is',
+ s1:[['Canberra',.71],['Sydney',.22],['Melbourne',.05]],
+ s2:[['home',.49,' to the'],['where',.33,' the'],['seat',.15,' of']],
+ s3:{home:[['national',.55,' parliament.'],['federal',.34,' government.'],["country's",.09,' parliament.']],where:[['parliament',.5,' meets.'],['government',.38,' sits.'],['laws',.1,' are made.']],seat:[['government',.6,'.'],['the',.3,' federal government.'],['parliament',.08,'.']]}};
+const line=$('#nw-line'),hint=$('#nw-hint'),opts=$('#nw-opts'),auto=$('#nw-auto'),tally=$('#nw-tally');
+let picks=[],runs=0,wrong=0,busy=null;
+const cur=()=>picks.length===0?NW.s1:picks.length===1?NW.s2:NW.s3[picks[1][0]];
+const done=()=>picks.length===3;
+function draw(){
+  const last=picks.length-1;
+  line.innerHTML=esc(NW.start)+picks.map((p,i)=>(i===1?',':'')+' '+(i===last&&!done()?`<mark class="nw-new">${esc(p[0])}</mark>`:esc(p[0]))+esc(p[2]||'')).join('')+(done()?'':' <span class="nw-caret" aria-hidden="true">▍</span>');
+  if(done()){const ok=picks[0][0]==='Canberra';
+    hint.innerHTML=ok?'<strong>Fluent, and right.</strong> Each step only asked which word fits best. This time the likeliest words were also the true ones.':'<strong>Fluent, and wrong.</strong> The capital is Canberra. No step checked the fact, and every later word built on the mistake. It reads just as confident as a correct run.';
+    opts.innerHTML='';auto.textContent='Run it again';
+    tally.textContent=`So far: ${runs} ${runs===1?'run':'runs'}, ${wrong} ended wrong.`}
+  else{hint.textContent=`Step ${picks.length+1} of 3. What comes next? Tap a word, or let the model pick.`;
+    opts.innerHTML=cur().map((o,i)=>`<button class="btn nw-opt" type="button" data-i="${i}"><span class="bar"><span class="bl">${esc(o[0])}</span><span class="bt"><i style="width:${Math.round(o[1]*100)}%"></i></span><span class="bv">${Math.round(o[1]*100)}%</span></span></button>`).join('');auto.textContent='Let the model pick'}
+}
+function pick(i){if(done())return;picks.push(cur()[i]);if(done()){runs++;if(picks[0][0]!=='Canberra')wrong++}draw()}
+function sample(){const c=cur(),t=c.reduce((a,o)=>a+o[1],0);let r=Math.random()*t;for(let i=0;i<c.length;i++){r-=c[i][1];if(r<=0)return i}return c.length-1}
+function stop(){clearTimeout(busy);busy=null}
+function run(){if(done())return stop();pick(sample());if(!done())busy=setTimeout(run,reduce?0:650)}
+opts.addEventListener('click',e=>{const b=e.target.closest('.nw-opt');if(!b)return;stop();pick(+b.dataset.i)});
+auto.addEventListener('click',()=>{stop();if(done()){picks=[];draw();busy=setTimeout(run,reduce?0:450)}else pick(sample())});
+$('#nw-reset').addEventListener('click',()=>{stop();picks=[];tally.textContent=runs?`So far: ${runs} ${runs===1?'run':'runs'}, ${wrong} ended wrong.`:'';draw()});
+draw();
+}
+
 if (document.querySelector('#presets')) {
 const st=$('#stack');
-st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay" style="--i:${i}"><b>block ${i===6?'N':i}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
+st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay${i>1?' lay-more':''}" style="--i:${i}"><b>${i===1?'<span class="w-wide">block 1</span><span class="w-phone">blocks</span>':'block '+(i===6?'N':i)}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
 function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=tokenize(p.p);$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
 // cycles through the examples on its own; pausable (WCAG 2.2.2), stops off-screen, and never moves under reduced motion
 const pb=$('#h-pause');let paused=reduce,seen=true,tm=null;
