@@ -312,18 +312,6 @@ figures:
     evidence: "REGULATION (EU) 2026/1744 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 8 July 2026"
     verified: 2026-11-21
   - page: notes/2026-11
-    text: "Strands reports 0.78 on JevBench for its current release (0.72 for its launch build)"
-    kind: source
-    sources: [https://github.com/strands-labs/strands-decider]
-    evidence: "0.779 (180 of 231)"
-    verified: 2026-11-21
-  - page: notes/2026-11
-    text: "mistakes included, 6–8 points more often"
-    kind: source
-    sources: [https://www.ayautomate.com/blog/jev-vs-llm-benchmark]
-    evidence: "agreement ran 6 to 8 points above accuracy"
-    verified: 2026-11-21
-  - page: notes/2026-11
     text: "Jev answering \"cheap\" for 99.5% of model-routing requests"
     kind: source
     sources: [https://arxiv.org/html/2610.02267]
