@@ -5,3 +5,4 @@ dist/
 
 # local Python environment for scripts/next-token-probs.py
 .venv/
+__pycache__/
