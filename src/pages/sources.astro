@@ -20,7 +20,7 @@ const rest = claims.filter(c => !placed.has(c.id));
     <p class="lede">Every fact in this guide that can go out of date is listed here with its sources, the date a human last checked it, and how often it needs re-checking. Facts past their re-check date fade on the page until they are verified again. Fixes to anything that turned out wrong are listed on the <a href={`${base}/corrections/`}>corrections page</a>. Looking for things to read? See the <a href={`${base}/reading/`}>reading list</a>.</p></header>
 
     <nav class="src-jump small" aria-label="Chapters on this page">
-      {groups.map((p: any) => <p><b>{p.title}</b> {p.chapters.map((x: any) => <a href={`#ch-${x.c.id}`}>{x.c.data.short}</a>)}</p>)}
+      {groups.map((p: any) => <p><b>{p.title}</b> {[...p.chapters, ...extras.filter(e => e.c.data.part === p.id)].map((x: any) => <a href={`#ch-${x.c.id}`}>{x.c.data.short}</a>)}</p>)}
     </nav>
 
     {groups.map((p: any) => <>
