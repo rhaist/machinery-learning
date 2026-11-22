@@ -14,7 +14,7 @@ export async function GET({ site }: { site: URL }) {
     ...Object.keys(reviews).map(id => [`/review/${id}/`, latest] as [string, Date]),
     ['/notes/', lastNote],
     ...notes.map(n => [`/notes/${n.id}/`, n.data.date] as [string, Date]),
-    ['/radar/', lastNote], ['/glossary/', latest], ['/sources/', latest], ['/about/', latest], ['/corrections/', latest],
+    ['/radar/', lastNote], ['/glossary/', latest], ['/sources/', latest], ['/reading/', latest], ['/about/', latest], ['/corrections/', latest],
   ];
   const body = pages.map(([p, d]) => `  <url><loc>${new URL(base + p, site).href}</loc><lastmod>${day(d)}</lastmod></url>`).join('\n');
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
