@@ -1319,7 +1319,7 @@
   status: evergreen
 
 - id: alphago
-  text: "in January 2016 DeepMind reported that AlphaGo, trained first on human games and then by playing against itself, had beaten a professional Go player, something expected to be a decade away; that March it beat Lee Sedol, one of the world's strongest players, four games to one"
+  text: "in January 2016 DeepMind reported that AlphaGo, which combined neural networks with a search through possible moves and was trained first on human games and then by playing against itself, had beaten a professional Go player, something expected to be a decade away; that March it beat Lee Sedol, one of the world's strongest players, four games to one"
   evidence: "a feat previously thought to be at least a decade away"
   evidence_src: https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/
   sources: [https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/, https://www.scientificamerican.com/article/how-the-computer-beat-the-go-player/]
@@ -1348,9 +1348,9 @@
   status: evergreen
 
 - id: chatgpt-2022
-  text: "ChatGPT, released on 30 November 2022, was a language model trained to hold a conversation, using people's feedback on its answers"
+  text: "ChatGPT, released on 30 November 2022, was a language model trained to hold a conversation, using reinforcement learning from people's feedback on its answers, a method OpenAI had published that March"
   evidence: "We trained this model using Reinforcement Learning from Human Feedback (RLHF)."
-  sources: [https://openai.com/index/chatgpt/]
+  sources: [https://openai.com/index/chatgpt/, https://arxiv.org/abs/2203.02155]
   verified: 2026-11-22
   status: evergreen
 
@@ -1358,6 +1358,13 @@
   text: "around the time of the 2012 result, the leading computer-vision conference turned down a paper from Yann LeCun's group because it used neural networks, as the winning team later recalled; many researchers had concluded that deep networks were simply too hard to train"
   evidence: "rejected by the leading computer vision conference on the grounds that it used neural networks"
   sources: [https://cacm.acm.org/research/imagenet-classification-with-deep-convolutional-neural-networks/]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: hand-built
+  text: "the leading methods worked with rules and symbols written by hand, and in computer vision with hand-engineered features, which the field gave up after 2012, as three of deep learning's pioneers later described it"
+  evidence: "abandoned previous hand-engineered approaches"
+  sources: [https://cacm.acm.org/research/deep-learning-for-ai/]
   verified: 2026-11-22
   status: evergreen
 
