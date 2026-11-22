@@ -8,6 +8,7 @@ const chapters = defineCollection({
     short: z.string(),          // label in the chapter bar
     order: z.number(),            // global order across all parts
     part: z.string().default('language-models'),
+    extra: z.boolean().default(false),   // optional side page: built at /learn/<id>/, but not numbered, not in the progress map or the pager sequence
     summary: z.string(),        // one sentence, shown on the journey map
     minutes: z.number(),
     updated: z.coerce.date(),   // last substantive change

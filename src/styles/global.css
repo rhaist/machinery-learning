@@ -899,3 +899,6 @@ details.eng{border-color:#999}
 /* Tokenizer: a token that is only part of a character */
 .tok.raw{font-style:italic}
 #tk-out[aria-busy=true]{opacity:.5}
+
+/* Optional side page, offered at the end of a part */
+.part-extra{margin-top:var(--sp-4)}

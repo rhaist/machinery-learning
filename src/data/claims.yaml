@@ -1302,3 +1302,62 @@
   verified: 2026-11-22
   half_life: 12
   status: shipping
+
+- id: alexnet
+  text: "in the 2012 ImageNet contest, a deep neural network built by Krizhevsky, Sutskever and Hinton made errors on 15.3% of test images, where the runner-up made them on 26.2%"
+  evidence: "a winning top-5 test error rate of 15.3%, compared to 26.2%"
+  evidence_src: https://cacm.acm.org/research/imagenet-classification-with-deep-convolutional-neural-networks/
+  sources: [https://cacm.acm.org/research/imagenet-classification-with-deep-convolutional-neural-networks/, https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: dqn
+  text: "in 2013 DeepMind showed one network learning to play seven Atari video games from nothing but the screen and the score, and beating a human expert at three of them"
+  evidence: "surpasses a human expert on three of them"
+  sources: [https://arxiv.org/abs/1312.5602]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: alphago
+  text: "in January 2016 DeepMind reported that AlphaGo, trained first on human games and then by playing against itself, had beaten a professional Go player, something expected to be a decade away; that March it beat Lee Sedol, one of the world's strongest players, four games to one"
+  evidence: "a feat previously thought to be at least a decade away"
+  evidence_src: https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/
+  sources: [https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/, https://www.scientificamerican.com/article/how-the-computer-beat-the-go-player/]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: transformer-2017
+  text: "in June 2017 a team at Google working on machine translation proposed the transformer, a design built on attention alone, which looks at all the words of a text at once"
+  evidence: "the Transformer, based solely on attention mechanisms"
+  sources: [https://arxiv.org/abs/1706.03762]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: bert-2018
+  text: "Google's BERT (October 2018) was first trained on plain, unlabelled text and then needed just one extra layer to be adapted to a new language task"
+  evidence: "the pre-trained BERT model can be fine-tuned with just one additional output layer"
+  sources: [https://arxiv.org/abs/1810.04805]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: gpt3
+  text: "OpenAI's GPT-3 (2020), a text predictor with 175 billion parameters, could take on new tasks from a few examples written into the prompt, with no further training"
+  evidence: "tasks and few-shot demonstrations specified purely via text interaction with the model"
+  sources: [https://arxiv.org/abs/2005.14165]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: chatgpt-2022
+  text: "ChatGPT, released on 30 November 2022, was a language model trained to hold a conversation, using people's feedback on its answers"
+  evidence: "We trained this model using Reinforcement Learning from Human Feedback (RLHF)."
+  sources: [https://openai.com/index/chatgpt/]
+  verified: 2026-11-22
+  status: evergreen
+
+- id: nn-dismissed
+  text: "around the time of the 2012 result, the leading computer-vision conference turned down a paper from Yann LeCun's group because it used neural networks, as the winning team later recalled; many researchers had concluded that deep networks were simply too hard to train"
+  evidence: "rejected by the leading computer vision conference on the grounds that it used neural networks"
+  sources: [https://cacm.acm.org/research/imagenet-classification-with-deep-convolutional-neural-networks/]
+  verified: 2026-11-22
+  status: evergreen
+

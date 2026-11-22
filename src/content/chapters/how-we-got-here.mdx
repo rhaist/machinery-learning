@@ -1,0 +1,80 @@
+---
+title: How we got here
+short: History
+order: 7.5
+part: language-models
+extra: true
+summary: "Six turning points, from image recognition to agents, and the chapters that explain each one."
+minutes: 6
+updated: 2026-11-22
+takeaways:
+  - "Today's systems combine three older ideas: deep neural networks, the transformer, and learning by trial and error."
+  - "ChatGPT was a packaging step. What it ran on had been building for a decade."
+  - "Every step needed scale as much as a new idea: more data and more computing power."
+  - "The experts' consensus has been wrong before. Ask for the evidence behind confident forecasts, hopeful or dismissive."
+---
+import Claim from '../../components/Claim.astro';
+import Note from '../../components/Note.astro';
+
+The rest of this guide explains how today's systems work. This page is about the order in which the pieces arrived. It's optional, and it's a simplification: every step below rests on decades of earlier work, and on faster chips and more data as much as on any single idea.
+
+<Note title="The short version" kind="key">
+
+- **2012:** neural networks win at recognising images, and deep learning becomes the standard approach.
+- **2013 to 2016:** networks learn by trial and error, first video games, then Go.
+- **2017:** the transformer, a design that reads a whole text at once.
+- **2018 to 2020:** transformers trained on huge amounts of plain text turn out to be steerable with words.
+- **2022:** ChatGPT turns a text predictor into an assistant anyone can use.
+- **2024 onwards:** trial and error returns, and models learn to reason through long tasks and to act.
+
+</Note>
+
+The rest of the page tells the same story with a little more detail.
+
+## 2012: neural networks start winning
+
+A neural network is a program that learns from examples by adjusting millions of numbers. For decades it was one approach to AI among several, and not the favoured one. That changed with one contest result. <Claim id="alexnet" cap />. The network itself was an old idea. This time it had far more labelled images to learn from, more layers, and graphics chips to train on. Within a few years this approach, now called deep learning, was the default for images and speech, and then for text.
+
+How learning by adjusting numbers works: [Training](/learn/training/).
+
+## 2013 to 2016: learning by trial and error
+
+Deep learning needs examples that come with the right answer. Reinforcement learning is a different way to learn: try something, get a score, adjust. The two fit together, because one is a kind of model and the other a way to train it. DeepMind, a London start-up that Google bought, combined them. <Claim id="dqn" cap />. Go was the harder test, because it has far too many positions to search through: <Claim id="alphago" />.
+
+This strand goes quiet for a few years in the story of language models. It comes back in the last step.
+
+## 2017: the transformer
+
+Until then, networks read text one word after another, which made long texts slow to train on and easy to lose track of. <Claim id="transformer-2017" cap />. Because it handles a whole text in one go, it could be trained on far more text than anything before it. Its authors were trying to improve machine translation.
+
+How it works: [Attention](/learn/attention/) and [Inside the stack](/learn/inside-the-stack/).
+
+## 2018 to 2020: read everything first
+
+The next idea was to train a transformer on plain text with a simple exercise, such as guessing a hidden or the next word, and only afterwards adapt it to a job. <Claim id="bert-2018" cap />. Then the models grew. <Claim id="gpt3" cap />. A big enough text predictor, it turned out, could be steered with words alone.
+
+This is reading, the first of the three stages in [the opening chapter](/learn/start-here/). More in [Tokens](/learn/tokens/) and [Generating](/learn/generating/).
+
+## 2022: a predictor becomes an assistant
+
+A raw text predictor continues text. Ask it a question and it may reply with more questions. The missing step was the second stage, apprenticeship: show the model helpful conversations and train it on which answers people prefer. <Claim id="chatgpt-2022" cap />. Most of the technology already existed. ChatGPT put it behind a chat window that anyone could use.
+
+More in [Training](/learn/training/).
+
+## 2024 onwards: trial and error returns
+
+Models now practise on tasks whose results can be checked automatically, such as maths with known answers or code with tests, much as AlphaGo practised by playing: <Claim id="reasoning-models" />. Models trained this way work through long problems more carefully and use tools more reliably, and a model that uses tools in a loop is what this guide calls an agent.
+
+More in [Beyond autocomplete](/learn/beyond-autocomplete/) and [The agent loop](/learn/agent-loop/).
+
+## What this story leaves out
+
+- **Hardware and data.** None of these steps would have worked without graphics chips and without text and images at the scale of the internet.
+- **Everyone else.** Each "first" above built on earlier work by many groups, and neural networks themselves go back to the middle of the last century.
+- **The roads not taken.** This is the story as told from where the field stands now. Other approaches lost out, for the time being, and [Where research is heading](/learn/frontier/) lists ideas that may yet replace parts of today's design.
+
+## Read it with some doubt
+
+A story like this one makes progress look inevitable. It wasn't, and the people closest to it were sometimes wrong. <Claim id="nn-dismissed" cap />. The field was confident when it dismissed the idea behind everything on this page, and it is confident again today.
+
+So treat confident forecasts the same way in both directions, the ones that promise everything and the ones that say it's all hype: ask what the evidence is and who is offering it. [How to judge AI claims](/learn/judging-claims/) shows how.

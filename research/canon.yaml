@@ -62,6 +62,12 @@ canon:
   - { id: "2311.17035", title: "Scalable Extraction of Training Data from (Production) Language Models", signal: "canonical", where: your-data, status: cited }
   - { id: "2412.09871", title: "Byte Latent Transformer: Patches Scale Better Than Tokens", signal: "ACL 2025 outstanding paper", where: tokens, status: cited }
   - { url: "https://hai.stanford.edu/ai-index/2026-ai-index-report", title: "Stanford AI Index Report 2026", signal: "the field's annual review", where: frontier, status: cited }
+  # --- history ---
+  - { url: "https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html", title: "ImageNet Classification with Deep Convolutional Neural Networks (AlexNet)", signal: "the result that made deep learning the default", where: how-we-got-here, status: cited }
+  - { id: "1312.5602", title: "Playing Atari with Deep Reinforcement Learning", signal: "first deep reinforcement learning result", where: how-we-got-here, status: cited }
+  - { url: "https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/", title: "Mastering the game of Go with deep neural networks and tree search (AlphaGo)", signal: "Nature 2016", where: how-we-got-here, status: cited }
+  - { id: "1810.04805", title: "BERT", signal: "canonical; pre-train, then fine-tune", where: how-we-got-here, status: cited }
+  - { id: "2005.14165", title: "Language Models are Few-Shot Learners (GPT-3)", signal: "NeurIPS 2020 best paper", where: how-we-got-here, status: cited }
   # --- considered and left out ---
   - { id: "2403.06634", title: "Stealing Part of a Production Language Model", signal: "ICML 2024 best paper", status: excluded, reason: "Model theft protects the vendor, not the reader; no current chapter covers it. Candidate for a future security chapter." }
   - { id: "2404.14219", title: "Phi-3 Technical Report", signal: "HN 411; 2.7k citations", status: excluded, reason: "Small models are sourced through Phi-4; the report adds no point the chapter makes." }
