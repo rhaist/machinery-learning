@@ -1,3 +1,9 @@
+---
+// Start-page demo: one generation step for three example prompts. Prompts are tokenized here, at build time,
+// with the same real vocabulary as the tokenizer demo; behaviour in demos.js.
+import { toks } from '../lib/tokens';
+import { P } from '../scripts/hero-prompts.js';
+---
 <div class="hero-demo">
   <div class="hd-bar" id="presets"><span class="small">One generation step<span class="w-wide">, shown for three example prompts</span></span><button class="linkbtn small" type="button" id="h-pause" aria-pressed="false">Pause</button></div>
   <div class="pipe" aria-live="off">
@@ -6,3 +12,4 @@
     <div class="stage"><h2 class="stage-h">Next-token probabilities</h2><div class="bars" id="h-out"></div><p class="caption">Illustrative numbers. A real model scores all ~200k tokens in its vocabulary at once.</p></div>
   </div>
 </div>
+<script type="application/json" id="hero-toks" set:html={JSON.stringify(P.map(p => toks(p.p)))} />

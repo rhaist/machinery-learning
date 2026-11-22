@@ -1,22 +1,16 @@
 // Machinery: client behaviour. Every demo is guarded, so a page only runs what it contains.
+import {P} from './hero-prompts.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let G={};try{G=JSON.parse(document.getElementById('glossary-data')?.textContent||'{}')}catch(e){}
 function rnd(seed){let s=seed%2147483647;if(s<=0)s+=2147483646;return()=>(s=s*16807%2147483647)/2147483647}
-const VOCAB=["The"," the","Die"," Haupt","stadt"," von"," Deutsch","land"," ist","for"," i"," in"," range","(",")",":"," fire","wall","fire"," block","ed"," blocked"," many"," un","believ","ably"," mal","ware"," request","s"," server"," model"," language"," large"," token","iz","ation"," attack","er"," is"," a"," of"," to"," and"," it"," was"," because"," security"," straw","berry","Straw"," Debian"," pack","age"," ransom"," phish","ing"," inject","ion"," prompt"," learn"," how"," work"," AI"," LLM"," what"," do"," you"," I"," think"," data"," network"," user"," password","."," ","!",","," we"," can"," not"," has"," have"," with"," this"," that"," on"," for"," from"," new"," time"," people"," world","How","What","I"," Strawberry"," Straw"];
-const VID=new Map();VOCAB.forEach((v,i)=>VID.set(v,300+i*37%9000));
-const MAXL=Math.max(...VOCAB.map(v=>v.length));
-function tokenize(t){const out=[];let i=0;while(i<t.length){let f=null;for(let L=Math.min(MAXL,t.length-i);L>0;L--){const s=t.substr(i,L);if(VID.has(s)&&s!==' Strawberry'){f=s;break}}if(!f){out.push([t[i],t.charCodeAt(i)]);i+=1}else{out.push([f,VID.get(f)]);i+=f.length}}return out}
 const HUES=['var(--b)','var(--t)','var(--y)','var(--r)'];
 const vis=s=>esc(s).replace(/ /g,'·').replace(/\n/g,'↵');
-const chips=ts=>ts.map((t,i)=>`<span class="tok" style="--h:${HUES[i%4]}">${vis(t[0])}<small>${t[1]}</small></span>`).join('');
-const P=[
- {l:"Firewall",p:"The firewall blocked the",c:[["connection",3.1],["request",2.8],["traffic",2.6],["attack",2.1],["port",1.7],["IP",1.5],["user",1.0],["banana",-2.5]]},
- {l:"Python",p:"for i in range(",c:[["len",3.4],["n",3.0],["10",2.4],["0",2.2],["1",1.9],["self",0.9],["x",0.8],["banana",-3]]},
- {l:"Deutsch",p:"Die Hauptstadt von Deutschland ist",c:[["Berlin",5.0],["die",1.8],["eine",1.4],["seit",1.0],["Bonn",0.8],["nicht",0.6],["München",0.2],["Banane",-4]]}
-];
+// a token that is only part of a character decodes to U+FFFD; show it as a byte fragment
+const frag=t=>t[0].includes('\uFFFD');
+const chips=ts=>ts.map((t,i)=>`<span class="tok${frag(t)?' raw':''}" style="--h:${HUES[i%4]}">${frag(t)?'byte':vis(t[0])}<small>${t[1]}</small></span>`).join('');
 let pi=0;
 function softmax(a,T){const m=Math.max(...a);const e=a.map(x=>Math.exp((x-m)/T));const s=e.reduce((x,y)=>x+y,0);return e.map(x=>x/s)}
 const pct=p=>p<0.001?'<0.1%':(p*100).toFixed(1)+'%';
@@ -39,9 +33,16 @@ addEventListener('scroll',()=>{if(!tipFor||tipRaf)return;tipRaf=requestAnimation
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip()});
 
 if (document.querySelector('#tk-in')) {
-function tk(){const v=$('#tk-in').value;const ts=tokenize(v);$('#tk-out').innerHTML=chips(ts);$('#tk-n').textContent=`${v.length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`}
-$('#tk-in').addEventListener('input',tk);
-tk();
+// Real tokenizer: OpenAI's o200k_base vocabulary. The default sentence is tokenized at build time; the vocabulary
+// (about 1 MB) is only downloaded when the reader starts typing.
+const inp=$('#tk-in'),out=$('#tk-out'),cap=$('#tk-n');let enc=null,loading=null;
+const show=(v,ts)=>{out.innerHTML=chips(ts);out.removeAttribute('aria-busy');cap.textContent=`${[...v].length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`+(ts.some(frag)?' Chips marked "byte" are fragments of a single character.':'')};
+const run=()=>{const v=inp.value;show(v,enc.encode(v).map(id=>[enc.decode([id]),id]))};
+const load=()=>loading||(loading=import('gpt-tokenizer/encoding/o200k_base').then(m=>{enc=m;run()}).catch(()=>{loading=null;out.removeAttribute('aria-busy');cap.textContent='The vocabulary could not be loaded. Check your connection and type again.'}));
+inp.addEventListener('focus',load,{once:true});
+inp.addEventListener('input',()=>{if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()});
+let seed={};try{seed=JSON.parse($('#tk-seed').textContent)}catch(e){}
+if(seed.toks&&seed.text===inp.value)show(inp.value,seed.toks);else load();
 }
 
 if (document.querySelector('#nw')) {
@@ -77,7 +78,8 @@ draw();
 if (document.querySelector('#presets')) {
 const st=$('#stack');
 st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay${i>1?' lay-more':''}" style="--i:${i}"><b>${i===1?'<span class="w-wide">block 1</span><span class="w-phone">blocks</span>':'block '+(i===6?'N':i)}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
-function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=tokenize(p.p);$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
+let HT=[];try{HT=JSON.parse($('#hero-toks').textContent)}catch(e){}
+function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=HT[pi]||[[p.p,0]];$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
 // cycles through the examples on its own; pausable (WCAG 2.2.2), stops off-screen, and never moves under reduced motion
 const pb=$('#h-pause');let paused=reduce,seen=true,tm=null;
 const tick=()=>{clearTimeout(tm);if(!paused&&seen&&!document.hidden)tm=setTimeout(()=>{pi=(pi+1)%P.length;hero();tick()},6000)};

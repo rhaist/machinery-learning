@@ -1,8 +1,15 @@
+---
+// Tokenizer playground with a real vocabulary (OpenAI's o200k_base). The default sentence is tokenized here, at build time;
+// demos.js downloads the vocabulary only when the reader starts typing. Nothing typed leaves the browser.
+import { toks } from '../lib/tokens';
+const text = 'Unbelievably, the firewall misclassified strawberries as malware.';
+---
 <div class="panel demo">
   <b>Tokenizer playground</b>
   <label for="tk-in">Type anything</label>
-  <input type="text" id="tk-in" value="The firewall blocked unbelievably many malware requests.">
+  <input type="text" id="tk-in" value={text} maxlength="400" autocomplete="off" spellcheck="false">
   <div class="toks" id="tk-out"></div>
-  <p class="caption" id="tk-n"></p>
-  <p class="caption">Toy tokenizer with a tiny vocabulary, for illustration; the small numbers are made-up IDs. Try "Strawberry" or a German word.</p>
+  <p class="caption" id="tk-n" aria-live="polite"></p>
+  <p class="caption">A real tokenizer: OpenAI's o200k_base vocabulary (about 200,000 tokens, used by GPT-4o), with the real token IDs. Other models split differently. It runs in your browser; nothing you type is sent anywhere.</p>
+  <script type="application/json" id="tk-seed" set:html={JSON.stringify({ text, toks: toks(text) })} />
 </div>
