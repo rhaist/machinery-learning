@@ -68,7 +68,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <main><slot /></main>
   <footer class="site-foot band"><div class="in">
     <span>A living guide, updated monthly{lastUpdate && <> · last update {lastUpdate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</>}</span>
-    <span><a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/corrections/`}>Corrections</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a> · <a href={`${base}/impressum/`}>Legal notice</a> · <a href={`${base}/privacy/`}>Privacy</a></span>
+    <span><a href={`${base}/reading/`}>Reading list</a> · <a href={`${base}/sources/`}>Sources &amp; freshness</a> · <a href={`${base}/corrections/`}>Corrections</a> · <a href={`${base}/rss.xml`}>RSS</a> · <a href={site.repo}>Source on GitHub</a> · <a href={`${base}/impressum/`}>Legal notice</a> · <a href={`${base}/privacy/`}>Privacy</a></span>
   </div></footer>
   {cur && <nav class="reader-bar" aria-label="Reading controls">
     <button type="button" class="rb-btn" data-sheet-open data-sheet-at="sheet-sections" aria-haspopup="dialog" aria-controls="sheet"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg><span>Contents</span></button>
@@ -92,7 +92,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
       </section>
       <section class={cur ? 'sheet-sec' : 'sheet-sec sheet-first'} aria-label="Guide">
         <p class="label">Guide</p>
-        <ul class="sheet-links"><li><a href={`${base}/`}>Home</a></li>{links.map(([k, label, href]) => <li><a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a></li>)}</ul>
+        <ul class="sheet-links"><li><a href={`${base}/`}>Home</a></li>{links.map(([k, label, href]) => <li><a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a></li>)}<li><a href={`${base}/reading/`} aria-current={nav === 'reading' ? 'page' : undefined}>Reading list</a></li></ul>
       </section>
       <section class="sheet-sec" id="sheet-settings" aria-label="Settings">
         <p class="label">Settings</p>

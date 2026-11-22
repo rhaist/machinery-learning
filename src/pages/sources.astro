@@ -1,21 +1,54 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { claims, freshness, site, reportUrl } from '../lib/data';
+import { claims, freshness, site, reportUrl, byPart, hostOf } from '../lib/data';
 const plain = (h: string) => h.replace(/<[^>]+>/g, '');
-const sorted = [...claims].sort((a, b) => (a.half_life ?? 999) - (b.half_life ?? 999));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
+const parts = byPart(all as any[]);
+// each fact is listed under the first chapter that uses it, in the order it appears there
+const placed = new Set<string>();
+const used = (body: string) => [...body.matchAll(/<Claim\s+id="([^"]+)"/g)].map(m => m[1]).filter(id => !placed.has(id) && placed.add(id));
+const byId = Object.fromEntries(claims.map(c => [c.id, c]));
+const groups = parts.map((p: any) => ({ ...p, chapters: p.chapters.map((x: any) => ({ ...x, claims: used(x.c.body ?? '').map(id => byId[id]).filter(Boolean) })).filter((x: any) => x.claims.length) }));
+const extras = all.filter((c: any) => c.data.extra).map((c: any) => ({ c, claims: used(c.body ?? '').map(id => byId[id]).filter(Boolean) })).filter(x => x.claims.length);
+const rest = claims.filter(c => !placed.has(c.id));
 ---
 <Base title="Sources & freshness" description="Every time-sensitive claim in the guide, its sources and when it was last verified." nav="about">
   <section class="band"><div class="wrap">
     <header class="page-head"><h1>Sources &amp; freshness</h1>
-    <p class="lede">Every fact in this guide that can go out of date is listed here with its sources, the date a human last checked it, and how often it needs re-checking. Facts past their re-check date fade on the page until they are verified again. Fixes to anything that turned out wrong are listed on the <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/corrections/`}>corrections page</a>.</p></header>
-    <div class="scroll"><table class="src stack2"><thead><tr><th>Claim</th><th>Status</th><th>Verified</th><th>Re-check</th><th>Sources</th></tr></thead><tbody>
-      {sorted.map(c => <tr id={c.id} class={freshness(c)} data-verified={c.verified} data-hl={c.half_life ?? ''}>
-        <td><span set:html={c.text} />{c.evidence && <span class="ev">Source: "{c.evidence}"</span>} <a class="src-report" href={reportUrl(site.repo, { title: plain(c.text).slice(0, 60), page: `https://${site.domain}/sources/#${c.id}`, quote: plain(c.text) })}>Report</a></td>
-        <td>{c.status} <span class="fl" data-fresh-label>{freshness(c)}</span></td>
-        <td>{c.verified}</td>
-        <td>{c.half_life ? `every ${c.half_life} months` : 'evergreen'}</td>
-        <td>{(c.sources ?? []).map(s => <div><a href={s}>{new URL(s).hostname.replace(/^www\./, '')}</a></div>)}</td>
-      </tr>)}
-    </tbody></table></div>
+    <p class="lede">Every fact in this guide that can go out of date is listed here with its sources, the date a human last checked it, and how often it needs re-checking. Facts past their re-check date fade on the page until they are verified again. Fixes to anything that turned out wrong are listed on the <a href={`${base}/corrections/`}>corrections page</a>. Looking for things to read? See the <a href={`${base}/reading/`}>reading list</a>.</p></header>
+
+    <nav class="src-jump small" aria-label="Chapters on this page">
+      {groups.map((p: any) => <p><b>{p.title}</b> {p.chapters.map((x: any) => <a href={`#ch-${x.c.id}`}>{x.c.data.short}</a>)}</p>)}
+    </nav>
+
+    {groups.map((p: any) => <>
+      <h2 class="src-part">{p.title}</h2>
+      {[...p.chapters, ...extras.filter(e => e.c.data.part === p.id)].map((x: any) => (
+        <section aria-labelledby={`ch-${x.c.id}`}>
+          <h3 id={`ch-${x.c.id}`}><a href={`${base}/learn/${x.c.id}/`}>{x.c.data.title}</a> <span class="small">{x.claims.length} {x.claims.length === 1 ? 'fact' : 'facts'}</span></h3>
+          <div class="scroll"><table class="src stack2"><thead><tr><th>Claim</th><th>Status</th><th>Verified</th><th>Re-check</th><th>Sources</th></tr></thead><tbody>
+            {x.claims.map((c: any) => <tr id={c.id} class={freshness(c)} data-verified={c.verified} data-hl={c.half_life ?? ''}>
+              <td><span set:html={c.text} />{c.evidence && <span class="ev">Source: "{c.evidence}"</span>} <a class="src-report" href={reportUrl(site.repo, { title: plain(c.text).slice(0, 60), page: `https://${site.domain}/sources/#${c.id}`, quote: plain(c.text) })}>Report</a></td>
+              <td>{c.status} <span class="fl" data-fresh-label>{freshness(c)}</span></td>
+              <td>{c.verified}</td>
+              <td>{c.half_life ? `every ${c.half_life} months` : 'evergreen'}</td>
+              <td>{(c.sources ?? []).map((s: string) => <div><a href={s}>{hostOf(s)}</a></div>)}</td>
+            </tr>)}
+          </tbody></table></div>
+        </section>
+      ))}
+    </>)}
+    {rest.length > 0 && <section aria-labelledby="ch-rest">
+      <h2 class="src-part" id="ch-rest">Checked, not currently used in a chapter</h2>
+      <div class="scroll"><table class="src stack2"><thead><tr><th>Claim</th><th>Status</th><th>Verified</th><th>Re-check</th><th>Sources</th></tr></thead><tbody>
+        {rest.map(c => <tr id={c.id} class={freshness(c)} data-verified={c.verified} data-hl={c.half_life ?? ''}>
+          <td><span set:html={c.text} />{c.evidence && <span class="ev">Source: "{c.evidence}"</span>}</td>
+          <td>{c.status} <span class="fl" data-fresh-label>{freshness(c)}</span></td><td>{c.verified}</td><td>{c.half_life ? `every ${c.half_life} months` : 'evergreen'}</td>
+          <td>{(c.sources ?? []).map((s: string) => <div><a href={s}>{hostOf(s)}</a></div>)}</td>
+        </tr>)}
+      </tbody></table></div>
+    </section>}
   </div></section>
 </Base>

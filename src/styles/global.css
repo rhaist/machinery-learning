@@ -724,6 +724,15 @@ figure.panel{margin-inline:0}
 @media(max-width:600px){.src td:nth-child(5) a{max-width:none}}
 .ev{display:block;font-size:var(--fs-sm);color:var(--mut);margin-top:var(--sp-1)}
 .src-report{font-size:var(--fs-sm);color:var(--mut);white-space:nowrap}
+/* Sources page: facts grouped by chapter, with jump links */
+.src-jump{margin:var(--sp-5) 0;display:grid;gap:var(--sp-2)}
+.src-jump p{margin:0;display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3)}
+.src-part{margin-top:var(--sp-7)}
+/* Reading list page */
+.rl-filter{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-3);margin:var(--sp-5) 0}
+.rl .rl-ch{border-top:0;padding-top:0;margin-top:var(--sp-5)}
+.rl .rl-ch h3{margin:0}
+.rl .rl-ch h3 .rl-go{font-weight:400;white-space:nowrap}
 .report{margin:var(--sp-6) 0 0}
 .corr{list-style:none;margin:var(--sp-5) 0 0;padding:0;display:grid;gap:var(--sp-6);max-width:var(--w-text)}
 .corr li{border-top:1px solid var(--line);padding-top:var(--sp-4)}
