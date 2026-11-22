@@ -18,6 +18,7 @@ primary:
     - https://transformer-circuits.pub/        # interpretability
   security:
     - https://genai.owasp.org/                 # OWASP GenAI / LLM Top 10
+    - https://genai.owasp.org/blog/            # quarterly exploit roundups: use them to find incidents, then cite each incident's own source
     - https://simonwillison.net/tags/prompt-injection/
 
 finding_aids:   # read to discover developments; always follow through to the primary source

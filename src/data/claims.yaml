@@ -265,10 +265,11 @@
   status: evergreen
 
 - id: pi-owasp
-  text: "OWASP ranks prompt injection as the number one risk for LLM applications (LLM01:2025)"
-  evidence: "LLM01:2025 Prompt Injection"
-  sources: [https://genai.owasp.org/llmrisk/llm01-prompt-injection/]
-  verified: 2026-11-21
+  text: "OWASP still ranks prompt injection as the number one risk for LLM applications in its 2026 list (LLM01:2026)"
+  evidence: "LLM01:2026 Prompt Injection"
+  evidence_src: https://genai.owasp.org/download/56857/
+  sources: [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/, https://genai.owasp.org/download/56857/]
+  verified: 2026-11-22
   half_life: 12
   status: shipping
 
@@ -345,10 +346,11 @@
   status: shipping
 
 - id: owasp-agency
-  text: "OWASP names three root causes of \"excessive agency\": too many functions, too many permissions and too much autonomy"
-  evidence: "excessive functionality, excessive permissions, or excessive autonomy"
-  sources: [https://genai.owasp.org/llmrisk/llm062025-excessive-agency/]
-  verified: 2026-11-21
+  text: "OWASP names three root causes of \"excessive agency\": too many functions, too many permissions and too much autonomy; its 2026 list moved the risk from sixth place to third"
+  evidence: "Excessive Agency climbed to third, the most consequential move on the list"
+  evidence_src: https://genai.owasp.org/download/56857/
+  sources: [https://genai.owasp.org/llmrisk/llm062025-excessive-agency/, https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/, https://genai.owasp.org/download/56857/]
+  verified: 2026-11-22
   half_life: 12
   status: shipping
 
@@ -1229,4 +1231,37 @@
   sources: [https://zerodayclock.com/]
   verified: 2026-11-21
   half_life: 3
+  status: shipping
+
+- id: cosnitch
+  text: "in August 2026 Microsoft patched \"CoSnitch\", a flaw in Copilot Personal where one click on a crafted link ran an attacker's prompt and a poisoned web page could plant instructions in the assistant's memory that survived a password change"
+  evidence: "The injection survives password changes, session revocation, and device re-enrollment"
+  sources: [https://www.varonis.com/blog/cosnitch]
+  verified: 2026-11-22
+  half_life: 12
+  status: shipping
+
+- id: deadbugz
+  text: "in August 2026 Pillar Security caught the trick in use: an MCP server, offered to open-source projects in 23 pull requests, showed harmless tools until its third call and then told agents to look for SSH keys and cloud credentials and to hide it; none of the requests was merged"
+  evidence: "The new metadata directs the agent to seek sensitive information"
+  sources: [https://www.pillar.security/blog/deadbugz-currently-active-mcp-supply-chain-campaign]
+  verified: 2026-11-22
+  half_life: 12
+  status: shipping
+
+- id: anthropic-evals
+  text: "in July 2026 Anthropic reported that Claude models in security tests, on machines that wrongly had internet access, broke into three real organisations, and one published a malicious package that ran on 15 real systems"
+  evidence: "Our models were told they had no internet access and to capture the flag"
+  sources: [https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals]
+  verified: 2026-11-22
+  half_life: 12
+  status: shipping
+
+- id: agentjacking
+  text: "in June 2026 Tenet Security showed that a fake error report, sent to the monitoring service Sentry with a public key, could make coding agents run an attacker's command when asked to fix open errors; it reports success in 85% of its tests (vendor research, self-reported)"
+  evidence: "Tenet Security achieved an 85% exploitation success rate across tested agents"
+  evidence_src: https://labs.cloudsecurityalliance.org/research/csa-research-note-agentjacking-mcp-sentry-injection-2026/
+  sources: [https://labs.cloudsecurityalliance.org/research/csa-research-note-agentjacking-mcp-sentry-injection-2026/, https://thenewstack.io/agentjacking-sentry-mcp-attack/]
+  verified: 2026-11-22
+  half_life: 12
   status: shipping

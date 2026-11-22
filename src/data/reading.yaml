@@ -83,7 +83,7 @@ prompt-injection:
   - { title: "Design Patterns for Securing LLM Agents against Prompt Injections", by: Beurer-Kellner et al., year: 2025, url: "https://arxiv.org/abs/2506.08837", why: "Reusable patterns, and the limits the authors state." }
   - { title: "The Attacker Moves Second", by: "Nasr, Carlini, Sitawarin et al.", year: 2025, url: "https://arxiv.org/abs/2510.09023", why: "Adaptive attacks against 12 published defences." }
 agents-permissions:
-  - { title: "OWASP LLM06: Excessive Agency", by: OWASP, year: 2025, url: "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/", why: "The root causes and mitigations in one page.", beginner: true }
+  - { title: "OWASP: Excessive Agency", by: OWASP, year: 2025, url: "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/", why: "The root causes and mitigations in one page.", beginner: true }
   - { title: "Beyond permission prompts: making Claude Code more secure and autonomous", by: Anthropic, year: 2025, url: "https://anthropic.com/engineering/claude-code-sandboxing", why: "Approval fatigue explained, prompts cut by 84%, and why sandboxes need two walls." }
   - { title: "MCP security notification: tool poisoning attacks", by: Invariant Labs, year: 2025, url: "https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks", why: "Tool poisoning, rug pulls and shadowing explained." }
   - { title: "MCP security best practices", by: MCP project, year: 2026, url: "https://modelcontextprotocol.io/specification/draft/basic/security_best_practices", why: "The specification's own rules on tokens, scopes and consent." }

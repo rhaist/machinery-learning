@@ -34,7 +34,7 @@ When you hand your car to a parking attendant, you give them a key that starts t
 
 ## Too much power, too much freedom
 
-Security people have a name for the problem: <Term k="agency">excessive agency</Term>. <Claim id="owasp-agency" cap />. The real incidents fit that list neatly:
+Security people have a name for the problem: <Term k="agency">excessive agency</Term>. <Claim id="owasp-agency" cap />. The real incidents fit those three causes neatly:
 
 - **The code freeze that wasn't.** <Claim id="replit-db" cap />. Nothing in the system enforced the freeze. It was a sentence in a chat.
 - **The helpful support agent.** <Claim id="supabase-mcp" cap />. A human support worker would never have had those rights.
@@ -44,7 +44,7 @@ The common thread: the agent had more access than its job needed, and the only t
 
 ## Plug-ins speak to the model, not to you
 
-Most agents now connect to tools through <Term k="mcp">MCP</Term>, a standard plug-in protocol. Each tool comes with a description written for the model. You usually never see it. <Claim id="mcp-tool-poisoning" cap />. That's <Term k="toolpoison">tool poisoning</Term>. A related trick, the <Term k="rugpull">rug pull</Term>, changes a tool's description after you've approved it.
+Most agents now connect to tools through <Term k="mcp">MCP</Term>, a standard plug-in protocol. Each tool comes with a description written for the model. You usually never see it. <Claim id="mcp-tool-poisoning" cap />. That's <Term k="toolpoison">tool poisoning</Term>. A related trick, the <Term k="rugpull">rug pull</Term>, changes a tool's description after you've approved it. <Claim id="deadbugz" cap />.
 
 ## Try it: approve, approve, approve
 

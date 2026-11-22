@@ -34,7 +34,7 @@ Imagine a new assistant who opens all your post and does whatever any letter say
 
 ## Direct and indirect
 
-There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since.
+There are two kinds. **Direct** injection is you, the user, trying to talk the model out of its rules. That's mostly the provider's problem. **<Term k="indirect">Indirect</Term>** injection is the dangerous one: someone *else* plants instructions in content your assistant will read later. A web page, an email, a PDF, a calendar invite, a code comment, an error report. <Claim id="pi-greshake" cap />, and the field has been chasing it ever since.
 
 Indirect injection has already hit shipping products:
 
@@ -96,6 +96,8 @@ Everything inside the model only lowers the odds of a successful injection. The 
 
 **Measure honestly.** Ask vendors for <Term k="adaptive">adaptive</Term> red-team results, not static benchmark <Term k="asr">attack success rates</Term>. Log prompts, tool calls and failed tool calls, and alert on unusual outbound traffic. The NCSC's <Term k="deputy">confused deputy</Term> framing is useful in security reviews.
 **Ranked first.** <Claim id="pi-owasp" cap />.
+
+**A newer way in.** <Claim id="agentjacking" cap />.
 </Engineer>
 
 <Quiz kind="recall" q="Your assistant can read your files and browse the web. Which single change most reliably stops a malicious web page from leaking your files?" options={["A stronger system prompt telling it to ignore web instructions","A keyword filter for phrases like 'ignore previous instructions'","Removing its ability to send anything out (no email, no links, no image loading)","Asking it to double-check its work"]} answer={2} explain="Removing one leg of the lethal trifecta works even when the model is fooled. Prompts and filters lower the odds; they don't remove the path the data would take." />
