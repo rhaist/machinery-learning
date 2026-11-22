@@ -1,5 +1,5 @@
 // Machinery: client behaviour. Every demo is guarded, so a page only runs what it contains.
-import {P} from './hero-prompts.js';
+import {P,NW,MODEL} from './hero-prompts.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,53 +35,57 @@ addEventListener('scroll',()=>{if(!tipFor||tipRaf)return;tipRaf=requestAnimation
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip()});
 
 if (document.querySelector('#tk-in')) {
-// Real tokenizer: OpenAI's o200k_base vocabulary. The default sentence is tokenized at build time; the vocabulary
-// (about 1 MB) is only downloaded when the reader starts typing.
-const inp=$('#tk-in'),out=$('#tk-out'),cap=$('#tk-n');let enc=null,loading=null;
-const show=(v,ts)=>{out.innerHTML=chips(ts);out.removeAttribute('aria-busy');cap.textContent=`${[...v].length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`+(ts.some(frag)?' Chips marked "byte" are fragments of a single character.':'')};
+// Real tokenizer: OpenAI's o200k_base vocabulary. The example buttons are tokenized at build time; the vocabulary
+// (about 1 MB) is only downloaded when the reader types their own text.
+const inp=$('#tk-in'),out=$('#tk-out'),cap=$('#tk-n'),ex=$('#tk-ex');let enc=null,loading=null;
+let seed=[];try{seed=(JSON.parse($('#tk-seed').textContent).items||[]).map(it=>({text:String(it.text),toks:pairs(it.toks)}))}catch(e){}
+const words=v=>(v.trim().match(/\S+/g)||[]).length;
+const show=(v,ts)=>{out.innerHTML=chips(ts);out.removeAttribute('aria-busy');const w=words(v);cap.textContent=`${w} ${w===1?'word':'words'}, ${[...v].length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`+(ts.some(frag)?' Chips marked "byte" are fragments of a single character.':'')};
+const mark=()=>{if(ex)[...ex.querySelectorAll('button')].forEach(b=>b.setAttribute('aria-pressed',String(seed[+b.dataset.i]&&seed[+b.dataset.i].text===inp.value)))};
 const run=()=>{const v=inp.value;show(v,enc.encode(v).map(id=>[enc.decode([id]),id]))};
 const load=()=>loading||(loading=import('gpt-tokenizer/encoding/o200k_base').then(m=>{enc=m;run()}).catch(()=>{loading=null;out.removeAttribute('aria-busy');cap.textContent='The vocabulary could not be loaded. Check your connection and type again.'}));
+// known example → instant, from the build; anything else → the real vocabulary
+const update=()=>{mark();const hit=seed.find(it=>it.text===inp.value);if(hit)return show(hit.text,hit.toks);if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()};
 inp.addEventListener('focus',load,{once:true});
-inp.addEventListener('input',()=>{if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()});
-let seed={};try{seed=JSON.parse($('#tk-seed').textContent)}catch(e){}
-if(seed.toks&&seed.text===inp.value)show(inp.value,pairs(seed.toks));else load();
+inp.addEventListener('input',update);
+if(ex)ex.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!seed[+b.dataset.i])return;inp.value=seed[+b.dataset.i].text;update()});
+update();
 }
 
 if (document.querySelector('#nw')) {
-// Chapter 1: three choices, each a word; the first decides whether the sentence is true. Illustrative probabilities.
-const NW={start:'The capital of Australia is',
- s1:[['Canberra',.71],['Sydney',.22],['Melbourne',.05]],
- s2:[['home',.49,' to the'],['where',.33,' the'],['seat',.15,' of']],
- s3:{home:[['national',.55,' parliament.'],['federal',.34,' government.'],["country's",.09,' parliament.']],where:[['parliament',.5,' meets.'],['government',.38,' sits.'],['laws',.1,' are made.']],seat:[['government',.6,'.'],['the',.3,' federal government.'],['parliament',.08,'.']]}};
+// Chapter 1: real output of a small open model (see hero-prompts.js). The reader picks the first word, or the model
+// samples it by its real probabilities; after that the model's most likely continuation appears word by word.
+// The verdicts are written by hand for the measured continuations; if the data changes, they fall back to a neutral line.
+const V={Canberra:[', which is located in the state of New South Wales','<strong>Right capital, wrong state.</strong> Canberra is in the Australian Capital Territory, which New South Wales surrounds but does not include. No step checked that either.',true],
+ Sydney:['. It is the largest city in Australia','<strong>Fluent, and wrong.</strong> The capital is Canberra. After the wrong first word, the model carried on just as confidently.',false],
+ Melbourne:[', which is located in the state of Victoria','<strong>Fluent, and wrong.</strong> The capital is Canberra. What follows about Melbourne is true, which makes the sentence sound more reliable than it is.',false]};
 const line=$('#nw-line'),hint=$('#nw-hint'),opts=$('#nw-opts'),auto=$('#nw-auto'),tally=$('#nw-tally');
-let picks=[],runs=0,wrong=0,busy=null;
-const cur=()=>picks.length===0?NW.s1:picks.length===1?NW.s2:NW.s3[picks[1][0]];
-const done=()=>picks.length===3;
+const whole=o=>{const c=o.cont,e=c.lastIndexOf('.');return e>0?c.slice(0,e+1):c+'…'};
+let cur=null,shown=0,parts=[],runs=0,wrong=0,busy=null;
+const done=()=>cur&&shown>=parts.length;
 function draw(){
-  const last=picks.length-1;
-  line.innerHTML=esc(NW.start)+picks.map((p,i)=>(i===1?',':'')+' '+(i===last&&!done()?`<mark class="nw-new">${esc(p[0])}</mark>`:esc(p[0]))+esc(p[2]||'')).join('')+(done()?'':' <span class="nw-caret" aria-hidden="true">▍</span>');
-  if(done()){const ok=picks[0][0]==='Canberra';
-    hint.innerHTML=ok?'<strong>Fluent, and right.</strong> Each step only asked which word fits best. This time the likeliest words were also the true ones.':'<strong>Fluent, and wrong.</strong> The capital is Canberra. No step checked the fact, and every later word built on the mistake. It reads just as confident as a correct run.';
-    opts.innerHTML='';auto.textContent='Run it again';
-    tally.textContent=`So far: ${runs} ${runs===1?'run':'runs'}, ${wrong} ended wrong.`}
-  else{hint.textContent=`Step ${picks.length+1} of 3. What comes next? Tap a word, or let the model pick.`;
-    opts.innerHTML=cur().map((o,i)=>`<button class="btn nw-opt" type="button" data-i="${i}"><span class="bar"><span class="bl">${esc(o[0])}</span><span class="bt"><i style="width:${Math.round(o[1]*100)}%"></i></span><span class="bv">${Math.round(o[1]*100)}%</span></span></button>`).join('');auto.textContent='Let the model pick'}
+  line.setAttribute('aria-busy',String(!!cur&&!done()));
+  line.innerHTML=esc(NW.start)+(cur?' '+(shown===0?`<mark class="nw-new">${esc(cur.word)}</mark>`:esc(cur.word))+esc(parts.slice(0,shown).join('')):'')+(done()?'':' <span class="nw-caret" aria-hidden="true">▍</span>');
+  if(!cur){hint.textContent=`The model's real scores for the next word. Tap one, or let the model pick. It also considered "${NW.others.map(o=>o[0]).join('" and "')}".`;
+    opts.innerHTML=NW.opts.map((o,i)=>`<button class="btn nw-opt" type="button" data-i="${i}"><span class="bar"><span class="bl">${esc(o.word)}</span><span class="bt"><i style="width:${(o.p*100).toFixed(1)}%"></i></span><span class="bv">${pct(o.p)}</span></span></button>`).join('');auto.textContent='Let the model pick'}
+  else if(!done()){hint.textContent='The model continues with its most likely word each time.';opts.innerHTML=''}
+  else{const v=V[cur.word];hint.innerHTML=v&&cur.cont.startsWith(v[0])?v[1]:'<strong>Fluent.</strong> Whether it is also true, no step of the model checked.';opts.innerHTML='';auto.textContent='Run it again';
+    tally.textContent=`So far: ${runs} ${runs===1?'run':'runs'}, ${wrong} with the wrong capital.`}
 }
-function pick(i){if(done())return;picks.push(cur()[i]);if(done()){runs++;if(picks[0][0]!=='Canberra')wrong++}draw()}
-function sample(){const c=cur(),t=c.reduce((a,o)=>a+o[1],0);let r=Math.random()*t;for(let i=0;i<c.length;i++){r-=c[i][1];if(r<=0)return i}return c.length-1}
-function stop(){clearTimeout(busy);busy=null}
-function run(){if(done())return stop();pick(sample());if(!done())busy=setTimeout(run,reduce?0:650)}
-opts.addEventListener('click',e=>{const b=e.target.closest('.nw-opt');if(!b)return;stop();pick(+b.dataset.i)});
-auto.addEventListener('click',()=>{stop();if(done()){picks=[];draw();busy=setTimeout(run,reduce?0:450)}else pick(sample())});
-$('#nw-reset').addEventListener('click',()=>{stop();picks=[];tally.textContent=runs?`So far: ${runs} ${runs===1?'run':'runs'}, ${wrong} ended wrong.`:'';draw()});
+const stop=()=>{clearTimeout(busy);busy=null};
+function step(){if(done()){runs++;if(!(V[cur.word]||[])[2])wrong++;return draw()}shown=reduce?parts.length:shown+1;draw();if(done()){runs++;if(!(V[cur.word]||[])[2])wrong++;draw()}else busy=setTimeout(step,320)}
+function pick(i){stop();cur=NW.opts[i];parts=whole(cur).match(/\s*\S+/g)||[];shown=0;draw();busy=setTimeout(step,reduce?0:500)}
+function sample(){const t=NW.opts.reduce((a,o)=>a+o.p,0);let r=Math.random()*t;for(let i=0;i<NW.opts.length;i++){r-=NW.opts[i].p;if(r<=0)return i}return 0}
+opts.addEventListener('click',e=>{const b=e.target.closest('.nw-opt');if(b)pick(+b.dataset.i)});
+auto.addEventListener('click',()=>pick(sample()));
+$('#nw-reset').addEventListener('click',()=>{stop();cur=null;draw()});
 draw();
 }
 
 if (document.querySelector('#presets')) {
 const st=$('#stack');
 st.innerHTML='<div class="lay end" style="--i:0"><b>embed</b><span>ID → vector</span></div>'+[1,2,3,4,5,6].map(i=>`<div class="lay${i>1?' lay-more':''}" style="--i:${i}"><b>${i===1?'<span class="w-wide">block 1</span><span class="w-phone">blocks</span>':'block '+(i===6?'N':i)}</b><span>attention</span><span>MLP</span></div>`).join('')+'<div class="lay end" style="--i:7"><b>unembed</b><span>vector → logits</span></div>';
-let HT=[];try{HT=JSON.parse($('#hero-toks').textContent).map(pairs)}catch(e){}
-function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=HT[pi]||[[p.p,0]];$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const pr=softmax(p.c.map(c=>c[1]),1);$('#h-out').innerHTML=p.c.map((c,i)=>barRow(c[0],pr[i])).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
+function hero(){const p=P[pi];$('#h-prompt').textContent='"'+p.p+'"';const tt=p.toks;$('#h-toks').innerHTML=chips(tt);$('#h-vec').innerHTML=tt.slice(-5).map(t=>{const r=rnd(t[1]*31+7);return `<div class="vec"><span>${vis(t[0])}</span>${Array.from({length:24},()=>{const v=r()*2-1;return `<i style="background:${v>0?'#4fc1c6':'#e8452c'};opacity:${(.15+Math.abs(v)*.85).toFixed(2)}"></i>`}).join('')}</div>`}).join('');const mx=Math.max(...p.c.map(c=>c[2]));$('#h-out').innerHTML=p.c.map(c=>`<div class="bar"><span class="bl">${esc(c[0])}</span><span class="bt"><i style="width:${(c[2]/mx*100).toFixed(1)}%"></i></span><span class="bv">${pct(c[2])}</span></div>`).join('');st.classList.remove('run');void st.offsetWidth;if(!reduce)st.classList.add('run')}
 // cycles through the examples on its own; pausable (WCAG 2.2.2), stops off-screen, and never moves under reduced motion
 const pb=$('#h-pause');let paused=reduce,seen=true,tm=null;
 const tick=()=>{clearTimeout(tm);if(!paused&&seen&&!document.hidden)tm=setTimeout(()=>{pi=(pi+1)%P.length;hero();tick()},6000)};

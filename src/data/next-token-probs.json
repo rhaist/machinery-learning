@@ -1,0 +1,1111 @@
+{
+ "model": "HuggingFaceTB/SmolLM2-360M",
+ "revision": null,
+ "parameters": 361821120,
+ "vocabulary": 49152,
+ "collected": "2026-11-22",
+ "versions": {
+  "torch": "2.15.0",
+  "transformers": "5.24.0"
+ },
+ "prompts": [
+  {
+   "id": "firewall",
+   "prompt": "The firewall blocked the",
+   "prompt_tokens": [
+    [
+     "The",
+     504
+    ],
+    [
+     " firewall",
+     31416
+    ],
+    [
+     " blocked",
+     15166
+    ],
+    [
+     " the",
+     260
+    ]
+   ],
+   "top": [
+    {
+     "token": " connection",
+     "id": 3890,
+     "p": 0.047986,
+     "logit": 19.625
+    },
+    {
+     "token": " traffic",
+     "id": 5442,
+     "p": 0.03298,
+     "logit": 19.25
+    },
+    {
+     "token": " request",
+     "id": 3116,
+     "p": 0.029105,
+     "logit": 19.125
+    },
+    {
+     "token": " incoming",
+     "id": 17807,
+     "p": 0.025685,
+     "logit": 19.0
+    },
+    {
+     "token": " access",
+     "id": 1594,
+     "p": 0.022667,
+     "logit": 18.875
+    },
+    {
+     "token": " IP",
+     "id": 6806,
+     "p": 0.013748,
+     "logit": 18.375
+    },
+    {
+     "token": " attack",
+     "id": 3414,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " application",
+     "id": 3279,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " data",
+     "id": 940,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " email",
+     "id": 4106,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " packets",
+     "id": 20407,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " file",
+     "id": 2301,
+     "p": 0.012133,
+     "logit": 18.25
+    },
+    {
+     "token": " packet",
+     "id": 15976,
+     "p": 0.010707,
+     "logit": 18.125
+    },
+    {
+     "token": " port",
+     "id": 2399,
+     "p": 0.009449,
+     "logit": 18.0
+    },
+    {
+     "token": " user",
+     "id": 2914,
+     "p": 0.009449,
+     "logit": 18.0
+    },
+    {
+     "token": " web",
+     "id": 3877,
+     "p": 0.008339,
+     "logit": 17.875
+    },
+    {
+     "token": " website",
+     "id": 3817,
+     "p": 0.008339,
+     "logit": 17.875
+    },
+    {
+     "token": " page",
+     "id": 3013,
+     "p": 0.007359,
+     "logit": 17.75
+    },
+    {
+     "token": " call",
+     "id": 946,
+     "p": 0.007359,
+     "logit": 17.75
+    },
+    {
+     "token": " server",
+     "id": 6064,
+     "p": 0.007359,
+     "logit": 17.75
+    }
+   ],
+   "candidates": [
+    {
+     "word": "connection",
+     "tokens": [
+      " connection"
+     ],
+     "first_token_p": 0.047986,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "request",
+     "tokens": [
+      " request"
+     ],
+     "first_token_p": 0.029105,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "traffic",
+     "tokens": [
+      " traffic"
+     ],
+     "first_token_p": 0.03298,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "attack",
+     "tokens": [
+      " attack"
+     ],
+     "first_token_p": 0.012133,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "port",
+     "tokens": [
+      " port"
+     ],
+     "first_token_p": 0.009449,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "IP",
+     "tokens": [
+      " IP"
+     ],
+     "first_token_p": 0.013748,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "user",
+     "tokens": [
+      " user"
+     ],
+     "first_token_p": 0.009449,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "banana",
+     "tokens": [
+      " banana"
+     ],
+     "first_token_p": 3e-06,
+     "whole_word_is_one_token": true
+    }
+   ]
+  },
+  {
+   "id": "python",
+   "prompt": "for i in range(",
+   "prompt_tokens": [
+    [
+     "for",
+     1710
+    ],
+    [
+     " i",
+     2056
+    ],
+    [
+     " in",
+     281
+    ],
+    [
+     " range",
+     1845
+    ],
+    [
+     "(",
+     24
+    ]
+   ],
+   "top": [
+    {
+     "token": "1",
+     "id": 33,
+     "p": 0.291491,
+     "logit": 14.0625
+    },
+    {
+     "token": "0",
+     "id": 32,
+     "p": 0.188201,
+     "logit": 13.625
+    },
+    {
+     "token": "len",
+     "id": 4152,
+     "p": 0.146571,
+     "logit": 13.375
+    },
+    {
+     "token": "2",
+     "id": 34,
+     "p": 0.050654,
+     "logit": 12.3125
+    },
+    {
+     "token": "n",
+     "id": 94,
+     "p": 0.047585,
+     "logit": 12.25
+    },
+    {
+     "token": "5",
+     "id": 37,
+     "p": 0.041993,
+     "logit": 12.125
+    },
+    {
+     "token": "3",
+     "id": 35,
+     "p": 0.028862,
+     "logit": 11.75
+    },
+    {
+     "token": "4",
+     "id": 36,
+     "p": 0.018634,
+     "logit": 11.3125
+    },
+    {
+     "token": "num",
+     "id": 2871,
+     "p": 0.016445,
+     "logit": 11.1875
+    },
+    {
+     "token": "int",
+     "id": 591,
+     "p": 0.014512,
+     "logit": 11.0625
+    },
+    {
+     "token": "N",
+     "id": 62,
+     "p": 0.012807,
+     "logit": 10.9375
+    },
+    {
+     "token": "6",
+     "id": 38,
+     "p": 0.010618,
+     "logit": 10.75
+    },
+    {
+     "token": "9",
+     "id": 41,
+     "p": 0.008269,
+     "logit": 10.5
+    },
+    {
+     "token": "8",
+     "id": 40,
+     "p": 0.007768,
+     "logit": 10.4375
+    },
+    {
+     "token": "7",
+     "id": 39,
+     "p": 0.005339,
+     "logit": 10.0625
+    },
+    {
+     "token": "number",
+     "id": 7979,
+     "p": 0.005015,
+     "logit": 10.0
+    },
+    {
+     "token": "self",
+     "id": 771,
+     "p": 0.005015,
+     "logit": 10.0
+    },
+    {
+     "token": "length",
+     "id": 6666,
+     "p": 0.003238,
+     "logit": 9.5625
+    },
+    {
+     "token": "x",
+     "id": 104,
+     "p": 0.002858,
+     "logit": 9.4375
+    },
+    {
+     "token": "size",
+     "id": 2961,
+     "p": 0.002685,
+     "logit": 9.375
+    }
+   ],
+   "candidates": [
+    {
+     "word": "len",
+     "tokens": [
+      "len"
+     ],
+     "first_token_p": 0.146571,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "n",
+     "tokens": [
+      "n"
+     ],
+     "first_token_p": 0.047585,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "10",
+     "tokens": [
+      "1",
+      "0"
+     ],
+     "first_token_p": 0.291491,
+     "whole_word_is_one_token": false
+    },
+    {
+     "word": "0",
+     "tokens": [
+      "0"
+     ],
+     "first_token_p": 0.188201,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "1",
+     "tokens": [
+      "1"
+     ],
+     "first_token_p": 0.291491,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "self",
+     "tokens": [
+      "self"
+     ],
+     "first_token_p": 0.005015,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "x",
+     "tokens": [
+      "x"
+     ],
+     "first_token_p": 0.002858,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "banana",
+     "tokens": [
+      "ban",
+      "ana"
+     ],
+     "first_token_p": 2e-05,
+     "whole_word_is_one_token": false
+    }
+   ]
+  },
+  {
+   "id": "deutsch",
+   "prompt": "Die Hauptstadt von Deutschland ist",
+   "prompt_tokens": [
+    [
+     "Die",
+     42703
+    ],
+    [
+     " H",
+     407
+    ],
+    [
+     "au",
+     603
+    ],
+    [
+     "pt",
+     437
+    ],
+    [
+     "stadt",
+     36192
+    ],
+    [
+     " von",
+     12673
+    ],
+    [
+     " Deutsch",
+     45365
+    ],
+    [
+     "land",
+     1219
+    ],
+    [
+     " ist",
+     43424
+    ]
+   ],
+   "top": [
+    {
+     "token": " Berlin",
+     "id": 11452,
+     "p": 0.106391,
+     "logit": 14.8125
+    },
+    {
+     "token": " Deutsch",
+     "id": 45365,
+     "p": 0.099945,
+     "logit": 14.75
+    },
+    {
+     "token": " die",
+     "id": 5437,
+     "p": 0.073121,
+     "logit": 14.4375
+    },
+    {
+     "token": " in",
+     "id": 281,
+     "p": 0.047211,
+     "logit": 14.0
+    },
+    {
+     "token": " der",
+     "id": 3690,
+     "p": 0.047211,
+     "logit": 14.0
+    },
+    {
+     "token": " den",
+     "id": 4017,
+     "p": 0.030481,
+     "logit": 13.5625
+    },
+    {
+     "token": " Europa",
+     "id": 36886,
+     "p": 0.028635,
+     "logit": 13.5
+    },
+    {
+     "token": ":",
+     "id": 42,
+     "p": 0.02527,
+     "logit": 13.375
+    },
+    {
+     "token": " de",
+     "id": 367,
+     "p": 0.018488,
+     "logit": 13.0625
+    },
+    {
+     "token": " das",
+     "id": 42356,
+     "p": 0.017368,
+     "logit": 13.0
+    },
+    {
+     "token": " St",
+     "id": 625,
+     "p": 0.017368,
+     "logit": 13.0
+    },
+    {
+     "token": " Heidelberg",
+     "id": 45148,
+     "p": 0.015327,
+     "logit": 12.875
+    },
+    {
+     "token": " Wien",
+     "id": 48651,
+     "p": 0.014398,
+     "logit": 12.8125
+    },
+    {
+     "token": " e",
+     "id": 297,
+     "p": 0.014398,
+     "logit": 12.8125
+    },
+    {
+     "token": " Mü",
+     "id": 30919,
+     "p": 0.012707,
+     "logit": 12.6875
+    },
+    {
+     "token": "\n",
+     "id": 198,
+     "p": 0.012707,
+     "logit": 12.6875
+    },
+    {
+     "token": ",",
+     "id": 28,
+     "p": 0.011214,
+     "logit": 12.5625
+    },
+    {
+     "token": " un",
+     "id": 551,
+     "p": 0.010534,
+     "logit": 12.5
+    },
+    {
+     "token": " Hamburg",
+     "id": 34391,
+     "p": 0.009296,
+     "logit": 12.375
+    },
+    {
+     "token": " Frankfurt",
+     "id": 35737,
+     "p": 0.008733,
+     "logit": 12.3125
+    }
+   ],
+   "candidates": [
+    {
+     "word": "Berlin",
+     "tokens": [
+      " Berlin"
+     ],
+     "first_token_p": 0.106391,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "die",
+     "tokens": [
+      " die"
+     ],
+     "first_token_p": 0.073121,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "eine",
+     "tokens": [
+      " e",
+      "ine"
+     ],
+     "first_token_p": 0.014398,
+     "whole_word_is_one_token": false
+    },
+    {
+     "word": "seit",
+     "tokens": [
+      " se",
+      "it"
+     ],
+     "first_token_p": 0.003875,
+     "whole_word_is_one_token": false
+    },
+    {
+     "word": "Bonn",
+     "tokens": [
+      " Bonn"
+     ],
+     "first_token_p": 0.001831,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "nicht",
+     "tokens": [
+      " n",
+      "icht"
+     ],
+     "first_token_p": 0.002663,
+     "whole_word_is_one_token": false
+    },
+    {
+     "word": "München",
+     "tokens": [
+      " Mü",
+      "n",
+      "chen"
+     ],
+     "first_token_p": 0.012707,
+     "whole_word_is_one_token": false
+    },
+    {
+     "word": "Banane",
+     "tokens": [
+      " Ban",
+      "ane"
+     ],
+     "first_token_p": 2.2e-05,
+     "whole_word_is_one_token": false
+    }
+   ]
+  },
+  {
+   "id": "australia",
+   "prompt": "The capital of Australia is",
+   "prompt_tokens": [
+    [
+     "The",
+     504
+    ],
+    [
+     " capital",
+     3575
+    ],
+    [
+     " of",
+     282
+    ],
+    [
+     " Australia",
+     4617
+    ],
+    [
+     " is",
+     314
+    ]
+   ],
+   "top": [
+    {
+     "token": " Canberra",
+     "id": 40136,
+     "p": 0.556755,
+     "logit": 24.375
+    },
+    {
+     "token": " located",
+     "id": 3807,
+     "p": 0.124229,
+     "logit": 22.875
+    },
+    {
+     "token": " the",
+     "id": 260,
+     "p": 0.066495,
+     "logit": 22.25
+    },
+    {
+     "token": " Sydney",
+     "id": 16570,
+     "p": 0.058682,
+     "logit": 22.125
+    },
+    {
+     "token": " Melbourne",
+     "id": 21615,
+     "p": 0.021588,
+     "logit": 21.125
+    },
+    {
+     "token": " Australia",
+     "id": 4617,
+     "p": 0.014837,
+     "logit": 20.75
+    },
+    {
+     "token": " known",
+     "id": 1343,
+     "p": 0.013094,
+     "logit": 20.625
+    },
+    {
+     "token": " called",
+     "id": 1217,
+     "p": 0.011555,
+     "logit": 20.5
+    },
+    {
+     "token": " situated",
+     "id": 13010,
+     "p": 0.010197,
+     "logit": 20.375
+    },
+    {
+     "token": " a",
+     "id": 253,
+     "p": 0.010197,
+     "logit": 20.375
+    },
+    {
+     "token": " named",
+     "id": 3365,
+     "p": 0.006185,
+     "logit": 19.875
+    },
+    {
+     "token": " also",
+     "id": 597,
+     "p": 0.004817,
+     "logit": 19.625
+    },
+    {
+     "token": " ",
+     "id": 15442,
+     "p": 0.004251,
+     "logit": 19.5
+    },
+    {
+     "token": " one",
+     "id": 582,
+     "p": 0.004251,
+     "logit": 19.5
+    },
+    {
+     "token": " not",
+     "id": 441,
+     "p": 0.002922,
+     "logit": 19.125
+    },
+    {
+     "token": " Perth",
+     "id": 40606,
+     "p": 0.002922,
+     "logit": 19.125
+    },
+    {
+     "token": " its",
+     "id": 624,
+     "p": 0.002275,
+     "logit": 18.875
+    },
+    {
+     "token": " in",
+     "id": 281,
+     "p": 0.002275,
+     "logit": 18.875
+    },
+    {
+     "token": " Adelaide",
+     "id": 36896,
+     "p": 0.002008,
+     "logit": 18.75
+    },
+    {
+     "token": " placed",
+     "id": 4294,
+     "p": 0.002008,
+     "logit": 18.75
+    }
+   ],
+   "candidates": [
+    {
+     "word": "Canberra",
+     "tokens": [
+      " Canberra"
+     ],
+     "first_token_p": 0.556755,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "Sydney",
+     "tokens": [
+      " Sydney"
+     ],
+     "first_token_p": 0.058682,
+     "whole_word_is_one_token": true
+    },
+    {
+     "word": "Melbourne",
+     "tokens": [
+      " Melbourne"
+     ],
+     "first_token_p": 0.021588,
+     "whole_word_is_one_token": true
+    }
+   ],
+   "tree": [
+    {
+     "token": " Canberra",
+     "id": 40136,
+     "p": 0.556755,
+     "next": [
+      {
+       "token": ",",
+       "id": 28,
+       "p": 0.418044,
+       "next": [
+        {
+         "token": " which",
+         "id": 527,
+         "p": 0.210616,
+         "next": []
+        },
+        {
+         "token": " the",
+         "id": 260,
+         "p": 0.127745,
+         "next": []
+        },
+        {
+         "token": " located",
+         "id": 3807,
+         "p": 0.099488,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": ".",
+       "id": 30,
+       "p": 0.368922,
+       "next": [
+        {
+         "token": " Canberra",
+         "id": 40136,
+         "p": 0.269053,
+         "next": []
+        },
+        {
+         "token": " It",
+         "id": 657,
+         "p": 0.237439,
+         "next": []
+        },
+        {
+         "token": " The",
+         "id": 378,
+         "p": 0.112158,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": " and",
+       "id": 284,
+       "p": 0.056576,
+       "next": [
+        {
+         "token": " it",
+         "id": 357,
+         "p": 0.301386,
+         "next": []
+        },
+        {
+         "token": " the",
+         "id": 260,
+         "p": 0.16132,
+         "next": []
+        },
+        {
+         "token": " is",
+         "id": 314,
+         "p": 0.110874,
+         "next": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "token": " located",
+     "id": 3807,
+     "p": 0.124229,
+     "next": [
+      {
+       "token": " in",
+       "id": 281,
+       "p": 0.706493,
+       "next": [
+        {
+         "token": " the",
+         "id": 260,
+         "p": 0.725775,
+         "next": []
+        },
+        {
+         "token": " Sydney",
+         "id": 16570,
+         "p": 0.059575,
+         "next": []
+        },
+        {
+         "token": " a",
+         "id": 253,
+         "p": 0.036134,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": " on",
+       "id": 335,
+       "p": 0.15764,
+       "next": [
+        {
+         "token": " the",
+         "id": 260,
+         "p": 0.876509,
+         "next": []
+        },
+        {
+         "token": " a",
+         "id": 253,
+         "p": 0.033986,
+         "next": []
+        },
+        {
+         "token": " an",
+         "id": 354,
+         "p": 0.029992,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": " at",
+       "id": 418,
+       "p": 0.057992,
+       "next": [
+        {
+         "token": " the",
+         "id": 260,
+         "p": 0.675927,
+         "next": []
+        },
+        {
+         "token": " Sydney",
+         "id": 16570,
+         "p": 0.080728,
+         "next": []
+        },
+        {
+         "token": " Canberra",
+         "id": 40136,
+         "p": 0.055483,
+         "next": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "token": " the",
+     "id": 260,
+     "p": 0.066495,
+     "next": [
+      {
+       "token": " city",
+       "id": 2240,
+       "p": 0.283787,
+       "next": [
+        {
+         "token": " of",
+         "id": 282,
+         "p": 0.947343,
+         "next": []
+        },
+        {
+         "token": " Canberra",
+         "id": 40136,
+         "p": 0.009287,
+         "next": []
+        },
+        {
+         "token": " Sydney",
+         "id": 16570,
+         "p": 0.009287,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": " largest",
+       "id": 3995,
+       "p": 0.134052,
+       "next": [
+        {
+         "token": " city",
+         "id": 2240,
+         "p": 0.601089,
+         "next": []
+        },
+        {
+         "token": " and",
+         "id": 284,
+         "p": 0.09218,
+         "next": []
+        },
+        {
+         "token": " metropolitan",
+         "id": 22962,
+         "p": 0.029926,
+         "next": []
+        }
+       ]
+      },
+      {
+       "token": " capital",
+       "id": 3575,
+       "p": 0.063322,
+       "next": [
+        {
+         "token": " of",
+         "id": 282,
+         "p": 0.707862,
+         "next": []
+        },
+        {
+         "token": " city",
+         "id": 2240,
+         "p": 0.202806,
+         "next": []
+        },
+        {
+         "token": " and",
+         "id": 284,
+         "p": 0.014691,
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "forced": [
+    {
+     "first_word": "Canberra",
+     "continuation": ", which is located in the state of New South Wales. Canberra is the capital"
+    },
+    {
+     "first_word": "Sydney",
+     "continuation": ". It is the largest city in Australia and the second largest city in Oceania"
+    },
+    {
+     "first_word": "Melbourne",
+     "continuation": ", which is located in the state of Victoria. Melbourne is the second largest city"
+    }
+   ]
+  }
+ ]
+}
