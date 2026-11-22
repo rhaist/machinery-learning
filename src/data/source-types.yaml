@@ -1,0 +1,28 @@
+# Who published a source, by web address. Used on the sources page to label every link.
+# A label says who is speaking, not how reliable the source is. Hosts not listed here show as "Other".
+# Matching is by host name ending, so "anthropic.com" also covers "www.anthropic.com".
+types:
+  - id: paper
+    label: Research paper
+    note: Mostly preprints; a few peer-reviewed.
+    hosts: [arxiv.org, nature.com, usenix.org, informs.org, iclr.cc, icml.cc, openreview.net, aclanthology.org, papers.nips.cc, acm.org, not-just-memorization.github.io, xlang.ai]
+  - id: maker
+    label: Lab or vendor
+    note: The company that makes the model or product, speaking about its own work.
+    hosts: [anthropic.com, claude.com, openai.com, meta.com, deepmind.google, research.google, google.com, alibabacloud.com, amilabs.xyz, amazon.com, cloudflare.com, nvidia.com, minimax.io, typesafe.ai, strandsagents.com, microsoft.com, github.com, litellm.ai, nx.dev, gvisor.dev, modelcontextprotocol.io, sigstore.dev, brave.com, trychroma.com, huggingface.co, arena.ai, amplitude.com, ayautomate.com]
+  - id: official
+    label: Government or standards body
+    note: Agencies, the EU, and bodies such as OWASP.
+    hosts: [gov.uk, nist.gov, nsa.gov, ic3.gov, cisa.gov, europa.eu, owasp.org, c2pa.org, linuxfoundation.org, cloudsecurityalliance.org]
+  - id: independent
+    label: Independent researcher or evaluator
+    note: People and organisations that test systems they did not build.
+    hosts: [metr.org, epoch.ai, simonwillison.net, embracethered.com, incidentdatabase.ai, zerodayclock.com, steel.dev, jericho.blog, vals.ai, stackoverflow.co]
+  - id: security
+    label: Security company
+    note: Research by firms that also sell security products.
+    hosts: [cisco.com, invariantlabs.ai, jfrog.com, malwarebytes.com, pillar.security, reversinglabs.com, snyk.io, varonis.com, verizon.com, vulncheck.com, wiz.io, generalanalysis.com]
+  - id: press
+    label: Press
+    note: News reporting and analysts.
+    hosts: [cyberscoop.com, darkreading.com, cnn.com, fortune.com, infosecurity-magazine.com, securityweek.com, techcrunch.com, thenewstack.io, theregister.com, tomshardware.com, futurumgroup.com, scientificamerican.com, notebookcheck.net]

@@ -75,3 +75,12 @@ export function reportUrl(repo: string, o: { title: string; page: string; quote?
   if (o.quote) q.set('claim', o.quote);
   return `${repo}/issues/new?${q.toString()}`;
 }
+
+/** Who published a source, by host name (src/data/source-types.yaml). */
+export type SourceType = { id: string; label: string; note: string; hosts: string[] };
+export const sourceTypes: SourceType[] = [...((load('source-types.yaml') as any).types as SourceType[]), { id: 'other', label: 'Other', note: 'Everything else.', hosts: [] }];
+export const hostOf = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+export function sourceType(u: string): SourceType {
+  const h = hostOf(u);
+  return sourceTypes.find(t => t.hosts.some(x => h === x || h.endsWith('.' + x))) ?? sourceTypes[sourceTypes.length - 1];
+}

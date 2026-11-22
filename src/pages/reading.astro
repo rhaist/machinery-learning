@@ -1,0 +1,44 @@
+---
+// Every "Further reading" entry of the guide on one page, grouped by part and chapter (src/data/reading.yaml).
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { byPart, reading, hostOf } from '../lib/data';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
+const parts = byPart(all as any[]).map((p: any) => ({ ...p, chapters: [...p.chapters.map((x: any) => x.c), ...all.filter((c: any) => c.data.extra && c.data.part === p.id)].filter((c: any) => (reading[c.id] ?? []).length) }));
+const total = parts.reduce((n: number, p: any) => n + p.chapters.reduce((m: number, c: any) => m + reading[c.id].length, 0), 0);
+const easy = parts.reduce((n: number, p: any) => n + p.chapters.reduce((m: number, c: any) => m + reading[c.id].filter((r: any) => r.beginner).length, 0), 0);
+---
+<Base title="Reading list" description="Everything the guide recommends for further reading, in one place." nav="about">
+  <section class="band"><div class="page-text">
+    <header class="page-head">
+      <h1>Reading list</h1>
+      <p class="lede">Everything the guide recommends at the end of its chapters, in one place: {total} talks, articles, papers and books. {easy} of them need no background. For the evidence behind individual facts, see <a href={`${base}/sources/`}>sources</a>.</p>
+    </header>
+    <p class="rl-filter"><button class="btn" type="button" id="rl-easy" aria-pressed="false">Show only "no background needed"</button> <span class="small" id="rl-count" aria-live="polite"></span></p>
+    <div class="prose rl">
+      {parts.map((p: any) => <section>
+        <h2>{p.title}</h2>
+        {p.chapters.map((c: any) => <section class="reading rl-ch">
+          <h3><a href={`${base}/learn/${c.id}/`}>{c.data.title}</a></h3>
+          <ul>{reading[c.id].map((r: any) => <li data-easy={r.beginner ? '1' : undefined}>
+            <span class="rd-t"><a href={r.url}>{r.title}</a>{r.beginner && <span class="rd-b">no background needed</span>}</span>
+            <span class="rd-m">{r.by}{r.year ? `, ${r.year}` : ''} · {hostOf(r.url)}</span>
+            <span class="rd-w">{r.why}</span>
+          </li>)}</ul>
+        </section>)}
+      </section>)}
+    </div>
+  </div></section>
+  <script>
+    const b = document.getElementById('rl-easy'), out = document.getElementById('rl-count');
+    b?.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', String(on));
+      let n = 0;
+      document.querySelectorAll('.rl li').forEach(li => { const hide = on && !li.hasAttribute('data-easy'); (li as HTMLElement).hidden = hide; if (!hide) n++; });
+      document.querySelectorAll('.rl-ch').forEach(s => { (s as HTMLElement).hidden = !s.querySelector('li:not([hidden])'); });
+      if (out) out.textContent = on ? `${n} shown` : '';
+    });
+  </script>
+</Base>

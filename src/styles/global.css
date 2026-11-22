@@ -899,3 +899,25 @@ details.eng{border-color:#999}
 /* Tokenizer: a token that is only part of a character */
 .tok.raw{font-style:italic}
 #tk-out[aria-busy=true]{opacity:.5}
+
+/* Sources page: who the guide relies on, and facts grouped by chapter */
+.src-mix{margin:var(--sp-6) 0;display:grid;gap:var(--sp-3);max-width:var(--w-text)}
+.src-mix h2,.src-mix p{margin:0}
+.src-mix ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-3)}
+.src-mix li{display:grid;grid-template-columns:minmax(0,14em) minmax(0,1fr) 2.5em;gap:var(--sp-1) var(--sp-3);align-items:center}
+.sm-l{font-weight:600}
+.sm-t{display:block;width:100%;height:.5rem;border-radius:var(--r-xs)}
+.sm-bg{fill:var(--track)}
+.sm-fg{fill:var(--t)}
+.sm-n{text-align:right;font-variant-numeric:tabular-nums}
+.sm-note{grid-column:1/-1;color:var(--mut)}
+.src-jump{margin:var(--sp-5) 0;display:grid;gap:var(--sp-2)}
+.src-jump p{margin:0;display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3)}
+.src-part{margin-top:var(--sp-7)}
+.src-type{color:var(--mut);font-size:var(--fs-xs);white-space:nowrap}
+@media(max-width:600px){.src-mix li{grid-template-columns:minmax(0,1fr) 2.5em}.sm-t{grid-column:1/-1;grid-row:2}}
+
+/* Reading list page */
+.rl-filter{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-3);margin:var(--sp-5) 0}
+.rl .rl-ch{border-top:0;padding-top:0;margin-top:var(--sp-5)}
+.rl .rl-ch h3{margin:0}
