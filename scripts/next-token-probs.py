@@ -10,7 +10,7 @@ and not part of CI.
 
     python3 -m venv .venv && . .venv/bin/activate
     pip install torch transformers
-    python scripts/next-token-probs.py > research/next-token-probs.json
+    python scripts/next-token-probs.py > src/data/next-token-probs.json
 
 What it does:
   - downloads an open model (default: HuggingFaceTB/SmolLM2-360M, Apache-2.0, about 0.7 GB).

@@ -101,9 +101,9 @@ figures:
     calc: "Encoded with tiktoken's o200k_base (GPT-4o): '12345' → '123' + '45'. Llama 3's tokenizer also groups digits in threes."
     based_on: [https://github.com/openai/tiktoken]
   - page: chapters/generating
-    text: "\"connection\" 30%, \"request\" 22%, \"traffic\" 18%"
+    text: "\"connection\" gets about 5%, \"traffic\" and \"request\" about 3% each"
     kind: illustrative
-    note: "Example probabilities, matching the hero demo."
+    note: "Measured with scripts/next-token-probs.py on SmolLM2-360M (src/data/next-token-probs.json): 4.8%, 3.3%, 2.9%. Same data as the hero demo and the sampler."
   - page: chapters/generating
     text: "Generating token 500 doesn't recompute tokens 1 to 499"
     kind: illustrative

@@ -24,7 +24,7 @@ import Sampler from '../../components/Sampler.astro';
 import Debate from '../../components/Debate.astro';
 import KvCache from '../../components/KvCache.astro';
 
-At the end of the stack, the model has a score for every possible next token. Those scores become probabilities: "connection" 30%, "request" 22%, "traffic" 18%, and so on down to "banana" at almost nothing. Then one token is **picked at random, weighted by those probabilities**: a weighted dice roll. The chosen token is added to the text, and the whole process runs again for the next one.
+At the end of the stack, the model has a score for every possible next token. Those scores become probabilities: in a small open model, "connection" gets about 5%, "traffic" and "request" about 3% each, and so on through tens of thousands of tokens, down to "banana" at almost nothing. Then one token is **picked at random, weighted by those probabilities**: a weighted dice roll. The chosen token is added to the text, and the whole process runs again for the next one.
 
 Every answer you have ever received from a chatbot was written this way, one piece at a time. That explains several things you've probably noticed:
 
