@@ -21,6 +21,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Text in the data files is really text
+        run: node scripts/check-data.mjs
       - name: Claims freshness and integrity
         run: node scripts/check-claims.mjs --strict
       - name: Every number has a source, calculation or illustration label
