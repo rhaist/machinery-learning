@@ -34,7 +34,7 @@ debates:
         sources:
           - https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
           - https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection
-          - https://notebookcheck.net/Claude-Fable-5-2-fallbacks-make-AI-agents-more-vulnerable.1446771.0.html
+          - https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf
           - https://arxiv.org/abs/2510.09023
     settle: Adaptive, independent red-team results on shipping products over time, and whether data-flow designs like CaMeL become usable for general assistants.
     verified: 2026-11-21

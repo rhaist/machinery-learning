@@ -325,7 +325,7 @@
   text: "OpenAI says prompt injection is unlikely ever to be fully solved; Anthropic, whose browser agent let through at most 0.3% of test attacks in August 2026, still calls it a moving target, and its newest model did worse than its predecessor on an outside benchmark, 4.09% against 1.02% within 15 attempts (Anthropic's own figures)"
   evidence: "Prompt injection remains a moving target."
   evidence_src: https://claude.com/blog/claude-in-chrome-generally-available
-  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection, https://claude.com/blog/claude-in-chrome-generally-available, https://notebookcheck.net/Claude-Fable-5-2-fallbacks-make-AI-agents-more-vulnerable.1446771.0.html, https://www.anthropic.com/research/prompt-injection-defenses]
+  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection, https://claude.com/blog/claude-in-chrome-generally-available, https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf, https://www.anthropic.com/research/prompt-injection-defenses]
   verified: 2026-11-22
   half_life: 3
   status: emerging
@@ -1066,10 +1066,10 @@
   status: research
 
 - id: so-almost-right
-  text: "in Stack Overflow's 2026 survey, 48% of developers trusted AI output when they could easily verify it, but only about 7% for important work decisions; a year earlier, 66% had cited AI answers that are almost right, but not quite"
-  evidence: "48 percent trusted it when they could easily verify the output"
-  evidence_src: https://www.theregister.com/a/5301662
-  sources: [https://www.theregister.com/a/5301662, https://stackoverflow.blog/2026/10/06/the-results-of-the-2026-developer-survey-are-here/, https://survey.stackoverflow.co/2025/ai]
+  text: "in Stack Overflow's 2026 survey, 48% of developers said they trust AI output when they can easily verify it, and only 6.6% trust it for important work decisions; a year earlier, 66% had cited AI answers that are almost right, but not quite"
+  evidence: "I trust it when I can easily verify the output"
+  evidence_src: https://survey.stackoverflow.co/2026/ai/data/ai-trust
+  sources: [https://survey.stackoverflow.co/2026/ai/data/ai-trust, https://survey.stackoverflow.co/2025/ai]
   verified: 2026-11-22
   half_life: 12
   status: research
