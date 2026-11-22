@@ -5,7 +5,7 @@ order: 7.5
 part: language-models
 extra: true
 summary: "Six turning points, from image recognition to agents, and the chapters that explain each one."
-minutes: 5
+minutes: 6
 updated: 2026-11-22
 takeaways:
   - "Today's systems combine three older ideas: deep neural networks, the transformer, and learning by trial and error."
@@ -13,8 +13,22 @@ takeaways:
   - "Every step needed scale as much as a new idea: more data and more computing power."
 ---
 import Claim from '../../components/Claim.astro';
+import Note from '../../components/Note.astro';
 
 The rest of this guide explains how today's systems work. This page is about the order in which the pieces arrived. It's optional, and it's a simplification: every step below rests on decades of earlier work, and on faster chips and more data as much as on any single idea.
+
+<Note title="The short version" kind="key">
+
+- **2012:** neural networks win at recognising images, and deep learning becomes the standard approach.
+- **2013 to 2016:** networks learn by trial and error, first video games, then Go.
+- **2017:** the transformer, a design that reads a whole text at once.
+- **2018 to 2020:** transformers trained on huge amounts of plain text turn out to be steerable with words.
+- **2022:** ChatGPT turns a text predictor into an assistant anyone can use.
+- **2024 onwards:** trial and error returns, and models learn to reason through long tasks and to act.
+
+</Note>
+
+The rest of the page tells the same story with a little more detail.
 
 ## 2012: neural networks start winning
 

@@ -109,3 +109,8 @@ judging-claims:
   - { title: "LMArena's response", by: LMArena, year: 2025, url: "https://arena.ai/blog/our-response", why: "The other side of the leaderboard dispute." }
   - { title: "GPT detectors are biased against non-native English writers", by: Liang et al., year: 2023, url: "https://arxiv.org/abs/2304.02819", why: "Why detector scores can't be evidence.", beginner: true }
   - { title: "Measuring the impact of early-2025 AI on developer productivity", by: METR, year: 2025, url: "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/", why: "Perceived versus measured speed-up.", beginner: true }
+how-we-got-here:
+  - { title: "The Bitter Lesson", by: Rich Sutton, year: 2019, url: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html", why: "One page on why methods that scale with computing power keep beating hand-built knowledge. The idea behind every step on this page.", beginner: true }
+  - { title: "The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence", by: Sebastian Mallaby, year: 2026, url: "https://www.cfr.org/books/the-infinity-machine", why: "A full-length telling, from inside DeepMind. One lab's view of a story with many labs in it.", beginner: true }
+  - { title: "Attention Is All You Need", by: "Vaswani and colleagues", year: 2017, url: "https://arxiv.org/abs/1706.03762", why: "The transformer paper itself. Short, and more readable than its reputation." }
+
