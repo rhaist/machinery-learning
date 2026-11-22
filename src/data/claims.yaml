@@ -215,6 +215,15 @@
   half_life: 3
   status: emerging
 
+
+- id: decision-audit
+  text: "an audit of the first 28 papers on decision models, posted within nine days of Jev's release, found no accuracy advantage from the typed answer format itself, clear gains only in speed and cost, and no like-for-like baseline in most of the papers"
+  evidence: "the typed readout has not yet shown an independent accuracy advantage"
+  sources: [https://arxiv.org/abs/2609.32160]
+  verified: 2026-11-22
+  half_life: 3
+  status: emerging
+
 - id: decision-imitation
   text: "an AY Automate study of 791 labelled decisions (September 2026) found Jev agreed with a frontier model's answers, mistakes included, 6–8 points more often than with the correct answers"
   evidence: "agreement ran 6 to 8 points above accuracy"
@@ -313,11 +322,11 @@
   status: research
 
 - id: labs-unsolved
-  text: "OpenAI says prompt injection is unlikely ever to be fully solved, and Anthropic calls it far from solved while reporting about 1% attack success for adaptive attackers with 100 attempts against its browser agent (self-reported)"
-  evidence: "prompt injection is far from a solved problem"
-  evidence_src: https://www.anthropic.com/research/prompt-injection-defenses
-  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection, https://www.anthropic.com/research/prompt-injection-defenses]
-  verified: 2026-11-21
+  text: "OpenAI says prompt injection is unlikely ever to be fully solved; Anthropic, whose browser agent let through at most 0.3% of test attacks in August 2026, still calls it a moving target, and its newest model did worse than its predecessor on an outside benchmark, 4.09% against 1.02% within 15 attempts (Anthropic's own figures)"
+  evidence: "Prompt injection remains a moving target."
+  evidence_src: https://claude.com/blog/claude-in-chrome-generally-available
+  sources: [https://openai.com/index/hardening-atlas-against-prompt-injection, https://claude.com/blog/claude-in-chrome-generally-available, https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf, https://www.anthropic.com/research/prompt-injection-defenses]
+  verified: 2026-11-22
   half_life: 3
   status: emerging
 
@@ -670,11 +679,11 @@
   status: shipping
 
 - id: ms-1413
-  text: "its October 2026 Patch Tuesday fixed 1,413 vulnerabilities, more than in all of 2025, and only one of them was already under attack"
+  text: "its October 2026 Patch Tuesday fixed 1,413 vulnerabilities, more than in all of 2025, and November's about 1,090 more; in each month only one was already under attack"
   evidence: "containing 1,413 defects affecting the company’s various enterprise products and services"
   evidence_src: https://cyberscoop.com/microsoft-patch-tuesday-october-2026/
-  sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/, https://www.infosecurity-magazine.com/news/microsoft-patch-tuesday-record-1/]
-  verified: 2026-11-21
+  sources: [https://cyberscoop.com/microsoft-patch-tuesday-october-2026/, https://www.infosecurity-magazine.com/news/microsoft-patch-tuesday-record-1/, https://darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves]
+  verified: 2026-11-22
   half_life: 3
   status: shipping
 
@@ -772,7 +781,7 @@
   status: evergreen
 
 - id: mcpmark
-  text: "on MCPMark, a 2025 benchmark of realistic multi-step tool tasks, the best model solved 52.56% of tasks on one try, but only 33.86% on all four of four tries"
+  text: "on MCPMark, a 2025 benchmark of realistic multi-step tool tasks, the best model at publication solved 52.56% of tasks on one try, but only 33.86% on all four of four tries"
   evidence: "the best-performing model, gpt-5-medium, reaches only"
   sources: [https://arxiv.org/abs/2509.24002]
   verified: 2026-11-21
@@ -1000,10 +1009,11 @@
   status: evergreen
 
 - id: osworld2
-  text: "on OSWorld 2.0 (June 2026), whose workflows take people a median of about 1.6 hours, the best model completed only 20.6% of tasks, despite a partial-credit score of 54.8%"
+  text: "on OSWorld 2.0 (June 2026), whose workflows take people a median of about 1.6 hours, the best model at launch completed only 20.6% of tasks, despite a partial-credit score of 54.8%; by October an outside tracker of mostly vendor-reported results listed 32.0% as the best strict score, with partial scores above 75%"
   evidence: "still completes only 20.6% of tasks at a 54.8% partial score"
-  sources: [https://arxiv.org/abs/2606.29537]
-  verified: 2026-11-21
+  evidence_src: https://arxiv.org/abs/2606.29537
+  sources: [https://arxiv.org/abs/2606.29537, https://leaderboard.steel.dev/leaderboards/osworld-2/]
+  verified: 2026-11-22
   half_life: 6
   status: research
 
@@ -1056,10 +1066,11 @@
   status: research
 
 - id: so-almost-right
-  text: "in Stack Overflow's 2025 survey, 66% of developers cited AI answers that are almost right, but not quite, and only 3.1% highly trusted AI accuracy"
-  evidence: "AI solutions that are almost right, but not quite"
-  sources: [https://survey.stackoverflow.co/2025/ai]
-  verified: 2026-11-21
+  text: "in Stack Overflow's 2026 survey, 48% of developers said they trust AI output when they can easily verify it, and only 6.6% trust it for important work decisions; a year earlier, 66% had cited AI answers that are almost right, but not quite"
+  evidence: "I trust it when I can easily verify the output"
+  evidence_src: https://survey.stackoverflow.co/2026/ai/data/ai-trust
+  sources: [https://survey.stackoverflow.co/2026/ai/data/ai-trust, https://survey.stackoverflow.co/2025/ai]
+  verified: 2026-11-22
   half_life: 12
   status: research
 

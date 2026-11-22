@@ -17,21 +17,24 @@ debates:
         who: OpenAI, Anthropic
         points:
           - Models trained to rank instructions by source, plus automated red-teaming, cut measured attack success sharply.
-          - Anthropic reports about 1% success for an adaptive attacker with 100 attempts in browser use (self-reported).
+          - Anthropic reported in August 2026 that at most 0.3% of test attacks got through its browser agent with all defences on (self-reported).
           - Like scams and social engineering, injection may never be fully solved, but layered defences, monitoring and confirmations can keep real-world risk low.
         sources:
           - https://openai.com/index/hardening-atlas-against-prompt-injection
           - https://openai.com/index/instruction-hierarchy-challenge
           - https://www.anthropic.com/research/prompt-injection-defenses
+          - https://claude.com/blog/claude-in-chrome-generally-available
       - label: Only deterministic boundaries count
         who: Simon Willison, the UK NCSC, Nasr, Carlini, Tramèr and colleagues
         points:
           - Adaptive attacks broke 12 published defences, most of which had reported near-zero attack success.
-          - A 1% failure rate against an attacker who can retry many times is close to certain failure.
+          - Even a failure rate well under 1% is close to certain failure against an attacker who can retry many times.
+          - Measured rates can rise again. Anthropic's November 2026 model did worse than its predecessor on an outside benchmark.
           - So untrusted input must never be able to reach privileged tools, whatever the model decides.
         sources:
           - https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
           - https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection
+          - https://assets.claude.com/27d60918d218125e7504bc7354c4b4626ec56b11.pdf
           - https://arxiv.org/abs/2510.09023
     settle: Adaptive, independent red-team results on shipping products over time, and whether data-flow designs like CaMeL become usable for general assistants.
     verified: 2026-11-21
@@ -324,12 +327,13 @@ debates:
           - https://github.com/strands-labs/strands-decider
           - https://blog.cloudflare.com/clef-decision-models/
       - label: The evidence is thin
-        who: Jiawei Li (independent preprint); AY Automate
+        who: Jiawei Li (independent preprint); AY Automate; Tang and Zheng (Northeastern University)
         points:
           - One evaluation found Jev at chance on routing and "confidently constant", with the open Laya model no better.
           - Another found a decision model copied the big model, mistakes included, more than it matched the correct answers.
-          - The few independent tests so far are small and mixed; the headline benchmarks for Strands Decider and Clef are self-reported.
+          - An audit of the first 28 papers found no accuracy advantage from the typed format itself and no like-for-like baseline in most of them; the headline benchmarks for Strands Decider and Clef are still self-reported.
         sources:
+          - https://arxiv.org/abs/2609.32160
           - https://arxiv.org/abs/2610.02267
           - https://www.ayautomate.com/blog/jev-vs-llm-benchmark
           - https://vals.ai/blogs/independent-evaluation-of-jev

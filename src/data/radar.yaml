@@ -110,7 +110,7 @@ entries:
     name: Decision models
     quadrant: Systems & agents
     chapter: around-the-model
-    note: Typed answers with probabilities, no text generation. Jev, Laya, Strands Decider, Clef. Makers' benchmarks are self-reported; the first independent tests are small and mixed.
+    note: Typed answers with probabilities, no text generation. Jev, Laya, Strands Decider, Clef. Makers' benchmarks are self-reported; independent tests are many but uneven, and show gains in speed and cost more clearly than in accuracy.
     history: { 2026-11: emerging }
 
   - id: prompt-caching
