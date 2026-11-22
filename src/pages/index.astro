@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import HeroPipeline from '../components/HeroPipeline.astro';
-import { radarEntries, radarMonths, ringAt, monthLabel, site, edition, byPart, reviews } from '../lib/data';
+import { radarEntries, radarMonths, ringAt, monthLabel, site, edition, byPart, reviews, extrasOf } from '../lib/data';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const chapters = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
 const parts = byPart(chapters);
@@ -57,6 +57,7 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
       ))}
     </div>
     {reviews[p.id] && <p class="part-more small"><a href={`${base}/review/${p.id}/`}>{pi === parts.length - 1 ? 'Final review' : 'Mixed review'}</a> · {reviews[p.id].questions.length} questions that combine the chapters of this part</p>}
+    {extrasOf(chapters as any[], p.id).map((x: any) => <p class="part-more small"><a href={`${base}/learn/${x.id}/`}>{x.data.title}</a> · optional, {x.data.minutes} minutes. {x.data.summary}</p>)}
   </div></section>
   ))}
 

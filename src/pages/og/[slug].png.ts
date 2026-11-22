@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const chapters = await getCollection('chapters');
   const notes = await getCollection('notes');
   const parts = byPart(chapters as any[]);
-  const kick = (id: string) => { const p = parts.find(p => p.chapters.some(x => x.c.id === id))!; const num = p.chapters.find(x => x.c.id === id)!.num; return `${parts.length > 1 ? p.title.split(':')[0] + ' · ' : ''}Chapter ${num} of ${p.chapters[p.chapters.length - 1].num}`; };
+  const kick = (id: string) => { const p = parts.find(p => p.chapters.some(x => x.c.id === id)); if (!p) return 'Optional reading'; const num = p.chapters.find(x => x.c.id === id)!.num; return `${parts.length > 1 ? p.title.split(':')[0] + ' · ' : ''}Chapter ${num} of ${p.chapters[p.chapters.length - 1].num}`; };
   const pages = [
     { slug: 'home', kicker: `${monthLabel(String(edition.month))} edition`, title: 'How AI like ChatGPT works, updated every month', summary: site.tagline + '. Interactive and in plain language.' },
     { slug: 'radar', kicker: 'Frontier radar', title: 'Where AI research stands this month', summary: 'From research to emerging to shipping, reviewed monthly. History is never rewritten.' },

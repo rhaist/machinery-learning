@@ -3,24 +3,33 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ChapterArt from '../../components/ChapterArt.astro';
 import Reading from '../../components/Reading.astro';
-import { byPart, site, reportUrl, reviews } from '../../lib/data';
+import { byPart, site, reportUrl, reviews, extrasOf } from '../../lib/data';
 
 export async function getStaticPaths() {
   const all = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
-  return all.map((entry, i) => ({ params: { slug: entry.id }, props: { entry, prev: all[i - 1], next: all[i + 1], all } }));
+  // the reading sequence skips optional side pages; a side page sits between the chapters around it
+  const main = all.filter(c => !c.data.extra);
+  return all.map(entry => {
+    const i = main.indexOf(entry);
+    const prev = i >= 0 ? main[i - 1] : [...main].reverse().find(c => c.data.order < entry.data.order);
+    const next = i >= 0 ? main[i + 1] : main.find(c => c.data.order > entry.data.order);
+    return { params: { slug: entry.id }, props: { entry, prev, next, all } };
+  });
 }
 const { entry, prev, next, all } = Astro.props;
 const parts = byPart(all as any[]);
 const part = parts.find(p => p.id === entry.data.part)!;
-const num = part.chapters.find(x => x.c.id === entry.id)!.num;
+const extra = entry.data.extra;
+const num = extra ? 0 : part.chapters.find(x => x.c.id === entry.id)!.num;
 const last = part.chapters[part.chapters.length - 1].num;
+const extras = num === last ? extrasOf(all as any[], part.id) : [];
 const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { goals, takeaways } = entry.data;
 const review = num === last && reviews[part.id] ? reviews[part.id] : null;
 const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 ---
-<Base title={entry.data.title} description={entry.data.summary} chapter={entry.id} nav="learn" og={`learn-${entry.id}`} type="article" modified={entry.data.updated}>
+<Base title={entry.data.title} description={entry.data.summary} chapter={extra ? undefined : entry.id} nav="learn" og={`learn-${entry.id}`} type="article" modified={entry.data.updated}>
   <nav slot="top" class="chbar" aria-label="Chapters"><div class="in">
     {parts.map(p => <>{parts.length > 1 && <span class="chbar-part">Part {p.index}</span>}{p.chapters.map(({ c }) => <a href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} aria-current={c.id === entry.id ? 'page' : undefined}>{c.data.short}</a>)}</>)}
   </div></nav>
@@ -28,7 +37,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
     <div class="chapter-grid">
       <ChapterArt name={entry.id} />
       <header class="page-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
-        <p class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}Chapter {num} of {last}{entry.data.order === 0 ? ' · start here' : ''}</p>
+        <p class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}{extra ? 'Optional reading' : `Chapter ${num} of ${last}`}{entry.data.order === 0 ? ' · start here' : ''}</p>
         <h1>{entry.data.title}</h1>
         <p class="lede">{entry.data.summary}</p>
         <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>
@@ -39,6 +48,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
       <Content />
       {takeaways.length > 0 && <section class="recap" aria-labelledby="recap-h"><h2 id="recap-h">Remember this</h2><ul>{takeaways.map((t: string) => <li>{t}</li>)}</ul></section>}
       {review && <p class="part-review"><span>That was the last chapter of {part.title.replace(':', ',')}.</span> <a class="btn" href={`${base}/review/${part.id}/`}>{next ? 'Take the mixed review' : 'Take the final review'} ({review.questions.length} questions)</a></p>}
+      {extras.map((x: any) => <p class="part-extra small">Optional: <a href={`${base}/learn/${x.id}/`}>{x.data.title}</a>. {x.data.summary} About {x.data.minutes} minutes.</p>)}
       <Reading id={entry.id} />
     </div>
     <p class="complete-note label" id="complete-note" hidden>Chapter complete</p>

@@ -53,8 +53,8 @@ export const edition = [...site.editions].sort((a, b) => String(b.month).localeC
 export const reviews: Record<string, { intro: string; questions: { q: string; options: string[]; answer: number; explain: string; from: string[] }[] }> = load('reviews.yaml');
 
 /** Chapters grouped by part (in site.yaml order), each with its number inside the part. */
-export function byPart<T extends { id: string; data: { order: number; part: string } }>(chapters: T[]) {
-  const sorted = [...chapters].sort((a, b) => a.data.order - b.data.order);
+export function byPart<T extends { id: string; data: { order: number; part: string; extra?: boolean } }>(chapters: T[]) {
+  const sorted = [...chapters].filter(c => !c.data.extra).sort((a, b) => a.data.order - b.data.order);
   return site.parts.map((p, pi) => {
     const list = sorted.filter(c => c.data.part === p.id);
     return { ...p, index: pi + 1, chapters: list.map((c, i) => ({ c, num: i + 1 })) };
@@ -75,3 +75,7 @@ export function reportUrl(repo: string, o: { title: string; page: string; quote?
   if (o.quote) q.set('claim', o.quote);
   return `${repo}/issues/new?${q.toString()}`;
 }
+
+/** Optional side pages of a part (frontmatter `extra: true`), in order. */
+export const extrasOf = <T extends { data: { order: number; part: string; extra?: boolean } }>(chapters: T[], partId: string) =>
+  chapters.filter(c => c.data.extra && c.data.part === partId).sort((a, b) => a.data.order - b.data.order);
