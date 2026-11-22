@@ -49,20 +49,24 @@ debates:
         points:
           - Some actions, such as payments, emails to new recipients or deletions, can't be undone.
           - Only the human knows what they actually intended, so confirmation for high-impact steps is a core mitigation.
+          - The classifier that now approves actions in Claude Code was bypassed within weeks, and Anthropic itself still recommends human review for high-stakes changes.
         sources:
           - https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
           - https://brave.com/blog/comet-prompt-injection/
+          - https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/
       - label: Enforce boundaries instead
         who: Anthropic engineering, Invariant Labs
         points:
           - Users approved about 93% of prompts; sandboxing removed 84% of them without losing safety (self-reported).
+          - In Anthropic's 2026 study of about a thousand testers, human reviewers stopped only 13.6% of dangerous commands (self-reported).
           - People pick "Always allow" and stop reading, so the prompt gives false assurance.
           - Better to make dangerous actions impossible by default and keep prompts for rare boundary crossings.
         sources:
           - https://anthropic.com/engineering/how-we-contain-claude
+          - https://claude.com/blog/auto-mode-default-in-claude-code
           - https://invariantlabs.ai/blog/mcp-github-vulnerability
-    settle: Field data on how often people catch a malicious action among routine prompts, compared with incidents in sandboxed setups.
-    verified: 2026-11-21
+    settle: Independent field data on how often people, and the classifiers now replacing them, catch a malicious action among routine ones, compared with incidents in sandboxed setups.
+    verified: 2026-11-22
     half_life: 6
 
   - id: data-poisoning-risk

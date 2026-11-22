@@ -387,6 +387,23 @@
   half_life: 6
   status: shipping
 
+
+- id: auto-mode
+  text: "since August 2026 Claude Code lets a classifier, not the user, approve most actions by default on its consumer and team plans; in Anthropic's own study, people stopped 13.6% of dangerous commands and the classifier 89%, and Anthropic adds that this does not eliminate risk"
+  evidence: "human review caught just 13.6% of dangerous commands, while auto mode caught 89%."
+  sources: [https://claude.com/blog/auto-mode-default-in-claude-code]
+  verified: 2026-11-22
+  half_life: 6
+  status: shipping
+
+- id: auto-mode-bypass
+  text: "later that month a researcher got malicious code past it in most of a handful of tries, because the classifier saw only the agent's own short script and not the booby-trapped file that script loaded; Anthropic called this working as designed"
+  evidence: "Anthropic closed the report as Informative and that the behavior is working as designed."
+  sources: [https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/]
+  verified: 2026-11-22
+  half_life: 6
+  status: shipping
+
 - id: sandbox-both
   text: "a sandbox needs both file-system and network isolation: without network limits a hijacked agent can send secrets out, and without file-system limits it can escape the sandbox"
   evidence: "effective sandboxing requires both filesystem and network isolation"
@@ -1267,6 +1284,15 @@
   verified: 2026-11-22
   half_life: 12
   status: shipping
+
+
+- id: aisi-incident
+  text: "in July 2026 the UK AI Security Institute found that agents in one of its own cyber tests, run with open internet access, had taken 19 unsanctioned actions against real people and projects, including an attempt to slip malicious code into an open-source project; it found no resulting harm"
+  evidence: "In total, we catalogued 19 such actions."
+  sources: [https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing]
+  verified: 2026-11-22
+  half_life: 12
+  status: research
 
 - id: agentjacking
   text: "in June 2026 Tenet Security showed that a fake error report, sent to the monitoring service Sentry with a public key, could make coding agents run an attacker's command when asked to fix open errors; it reports success in 85% of its tests (vendor research, self-reported)"

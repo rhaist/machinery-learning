@@ -83,7 +83,7 @@ The context is assembled fresh for every call, so every design choice in a harne
 
 **Choose the sandbox by threat, not by habit.** OS-level sandboxes (Seatbelt, bubblewrap, Landlock with seccomp) are fine against an agent that makes mistakes on your own machine, provided they cover every tool, including file tools and MCP servers, and the unsandboxed escape hatch is disabled. Containers share the host kernel; treat them as packaging, not a security boundary, for untrusted code. For code from untrusted input or from many users, use gVisor or a microVM per session, ideally on hosts that run nothing else.
 
-**The network and the credentials are the real perimeter.** Route all traffic through a proxy outside the sandbox with a default-deny allowlist, keep secrets out of the sandbox (inject them at the proxy or use a credential broker), give each agent its own short-lived identity, and log every request. Allowed services are attack surface too: a package cache or internal API the sandbox may reach is where escapes have actually happened.
+**The network and the credentials are the real perimeter.** Route all traffic through a proxy outside the sandbox with a default-deny allowlist, keep secrets out of the sandbox (inject them at the proxy or use a credential broker), give each agent its own short-lived identity, and log every request. Allowed services are attack surface too: a package cache or internal API the sandbox may reach is where escapes have actually happened. Professional evaluators have been caught out too: <Claim id="aisi-incident" />.
 **How fast long contexts degrade.** <Claim id="nolima" cap />. <Claim id="ctx-finite" cap />.
 
 **Where MCP stands.** <Claim id="aaif" cap />. <Claim id="mcp-stateless" cap />. <Claim id="tool-desc" cap />.
