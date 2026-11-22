@@ -173,7 +173,7 @@ $('#mx').innerHTML=MX.map(r=>`<tr><td><b>${r[0]}</b></td>${r[1].map(v=>`<td>${do
 if (document.querySelector('#d-ar')) {
 const DS="Attackers often reuse infrastructure across several campaigns .".split(' ');
 const ORD=[0,2,4,7,1,3,5,6];let ds=0,timer=null;
-function diff(){const arOn=new Set(DS.map((w,i)=>i).filter(i=>i<ds)),dfOn=new Set(ORD.slice(0,Math.min(8,ds*2))),dfNew=new Set(ds>0&&ds<=4?ORD.slice((ds-1)*2,ds*2):[]);$('#d-ar').innerHTML=DS.map((w,i)=>`<span class="${arOn.has(i)?(i===ds-1?'new':'on'):''}">${arOn.has(i)?esc(w):'▢'}</span>`).join('');$('#d-df').innerHTML=DS.map((w,i)=>`<span class="${dfOn.has(i)?(dfNew.has(i)?'new':'on'):''}">${dfOn.has(i)?esc(w):'▢'}</span>`).join('');$('#d-n').textContent=`pass ${ds} of 8: autoregressive ${Math.min(ds,8)}/8, diffusion ${Math.min(ds*2,8)}/8`}
+function diff(){const arOn=new Set(DS.map((w,i)=>i).filter(i=>i<ds)),dfOn=new Set(ORD.slice(0,Math.min(8,ds*2))),dfNew=new Set(ds>0&&ds<=4?ORD.slice((ds-1)*2,ds*2):[]);$('#d-ar').innerHTML=DS.map((w,i)=>`<span class="${arOn.has(i)?(i===ds-1?'new':'on'):''}">${arOn.has(i)?esc(w):'▢'}</span>`).join('');$('#d-df').innerHTML=DS.map((w,i)=>`<span class="${dfOn.has(i)?(dfNew.has(i)?'new':'on'):''}">${dfOn.has(i)?esc(w):'▢'}</span>`).join('');$('#d-n').textContent=`Pass ${ds} of 8: autoregressive ${Math.min(ds,8)}/8, diffusion ${Math.min(ds*2,8)}/8`}
 function dstep(){if(ds<8){ds++;diff()}if(ds>=8&&timer){clearInterval(timer);timer=null}}
 $('#d-step').addEventListener('click',dstep);
 $('#d-reset').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null}ds=0;diff()});
@@ -221,7 +221,7 @@ let raw=false,cache=true,inj=false,sti=0,ST=BASE;
 const build=()=>{ST=inj?[BASE[0],BASE[1],...INJ,...BASE.slice(3).map(t=>({...t,k:+(t.k+0.3).toFixed(1),c:t.c+1,d:t.d.replace(/^Call (\d+)/,(m,n)=>`Call ${+n+1}`)}))]:BASE;if(sti>=ST.length)sti=ST.length-1};
 const kmax=()=>ST[ST.length-1].k;
 function cost(){let proc=0,bill=0,prev=0,last=0;for(let i=0;i<=sti;i++){const t=ST[i];if(t.c>last){proc+=t.k;bill+=cache?prev*0.1+(t.k-prev):t.k;prev=t.k;last=t.c}}return[proc,bill]}
-function stp(){const t=ST[sti];$('#st-who').textContent=WHO[t.w][0];$('#st-who').style.color=WHO[t.w][1];$('#st-n').textContent=`step ${sti+1} of ${ST.length}`;$('#st-x').textContent=raw?t.r:t.x;$('#st-d').textContent=t.d;$('#st-m').style.width=(t.k/kmax()*100).toFixed(1)+'%';$('#st-v').textContent=`${t.k}k · ${t.c} call${t.c===1?'':'s'}`;
+function stp(){const t=ST[sti];$('#st-who').textContent=WHO[t.w][0];$('#st-who').style.color=WHO[t.w][1];$('#st-n').textContent=`Step ${sti+1} of ${ST.length}`;$('#st-x').textContent=raw?t.r:t.x;$('#st-d').textContent=t.d;$('#st-m').style.width=(t.k/kmax()*100).toFixed(1)+'%';$('#st-v').textContent=`${t.k}k · ${t.c} call${t.c===1?'':'s'}`;
  const[p,b]=cost();$('#st-cost').textContent=t.c?`Input read by the model so far: ${p.toFixed(0)}k tokens. Billed like ${b.toFixed(0)}k full-price tokens${cache?' with caching':''}.`:'No model call yet.';
  $('#st-prev').disabled=sti===0;$('#st-next').disabled=sti===ST.length-1}
 const tog=(id,f)=>$(id).addEventListener('click',e=>{f();e.currentTarget.setAttribute('aria-pressed',String(id==='#st-raw'?raw:id==='#st-cache'?cache:inj));stp()});
@@ -380,7 +380,7 @@ const S=[
  ["Sample and loop","Softmax turns the scores into probabilities and one token is drawn: \"connection\". It is appended to the input, and the whole pass runs again. Thanks to the KV cache, the next pass computes only the new row; attention reads the stored keys and values of the earlier rows instead of recomputing them."]];
 let k=0;const parts=$$('#fp [data-s]');
 function fp(){const n=k+1;parts.forEach(p=>p.classList.toggle('on',p.dataset.s.split(' ').includes(String(n))));
- $('#fp-t').textContent=n+'. '+S[k][0];$('#fp-n').textContent=n+' of '+S.length;$('#fp-d').textContent=S[k][1];
+ $('#fp-t').textContent=S[k][0];$('#fp-n').textContent='Step '+n+' of '+S.length;$('#fp-d').textContent=S[k][1];
  $('#fp-prev').disabled=k===0;$('#fp-next').textContent=k===S.length-1?'Start over':'Next step'}
 $('#fp-next').addEventListener('click',()=>{k=k===S.length-1?0:k+1;fp()});
 $('#fp-prev').addEventListener('click',()=>{if(k>0){k--;fp()}});
@@ -435,7 +435,7 @@ const S=[
  {t:'Decode, token 7',n:7,d:'Each step adds 0.31 MiB. That is small per token, but it adds up, and every concurrent conversation on the server needs its own cache.'},
  {t:'At 128k tokens',n:128000,d:'A full 128,000-token context needs about 39 GiB of cache for one conversation, more than a quarter of the model\'s own weights. This is why long contexts are expensive to serve, why GQA shares keys and values between heads, and why providers cache and compress aggressively.'}];
 let k=0;
-function kv(){const s=S[k];$('#kv-t').textContent=(k+1)+'. '+s.t;$('#kv-n').textContent=(k+1)+' of '+S.length;
+function kv(){const s=S[k];$('#kv-t').textContent=s.t;$('#kv-n').textContent='Step '+(k+1)+' of '+S.length;
  const cols=s.n>TK.length?[...TK.slice(0,2).map((t,i)=>[t,'old']),['…','gap'],[s.n.toLocaleString('en-GB'),'new']]:TK.slice(0,s.n).map((t,i)=>[t,k===0?'par':i===s.n-1?'new':'old']);
  $('#kv-g').innerHTML=cols.map(([t,c])=>`<div class="kv-col ${c}"><span class="mono kv-tok">${esc(t)}</span>${c==='gap'?'<span class="kv-cell">…</span><span class="kv-cell">…</span>':'<span class="kv-cell">K</span><span class="kv-cell">V</span>'}</div>`).join('');
  const mib=s.n*MB;$('#kv-m').textContent=`Cache: ${s.n.toLocaleString('en-GB')} tokens × 0.31 MiB = ${mib>=1024?(mib/1024).toFixed(0)+' GiB':mib.toFixed(2)+' MiB'}`;

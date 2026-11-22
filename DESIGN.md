@@ -83,7 +83,7 @@ Colours come only from the theme variables, which switch for light and dark. Nev
 | Text | `--ink`, `--mut` (secondary), `--faint` (tertiary, never for body text) |
 | Lines | `--line` |
 | Cyan: links, "fresh", positive, progress, blueprint lines | `--t` (lines and fills), `--tt` (text) |
-| Amber, the signal colour: the one primary action, selection, current item, kickers | `--y` (fills), `--yt` (text), `--onY` (text on amber) |
+| Amber, the signal colour. Solid fill: the one primary action. Outline with a light tint: the selected option. Also the current item and kickers | `--y` (fills), `--yt` (text), `--onY` (text on amber) |
 | Red: risk, attack, error | `--r`, `--rt` |
 | Violet-blue: structure, system, the Engineer path | `--b`, `--bsoft` |
 | Grid | `--grid` (4–5% ink) |
@@ -100,7 +100,7 @@ One amber primary action per view. Red means risk, never decoration. Text colour
 - **Quiz** (`.quiz`): sunk surface, options as full-width 44px buttons.
 - **Badge / stamp** (`.badge` family: claim dates, ring labels, freshness, tags): a mono label inside a 1px outline in its own colour, no fill. The "new" tag is the one filled badge.
 - **Caption** (`.caption`): `--fs-sm`, `--mut`. The last line of a demo that explains what is illustrative.
-- **Buttons**: `.btn` (secondary) and `.btn.pri` (the primary, amber). Segmented toggles use `aria-pressed`.
+- **Buttons**: `.btn` (secondary) and `.btn.pri` (the primary, solid amber). Toggles and segmented controls use `aria-pressed`; the pressed one gets an amber outline and a light amber tint, never the solid fill, so a selected option can't be mistaken for the action. Demos: every lab has a bold title, step counters read "Step N of M", and the button that restarts a sequence is "Start over".
 
 ## Reader
 

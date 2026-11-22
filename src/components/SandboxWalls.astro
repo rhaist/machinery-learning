@@ -16,16 +16,16 @@
     <path class="w-ln" d="M170 198V226" stroke-dasharray="3 3"/>
     <path class="w-x" d="M163 183L177 197M177 183L163 197"/>
     <rect class="w-chip" x="136" y="228" width="68" height="26" rx="2"/><text x="170" y="245" text-anchor="middle">~/.ssh</text>
-    <text class="w-lbl" x="24" y="210">file-system wall</text>
-    <path class="w-ln" d="M154 88H204" marker-end="url(#w-ah)"/>
-    <rect class="w-proxy" x="208" y="56" width="140" height="150" rx="3"/>
-    <text class="w-tag" x="216" y="74">egress proxy</text>
-    <text class="w-lbl" x="216" y="90">outside sandbox</text>
-    <text class="w-ok" x="216" y="118">✓ npm registry</text>
-    <text class="w-ok" x="216" y="142">✓ api.anthropic.com</text>
-    <text class="w-lbl" x="230" y="156">but whose key?</text>
-    <text class="w-no" x="216" y="182">✗ evil.example</text>
-    <text class="w-lbl" x="216" y="226">network wall</text>
+    <text class="w-lbl" x="10" y="210">file-system wall</text>
+    <path class="w-ln" d="M154 88H196" marker-end="url(#w-ah)"/>
+    <rect class="w-proxy" x="200" y="56" width="150" height="150" rx="3"/>
+    <text class="w-tag" x="207" y="74">egress proxy</text>
+    <text class="w-lbl" x="207" y="90">(outside)</text>
+    <text class="w-ok" x="207" y="118">✓ npm registry</text>
+    <text class="w-ok" x="207" y="142">✓ api.anthropic.com</text>
+    <text class="w-lbl" x="207" y="157">but whose key?</text>
+    <text class="w-no" x="207" y="182">✗ evil.example</text>
+    <text class="w-lbl" x="207" y="226">network wall</text>
   </svg>
   <p class="caption">Without the file-system wall, the agent can read your keys. Without the network wall, it can send whatever it reads anywhere. The allowlist lives outside the sandbox so the agent can't edit it.</p>
 </div>
