@@ -99,9 +99,13 @@ if (prev === null) {
   try { sessionStorage.setItem('lfg-prev', prev); } catch (e) {}
 }
 store.set('lfg-last-visit', iso(today));
-if (prev) {
-  $$('[data-updated]').forEach(el => { if (el.dataset.updated > prev) el.classList.add('is-new'); });
-  $$('.claim[data-verified]').forEach(el => { if (el.dataset.verified > prev) el.classList.add('is-new'); });
+// Nothing is marked during the soft launch. After launch (site.yaml: launched), only changes dated after
+// both the launch and the reader's last visit count as new.
+const launched = document.body.dataset.launched || '';
+if (prev && launched) {
+  const since = prev > launched ? prev : launched;
+  $$('[data-updated]').forEach(el => { if (el.dataset.updated > since) el.classList.add('is-new'); });
+  $$('.claim[data-verified]').forEach(el => { if (el.dataset.verified > since) el.classList.add('is-new'); });
   const n = $$('.is-new').length;
   const banner = $('#since');
   if (banner && n) { banner.hidden = false; banner.querySelector('b').textContent = `${n} change${n === 1 ? '' : 's'}`; }

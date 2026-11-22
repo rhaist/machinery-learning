@@ -15,6 +15,10 @@ legal:
   responsible: Robert Haist        # § 18 (2) MStV, responsible for editorial content
   supervisory_authority: "Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)"
 
+# Public launch date (YYYY-MM-DD). Leave empty during the soft launch: until it is set, nothing is
+# marked "updated" or "new since your last visit". After launch, only changes dated later are marked.
+launched:
+
 editions:
   - month: 2026-11
     subtitle: Next token, and what comes after
