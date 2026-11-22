@@ -1,0 +1,76 @@
+---
+// Reviewer sheet: every practice and review question on one page, with the marked answer and its explanation.
+// Built from the chapters and src/data/reviews.yaml at build time, so it can't go out of date. Not linked from the reader's navigation.
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { byPart, reviews, site, reportUrl } from '../../lib/data';
+
+const parts = byPart((await getCollection('chapters')) as any[]);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const kinds: Record<string, string> = { recall: 'Recall', apply: 'Apply it', mistake: 'Spot the mistake' };
+const attr = (a: string, re: RegExp) => (a.match(re) || [])[1] ?? '';
+const quizzes = (body: string) => [...body.matchAll(/<Quiz\s+([\s\S]*?)\s*\/>/g)].map(m => {
+  const a = m[1];
+  return {
+    kind: attr(a, /\bkind="(\w+)"/),
+    q: attr(a, /\bq="([^"]*)"/),
+    options: JSON.parse(attr(a, /options=\{(\[[\s\S]*?\])\}/) || '[]') as string[],
+    answer: Number(attr(a, /answer=\{(\d+)\}/)),
+    explain: attr(a, /explain="([^"]*)"/),
+  };
+});
+const all = parts.flatMap((p: any) => p.chapters.map((x: any) => x.c));
+const title = (id: string) => all.find((c: any) => c.id === id)?.data.title ?? id;
+const total = all.reduce((n: number, c: any) => n + quizzes(c.body ?? '').length, 0) + Object.values(reviews).reduce((n, r) => n + r.questions.length, 0);
+const issue = (ref: string, q: string) => reportUrl(site.repo, { title: `question [${ref}]`, page: new URL(`${base}/review/questions/`, Astro.site).href, quote: q });
+---
+<Base title="All questions, for reviewers" description="Every practice and review question in the guide, with the marked answer and its explanation." nav="learn" noindex>
+  <article class="band"><div class="page-text">
+    <header class="page-head">
+      <p class="kicker">For reviewers</p>
+      <h1>All {total} questions</h1>
+      <p class="lede">Every practice and review question in the guide, with the answer the guide marks as correct and the explanation readers see.</p>
+    </header>
+    <div class="prose">
+      <p>For each question, please check three things. Is the marked answer the only defensible one? Could an expert argue for one of the other options? Does the explanation say why, in a way the chapter supports? Use the "Report" link under a question, or send one list to <a href={`mailto:${site.legal.email}`}>{site.legal.email}</a> with the reference shown in brackets.</p>
+      {parts.map((p: any) => (
+        <section>
+          <h2>{p.title}</h2>
+          {p.chapters.map((x: any) => {
+            const qs = quizzes(x.c.body ?? '');
+            return qs.length > 0 && (
+              <Fragment>
+                <h3><a href={`${base}/learn/${x.c.id}/`}>{x.num}. {x.c.data.title}</a></h3>
+                {qs.map(q => {
+                  const ref = `${x.c.id}, ${q.kind}`;
+                  return (
+                    <div class="qsheet">
+                      <p><strong>{kinds[q.kind] ?? 'Question'}.</strong> {q.q} <span class="small">[{ref}]</span></p>
+                      <ol type="A">{q.options.map((o, i) => <li>{i === q.answer ? <strong>{o} (marked correct)</strong> : o}</li>)}</ol>
+                      <p class="small">{q.explain} <a href={issue(ref, q.q)}>Report</a></p>
+                    </div>
+                  );
+                })}
+              </Fragment>
+            );
+          })}
+          {reviews[p.id] && (
+            <Fragment>
+              <h3><a href={`${base}/review/${p.id}/`}>Mixed review</a></h3>
+              {reviews[p.id].questions.map((q, n) => {
+                const ref = `review ${p.id}, ${n + 1}`;
+                return (
+                  <div class="qsheet">
+                    <p><strong>Question {n + 1}.</strong> {q.q} <span class="small">[{ref}]</span></p>
+                    <ol type="A">{q.options.map((o, i) => <li>{i === q.answer ? <strong>{o} (marked correct)</strong> : o}</li>)}</ol>
+                    <p class="small">{q.explain} Draws on: {q.from.map(title).join(', ')}. <a href={issue(ref, q.q)}>Report</a></p>
+                  </div>
+                );
+              })}
+            </Fragment>
+          )}
+        </section>
+      ))}
+    </div>
+  </div></article>
+</Base>

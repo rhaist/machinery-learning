@@ -19,7 +19,7 @@ Read on the live site: <https://machinerylearning.eu>. To open every Engineer bo
 3. **Figures.** Do the drawings and step-throughs show the mechanism correctly? Are the sizes right for the model they name?
 4. **Missing caveats.** Places where the guide sounds more certain than the evidence allows, or where a well-known counter-argument is missing.
 5. **For newcomers:** the first sentence you had to read twice, and the first term that wasn't explained.
-6. **Questions.** Each chapter ends with three questions and each part with a mixed review. Is the marked answer the only defensible one? Could an expert argue for one of the wrong options?
+6. **Questions.** Each chapter ends with three questions and each part with a mixed review. Is the marked answer the only defensible one? Could an expert argue for one of the wrong options? All questions are on one page, with the marked answers: [machinerylearning.eu/review/questions](https://machinerylearning.eu/review/questions/).
 
 Style, wording and layout feedback is welcome but secondary.
 
