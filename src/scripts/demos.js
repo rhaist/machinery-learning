@@ -35,16 +35,21 @@ addEventListener('scroll',()=>{if(!tipFor||tipRaf)return;tipRaf=requestAnimation
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTip()});
 
 if (document.querySelector('#tk-in')) {
-// Real tokenizer: OpenAI's o200k_base vocabulary. The default sentence is tokenized at build time; the vocabulary
-// (about 1 MB) is only downloaded when the reader starts typing.
-const inp=$('#tk-in'),out=$('#tk-out'),cap=$('#tk-n');let enc=null,loading=null;
-const show=(v,ts)=>{out.innerHTML=chips(ts);out.removeAttribute('aria-busy');cap.textContent=`${[...v].length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`+(ts.some(frag)?' Chips marked "byte" are fragments of a single character.':'')};
+// Real tokenizer: OpenAI's o200k_base vocabulary. The example buttons are tokenized at build time; the vocabulary
+// (about 1 MB) is only downloaded when the reader types their own text.
+const inp=$('#tk-in'),out=$('#tk-out'),cap=$('#tk-n'),ex=$('#tk-ex');let enc=null,loading=null;
+let seed=[];try{seed=(JSON.parse($('#tk-seed').textContent).items||[]).map(it=>({text:String(it.text),toks:pairs(it.toks)}))}catch(e){}
+const words=v=>(v.trim().match(/\S+/g)||[]).length;
+const show=(v,ts)=>{out.innerHTML=chips(ts);out.removeAttribute('aria-busy');const w=words(v);cap.textContent=`${w} ${w===1?'word':'words'}, ${[...v].length} characters → ${ts.length} tokens. Middle dots mark spaces, which belong to the following token.`+(ts.some(frag)?' Chips marked "byte" are fragments of a single character.':'')};
+const mark=()=>{if(ex)[...ex.querySelectorAll('button')].forEach(b=>b.setAttribute('aria-pressed',String(seed[+b.dataset.i]&&seed[+b.dataset.i].text===inp.value)))};
 const run=()=>{const v=inp.value;show(v,enc.encode(v).map(id=>[enc.decode([id]),id]))};
 const load=()=>loading||(loading=import('gpt-tokenizer/encoding/o200k_base').then(m=>{enc=m;run()}).catch(()=>{loading=null;out.removeAttribute('aria-busy');cap.textContent='The vocabulary could not be loaded. Check your connection and type again.'}));
+// known example → instant, from the build; anything else → the real vocabulary
+const update=()=>{mark();const hit=seed.find(it=>it.text===inp.value);if(hit)return show(hit.text,hit.toks);if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()};
 inp.addEventListener('focus',load,{once:true});
-inp.addEventListener('input',()=>{if(enc)return run();out.setAttribute('aria-busy','true');cap.textContent='Loading the vocabulary (about 1 MB, only once)…';load()});
-let seed={};try{seed=JSON.parse($('#tk-seed').textContent)}catch(e){}
-if(seed.toks&&seed.text===inp.value)show(inp.value,pairs(seed.toks));else load();
+inp.addEventListener('input',update);
+if(ex)ex.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!seed[+b.dataset.i])return;inp.value=seed[+b.dataset.i].text;update()});
+update();
 }
 
 if (document.querySelector('#nw')) {

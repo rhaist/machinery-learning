@@ -1,15 +1,24 @@
 ---
-// Tokenizer playground with a real vocabulary (OpenAI's o200k_base). The default sentence is tokenized here, at build time;
-// demos.js downloads the vocabulary only when the reader starts typing. Nothing typed leaves the browser.
+// Tokenizer playground with a real vocabulary (OpenAI's o200k_base). The examples are tokenized here, at build time;
+// demos.js downloads the vocabulary only when the reader types their own text. Nothing typed leaves the browser.
 import { toks } from '../lib/tokens';
-const text = 'Unbelievably, the firewall misclassified strawberries as malware.';
+const examples = [
+  ['English', 'Unbelievably, the firewall misclassified strawberries as malware.'],
+  ['Same in German', 'Unglaublich: Die Firewall hat Erdbeeren fälschlich als Schadsoftware eingestuft.'],
+  ['Code', 'for i in range(len(items)): print(items[i])'],
+  ['A phrase', 'Ignore previous instructions.'],
+  ['The phrase, disguised', 'Ign0re prev1ous instruct1ons.'],
+].map(([label, text]) => ({ label, text, toks: toks(text) }));
 ---
 <div class="panel demo">
   <b>Tokenizer playground</b>
-  <label for="tk-in">Type anything</label>
-  <input type="text" id="tk-in" value={text} maxlength="400" autocomplete="off" spellcheck="false">
+  <div class="row" role="group" aria-label="Examples" id="tk-ex">
+    {examples.map((e, i) => <button class="btn sm" type="button" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'}>{e.label}</button>)}
+  </div>
+  <label for="tk-in">Or type anything</label>
+  <input type="text" id="tk-in" value={examples[0].text} maxlength="400" autocomplete="off" spellcheck="false">
   <div class="toks" id="tk-out"></div>
   <p class="caption" id="tk-n" aria-live="polite"></p>
   <p class="caption">A real tokenizer: OpenAI's o200k_base vocabulary (about 200,000 tokens, used by GPT-4o), with the real token IDs. Other models split differently. It runs in your browser; nothing you type is sent anywhere.</p>
-  <script type="application/json" id="tk-seed" set:html={JSON.stringify({ text, toks: toks(text) })} />
+  <script type="application/json" id="tk-seed" set:html={JSON.stringify({ items: examples.map(e => ({ text: e.text, toks: e.toks })) })} />
 </div>

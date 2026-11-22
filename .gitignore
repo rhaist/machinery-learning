@@ -2,3 +2,6 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# local Python environment for scripts/next-token-probs.py
+.venv/
