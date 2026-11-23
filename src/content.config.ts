@@ -24,6 +24,14 @@ const notes = defineCollection({
     month: z.string(),          // YYYY-MM
     date: z.coerce.date(),
     summary: z.string(),
+    // Facts that were wrong on a published page and have been fixed. Shown at the end of the note.
+    corrections: z.array(z.object({
+      page: z.string().startsWith('/'),   // site path, e.g. /learn/tokens/
+      title: z.string(),                  // page or chapter title
+      was: z.string(),
+      now: z.string(),
+      found_by: z.enum(['reader', 'fact-check', 'monthly review', 'editor']),
+    })).default([]),
   }),
 });
 

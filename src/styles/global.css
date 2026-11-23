@@ -747,8 +747,9 @@ figure.panel{margin-inline:0}
 .rl .rl-ch h3 .rl-go{font-weight:400;white-space:nowrap}
 .report{margin:var(--sp-6) 0 0}
 .corr{list-style:none;margin:var(--sp-5) 0 0;padding:0;display:grid;gap:var(--sp-6);max-width:var(--w-text)}
-.corr li{border-top:1px solid var(--line);padding-top:var(--sp-4)}
-.corr h2{font-size:var(--fs-lg);margin:var(--sp-1) 0 var(--sp-2)}
+.corr li{border-top:1px solid var(--line);padding-top:var(--sp-4);margin:0}
+.prose>.corr{padding:0;gap:var(--sp-5)}
+.corr h3{font-size:var(--fs-lg);margin:var(--sp-1) 0 var(--sp-2)}
 .corr p{margin:var(--sp-1) 0}
 
 /* ========== journey route ========== */

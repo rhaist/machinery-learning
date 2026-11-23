@@ -7,10 +7,26 @@ export async function getStaticPaths() {
 }
 const { n } = Astro.props;
 const { Content } = await render(n);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const who: Record<string, string> = { reader: 'Reported by a reader', 'fact-check': 'Found in an independent fact-check', 'monthly review': 'Found in the monthly review', editor: 'Found by the editor' };
+const fixed = n.data.corrections;
 ---
 <Base title={n.data.title} description={n.data.summary} nav="notes" og={`notes-${n.id}`} type="article" published={n.data.date}>
   <article class="band"><div class="page-text">
     <header class="page-head"><p class="kicker">Field notes · {monthLabel(n.data.month)}</p><h1>{n.data.title}</h1><p class="lede">{n.data.summary}</p></header>
-    <div class="prose"><Content /></div>
+    <div class="prose"><Content />
+    {fixed.length > 0 && <>
+      <h2 id="corr-h">What we got wrong</h2>
+      <p>Facts on published pages that turned out to be wrong and have been fixed. Rewording and new material aren't listed.</p>
+      <ol class="corr">
+        {fixed.map(c => <li>
+          <p class="label">{who[c.found_by]}</p>
+          <h3><a href={`${base}${c.page}`}>{c.title}</a></h3>
+          <p><b>Was:</b> {c.was}</p>
+          <p><b>Now:</b> {c.now}</p>
+        </li>)}
+      </ol>
+    </>}
+    </div>
   </div></article>
 </Base>

@@ -52,7 +52,7 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
       <Reading id={entry.id} />
     </div>
     <p class="complete-note label" id="complete-note" hidden>Chapter complete</p>
-    <p class="report caption">Spotted a mistake? <a href={reportUrl(site.repo, { title: entry.data.title, page: `https://${site.domain}/learn/${entry.id}/` })}>Report it on GitHub</a>. Every fix is listed on the <a href={`${base}/corrections/`}>corrections page</a>.</p>
+    <p class="report caption">Spotted a mistake? <a href={reportUrl(site.repo, { title: entry.data.title, page: `https://${site.domain}/learn/${entry.id}/` })}>Report it on GitHub</a>. Every fix is listed in the monthly <a href={`${base}/notes/`}>field notes</a>.</p>
     <nav class="pager" aria-label="Previous and next chapter">
       {prev && <a href={`${base}/learn/${prev.id}/`}><small>Previous</small>{prev.data.title}</a>}
       {next && <a class="next" href={`${base}/learn/${next.id}/`}><small>Next</small>{next.data.title}</a>}
