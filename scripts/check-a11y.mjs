@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Runs axe-core (WCAG checks) on every built page, in the light and the dark theme, on a phone-sized and a desktop-sized
 // screen. Needs a build in dist/ and a local Chrome (GitHub's runners have one; set CHROME_PATH to use another).
+// It also loads every page once with the site's Content-Security-Policy enforced and reports anything the policy blocks.
 // Exit code 1 on any violation.
 import fs from 'node:fs';
 import http from 'node:http';
@@ -43,7 +44,8 @@ const setups = [['phone, light', 390, 844, 'light'], ['phone, dark', 390, 844, '
 const problems = [];
 let runs = 0;
 for (const [name, width, height, colorScheme] of setups) {
-  const context = await browser.newContext({ viewport: { width, height }, colorScheme, reducedMotion: 'reduce' });
+  // bypassCSP: the site's Content-Security-Policy would otherwise block the injected axe script, as it should
+  const context = await browser.newContext({ viewport: { width, height }, colorScheme, reducedMotion: 'reduce', bypassCSP: true });
   const page = await context.newPage();
   for (const url of pages) {
     await page.goto(origin + url, { waitUntil: 'load' });
@@ -54,6 +56,17 @@ for (const [name, width, height, colorScheme] of setups) {
   }
   await context.close();
 }
+
+// the same pages with the policy enforced: nothing of the site's own may be blocked
+{
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await context.addInitScript(() => document.addEventListener('securitypolicyviolation', e => console.error(`CSP-BLOCKED ${e.violatedDirective}: ${e.blockedURI || 'inline'} ${e.sample || ''}`)));
+  const page = await context.newPage();
+  let current = '';
+  page.on('console', m => { if (m.type() === 'error' && /CSP-BLOCKED|Content Security Policy/.test(m.text())) problems.push(`${current}  [policy]  ${m.text().slice(0, 200)}`); });
+  for (const url of pages) { current = url; await page.goto(origin + url, { waitUntil: 'load' }); await page.waitForTimeout(100); runs++; }
+  await context.close();
+}
 await browser.close();
 server.close();
 
@@ -61,4 +74,4 @@ if (problems.length) {
   console.error(`Accessibility check: ${problems.length} problem${problems.length === 1 ? '' : 's'} in ${runs} page checks.\n` + problems.map(p => '  ✗ ' + p).join('\n'));
   process.exit(1);
 }
-console.log(`Accessibility check: OK (${pages.length} pages × ${setups.length} setups, axe-core)`);
+console.log(`Accessibility check: OK (${pages.length} pages × ${setups.length} setups, axe-core; nothing blocked by the Content-Security-Policy)`);

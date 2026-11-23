@@ -5,6 +5,10 @@ import '@fontsource/martian-mono/latin-500.css';
 // the two font files every page needs first; preloaded in <head> so text appears in its final font sooner
 import sansUrl from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url';
 import monoUrl from '@fontsource/martian-mono/files/martian-mono-latin-400-normal.woff2?url';
+// the bootstrap script, inlined as the first thing in <body>; astro.config.mjs hashes the same text for the Content-Security-Policy
+import bootSource from '../scripts/boot.js?raw';
+import { bootCode } from '../lib/boot.mjs';
+const boot = bootCode(bootSource);
 import '../styles/global.css';
 import { glossary, site, byPart } from '../lib/data';
 import { getCollection } from 'astro:content';
@@ -61,9 +65,10 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f4ef">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1014">
   {ldJson && <script type="application/ld+json" set:html={ldJson} />}
-  <script is:inline>document.documentElement.classList.add('js');try{var d=JSON.parse(localStorage.getItem('lfg-depth')||'"beginner"');document.documentElement.dataset.depth=d;var t=JSON.parse(localStorage.getItem('lfg-theme')||'"auto"');if(t!=="auto")document.documentElement.dataset.theme=t;var z=JSON.parse(localStorage.getItem('lfg-size')||'"m"');if(z!=="m")document.documentElement.dataset.size=z}catch(e){}</script>
+
 </head>
 <body data-launched={site.launched ? new Date(site.launched).toISOString().slice(0, 10) : undefined} data-chapter={chapter} data-quiz-key={quizKey || undefined} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
+  <script is:inline set:html={boot} />
   <a class="skip" href="#main">Skip to main content</a>
   <header class="site-head"><div class="in">
     <a class="brand" href={`${base}/`}><Mark />{site.name}</a>
