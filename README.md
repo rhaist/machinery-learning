@@ -48,14 +48,14 @@ npm run check      # claims freshness (strict), design rules, production build
 | `src/data/debates.yaml` | "Where experts disagree": two sides, proponents, sources, what would settle it |
 | `src/data/radar.yaml` | The frontier radar, with an append-only history per entry |
 | `src/data/glossary.json`, `reading.yaml` | Glossary terms and further reading per chapter |
-| `src/content/notes/` | Monthly field notes |
+| `src/content/notes/` | Monthly field notes, each with the corrections made that month |
 | `src/components/`, `src/scripts/` | Demos and labs (Astro components plus guarded client scripts) |
 | `research/` | The brief and source list for the monthly update |
 | `scripts/` | `check-data.mjs` (text in the data files is really text), `check-a11y.mjs` (axe on every built page; runs in CI), `check-claims.mjs` (freshness and integrity), `check-design.mjs` (design rules); `next-token-probs.py` (measures a small open model's next-word probabilities for three demos; run by hand, output in `src/data/next-token-probs.json`) |
 | [`DESIGN.md`](DESIGN.md) | The design system: tokens, type, layout, signatures and the rules CI enforces |
 | [`docs/MAINTAINING.md`](docs/MAINTAINING.md) | Deployment, domain, the monthly update and release checks |
 | [`docs/REVIEW.md`](docs/REVIEW.md) | Brief for expert reviewers: what to read, what to look for, how to report |
-| `src/data/figures.yaml`, `corrections.yaml` | Sources or calculations for every other number in the text, and the public corrections log |
+| `src/data/figures.yaml` | Sources or calculations for every other number in the text |
 
 Built with [Astro](https://astro.build), Instrument Sans and Martian Mono (both self-hosted), and no client-side framework.
 
