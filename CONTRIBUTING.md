@@ -14,7 +14,7 @@ For any of these, [open an issue](https://github.com/rhaist/machinery-learning/i
 Something goes into the guide only if it changes how a reader should understand or use these systems. New model releases, benchmark records and funding rounds rarely qualify on their own.
 
 - **Sources:** primary sources (papers, official lab or vendor posts, standards, court and regulator documents) over commentary. Vendor numbers about their own products are marked "self-reported".
-- **Time-sensitive facts** go into `src/data/claims.yaml` with sources, a `verified` date and a `half_life` (months until re-check), and an `evidence` excerpt (at most 15 words, copied exactly from the source), and appear in chapters as `<Claim id="…" />`. Don't hard-code them into prose.
+- **Time-sensitive facts** go into `src/data/claims.yaml` with sources, a `verified` date and a `half_life` (months until re-check), and an `evidence` excerpt (at most 15 words, copied exactly from the source; only a claim that something is absent, which no excerpt can show, may instead carry a `[note]` saying what was checked), and appear in chapters as `<Claim id="…" />`. Don't hard-code them into prose.
 - **Every other number** in a chapter needs an entry in `src/data/figures.yaml`: `source` (with sources and evidence), `derived` (with the calculation) or `illustrative` (with a note). `npm run check` fails on a number without one.
 - **Corrections** to anything already published get an entry in `src/data/corrections.yaml`, shown on the corrections page.
 - **Canonical works** a researcher would expect are tracked in `research/canon.yaml`: each is cited in the guide or listed as excluded with a reason. Popularity is a reason to look, not a reason to cite.
