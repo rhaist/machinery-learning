@@ -80,7 +80,7 @@ Assume the agent will sometimes be fooled, and decide in advance what it can't d
 
 <SandboxWalls />
 
-Enforce a default-deny <Term k="egress">egress</Term> allowlist *outside* the sandbox, where the agent can't change it. And tie allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts.
+Enforce a default-deny <Term k="egress">egress</Term> allowlist *outside* the sandbox, where the agent can't change it. And tie allowed calls to the agent's own credentials: Anthropic describes a malicious workspace file that used an *attacker's* API key to upload files through the allowed api.anthropic.com domain. An allowlist of domains is not an allowlist of accounts. The way out can even be the platform the agent works on: <Claim id="comment-control" />. No network rule stops that, so give an agent in a build pipeline only the secrets its task needs.
 
 **Keep secrets out of reach.** Strip secrets from the environment variables passed to child processes. Don't mount `~/.ssh` or cloud credential files into agent environments. Block agents from editing their own configuration and permission files (the Copilot auto-approve CVE from the last chapter), and turn off auto-approve modes in managed environments.
 

@@ -15,40 +15,30 @@
 # skip:       pages that looked relevant and are not worth opening
 
 leads:
-  - topic: "Looped layers reach flagship models (GLM-5.4, and reportedly GPT-6 Astra)"
+  - topic: "Looped layers in flagship models: is 'research' still the right ring?"
     added: 2026-11-23
     qualified: 2026-11-23
-    known: "Z.ai's post of 23 Nov 2026 says GLM-5.4 runs 28 layers of its base model twice with shared weights (a 'Loop Transformer') on a 750B-parameter base. It is the first large model whose maker says so itself. Z.ai gives no scores for GLM-5.4; its only numbers come from a 30B test model with the same parameter count and about 10% more training compute, shown as a chart image. It also reports answers 10-14% shorter on most benchmarks, because part of the reasoning moves from written thinking into the second pass. OpenAI's GPT-6 Astra (3 Sep 2026) is widely described as using the same idea, but that rests on a report by The Information of 1 Sep 2026; OpenAI has not confirmed it. Astra's system card is said to state that the model is harder to monitor through its written reasoning and solves harder tasks without writing reasoning down."
-    open: "No independent evaluation of GLM-5.4 on the day it was noted; weights and API not released. Read Astra's system card itself for the monitorability finding and quote it, not the commentary. One article calls Thinking Machines' 'Inkling 2 Mini' a loop model; not confirmed. Z.ai's claim to match models with 2-3 trillion parameters has no evidence behind it yet."
+    known: "The frontier chapter now cites Z.ai's own statement that GLM-5.4 (23 Nov 2026) runs 28 layers twice with shared weights, and OpenAI's system card on the drop in chain-of-thought monitorability for GPT-6 Astra (claims 'glm-loop' and 'astra-monitorability'). Z.ai gives no scores for GLM-5.4; its only numbers come from a 30B test model with the same parameter count and about 10% more training compute, shown as a chart image. GPT-6 Astra is widely described as using looped layers too, but that rests on a report by The Information of 1 Sep 2026; OpenAI's system card says nothing about architecture."
+    open: "Has anyone independent evaluated GLM-5.4, and are the weights or the API out? Has OpenAI or anyone with first-hand knowledge confirmed Astra's architecture? One article calls Thinking Machines' 'Inkling 2 Mini' a loop model; not confirmed. With that settled, decide whether the radar entry 'latent-reasoning' moves from 'research' to 'emerging' in the December history, and re-verify claim 'glm-loop', which says nobody independent had tested the model at release."
     sources:
       - https://z.ai/blog/glm-5.4                       # needs a browser: the text is loaded by script
-      - "OpenAI's GPT-6 Astra system card (find it on openai.com)"
+      - https://deploymentsafety.openai.com/gpt-6-astra
       - https://www.nist.gov/caisi                      # assessed GLM-5.3's cyber capabilities in Sep 2026: has it looked at 5.4?
       - "Universal Transformer (Dehghani et al., 2018) and 'Reasoning with Latent Thoughts: On the Power of Looped Transformers' (ICLR 2025; reviews: https://api2.openreview.net/notes/search?term=looped%20transformers)"
+      - https://arxiv.org/abs/2610.02741                # 'On the Chain-of-Thought Monitorability of Looped Language Models': seen in a search, not read
       - https://news.ycombinator.com/item?id=50609685   # finding aid only; one comment on 23 Nov
       - https://the-decoder.com/z-ai-follows-openai-into-loop-transformer-territory-with-its-new-750b-flagship-model/   # finding aid only: names a March 2026 study from Bonn and the Inkling claim
-    where: "Radar entry 'latent-reasoning' (ring 'research' since 2026-11: is that still right once a shipping flagship is confirmed?). Frontier chapter, the two passages on latent reasoning. Debate 'scheming-evals', which calls reading a model's reasoning a fragile monitoring tool: the system card would be first-hand evidence."
+    where: "Radar entry 'latent-reasoning'. Frontier chapter, the passage on latent reasoning. Field note for December."
     skip: "A reviewer's private 'KingBench' ranking. A page on promptzone.com that gives GLM-5.4 21B parameters and a LiveCodeBench score: the numbers do not match the announcement."
 
-  - topic: "'Comment and Control': coding agents in build pipelines leak their own secrets"
+  - topic: "'Comment and Control': the vendors' side"
     added: 2026-11-23
     qualified: 2026-11-23
-    known: "Aonan Guan with Zhengyu Liu and Gavin Zhong (Johns Hopkins), published 15 Apr 2026; the paper was accepted at ACM CCS 2026. Text an outsider can write (a pull-request title, an issue comment, a hidden HTML comment in an issue) made three agents running in GitHub workflows hand over API keys and tokens: Anthropic's Claude Code Security Review, Google's Gemini CLI Action and GitHub's Copilot agent. The secrets left through GitHub itself (a comment, the log, a committed file), so no outside server was needed and a network allowlist did not help. The authors recommend giving an agent only the tools and secrets its task needs, by allowlist."
-    open: "The vendors' responses (severity ratings, bounties, 'not designed to resist prompt injection') are the researcher's account: confirm from the vendors' own advisories before repeating any of it. A second disclosure at Black Hat USA in Aug 2026 is mentioned in commentary; find it."
+    known: "The agents-and-permissions chapter now cites the researchers' April 2026 post for the mechanism (claim 'comment-control'). The post also reports how Anthropic, Google and GitHub rated and answered the reports; none of that is in the guide, because it is only the researcher's account."
+    open: "Do the vendors' own advisories or documentation say what changed? A second disclosure at Black Hat USA in Aug 2026 is mentioned in commentary; find it. Worth a line in the chapter only if a vendor changed a default."
     sources:
       - https://oddguan.com/blog/comment-and-control-prompt-injection-credential-theft-claude-code-gemini-cli-github-copilot/
       - "The CCS 2026 paper: 'Comment and Control: Hijacking Agentic Workflows via Context-Grounded Evolution'"
       - https://arxiv.org/abs/2606.09935                # 'GitInject': related academic study of the same attack surface
-    where: "Agents and permissions chapter, the paragraph on the egress allowlist, which already says an allowed destination can carry stolen data: this is a second, well documented case. Possibly the prompt-injection chapter's advice to cut the external channel. An event from April, so a gap in the guide and not news for the field note."
+    where: "Agents and permissions chapter, after the claim."
     skip: "Vendor blogs and newsletters that retell the April post without adding a source."
-
-  - topic: "Mini Shai-Hulud and Miasma: a package worm that hides in coding-agent settings"
-    added: 2026-11-23
-    qualified: 2026-11-23
-    known: "StepSecurity's analysis of 11 May 2026 documents that the worm's payload writes a session-start hook into a project's .claude/settings.json and a run-on-open task into .vscode/tasks.json, so it runs again whenever a developer opens the project with those tools, even after the package is removed. It also reads the tools' credential and MCP configuration files and authors its commits under the name 'claude'. It spread through stolen publishing rights in build pipelines (TanStack and others). 'Miasma' on 1 Jun 2026 hit Red Hat's cloud-services packages with a variant of the same code."
-    open: "Confirm the hook behaviour in a second independent analysis (Socket, Wiz, Microsoft or Aikido). Several vendors call it the 'first' attack of its kind; do not repeat that."
-    sources:
-      - https://www.stepsecurity.io/blog/mini-shai-hulud-is-back-a-self-spreading-supply-chain-attack-hits-the-npm-ecosystem
-      - https://www.aikido.dev/blog/red-hat-npm-packages-compromised-credential-stealing-worm
-    where: "Supply-chain chapter, next to the advice to review agent skills and rules files like code: this is a real case where an agent's settings file was the hiding place. Agents and permissions chapter, near the 's1ngularity' claim (malware using the victim's own AI tools). Events from May and June, so a gap in the guide and not news for the field note."
-    skip: "Research notes that summarise the vendor analyses."
