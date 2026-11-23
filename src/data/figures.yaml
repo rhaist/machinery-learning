@@ -165,7 +165,7 @@ figures:
   - page: chapters/attention
     text: "about 50,000 earlier tokens"
     kind: derived
-    calc: "Per token, attention scores cost about 2·n·d·L FLOPs against about 2·P for the weights; with d = 8,192, L = 80, P = 70.6B they are equal near n ≈ 53,000."
+    calc: "Per token, attention costs about 4·n·d·L FLOPs (2·n·d·L for the scores plus 2·n·d·L for the weighted sum of values) against about 2·P for the weights; with d = 8,192, L = 80, P = 70.6B they are equal at n = P/(2·d·L) ≈ 53,900."
     based_on: [https://huggingface.co/NousResearch/Meta-Llama-3-70B/blob/main/config.json]
   - page: chapters/inside-the-stack
     text: "30 to over 120 layers in today's large models"
