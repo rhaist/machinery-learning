@@ -32,6 +32,8 @@ jobs:
       - name: Design rules (DESIGN.md)
         run: node scripts/check-design.mjs
       - run: npm run build
+      - name: Accessibility (axe) on every page, both themes, phone and desktop
+        run: node scripts/check-a11y.mjs
       - name: Guard protected paths in monthly update PRs
         if: startsWith(github.head_ref, 'update/')
         env:
