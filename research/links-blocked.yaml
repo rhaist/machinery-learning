@@ -31,3 +31,6 @@ blocked:
   - url: https://cacm.acm.org/research/deep-learning-for-ai/
     shows: "Deep Learning for AI (Communications of the ACM)"
     opened: 2026-11-23
+  - url: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4945566
+    shows: "The Effects of Generative AI on High-Skilled Work: Evidence from Three Field Experiments with Software Developers (SSRN)"
+    opened: 2026-11-23
