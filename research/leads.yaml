@@ -52,3 +52,15 @@ leads:
       - https://arxiv.org/abs/2601.06521
       - "OpenReview reviews: https://api2.openreview.net/notes/search?term=Humanity%27s%20Sixth%20Sense"
     where: "Tokens chapter, the section on pictures and sound."
+
+  - topic: "Voice cloning and generated music"
+    added: 2026-11-23
+    known: "The generating chapter explains how pictures and video are made and gives spoken answers one sentence. It says nothing about cloning a specific person's voice or about generated music. The judging-claims chapter covers the defence against cloned voices (a family code word, calling back) but not how little audio a clone needs."
+    open: "What do primary sources say about how much audio current systems need to clone a voice, and what safeguards the providers apply? Is there an independent measurement of how well people or detectors tell cloned voices from real ones? Decide whether this is a paragraph in the generating chapter or belongs with the deepfake section."
+    where: "Generating chapter, the section on pictures, video and voice; judging-claims chapter, the deepfake section."
+
+  - topic: "Image and video models trained on other people's work"
+    added: 2026-11-23
+    known: "The guide explains how image generators work but not what they were trained on or who owns the result. The your-data chapter covers what happens to a reader's own data, and the EU AI Act's transparency duties."
+    open: "A legal topic that differs by country and is in the courts: find the state of the main cases and of the EU and German rules from primary sources (court decisions, the AI Act text, official guidance), not from commentary. Only add it if it can be said in plain words without giving legal advice. If in doubt, leave it out and link to an authority."
+    where: "Your-data chapter, possibly one sentence in the generating chapter."
