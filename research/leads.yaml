@@ -53,27 +53,8 @@ leads:
       - "OpenReview reviews: https://api2.openreview.net/notes/search?term=Humanity%27s%20Sixth%20Sense"
     where: "Tokens chapter, the section on pictures and sound."
 
-  - topic: "Voice cloning and generated music"
+  - topic: "Voice cloning"
     added: 2026-11-23
-    known: "The generating chapter explains how pictures and video are made and gives spoken answers one sentence. It says nothing about cloning a specific person's voice or about generated music. The judging-claims chapter covers the defence against cloned voices (a family code word, calling back) but not how little audio a clone needs."
+    known: "The generating chapter explains how pictures and video are made and gives spoken answers one sentence. It says nothing about cloning a specific person's voice. The judging-claims chapter covers the defence against cloned voices (a family code word, calling back) but not how little audio a clone needs."
     open: "What do primary sources say about how much audio current systems need to clone a voice, and what safeguards the providers apply? Is there an independent measurement of how well people or detectors tell cloned voices from real ones? Decide whether this is a paragraph in the generating chapter or belongs with the deepfake section."
     where: "Generating chapter, the section on pictures, video and voice; judging-claims chapter, the deepfake section."
-
-  - topic: "What models were trained on, and what courts have decided"
-    added: 2026-11-23
-    known: "Scope decision of 23 Nov 2026: the guide takes no position on whether training on other people's work is fair, and has no chapter on the criticisms of AI. What a court decided is a fact and stays in scope. According to several case summaries (not yet checked against the court record): in Bartz v. Anthropic, a US federal judge ruled in June 2025 that training on books the company had bought and scanned was fair use, and that keeping pirated copies in a permanent library was not; a class settlement of $1.5 billion covering about 480,000 works got final approval on 20 July 2026, and it sets no precedent. The New York Times' case against OpenAI and Microsoft was still open in September 2026. A reader sent a Guardian opinion piece of 5 Aug 2026 on the destroyed books, which shows the topic reaches a general audience."
-    open: "Verify every fact above in the court record. If they hold, two or three sentences in the training chapter: what was decided, about whom, and that other cases are open. No view on whether it is fair. The guide is drafted with a model made by Anthropic, the defendant in this case: state the facts from the record and have a person review the wording."
-    sources:
-      - "The court record in Bartz v. Anthropic PBC (N.D. Cal.): the order on fair use of 23 June 2025 and the order granting final approval of 20 July 2026"
-      - https://www.copyright.gov/ai/                    # the US Copyright Office's reports; background, not for citing a position
-      - https://www.theguardian.com/commentisfree/2026/aug/05/anthropic-ai-destroying-books   # opinion piece, finding aid only; the site blocks automated readers, so a person has to read it
-    where: "Training chapter (what models learn from)."
-    skip: "Law-firm and tracker pages that summarise the case; several disagree on details of the payment schedule."
-
-  - topic: "How much electricity does one request use?"
-    added: 2026-11-23
-    known: "In scope by the measurement test, and not in the guide. The attention chapter already counts the arithmetic per token, so a measured energy figure would sit next to it. Nothing has been researched; a provider's own figure for a typical text request was published in 2025 and would be self-reported."
-    open: "Is there a measured figure from a provider, and has anyone independent checked it? What does it leave out (training, idle capacity, cooling)? The International Energy Agency's reports give totals for data centres, not per request. State the figure with who measured it and what it covers, and say nothing on whether the total is too much."
-    sources:
-      - https://www.iea.org/reports/energy-and-ai
-    where: "Generating chapter (what a request costs) or the attention chapter's engineer box."
