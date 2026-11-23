@@ -4,8 +4,8 @@ short: Tokens
 order: 1
 part: language-models
 summary: Models never see letters or words. They see numbered pieces of text, and then points on a map of meaning.
-minutes: 9
-updated: 2026-11-22
+minutes: 10
+updated: 2026-11-23
 goals:
   - "Explain what a token is and why limits and prices are counted in tokens"
   - "Predict which kinds of text use more tokens"
@@ -14,6 +14,7 @@ takeaways:
   - "Models read numbered pieces of text called tokens, not letters or words."
   - "Limits and prices are counted in tokens. Rare words, other languages and code usually need more of them."
   - "Each token becomes a long list of numbers, placed so that related meanings sit close together."
+  - "Pictures and sound are cut into pieces and put on the same map, which is how one model handles them alongside text."
 ---
 import Term from '../../components/Term.astro';
 import Claim from '../../components/Claim.astro';
@@ -47,8 +48,21 @@ A number like 892 means nothing by itself. So each token number is translated in
 
 <EmbeddingMap />
 
+## Pictures and sound become pieces too
+
+Text isn't the only thing that can be chopped up. <Claim id="vit-patches" cap />. Each square is turned into a list of numbers: a point on the same kind of map. Sound gets the same treatment. A recording is sliced into short moments, and each slice becomes a point.
+
+From there on, the model doesn't care where a piece came from. A square of a photo and a piece of a word sit in one sequence, and everything in the next chapters works on both. That's how a <Term k="multimodal">multimodal</Term> model can take a photo of an error message together with a typed question about it.
+
+Two things follow from this:
+
+- **Pictures use up tokens.** An image takes room in the model's working memory the way text does, and it is billed the same way.
+- **Seeing isn't measuring.** A model can describe a photo fluently and still get simple visual facts wrong. <Claim id="clock-reading" cap />. Models also lean on what such pictures usually show: <Claim id="vlm-biased" />. Treat what a model says about an image as a first reading, and check it when it matters.
+
+Making pictures is a different job from reading them. [Generating text](/learn/generating/) explains how that works.
+
 <Note title="Security lens" kind="warn">
-A model reads tokens, while many filters read words. A blocklist that looks for a phrase can miss it when it's split with spaces, written in another language or encoded, yet the model may still understand it perfectly. That's one reason filtering text before it reaches a model is a weak defence, as [Prompt injection](/learn/prompt-injection/) in Part 3 explains.
+A model reads tokens, while many filters read words. A blocklist that looks for a phrase can miss it when it's split with spaces, written in another language or encoded, yet the model may still understand it perfectly. That's one reason filtering text before it reaches a model is a weak defence, as [Prompt injection](/learn/prompt-injection/) in Part 3 explains. Pictures make it harder still, because the model reads text inside an image as well, and you may not be able to see it: <Claim id="image-scaling" />.
 </Note>
 
 <Engineer title="Tokenizers and embedding tables">
@@ -69,6 +83,8 @@ The tokenizer explains some cost and quality differences you'll meet:
 - Code is cheap if the tokenizer saw plenty of it, because common indentation and keywords get their own tokens.
 - German costs more: a compound like "Datenschutzgrundverordnung" splits into many pieces.
 - Some tokenizers chunk numbers into groups of up to three digits ("12345" becomes "123" + "45" in GPT-4o's and Llama 3's), which makes arithmetic harder to learn. Others, such as Llama 2 and Gemma, split numbers into single digits.
+
+**Images and audio.** A vision encoder cuts an image into fixed-size patches, flattens each into a vector and projects it to the model's width, so a patch takes a position in the sequence the way a token does ([Dosovitskiy et al., 2020](https://arxiv.org/abs/2010.11929)). Training on paired images and captions pulls a picture and its description close together in one space ([Radford et al., 2021](https://arxiv.org/abs/2103.00020)). Audio is usually converted to a spectrogram, a picture of frequency over time, and cut into frames in the same way ([Radford et al., 2022](https://arxiv.org/abs/2212.04356)). Patches and frames have no entry in the tokenizer's vocabulary. A model can read them, but writing an image takes extra machinery, usually a diffusion decoder or a second vocabulary of image tokens.
 
 In computer-science terms, the tokenizer is a deterministic compression codec, and the embedding table is an array of vectors indexed by token ID.
 </Engineer>

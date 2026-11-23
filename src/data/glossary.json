@@ -482,5 +482,13 @@
  "horizon": {
   "term": "Time horizon",
   "def": "METR's measure of agent capability: the length of task, in the time a skilled person needs, that an agent completes at a given success rate (usually 50%)."
+ },
+ "multimodal": {
+  "term": "Multimodal",
+  "def": "A model that takes more than one kind of input, such as text, images and sound, in a single sequence."
+ },
+ "diffusion": {
+  "term": "Diffusion",
+  "def": "A way of generating pictures, video or sound: start from random noise and remove it step by step, guided by a description, until the result is left."
  }
 }

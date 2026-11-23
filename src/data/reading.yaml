@@ -4,6 +4,7 @@ start-here:
   - { title: "Intro to Large Language Models (1-hour talk)", by: Andrej Karpathy, year: 2023, url: "https://www.youtube.com/watch?v=zjkBMFhNj_g", why: "A one-hour non-technical overview of the whole pipeline.", beginner: true }
   - { title: "Large Language Models explained briefly", by: 3Blue1Brown, year: 2024, url: "https://www.youtube.com/watch?v=LPZh9BOjkQs", why: "An eight-minute visual version of this chapter.", beginner: true }
   - { title: "Deep Dive into LLMs like ChatGPT", by: Andrej Karpathy, year: 2025, url: "https://www.youtube.com/watch?v=7xTGNNLPyMI", why: "Long, but covers pretraining, fine-tuning, RL and hallucination in plain terms.", beginner: true }
+  - { title: "CME 295: Transformers & Large Language Models", by: "Afshine and Shervine Amidi (Stanford)", year: 2026, url: "https://cme295.stanford.edu/", why: "A full university course with slides and recorded lectures, for readers who want the maths behind Parts 1 and 2." }
   - { title: "Climbing towards NLU: on meaning, form and understanding", by: "Bender, Koller", year: 2020, url: "https://aclanthology.org/2020.acl-main.463/", why: "The classic sceptical argument that form alone can't give meaning." }
 tokens:
   - { title: "Let's build the GPT Tokenizer", by: Andrej Karpathy, year: 2024, url: "https://www.youtube.com/watch?v=zduSFxRajkE", why: "Builds a BPE tokenizer from scratch, quirks included." }

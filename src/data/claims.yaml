@@ -1391,3 +1391,64 @@
   sources: [https://www.wiz.io/blog/mini-shai-hulud-supply-chain-sap-npm, https://www.stepsecurity.io/blog/mini-shai-hulud-is-back-a-self-spreading-supply-chain-attack-hits-the-npm-ecosystem]
   verified: 2026-11-23
   status: evergreen
+
+- id: vit-patches
+  text: "in 2020 researchers at Google showed that an ordinary transformer can recognise images when a picture is cut into small square patches and the patches are fed in like the words of a sentence"
+  evidence: "a pure transformer applied directly to sequences of image patches can perform very well"
+  sources: [https://arxiv.org/abs/2010.11929]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: clock-reading
+  text: "Stanford's 2026 AI Index reports that the best model read an analogue clock correctly 50.6% of the time in March 2026, where people manage about 90%"
+  evidence: "GPT-5.4 High, the top model, reached 50.6% in March 2026"
+  evidence_src: https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf
+  sources: [https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf, https://hai.stanford.edu/ai-index/2026-ai-index-report]
+  verified: 2026-11-23
+  half_life: 6
+  status: shipping
+
+- id: vlm-biased
+  text: "in a study presented at the ICLR conference in 2026, leading models counted correctly only 17% of the time on pictures of familiar things with one detail changed, such as a three-stripe logo with a fourth stripe added"
+  evidence: "scoring an average of 17.05% accuracy in counting"
+  sources: [https://arxiv.org/abs/2505.23941]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: image-scaling
+  text: "in 2025 researchers at Trail of Bits hid instructions in a picture that looked harmless at full size and became readable only once the system shrank it for the model, and used it to pull data out through Google's Gemini command-line tool"
+  evidence: "we achieved data exfiltration on systems including the Google Gemini CLI"
+  sources: [https://blog.trailofbits.com/2025/08/21/weaponizing-image-scaling-against-production-ai-systems/]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: llm-judge
+  text: "a 2023 study found that strong models used as markers agreed with human raters more than 80% of the time, about as often as people agree with each other, but leaned towards answers by their position, their length and the marker's own style"
+  evidence: "achieving over 80% agreement, the same level of agreement between humans"
+  sources: [https://arxiv.org/abs/2306.05685]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: native-image
+  text: "OpenAI built picture-making into its chat model in March 2025 and described it as a new approach compared with its earlier, separate DALL·E models"
+  evidence: "embedded natively, deep in the architecture of our omnimodal GPT‑4o model"
+  sources: [https://openai.com/index/gpt-4o-image-generation-system-card-addendum/]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: video-limits
+  text: "Stanford's 2026 AI Index reports that no video model tested in early 2026 scored above 67% on a broad benchmark, and that they still struggle with longer stories and with keeping objects and scenes consistent"
+  evidence: "None of the models evaluated in early 2026 surpasses a total score of 67%"
+  evidence_src: https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf
+  sources: [https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf, https://hai.stanford.edu/ai-index/2026-ai-index-report]
+  verified: 2026-11-23
+  half_life: 6
+  status: shipping
+
+- id: sora
+  text: "Sora, OpenAI's video generator, was a diffusion model that worked on patches spanning space and time, as its 2024 technical report describes; OpenAI discontinued it in 2026, the app in April and the developer interface in September"
+  evidence: "The Sora web and app experiences were discontinued on April 26, 2026."
+  evidence_src: https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation
+  sources: [https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation, https://openai.com/index/video-generation-models-as-world-simulators/]
+  verified: 2026-11-23
+  status: evergreen

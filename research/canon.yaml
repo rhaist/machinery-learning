@@ -16,6 +16,8 @@
 canon:
   # --- architecture and inference ---
   - { id: "1706.03762", title: "Attention Is All You Need", signal: "the transformer paper", where: attention, status: cited }
+  - { id: "2006.11239", title: "Denoising Diffusion Probabilistic Models", signal: "canonical; the basis of modern image generation", where: generating, status: cited }
+  - { id: "2112.10752", title: "High-Resolution Image Synthesis with Latent Diffusion Models", signal: "CVPR 2022; the paper behind Stable Diffusion", where: generating, status: cited }
   - { id: "2205.14135", title: "FlashAttention", signal: "canonical; reviewed 2026-11", where: attention, status: cited }
   - { id: "2309.17453", title: "Efficient Streaming Language Models with Attention Sinks", signal: "2.9k citations", where: attention, status: cited }
   - { id: "2505.06708", title: "Gated Attention for Large Language Models", signal: "NeurIPS 2025 best paper", where: attention, status: cited }
@@ -61,6 +63,8 @@ canon:
   - { id: "2401.05566", title: "Sleeper Agents", signal: "canonical", where: supply-chain, status: cited }
   - { id: "2311.17035", title: "Scalable Extraction of Training Data from (Production) Language Models", signal: "canonical", where: your-data, status: cited }
   - { id: "2412.09871", title: "Byte Latent Transformer: Patches Scale Better Than Tokens", signal: "ACL 2025 outstanding paper", where: tokens, status: cited }
+  - { id: "2010.11929", title: "An Image is Worth 16x16 Words (Vision Transformer)", signal: "canonical; the basis of how language models take in images", where: tokens, status: cited }
+  - { id: "2103.00020", title: "Learning Transferable Visual Models From Natural Language Supervision (CLIP)", signal: "canonical", where: tokens, status: cited }
   - { url: "https://hai.stanford.edu/ai-index/2026-ai-index-report", title: "Stanford AI Index Report 2026", signal: "the field's annual review", where: frontier, status: cited }
   # --- history ---
   - { url: "https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html", title: "ImageNet Classification with Deep Convolutional Neural Networks (AlexNet)", signal: "the result that made deep learning the default", where: how-we-got-here, status: cited }
