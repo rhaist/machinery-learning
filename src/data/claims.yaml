@@ -1444,3 +1444,11 @@
   verified: 2026-11-23
   half_life: 6
   status: shipping
+
+- id: sora
+  text: "Sora, OpenAI's video generator, was a diffusion model that worked on patches spanning space and time, as its 2024 technical report describes; OpenAI discontinued it in 2026, the app in April and the developer interface in September"
+  evidence: "The Sora web and app experiences were discontinued on April 26, 2026."
+  evidence_src: https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation
+  sources: [https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation, https://openai.com/index/video-generation-models-as-world-simulators/]
+  verified: 2026-11-23
+  status: evergreen
