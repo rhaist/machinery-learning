@@ -37,6 +37,10 @@ The run may only edit `src/data/`, `src/content/` and the table components. CI r
 - Accessibility: axe on every page in both themes runs on every pull request (`npm run check:a11y` locally, after a build). It finds what a machine can find; a keyboard and screen-reader pass by a person is still worth doing before a launch.
 - `node scripts/check-claims.mjs` shows nothing aging or stale.
 
+## Content-Security-Policy
+
+Every page carries a policy (set in `astro.config.mjs`) that lets the browser run only the site's own scripts and load only from this site. Two things follow. A new inline `<script>` will be blocked unless it goes through `src/scripts/boot.js` or is a normal bundled script. A resource from another host (a font, an image, an embed) will be blocked until the policy names it; prefer to host it here. The pull-request check loads every page with the policy enforced and fails if anything is blocked.
+
 ## Legal pages
 
 The legal notice and privacy notice read their details from `legal:` in `src/data/site.yaml`. Any value starting with `TODO` shows a visible draft warning on those pages.
