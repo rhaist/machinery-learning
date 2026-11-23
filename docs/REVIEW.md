@@ -31,4 +31,4 @@ Style, wording and layout feedback is welcome but secondary.
 
 ## What happens next
 
-Every confirmed error is fixed and, once the guide has launched, listed in the monthly [field notes](https://machinerylearning.eu/notes/) with what was wrong and how it was found. Reviewers are thanked by name on the About page if they want to be.
+Every confirmed error is fixed and listed in the monthly [field notes](https://machinerylearning.eu/notes/) with what was wrong and how it was found. Reviewers are thanked by name on the About page if they want to be.

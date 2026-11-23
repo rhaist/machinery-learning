@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../lib/data';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const launchedOn = site.launched ? new Date(site.launched).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : '';
 ---
 <Base title="How this guide works" description={`How ${site.name} stays current: dated facts, visible corrections and a human-reviewed monthly update.`} nav="about">
   <section class="band"><div class="page-text">
@@ -13,7 +14,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p>Model releases, benchmark numbers and research results carry a small date that shows when someone last checked them against their sources. A fact that is overdue for a check fades until it has been verified again. All of them, with sources, are on <a href={`${base}/sources/`}>Sources &amp; freshness</a>.</p>
 
     <h2>Mistakes</h2>
-    <p>Every chapter ends with a link to report one. Fixes are listed in the monthly <a href={`${base}/notes/`}>field notes</a>, with what was wrong.</p>
+    <p>Every chapter ends with a link to report one. Fixes are listed in the monthly <a href={`${base}/notes/`}>field notes</a>, with what was wrong{launchedOn && <>, for everything since the guide launched on {launchedOn}</>}.</p>
 
     <h2>The monthly update</h2>
     <p>Each month an AI research agent reads a fixed list of sources and proposes changes as a pull request, each with its sources. A person checks every change before it goes live. The agent can read the web and open pull requests, nothing more: it cannot merge, see secrets or change how the site is built. Reading the web and acting on it is exactly the prompt-injection risk the guide warns about, so it gets no more access than that.</p>
