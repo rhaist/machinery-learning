@@ -1,6 +1,8 @@
 // Fetches every source URL in claims, figures, debates, the reading list and links in chapters and notes.
 // Fails on links that are gone (404, 410, DNS or TLS errors, 5xx after a retry).
 // 401/403/429 count as warnings: many publishers block automated requests.
+// Links listed in research/links-blocked.yaml are known to do so and were opened in a browser; they are only counted,
+// so that a new blocked link stands out.
 // Runs monthly in CI (.github/workflows/links.yml); not part of `npm run check`.
 import fs from 'node:fs';
 import { load } from 'js-yaml';
@@ -26,16 +28,25 @@ async function probe(u, tries = 2) {
   }
 }
 
-const bad = [], soft = [];
+const known = new Map((load(fs.readFileSync('research/links-blocked.yaml', 'utf8'))?.blocked ?? []).map(e => [e.url, e]));
+const bad = [], soft = [], quiet = [], notes = [];
 const list = [...urls.keys()];
 for (let i = 0; i < list.length; i += 8) {
   await Promise.all(list.slice(i, i + 8).map(async u => {
     const st = await probe(u);
-    if (typeof st === 'number' && st < 400) return;
-    (([401, 403, 429].includes(st)) ? soft : bad).push(`${st}  ${u}  (${urls.get(u).join(', ')})`);
+    if (typeof st === 'number' && st < 400) { if (known.has(u)) notes.push(`${u} answers the checker again: remove it from research/links-blocked.yaml`); return; }
+    const blocked = [401, 403, 429].includes(st);
+    (blocked ? (known.has(u) ? quiet : soft) : bad).push(`${st}  ${u}  (${urls.get(u).join(', ')})`);
   }));
 }
+// housekeeping for the list of known blocked links
+const halfYearAgo = Date.now() - 183 * 864e5;
+for (const [u, e] of known) {
+  if (!urls.has(u)) notes.push(`${u} is no longer used on the site: remove it from research/links-blocked.yaml`);
+  else if (!e.opened || new Date(e.opened).getTime() < halfYearAgo) notes.push(`${u} was last opened in a browser on ${e.opened ? new Date(e.opened).toISOString().slice(0, 10) : 'an unknown date'}: open it again and update the date`);
+}
 soft.forEach(s => console.warn('warning: ' + s));
+notes.forEach(n => console.warn('note: ' + n));
 bad.forEach(b => console.error('✗ ' + b));
-console.log(`${list.length} links checked: ${bad.length} broken, ${soft.length} blocked automated access.`);
+console.log(`${list.length} links checked: ${bad.length} broken, ${soft.length} newly blocked automated access, ${quiet.length} known to block it (research/links-blocked.yaml).`);
 process.exit(bad.length ? 1 : 0);

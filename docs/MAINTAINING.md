@@ -30,6 +30,10 @@ A scheduled research run on the 1st of each month follows [`research/MONTHLY_UPD
 
 The run may only edit `src/data/`, `src/content/` and the table components. CI rejects update PRs that touch `.claude/`, `.github/`, build configuration, package files, `scripts/`, `DESIGN.md` or the brief.
 
+## Links that block robots
+
+Some sources answer the link checker with 403 although the page is there. Once such a link has been opened in a browser, add it to `research/links-blocked.yaml` with the date. The checker then only counts it, and any other blocked link shows up as a warning worth a look.
+
 ## Before a release or a big share
 
 - `npm run check` passes locally.
