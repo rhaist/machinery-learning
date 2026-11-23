@@ -70,7 +70,7 @@ Finally, AI tools are software with their own supply chains, and attackers have 
 <Engineer title="Hardening the AI supply chain">
 Treat everything an AI system pulls in, whether packages, models, data or tools, as code from a stranger until you have reason to trust it.
 
-**Packages.** Route installs, including the ones agents run, through a proxy or allowlist that blocks brand-new and low-reputation packages. Review agent "skills", rules and settings files like code: they are instructions an agent will follow, and some run commands on their own: <Claim id="shai-hulud-hooks" />. Pin and hash dependencies, and prefer trusted publishing (OIDC) over long-lived registry tokens. The Amazon Q extension incident (July 2025, CVE-2025-8217) started with an over-broad GitHub token in build configuration; the Nx compromise from the last chapter started with a CI workflow.
+**Packages.** Route installs, including the ones agents run, through a proxy or allowlist that blocks brand-new and low-reputation packages. Review agent "skills", rules and settings files like code. They are instructions an agent will follow, and some run commands on their own: <Claim id="shai-hulud-hooks" />. Pin and hash dependencies, and prefer trusted publishing (OIDC) over long-lived registry tokens. The Amazon Q extension incident (July 2025, CVE-2025-8217) started with an over-broad GitHub token in build configuration; the Nx compromise from the last chapter started with a CI workflow.
 
 **Models.** Standardise on file formats that can't execute code. Update PyTorch to 2.6 or later (CVE-2025-32434 broke `weights_only=True`). Load unknown models only in isolated sandboxes without network access. Prefer known publishers, but remember that a publisher's account can be taken over.
 
