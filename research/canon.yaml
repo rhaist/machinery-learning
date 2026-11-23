@@ -16,6 +16,8 @@
 canon:
   # --- architecture and inference ---
   - { id: "1706.03762", title: "Attention Is All You Need", signal: "the transformer paper", where: attention, status: cited }
+  - { id: "2006.11239", title: "Denoising Diffusion Probabilistic Models", signal: "canonical; the basis of modern image generation", where: generating, status: cited }
+  - { id: "2112.10752", title: "High-Resolution Image Synthesis with Latent Diffusion Models", signal: "CVPR 2022; the paper behind Stable Diffusion", where: generating, status: cited }
   - { id: "2205.14135", title: "FlashAttention", signal: "canonical; reviewed 2026-11", where: attention, status: cited }
   - { id: "2309.17453", title: "Efficient Streaming Language Models with Attention Sinks", signal: "2.9k citations", where: attention, status: cited }
   - { id: "2505.06708", title: "Gated Attention for Large Language Models", signal: "NeurIPS 2025 best paper", where: attention, status: cited }

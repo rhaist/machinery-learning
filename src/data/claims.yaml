@@ -1428,3 +1428,19 @@
   sources: [https://arxiv.org/abs/2306.05685]
   verified: 2026-11-23
   status: evergreen
+
+- id: native-image
+  text: "OpenAI built picture-making into its chat model in March 2025 and described it as a new approach compared with its earlier, separate DALL·E models"
+  evidence: "embedded natively, deep in the architecture of our omnimodal GPT‑4o model"
+  sources: [https://openai.com/index/gpt-4o-image-generation-system-card-addendum/]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: video-limits
+  text: "Stanford's 2026 AI Index reports that no video model tested in early 2026 scored above 67% on a broad benchmark, and that they still struggle with longer stories and with keeping objects and scenes consistent"
+  evidence: "None of the models evaluated in early 2026 surpasses a total score of 67%"
+  evidence_src: https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf
+  sources: [https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf, https://hai.stanford.edu/ai-index/2026-ai-index-report]
+  verified: 2026-11-23
+  half_life: 6
+  status: shipping

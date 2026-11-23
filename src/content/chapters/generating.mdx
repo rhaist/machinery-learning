@@ -4,8 +4,8 @@ short: Generating
 order: 4
 part: language-models
 summary: "Each word is a weighted dice roll. That explains why answers differ every time, what \"temperature\" does and why thinking takes time."
-minutes: 10
-updated: 2026-11-22
+minutes: 12
+updated: 2026-11-23
 goals:
   - "Explain why the same question gets different answers"
   - "Say what temperature and top-p change"
@@ -14,6 +14,7 @@ takeaways:
   - "Every token is a weighted dice roll over the model's probabilities."
   - "Temperature and top-p shape the roll. A low temperature makes text more predictable, not more correct."
   - "Thinking models write a hidden draft first, token by token. That costs time and money, and usually helps on hard problems."
+  - "Pictures, video and voice are generated too: built to fit a description, different each time, and convincing without being accurate."
 ---
 import Term from '../../components/Term.astro';
 import Engineer from '../../components/Engineer.astro';
@@ -44,6 +45,22 @@ Newer <Term k="reasoning">reasoning models</Term> first write out a long draft, 
 Even when the model always takes the most likely token, your request is processed together with other people's, and the size of that batch subtly changes the arithmetic. Occasionally that tips a close call the other way.
 </Note>
 
+## Pictures, video and voice are made differently
+
+So far this chapter has been about text. Many people also ask a chat app for a picture, a short video or a spoken answer. Those are made in one of two ways.
+
+**Start from noise.** The method that made AI pictures take off is <Term k="diffusion">diffusion</Term>. It begins with random speckle, like the snow on an old television, and removes a little of it in each of many steps, steered by your description, until a picture is left. Video works the same way, on many frames at once.
+
+**Make it inside the chat model.** At first, a chat app only wrote a description and passed it to a separate picture generator. Newer models produce the picture themselves: <Claim id="native-image" />. Such a model can also take a picture you give it and change it.
+
+Spoken answers come about in similar ways: either a separate step reads the model's text aloud, or the model produces the sound itself.
+
+Three things carry over from text:
+
+- **It is generated, not looked up.** The picture is built to fit your description. It isn't a photo of anything, and whatever you didn't specify is filled in with what is typical.
+- **Ask again and you get a different one.** The same dice are rolled.
+- **Looking right isn't being right.** <Claim id="video-limits" cap />. And a convincing clip or voice of a real person is a risk of its own, which [Judging AI claims](/learn/judging-claims/) in Part 3 deals with.
+
 <Note title="Security lens" kind="warn">
 Sampling produces fluent, plausible text, and a plausible name isn't necessarily a real one. That includes the names of software packages: <Claim id="pkg-hallucination" />. Attackers register the invented names and wait. [Poisoned ingredients](/learn/supply-chain/) in Part 3 covers this "slopsquatting" and how to defend against it.
 </Note>
@@ -62,6 +79,8 @@ The model's raw output is a list of scores, the <Term k="logits">logits</Term>. 
 **Sampling more than once.** Asking for several answers and taking the most common one improves accuracy on reasoning tasks ([self-consistency, Wang et al., 2022](https://arxiv.org/abs/2203.11171)). Many "thinking harder" modes build on that idea.
 
 **Faster and stricter decoding.** In <Term k="specdec">speculative decoding</Term>, a small draft model guesses several tokens and the big model checks them all in one parallel pass; the output follows the same distribution as without it. In <Term k="constrained">constrained decoding</Term>, tokens that would break a JSON schema or grammar are masked out before sampling. That is how *strict* structured-output and tool modes guarantee valid JSON. Without strict mode, parsing usually works but isn't guaranteed.
+
+**Pictures, video and voice.** A diffusion model is trained to undo a gradual noising process, one small step at a time ([Ho et al., 2020](https://arxiv.org/abs/2006.11239)). Running that process on a compressed representation of the image instead of on raw pixels made it cheap enough for wide use ([Rombach et al., 2021](https://arxiv.org/abs/2112.10752)). Video models apply it to patches that span space and time. The alternative is autoregressive generation: an image is encoded as a sequence of discrete tokens and predicted the way text is. Hybrids exist too, with a language model producing the conditioning and a diffusion decoder painting the pixels. Voice modes either chain speech recognition, a text model and speech synthesis, or use one model that reads and writes audio tokens directly.
 
 **Why temperature 0 still varies.** A single forward pass on its own is deterministic. The variation comes from batching: common GPU kernels add numbers in an order that depends on the batch size, which depends on how many other people's requests run alongside yours, and floating-point addition gives slightly different results in a different order. Batch-invariant kernels fix this at some cost in speed.
 </Engineer>
