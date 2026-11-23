@@ -1,0 +1,33 @@
+# Sources that answer the link checker with 401, 403 or 429 because they refuse automated requests, although the page
+# is there. Each was opened in a real browser on the date given and showed the expected page.
+# scripts/check-links.mjs lists these quietly, so that a NEW blocked link stands out as a warning.
+# Rules: add a link only after opening it in a browser. If a link here ever answers 404 or 5xx, the check still fails.
+# Entries older than six months are flagged for a fresh look.
+blocked:
+  - url: https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4192332/nsas-aisc-releases-joint-guidance-on-the-risks-and-best-practices-in-ai-data-se/
+    shows: "NSA's AISC Releases Joint Guidance on the Risks and Best Practices in AI Data Security"
+    opened: 2026-11-23
+  - url: https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/
+    shows: "Timeline - Artificial intelligence (Council of the EU)"
+    opened: 2026-11-23
+  - url: https://darkreading.com/vulnerabilities-threats/november-patch-tuesday-cornucopia-cves
+    shows: "November Patch Tuesday: An Overflowing Cornucopia of CVEs (Dark Reading)"
+    opened: 2026-11-23
+  - url: https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2025.00535
+    shows: "The Effects of Generative AI on High-Skilled Work: Evidence from Three Field Experiments with Software Developers (Management Science)"
+    opened: 2026-11-23
+  - url: https://thenewstack.io/agentjacking-sentry-mcp-attack/
+    shows: "A public Sentry key is all it takes to hijack Claude Code, Cursor, and Codex (The New Stack)"
+    opened: 2026-11-23
+  - url: https://cacm.acm.org/research/imagenet-classification-with-deep-convolutional-neural-networks/
+    shows: "ImageNet Classification with Deep Convolutional Neural Networks (Communications of the ACM)"
+    opened: 2026-11-23
+  - url: https://www.wsgr.com/en/insights/openai-prevails-in-landmark-italian-ai-and-gdpr-enforcement-case.html
+    shows: "OpenAI Prevails in Landmark Italian AI and GDPR Enforcement Case (Wilson Sonsini)"
+    opened: 2026-11-23
+  - url: https://www.efta.int/eea-lex/32026r1744
+    shows: "Factsheet - 32026R1744 (European Free Trade Association)"
+    opened: 2026-11-23
+  - url: https://cacm.acm.org/research/deep-learning-for-ai/
+    shows: "Deep Learning for AI (Communications of the ACM)"
+    opened: 2026-11-23
