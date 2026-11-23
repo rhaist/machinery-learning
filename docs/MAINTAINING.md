@@ -38,7 +38,7 @@ Some sources answer the link checker with 403 although the page is there. Once s
 
 - `npm run check` passes locally.
 - Visual check at 1280px and 390px wide, light and dark.
-- Accessibility: axe (WCAG 2.1 AA) on every page in both themes.
+- Accessibility: axe on every page in both themes runs on every pull request (`npm run check:a11y` locally, after a build). It finds what a machine can find; a keyboard and screen-reader pass by a person is still worth doing before a launch.
 - `node scripts/check-claims.mjs` shows nothing aging or stale.
 
 ## Legal pages

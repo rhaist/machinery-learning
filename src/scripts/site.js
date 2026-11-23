@@ -153,7 +153,8 @@ quizzes.forEach((el, i) => {
     b.classList.add(ok ? 'right' : 'wrong');
     ex.hidden = false;
     ex.innerHTML = (ok ? '<b>Right.</b> ' : '<b>Not quite.</b> ') + el.dataset.explain.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-    if (ok) { solved.add(i); store.set('lfg-quiz-' + quizKey, [...solved]); markDone(); }
+    // once solved, the other options are switched off, so a later stray click cannot turn "Right" into "Not quite"
+    if (ok) { el.querySelectorAll('button').forEach(x => { if (x !== b) x.disabled = true; }); solved.add(i); store.set('lfg-quiz-' + quizKey, [...solved]); markDone(); }
   });
 });
 { const n = done.size, started = n || store.get('lfg-last', null); const row = $('#sheet-progress');
