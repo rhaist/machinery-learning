@@ -43,10 +43,12 @@ leads:
     where: "Agents and permissions chapter, after the claim."
     skip: "Vendor blogs and newsletters that retell the April post without adding a source."
 
-  - topic: "How well do current models handle simple visual tasks?"
+  - topic: "Simple visual tasks: a newer measurement that includes the latest models"
     added: 2026-11-23
-    known: "The tokens chapter cites a 2024 study (claim 'vlm-blind') in which four leading models of the time averaged 58% on tasks such as saying whether two circles overlap. The models tested are two generations old."
-    open: "Is there a 2026 measurement on the same or a similar benchmark? If current models do much better, say so next to the claim; if not, the claim gains a current source."
+    known: "The tokens chapter cites Stanford's 2026 AI Index (clock reading, data from March 2026; claim 'clock-reading') and an ICLR 2026 paper on counting in altered pictures (claim 'vlm-biased'). A preprint from October 2026, 'Humanity's Sixth Sense', reports that the best of 25 models, GPT-6 Astra, reached 53.6% where people reach 93.1%. It is newer than both sources and not yet peer reviewed."
+    open: "Has the preprint been reviewed or replicated, and are its tasks and data public? If so it could replace or join the clock figure. 'BabyVision' (Jan 2026, data released) and Moonshot AI's 'PerceptionBench' (Aug 2026, vendor-run) report the same gap; neither was read in full."
     sources:
-      - https://arxiv.org/abs/2407.06581
+      - https://arxiv.org/abs/2610.08966
+      - https://arxiv.org/abs/2601.06521
+      - "OpenReview reviews: https://api2.openreview.net/notes/search?term=Humanity%27s%20Sixth%20Sense"
     where: "Tokens chapter, the section on pictures and sound."

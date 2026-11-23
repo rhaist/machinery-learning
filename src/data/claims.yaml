@@ -1399,10 +1399,19 @@
   verified: 2026-11-23
   status: evergreen
 
-- id: vlm-blind
-  text: "in a 2024 study, four leading models of the time were right only 58% of the time on simple visual tasks such as saying whether two circles overlap"
-  evidence: "four state-of-the-art VLMs are only 58.07% accurate on average"
-  sources: [https://arxiv.org/abs/2407.06581]
+- id: clock-reading
+  text: "Stanford's 2026 AI Index reports that the best model read an analogue clock correctly 50.6% of the time in March 2026, where people manage about 90%"
+  evidence: "GPT-5.4 High, the top model, reached 50.6% in March 2026"
+  evidence_src: https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf
+  sources: [https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_2_technical.pdf, https://hai.stanford.edu/ai-index/2026-ai-index-report]
+  verified: 2026-11-23
+  half_life: 6
+  status: shipping
+
+- id: vlm-biased
+  text: "in a study presented at the ICLR conference in 2026, leading models counted correctly only 17% of the time on pictures of familiar things with one detail changed, such as a three-stripe logo with a fourth stripe added"
+  evidence: "scoring an average of 17.05% accuracy in counting"
+  sources: [https://arxiv.org/abs/2505.23941]
   verified: 2026-11-23
   status: evergreen
 
