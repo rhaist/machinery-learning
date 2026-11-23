@@ -1391,3 +1391,31 @@
   sources: [https://www.wiz.io/blog/mini-shai-hulud-supply-chain-sap-npm, https://www.stepsecurity.io/blog/mini-shai-hulud-is-back-a-self-spreading-supply-chain-attack-hits-the-npm-ecosystem]
   verified: 2026-11-23
   status: evergreen
+
+- id: vit-patches
+  text: "in 2020 researchers at Google showed that an ordinary transformer can recognise images when a picture is cut into small square patches and the patches are fed in like the words of a sentence"
+  evidence: "a pure transformer applied directly to sequences of image patches can perform very well"
+  sources: [https://arxiv.org/abs/2010.11929]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: vlm-blind
+  text: "in a 2024 study, four leading models of the time were right only 58% of the time on simple visual tasks such as saying whether two circles overlap"
+  evidence: "four state-of-the-art VLMs are only 58.07% accurate on average"
+  sources: [https://arxiv.org/abs/2407.06581]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: image-scaling
+  text: "in 2025 researchers at Trail of Bits hid instructions in a picture that looked harmless at full size and became readable only once the system shrank it for the model, and used it to pull data out through Google's Gemini command-line tool"
+  evidence: "we achieved data exfiltration on systems including the Google Gemini CLI"
+  sources: [https://blog.trailofbits.com/2025/08/21/weaponizing-image-scaling-against-production-ai-systems/]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: llm-judge
+  text: "a 2023 study found that strong models used as markers agreed with human raters more than 80% of the time, about as often as people agree with each other, but leaned towards answers by their position, their length and the marker's own style"
+  evidence: "achieving over 80% agreement, the same level of agreement between humans"
+  sources: [https://arxiv.org/abs/2306.05685]
+  verified: 2026-11-23
+  status: evergreen

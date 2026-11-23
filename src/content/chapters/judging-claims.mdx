@@ -5,7 +5,7 @@ order: 18
 part: trust-security
 summary: "How to read benchmarks, vendor security numbers, AI detectors and deepfakes, with habits for telling what's real."
 minutes: 13
-updated: 2026-11-22
+updated: 2026-11-23
 goals:
   - "Test any AI number with four questions: measured how, by whom, on what, and could the model have seen the test"
   - "Explain why a detector that is rarely wrong can still accuse many innocent people"
@@ -32,6 +32,10 @@ A student who memorised last year's exam scores brilliantly on last year's exam.
 ## Benchmarks leak
 
 When test questions end up in training data, scores go up without ability going up. That's <Term k="contamination">contamination</Term>. <Claim id="gsm1k" cap />. A leading coding benchmark had the same problem: <Claim id="swebench-retired" />. A benchmark where every top model scores about the same has also stopped telling you much, which is <Term k="saturation">saturation</Term>.
+
+## Who marks the answers?
+
+A score also depends on who does the marking. Code can be marked by running it against tests. A summary or an explanation can't, so one way to mark it is to ask another model. That works better than it sounds, and it has blind spots: <Claim id="llm-judge" />. When a number rests on a model's judgement, ask which model did the marking and whether people checked a sample.
 
 ## Feelings aren't measurements
 

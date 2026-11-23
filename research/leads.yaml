@@ -42,3 +42,11 @@ leads:
       - https://arxiv.org/abs/2606.09935                # 'GitInject': related academic study of the same attack surface
     where: "Agents and permissions chapter, after the claim."
     skip: "Vendor blogs and newsletters that retell the April post without adding a source."
+
+  - topic: "How well do current models handle simple visual tasks?"
+    added: 2026-11-23
+    known: "The tokens chapter cites a 2024 study (claim 'vlm-blind') in which four leading models of the time averaged 58% on tasks such as saying whether two circles overlap. The models tested are two generations old."
+    open: "Is there a 2026 measurement on the same or a similar benchmark? If current models do much better, say so next to the claim; if not, the claim gains a current source."
+    sources:
+      - https://arxiv.org/abs/2407.06581
+    where: "Tokens chapter, the section on pictures and sound."
