@@ -173,6 +173,8 @@ html:not(.js) .menu-btn{display:none}
 /* chapter bar */
 .chbar{border-bottom:1px solid var(--line);background:var(--s1)}
 .chbar .in{max-width:calc(var(--w-page) + 2 * var(--gutter));margin:0 auto;display:flex;gap:var(--sp-1);overflow-x:auto;padding:var(--sp-2) var(--gutter)}
+/* the bar scrolls sideways: fade its right edge to show there is more, and leave room so the last chapter can scroll clear of the fade */
+.chbar .in{padding-right:var(--sp-8);mask-image:linear-gradient(to right,black calc(100% - var(--sp-8)),transparent)}
 .chbar a{flex:none;display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-1) var(--sp-3);border-radius:var(--r-sm);color:var(--mut);text-decoration:none;font-size:var(--fs-sm);white-space:nowrap}
 .chbar a::before{content:"";width:7px;height:7px;border:1.5px solid var(--t)}
 .chbar a.done::before{background:var(--t)}
