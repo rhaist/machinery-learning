@@ -28,7 +28,9 @@ Check these against GitHub's documentation ("Managing a custom domain for your G
 
 A scheduled research run on the 1st of each month follows [`research/MONTHLY_UPDATE.md`](../research/MONTHLY_UPDATE.md) and opens one pull request on a branch named `update/YYYY-MM`. Review it like any other change: open the sources for every rewritten claim and radar move, read the field notes, and check the "Uncertain" and "Suspicious content" sections of the PR description. If the run couldn't research, it opens an issue instead.
 
-The run may only edit `src/data/`, `src/content/` and the table components. CI rejects update PRs that touch `.claude/`, `.github/`, build configuration, package files, `scripts/`, `DESIGN.md` or the brief.
+Seen something between two runs that the guide may need? Add it to [`research/leads.yaml`](../research/leads.yaml) with a line on what to check. The next run looks into each lead, reports in its PR what became of it, and empties the list.
+
+The run may only edit `src/data/`, `src/content/`, the table components, and the canon and leads lists under `research/`. CI rejects update PRs that touch `.claude/`, `.github/`, build configuration, package files, `scripts/`, `DESIGN.md` or the brief.
 
 ## Links that block robots
 

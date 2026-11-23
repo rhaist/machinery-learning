@@ -11,15 +11,20 @@ primary:
     - https://qwenlm.github.io/blog/
     - https://mistral.ai/news
     - https://strandsagents.com/blog/
-  papers:
-    - https://huggingface.co/papers           # daily trending papers
-    - https://arxiv.org/list/cs.CL/recent
-    - https://arxiv.org/list/cs.LG/recent
+  papers:   # where researchers promote and argue about new work. arXiv is where the run reads a paper, not where it looks for one.
+    - https://huggingface.co/papers/trending   # use the Monthly tab; upvotes are shown per paper
+    - https://www.alphaxiv.org/                # trending papers with reader comments and view counts
+    - https://www.alignmentforum.org/          # safety and oversight research, often argued over here before a paper exists
     - https://transformer-circuits.pub/        # interpretability
   security:
     - https://genai.owasp.org/                 # OWASP GenAI / LLM Top 10
     - https://genai.owasp.org/blog/            # quarterly exploit roundups: use them to find incidents, then cite each incident's own source
     - https://simonwillison.net/tags/prompt-injection/
+    - https://embracethered.com/blog/          # Johann Rehberger: working exploits against AI agents and assistants, with the vendors' fixes
+    - https://www.aisi.gov.uk/blog             # UK AI Security Institute: evaluations, red-teaming, incidents
+    - https://www.ncsc.gov.uk/frontier-ai      # UK NCSC: its AI guidance and blogs in one place (no dates on the page; open the items)
+    - https://www.nist.gov/caisi               # NIST's AI centre (US): model assessments and guidance
+    - https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Kuenstliche-Intelligenz/kuenstliche-intelligenz_node.html   # German BSI: a few publications a year; look for new or updated ones
 
 finding_aids:   # read to discover developments; always follow through to the primary source
   - https://magazine.sebastianraschka.com/
@@ -27,6 +32,11 @@ finding_aids:   # read to discover developments; always follow through to the pr
   - https://www.interconnects.ai/
   - https://jack-clark.net/                    # Import AI
   - https://www.deeplearning.ai/the-batch/
+
+second_opinions:   # before citing a paper that was found because it was promoted, read what its critics say (MONTHLY_UPDATE.md, step 3)
+  - https://api2.openreview.net/notes/search?term=    # add the paper's title: returns its conference reviews, no login needed
+  - https://www.alphaxiv.org/                          # the comments on the paper's own page
+  - https://hn.algolia.com/api/v1/search?query=        # discussion threads, by title
 
 recall_signals:   # popularity finds candidates; research judgement decides (MONTHLY_UPDATE.md › Canon and recall)
   - https://hn.algolia.com/api/v1/search?tags=story&query=arxiv.org&restrictSearchableAttributes=url

@@ -1361,3 +1361,33 @@
   verified: 2026-11-22
   status: evergreen
 
+- id: astra-monitorability
+  text: "OpenAI's system card for GPT-6 Astra (September 2026) reports a substantial drop in how well the model's written reasoning can be monitored, and says that with written reasoning switched off, the model can do far more than its predecessors could"
+  evidence: "GPT-6 Astra shows a substantial decrease in chain-of-thought monitorability compared to previous models"
+  sources: [https://deploymentsafety.openai.com/gpt-6-astra]
+  verified: 2026-11-23
+  half_life: 6
+  status: shipping
+
+- id: glm-loop
+  text: "Z.ai says its GLM-5.4 model, released in November 2026, runs a block of 28 layers twice with the same weights; it has published no benchmark scores for the model itself, and nobody independent had tested it at release"
+  evidence: "GLM-5.4 loops 28 layers of the GLM-5 base model for two iterations"
+  sources: [https://z.ai/blog/glm-5.4]
+  verified: 2026-11-23
+  half_life: 3
+  status: emerging
+
+- id: comment-control
+  text: "in April 2026 researchers showed that text an outsider can write, such as a pull-request title or an issue comment, made coding agents from three vendors post their own API keys and access tokens back into GitHub, so the secrets left without any outside server"
+  evidence: "The entire attack loop runs inside GitHub itself, with no external server required."
+  sources: [https://oddguan.com/blog/comment-and-control-prompt-injection-credential-theft-claude-code-gemini-cli-github-copilot/]
+  verified: 2026-11-23
+  status: evergreen
+
+- id: shai-hulud-hooks
+  text: "the \"Mini Shai-Hulud\" package worm of spring 2026 wrote a start-up hook into a project's Claude Code settings file and a run-on-open task for VS Code, so that opening the project ran the malware again"
+  evidence: "Claude Code SessionStart hook — runs node .vscode/setup.mjs on every session"
+  evidence_src: https://www.wiz.io/blog/mini-shai-hulud-supply-chain-sap-npm
+  sources: [https://www.wiz.io/blog/mini-shai-hulud-supply-chain-sap-npm, https://www.stepsecurity.io/blog/mini-shai-hulud-is-back-a-self-spreading-supply-chain-attack-hits-the-npm-ecosystem]
+  verified: 2026-11-23
+  status: evergreen
