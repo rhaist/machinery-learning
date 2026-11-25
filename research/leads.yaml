@@ -69,3 +69,13 @@ leads:
       - https://thinkingmachines.ai/news/inkling-2-small/
     where: "Agent-failures chapter, the section on reward hacking and false reports; possibly agents-and-permissions, next to the evaluator's incident."
     skip: "The benchmark tables: the post does not say which results are its own and which are independent."
+
+  - topic: "Model-written mathematics: OpenAI's repository of preprints"
+    added: 2026-11-25
+    known: "OpenAI publishes mathematical manuscripts in a public repository (github.com/openai/math). Its changelog says of an October 2026 release that the model's output is released directly, and it also records withdrawals and fixes. The entry of 24 Nov 2026 lists nine manuscripts that claim to settle several long-open problems at once, among them the exact exponent of matrix multiplication (nine fourths), a strongly polynomial algorithm for linear programming and a disproof of the polynomial Hirsch conjecture, 'with Lean formalizations of selected results'. On the day it was noted the discussion thread was under an hour old and held no independent check. The guide has nothing on AI doing mathematics or science."
+    open: "Extraordinary claims, so the bar is high. Which of the results are formalized in Lean, and has anyone independent confirmed that the formal statements say what the manuscripts claim? What do mathematicians in the fields concerned say, and has anything been withdrawn? Does the changelog or OpenAI say which model produced the November manuscripts and how much people intervened? Only if that holds up: a short passage on what a machine-checked proof establishes and what it does not (it checks the steps, not whether the statement is the one people care about), as a contrast to benchmark scores."
+    sources:
+      - https://github.com/openai/math/blob/main/history.md
+      - https://news.ycombinator.com/item?id=50637220   # finding aid only
+    where: "Judging-claims chapter (how to read a claim that an AI proved something); possibly the frontier chapter."
+    skip: "Headlines that report the claims as established before mathematicians have responded."
