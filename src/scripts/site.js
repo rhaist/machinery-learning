@@ -1,4 +1,4 @@
-// Site-level behaviour: Engineer-box default, theme, reader (progress, resume, sheet), freshness, "new since last visit", quizzes, glossary search, radar.
+// Site-level behaviour: Engineer-box default, theme, reader (progress, resume, sheet), freshness, quizzes, glossary search, radar.
 // Escape text before it goes into HTML or an attribute. Data from the page (JSON, headings) is never trusted as markup.
 const escH = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -7,7 +7,6 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
 };
 const today = new Date();
-const iso = d => d.toISOString().slice(0, 10);
 
 /* ---------- Engineer boxes: closed (default) | open. Stored as lfg-depth = beginner | engineer for continuity. ---------- */
 function applyDepth(depth, initial) {
@@ -91,25 +90,8 @@ $$('[data-verified]').forEach(el => {
   if (lab) lab.textContent = f;
 });
 
-/* ---------- new since your last visit ---------- */
-let prev = null;
-try { prev = sessionStorage.getItem('lfg-prev'); } catch (e) {}
-if (prev === null) {
-  prev = store.get('lfg-last-visit', '');
-  try { sessionStorage.setItem('lfg-prev', prev); } catch (e) {}
-}
-store.set('lfg-last-visit', iso(today));
-// Nothing is marked during the soft launch. After launch (site.yaml: launched), only changes dated after
-// both the launch and the reader's last visit count as new.
-const launched = document.body.dataset.launched || '';
-if (prev && launched) {
-  const since = prev > launched ? prev : launched;
-  $$('[data-updated]').forEach(el => { if (el.dataset.updated > since) el.classList.add('is-new'); });
-  $$('.claim[data-verified]').forEach(el => { if (el.dataset.verified > since) el.classList.add('is-new'); });
-  const n = $$('.is-new').length;
-  const banner = $('#since');
-  if (banner && n) { banner.hidden = false; banner.querySelector('b').textContent = `${n} change${n === 1 ? '' : 's'}`; }
-}
+// The "new since your last visit" marks were removed; clear the date older visits stored.
+try { localStorage.removeItem('lfg-last-visit'); } catch (e) {}
 
 /* ---------- quizzes and chapter progress ---------- */
 const page = document.body.dataset.chapter || '';

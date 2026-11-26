@@ -38,7 +38,6 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
         </nav>
       </div>
     </div>
-    <p class="since" id="since" hidden>Welcome back: <b></b> since your last visit, highlighted in yellow.</p>
     <HeroPipeline />
   </div></section>
 
@@ -48,8 +47,8 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
     <p>{p.summary}{pi === 0 && " New to this? Start with chapter 1; otherwise jump around."}</p></div>
     <div class="journey">
       {p.chapters.map(({ c, num }) => (
-        <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id} data-updated={c.data.updated.toISOString().slice(0, 10)}>
-          <span class="num">{num}</span><span class="newtag">updated</span>
+        <a class="card" href={`${base}/learn/${c.id}/`} data-chapter-link={c.id}>
+          <span class="num">{num}</span>
           <h3>{c.data.title}</h3>
           <p>{c.data.summary}</p>
           <div class="cm">{c.data.minutes} min</div>
@@ -64,8 +63,8 @@ const pi = parts.flatMap((p: any) => p.chapters).map(({ c }: any) => c).find((c:
   <section class={`band ${parts.length % 2 ? '' : 'alt'}`}><div class="wrap">
     <div class="part-head"><h2>This month in the field</h2></div>
     <div class="month">
-      {latest && <a class="card" href={`${base}/notes/${latest.id}/`} data-updated={latest.data.date.toISOString().slice(0, 10)}>
-        <span class="small">Field notes · {monthLabel(latest.data.month)}</span><span class="newtag">new</span>
+      {latest && <a class="card" href={`${base}/notes/${latest.id}/`}>
+        <span class="small">Field notes · {monthLabel(latest.data.month)}</span>
         <h3>{latest.data.title}</h3><p>{latest.data.summary}</p>
       </a>}
       <a class="card" href={`${base}/radar/`}>
