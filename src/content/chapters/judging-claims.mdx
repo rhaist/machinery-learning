@@ -4,8 +4,8 @@ short: Judging claims
 order: 18
 part: trust-security
 summary: "How to read benchmarks, vendor security numbers, AI detectors and deepfakes, with habits for telling what's real."
-minutes: 13
-updated: 2026-11-23
+minutes: 15
+updated: 2026-11-25
 goals:
   - "Test any AI number with four questions: measured how, by whom, on what, and could the model have seen the test"
   - "Explain why a detector that is rarely wrong can still accuse many innocent people"
@@ -13,6 +13,7 @@ goals:
 takeaways:
   - "For any AI number, ask how it was measured, by whom, on what, and whether the model could have seen the test."
   - "When the thing you are looking for is rare, even an accurate detector flags many innocent cases."
+  - "A machine-checked proof shows that code proves a formal statement. Ask who wrote the statement and whether it matches the headline."
   - "Against deepfakes, verify the channel: call back on a number you already have."
 ---
 import Term from '../../components/Term.astro';
@@ -36,6 +37,25 @@ When test questions end up in training data, scores go up without ability going 
 ## Who marks the answers?
 
 A score also depends on who does the marking. Code can be marked by running it against tests. A summary or an explanation can't, so one way to mark it is to ask another model. That works better than it sounds, and it has blind spots: <Claim id="llm-judge" />. When a number rests on a model's judgement, ask which model did the marking and whether people checked a sample.
+
+## "An AI proved it"
+
+Mathematics has an unusually strict marker. A <Term k="proof-assistant">proof assistant</Term> such as Lean is a program that checks a proof written in a formal language, step by step, against a small set of fixed rules. It makes no difference who or what wrote the proof, and a mistake doesn't get through because the wording around it is fluent. So a proof written by a model can be checked without trusting the model.
+
+The checker only establishes that a piece of code proves a formal statement. People still have to decide whether that formal statement says what the headline says, and whether anyone understands the proof.
+
+Two announcements from autumn 2026 show how this plays out. Each concerns a problem with a million-dollar prize attached. <Claim id="ns-openai" cap />. <Claim id="ns-clay" cap />. <Claim id="ns-lost" cap />. Lean had accepted the code, but that says nothing about a paper whose argument is a different one.
+
+The second case went differently. <Claim id="rh-lean" cap />. Here the translation question was settled before the proof existed. <Claim id="rh-checks" cap />. A proof that people can read did not exist yet. <Claim id="rh-digest" cap />.
+
+When a headline says an AI has proved something, ask four questions:
+
+- Which statement, exactly? The famous problem, or a version of it?
+- Who wrote the formal statement, and was it there before the proof?
+- Who ran the check again, with their own tools?
+- Can anyone explain the proof yet?
+
+Software has the same gap. Passing tests show that the code passes those tests, which is why [When agents fail](/learn/agent-failures/) treats "the tests pass" as weak evidence.
 
 ## Feelings aren't measurements
 
@@ -80,6 +100,8 @@ Public numbers describe public tasks under someone else's conditions. Only your 
 **Watched versus unwatched.** In a 2024 experiment, Claude 3 Opus complied more with a new training goal when it believed its answers would be used for training, and reasoned that this would stop it from being changed ([Greenblatt et al., 2024](https://arxiv.org/abs/2412.14093)). An evaluation only tells you how a model behaves under the conditions of that evaluation.
 
 **Read vendor security numbers critically.** Ask: static or <Term k="adaptive">adaptive</Term> attacks? How many attempts per attack? Which configuration, and is it the one you'll deploy? Who ran the test? A success rate per attempt means little without the number of attempts.
+
+**Machine-checked claims.** A formal proof is as strong as what it rests on: the statement, the axioms it may use, and the checker. Ask for a statement that comes from a source older than the proof, for the list of axioms, and for a second, independent checker. Formally verified software works the same way. The proof shows that the code meets the specification. Whether the specification describes what you wanted is still a matter for review.
 
 **Watch for conflicts of interest.** Benchmark funders sometimes get privileged access: Epoch AI disclosed in December 2024, and clarified in January 2025, that OpenAI funded FrontierMath and can see most of its problems and solutions. That doesn't make results false, but it changes how much weight they carry.
 

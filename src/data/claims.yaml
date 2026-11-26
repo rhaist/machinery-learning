@@ -1452,3 +1452,53 @@
   sources: [https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation, https://openai.com/index/video-generation-models-as-world-simulators/]
   verified: 2026-11-23
   status: evergreen
+
+- id: ns-openai
+  text: "on 8 September 2026 OpenAI announced that an internal system had solved the Navier–Stokes problem, a famous open question about how fluids move, with a proof on paper and one in Lean; the proof covers one of the versions in the official problem statement, in which an outside force pushes the fluid"
+  evidence: "We’re sharing both a writeup of the proof and a formalization in Lean."
+  sources: [https://openai.com/index/navier-stokes-solution/]
+  verified: 2026-11-25
+  half_life: 3
+  status: research
+
+- id: ns-clay
+  text: "three days later the Clay Mathematics Institute, which offers a prize for the problem, wrote that it had “apparently been settled” and that its own review is slow on purpose"
+  evidence: "The process is deliberately unhurried, but we will provide updates"
+  sources: [https://www.claymath.org/news/navier-stokes-announcement]
+  verified: 2026-11-25
+  half_life: 3
+  status: research
+
+- id: ns-lost
+  text: "a preprint posted in October 2026 compared OpenAI's paper with its Lean code and concluded that the two don't match, so the machine check says nothing about the written proof"
+  evidence: "the formalised Lean proof does not correspond to the NL proof of blow-up"
+  sources: [https://arxiv.org/abs/2610.08144]
+  verified: 2026-11-25
+  half_life: 3
+  status: research
+
+- id: rh-lean
+  text: "on 21 November 2026 the Lean FRO and the Mathlib Initiative, the organisations behind the checker and its mathematics library, certified a machine proof of the Riemann Hypothesis: a Lean library of 17 million lines that Levent Alpöge, a mathematician at Anthropic, had released the day before and says he found working with Claude, the company's model"
+  evidence: "certify that both the statement and the proof of the Riemann Hypothesis are correct"
+  evidence_src: https://leanprover-community.github.io/blog/posts/riemann-hypothesis/
+  sources: [https://leanprover-community.github.io/blog/posts/riemann-hypothesis/, https://www.nature.com/articles/d41586-026-03812-7]
+  verified: 2026-11-25
+  half_life: 3
+  status: research
+
+- id: rh-checks
+  text: "the certifiers checked that the formal statement is the right one, that the code compiles, that it proves that statement and no other, and that independent checkers accept it; the statement itself was already in the library and had been vetted by experts"
+  evidence: "has been carefully vetted by experts in Lean and number theory"
+  evidence_src: https://leanprover-community.github.io/blog/posts/riemann-hypothesis/
+  sources: [https://leanprover-community.github.io/blog/posts/riemann-hypothesis/, https://xenaproject.wordpress.com/2026/11/12/and-the-proof-is-checked-in-lean/]
+  verified: 2026-11-25
+  half_life: 3
+  status: research
+
+- id: rh-digest
+  text: "Terence Tao, a Fields medallist, described it on the day of release as an enormous Lean-only proof generated with an internal AI model, and expected that digesting it would take time"
+  evidence: "I imagine the digestion process will take some time"
+  sources: [https://terrytao.wordpress.com/2026/11/20/unforced-euler-singularity-unforced-navier-stokes-singularity-and-the-generalized-riemann-hypothesis/]
+  verified: 2026-11-25
+  half_life: 3
+  status: research

@@ -72,6 +72,7 @@ canon:
   - { url: "https://research.google/pubs/mastering-the-game-of-go-with-deep-neural-networks-and-tree-search/", title: "Mastering the game of Go with deep neural networks and tree search (AlphaGo)", signal: "Nature 2016", where: how-we-got-here, status: cited }
   - { id: "1810.04805", title: "BERT", signal: "canonical; pre-train, then fine-tune", where: how-we-got-here, status: cited }
   - { id: "2005.14165", title: "Language Models are Few-Shot Learners (GPT-3)", signal: "NeurIPS 2020 best paper", where: how-we-got-here, status: cited }
+  - { id: "2610.08144", title: "Navier-Stokes lost in translation: Why Lean verification of AI autoformalisation does not guarantee correct natural language proofs", signal: "preprint; compares a machine-checked proof with the paper it was meant to verify", where: judging-claims, status: cited }
   # --- considered and left out ---
   - { id: "2403.06634", title: "Stealing Part of a Production Language Model", signal: "ICML 2024 best paper", status: excluded, reason: "Model theft protects the vendor, not the reader; no current chapter covers it. Candidate for a future security chapter." }
   - { id: "2404.14219", title: "Phi-3 Technical Report", signal: "HN 411; 2.7k citations", status: excluded, reason: "Small models are sourced through Phi-4; the report adds no point the chapter makes." }

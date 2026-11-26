@@ -1,12 +1,12 @@
 {
  "model": "HuggingFaceTB/SmolLM2-360M",
- "revision": null,
+ "revision": "f8027fd0eaeea54caa13c31d31b9fdc459c38b49",
  "parameters": 361821120,
  "vocabulary": 49152,
- "collected": "2026-11-22",
+ "collected": "2026-11-26",
  "versions": {
   "torch": "2.15.0",
-  "transformers": "5.24.0"
+  "transformers": "5.24.1"
  },
  "prompts": [
   {
