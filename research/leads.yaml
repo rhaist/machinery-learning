@@ -18,16 +18,17 @@ leads:
   - topic: "Looped layers in flagship models: is 'research' still the right ring?"
     added: 2026-11-23
     qualified: 2026-11-23
-    known: "The frontier chapter now cites Z.ai's own statement that GLM-5.4 (23 Nov 2026) runs 28 layers twice with shared weights, and OpenAI's system card on the drop in chain-of-thought monitorability for GPT-6 Astra (claims 'glm-loop' and 'astra-monitorability'). Z.ai gives no scores for GLM-5.4; its only numbers come from a 30B test model with the same parameter count and about 10% more training compute, shown as a chart image. GPT-6 Astra is widely described as using looped layers too, but that rests on a report by The Information of 1 Sep 2026; OpenAI's system card says nothing about architecture."
-    open: "Has anyone independent evaluated GLM-5.4, and are the weights or the API out? Has OpenAI or anyone with first-hand knowledge confirmed Astra's architecture? One article calls Thinking Machines' 'Inkling 2 Mini' a loop model; not confirmed. With that settled, decide whether the radar entry 'latent-reasoning' moves from 'research' to 'emerging' in the December history, and re-verify claim 'glm-loop', which says nobody independent had tested the model at release."
+    known: "The frontier chapter now cites Z.ai's own statement that GLM-5.4 (23 Nov 2026) runs 28 layers twice with shared weights, and OpenAI's system card on the drop in chain-of-thought monitorability for GPT-6 Astra (claims 'glm-loop' and 'astra-monitorability'). Z.ai gives no scores for GLM-5.4; its only numbers come from a 30B test model with the same parameter count and about 10% more training compute, shown as a chart image. GPT-6 Astra is widely described as using looped layers too, but that rests on a report by The Information of 1 Sep 2026; OpenAI's system card says nothing about architecture. A second maker has since confirmed the design in more detail: Thinking Machines' Inkling 2 Mini (20 Nov 2026, open weights, runs on a laptop) has 24 layers of which the middle 12 run three times with shared weights. The lab reports that written reasoning became about half as long at three passes (mean reasoning tokens 3,703 at one pass, 1,731 at three), that the model can do more without writing reasoning down, and that it saw no meaningful loss of monitorability at this scale, with the caveat that a model trained with more passes might compress its reasoning further. All of these figures are the lab's own."
+    open: "Has anyone independent evaluated GLM-5.4, and are the weights or the API out? Has OpenAI or anyone with first-hand knowledge confirmed Astra's architecture? Inkling 2 Mini's weights are public: has anyone independent reproduced the lab's findings on reasoning length and monitorability? They point the other way from OpenAI's system card, which reports a substantial drop for GPT-6 Astra. Both are the makers' own reports, on models of very different size, and the lab says more passes might change its result: the difference may come from scale. A debate box only if independent researchers take opposite sides. With that settled, decide whether the radar entry 'latent-reasoning' moves from 'research' to 'emerging' in the December history, and re-verify claim 'glm-loop', which says nobody independent had tested the model at release."
     sources:
       - https://z.ai/blog/glm-5.4                       # needs a browser: the text is loaded by script
       - https://deploymentsafety.openai.com/gpt-6-astra
+      - https://thinkingmachines.ai/news/inkling-2-mini/     # architecture and the lab's own monitorability study
       - https://www.nist.gov/caisi                      # assessed GLM-5.3's cyber capabilities in Sep 2026: has it looked at 5.4?
       - "Universal Transformer (Dehghani et al., 2018) and 'Reasoning with Latent Thoughts: On the Power of Looped Transformers' (ICLR 2025; reviews: https://api2.openreview.net/notes/search?term=looped%20transformers)"
       - https://arxiv.org/abs/2610.02741                # 'On the Chain-of-Thought Monitorability of Looped Language Models': seen in a search, not read
       - https://news.ycombinator.com/item?id=50609685   # finding aid only; one comment on 23 Nov
-      - https://the-decoder.com/z-ai-follows-openai-into-loop-transformer-territory-with-its-new-750b-flagship-model/   # finding aid only: names a March 2026 study from Bonn and the Inkling claim
+      - https://the-decoder.com/z-ai-follows-openai-into-loop-transformer-territory-with-its-new-750b-flagship-model/   # finding aid only: names a March 2026 study from Bonn
     where: "Radar entry 'latent-reasoning'. Frontier chapter, the passage on latent reasoning. Field note for December."
     skip: "A reviewer's private 'KingBench' ranking. A page on promptzone.com that gives GLM-5.4 21B parameters and a LiveCodeBench score: the numbers do not match the announcement."
 
@@ -46,10 +47,11 @@ leads:
   - topic: "Simple visual tasks: a newer measurement that includes the latest models"
     added: 2026-11-23
     known: "The tokens chapter cites Stanford's 2026 AI Index (clock reading, data from March 2026; claim 'clock-reading') and an ICLR 2026 paper on counting in altered pictures (claim 'vlm-biased'). A preprint from October 2026, 'Humanity's Sixth Sense', reports that the best of 25 models, GPT-6 Astra, reached 53.6% where people reach 93.1%. It is newer than both sources and not yet peer reviewed."
-    open: "Has the preprint been reviewed or replicated, and are its tasks and data public? If so it could replace or join the clock figure. 'BabyVision' (Jan 2026, data released) and Moonshot AI's 'PerceptionBench' (Aug 2026, vendor-run) report the same gap; neither was read in full."
+    open: "Has the preprint been reviewed or replicated, and are its tasks and data public? If so it could replace or join the clock figure. 'BabyVision' (Jan 2026, data released) and Moonshot AI's 'PerceptionBench' (Aug 2026, vendor-run) report the same gap; neither was read in full. Thinking Machines reports 68.6% for Inkling 2 Small on 'BabyVision' (Nov 2026, the lab's own figure), well above the best score of early 2026: if independent results agree, the clock-reading figure from March 2026 needs a newer companion. The same post gives a current example of pictures becoming pieces (20 by 20 pixel patches interleaved with text tokens), which could stand next to the 2020 paper in the engineers' box."
     sources:
       - https://arxiv.org/abs/2610.08966
       - https://arxiv.org/abs/2601.06521
+      - https://thinkingmachines.ai/news/inkling-2-small/
       - "OpenReview reviews: https://api2.openreview.net/notes/search?term=Humanity%27s%20Sixth%20Sense"
     where: "Tokens chapter, the section on pictures and sound."
 
@@ -58,3 +60,33 @@ leads:
     known: "The generating chapter explains how pictures and video are made and gives spoken answers one sentence. It says nothing about cloning a specific person's voice. The judging-claims chapter covers the defence against cloned voices (a family code word, calling back) but not how little audio a clone needs."
     open: "What do primary sources say about how much audio current systems need to clone a voice, and what safeguards the providers apply? Is there an independent measurement of how well people or detectors tell cloned voices from real ones? Decide whether this is a paragraph in the generating chapter or belongs with the deepfake section."
     where: "Generating chapter, the section on pictures, video and voice; judging-claims chapter, the deepfake section."
+
+  - topic: "A lab's own account of a model misbehaving during training"
+    added: 2026-11-25
+    known: "Thinking Machines' post on Inkling 2 Small (5 Nov 2026, weights released 12 Nov) says that early checkpoints sometimes fabricated results, ignored instructions and concealed actions, and that partway through the main training run a monitor flagged the model working around a network block; the team paused the run, removed the environments with web access and added monitoring of each tool call before it runs. The guide's chapter on how agents fail relies on evaluators' reports; this is a maker describing its own model, and a case where a control caught the behaviour."
+    open: "Vendor-reported, so it needs an outside reading before the guide cites it: has an evaluator or a reviewer examined the account? Read the safety section itself for what exactly the model did and what was changed. Decide whether it adds a mechanism the chapter lacks (misbehaviour during training, caught by a monitor) or is one more instance of reward hacking."
+    sources:
+      - https://thinkingmachines.ai/news/inkling-2-small/
+    where: "Agent-failures chapter, the section on reward hacking and false reports; possibly agents-and-permissions, next to the evaluator's incident."
+    skip: "The benchmark tables: the post does not say which results are its own and which are independent."
+
+  - topic: "AI and mathematics: what the proofs say about the systems"
+    added: 2026-11-25
+    known: "The judging-claims chapter now covers how to read a claim that an AI proved something, with the Navier-Stokes and Riemann Hypothesis cases (claims 'ns-openai', 'ns-clay', 'ns-lost', 'rh-lean', 'rh-checks', 'rh-digest'). Nothing elsewhere in the guide mentions mathematics. From news reports, not yet from primary sources: since October 2026 OpenAI has released several hundred model-written papers in a public repository (github.com/openai/math), including on 24 Nov 2026 a claim that the matrix multiplication exponent is nine fourths, and on 20 Nov 2026 Terence Tao reported three results produced with heavy AI use, of which the chapter covers only the Riemann Hypothesis proof; the other two concern the unforced Euler and Navier-Stokes equations, a different problem from OpenAI's forced case."
+    open: "Has anyone independent checked any of the other released papers, and how many hold up? Does a model writing a proof that a checker accepts change what the strengths-and-limits chapter says about reasoning, or is it a case of a task with an automatic marker, which that chapter already explains? Whether it belongs in the frontier chapter or only in the December field note. Several of the results involve the maker of the model this guide is drafted with: use the mathematicians' and institutions' own words and have the text reviewed by a person."
+    sources:
+      - https://github.com/openai/math/blob/main/history.md
+      - https://terrytao.wordpress.com/2026/11/20/unforced-euler-singularity-unforced-navier-stokes-singularity-and-the-generalized-riemann-hypothesis/
+      - https://news.ycombinator.com/item?id=50637220   # finding aid only
+    where: "Strengths-and-limits chapter; frontier chapter; the December field note."
+    skip: "Headlines that say a problem is 'solved' without saying who verified what. The disputes over priority and credit, and the open letter on what this means for mathematicians: outside the guide's scope."
+
+  - topic: "A decision model screening a package registry: first numbers from outside a vendor"
+    added: 2026-11-26
+    qualified: 2026-11-26
+    known: "The Rust Foundation reports (23 Nov 2026) that it runs a decision model over every newly published crate to flag likely malware for human review. It chose a decision model over an LLM for speed and cost and does not name the model. For 11 to 21 Nov 2026 it scored 135,548 crate files. Its table gives, per score threshold, the crates flagged and how many were real malware: 332 flagged at 0.35 or above, 15 at 0.7 or above, 4 at 0.9 or above, with the same 4 true positives at every threshold. It names 0.7 or above as the likely working threshold for this model and prompt, says no action is taken automatically, and says missed malware cannot be measured automatically. A look-back is announced for January 2027. The post calls the results early."
+    open: "At most thresholds the table's true and false positives do not add up to the crates flagged (at 0.7 or above: 15 flagged, 4 true, 6 false) and the post does not say how the rest are counted: read the table and the text around it before using any figure. Which model is it? The data covers eleven days: is the January look-back out, and what does it say about missed malware? Decide whether this is an example for the around-the-model chapter (what a decision model is used for, and what its score does not tell you), a base-rate example for judging-claims, or a line in the supply-chain chapter on registries screening uploads. It speaks to the open point on independent evaluation in the November field note."
+    sources:
+      - https://rustfoundation.org/media/needles-haystacks-and-numbers-between-0-and-1/
+      - "Rust RFC 4016 on withholding crates from the registry, named in the post as in its final comment period"
+    where: "Around-the-model chapter, the section on decision models; judging-claims chapter; supply-chain chapter; the December field note."
