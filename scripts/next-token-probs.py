@@ -9,8 +9,11 @@ Run it once, by hand, on a machine that can reach Hugging Face. It is not part o
 and not part of CI.
 
     python3 -m venv .venv && . .venv/bin/activate
-    pip install torch transformers
+    pip install -r scripts/requirements.txt
     python scripts/next-token-probs.py > src/data/next-token-probs.json
+
+The output records the model commit it used. To reproduce the committed data exactly, pass
+the "revision" from src/data/next-token-probs.json as --revision.
 
 What it does:
   - downloads an open model (default: HuggingFaceTB/SmolLM2-360M, Apache-2.0, about 0.7 GB).
@@ -117,11 +120,14 @@ def main():
 
     import torch
     import transformers
-    tok, model = load(args.model, args.revision)
+    from huggingface_hub import model_info
+    # resolve a branch, tag or nothing to the exact commit, so the weights are pinned and recorded
+    revision = model_info(args.model, revision=args.revision).sha
+    tok, model = load(args.model, revision)
 
     result = {
         "model": args.model,
-        "revision": getattr(model.config, "_commit_hash", None) or args.revision,
+        "revision": revision,
         "parameters": sum(p.numel() for p in model.parameters()),
         "vocabulary": len(tok),
         "collected": datetime.date.today().isoformat(),
