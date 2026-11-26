@@ -80,3 +80,13 @@ leads:
       - https://news.ycombinator.com/item?id=50637220   # finding aid only
     where: "Strengths-and-limits chapter; frontier chapter; the December field note."
     skip: "Headlines that say a problem is 'solved' without saying who verified what. The disputes over priority and credit, and the open letter on what this means for mathematicians: outside the guide's scope."
+
+  - topic: "A decision model screening a package registry: first numbers from outside a vendor"
+    added: 2026-11-26
+    qualified: 2026-11-26
+    known: "The Rust Foundation reports (23 Nov 2026) that it runs a decision model over every newly published crate to flag likely malware for human review. It chose a decision model over an LLM for speed and cost and does not name the model. For 11 to 21 Nov 2026 it scored 135,548 crate files. Its table gives, per score threshold, the crates flagged and how many were real malware: 332 flagged at 0.35 or above, 15 at 0.7 or above, 4 at 0.9 or above, with the same 4 true positives at every threshold. It names 0.7 or above as the likely working threshold for this model and prompt, says no action is taken automatically, and says missed malware cannot be measured automatically. A look-back is announced for January 2027. The post calls the results early."
+    open: "At most thresholds the table's true and false positives do not add up to the crates flagged (at 0.7 or above: 15 flagged, 4 true, 6 false) and the post does not say how the rest are counted: read the table and the text around it before using any figure. Which model is it? The data covers eleven days: is the January look-back out, and what does it say about missed malware? Decide whether this is an example for the around-the-model chapter (what a decision model is used for, and what its score does not tell you), a base-rate example for judging-claims, or a line in the supply-chain chapter on registries screening uploads. It speaks to the open point on independent evaluation in the November field note."
+    sources:
+      - https://rustfoundation.org/media/needles-haystacks-and-numbers-between-0-and-1/
+      - "Rust RFC 4016 on withholding crates from the registry, named in the post as in its final comment period"
+    where: "Around-the-model chapter, the section on decision models; judging-claims chapter; supply-chain chapter; the December field note."
