@@ -67,7 +67,7 @@ const links = [['learn', 'Learn', `${base}/learn/start-here/`], ['radar', 'Radar
   {ldJson && <script type="application/ld+json" set:html={ldJson} />}
 
 </head>
-<body data-launched={site.launched ? new Date(site.launched).toISOString().slice(0, 10) : undefined} data-chapter={chapter} data-quiz-key={quizKey || undefined} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
+<body data-chapter={chapter} data-quiz-key={quizKey || undefined} data-minutes={cur?.c.data.minutes ?? ''} data-prev={prevC ? `${base}/learn/${prevC.c.id}/` : undefined} data-next={nextC ? `${base}/learn/${nextC.c.id}/` : undefined} class={cur ? 'has-reader' : undefined}>
   <script is:inline set:html={boot} />
   <a class="skip" href="#main">Skip to main content</a>
   <header class="site-head"><div class="in">

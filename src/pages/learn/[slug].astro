@@ -36,11 +36,11 @@ const upd = entry.data.updated.toLocaleDateString('en-GB', { month: 'long', year
   <article class="band"><div class="chapter">
     <div class="chapter-grid">
       <ChapterArt name={entry.id} />
-      <header class="page-head" data-updated={entry.data.updated.toISOString().slice(0, 10)}>
+      <header class="page-head">
         <p class="kicker">{parts.length > 1 ? `${part.title} · ` : ''}{extra ? 'Optional reading' : `Chapter ${num} of ${last}`}{entry.data.order === 0 ? ' · start here' : ''}</p>
         <h1>{entry.data.title}</h1>
         <p class="lede">{entry.data.summary}</p>
-        <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}<span class="newtag">new since your last visit</span></span></div>
+        <div class="meta"><span>About {entry.data.minutes} minutes</span><span>Updated {upd}</span></div>
       </header>
     </div>
     <div class="prose">
